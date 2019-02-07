@@ -1,0 +1,2 @@
+@import 'EXT:bw_guild/Configuration/TypoScript/Setup/config.typoscript'
+@import 'EXT:bw_guild/Configuration/TypoScript/Setup/ddev.typoscript'

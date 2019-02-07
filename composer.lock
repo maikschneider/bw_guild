@@ -4,9 +4,73 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e097566ebe6b2ff9c253ea648c51db8e",
+    "content-hash": "5838475880aad81b1fa82bf22a9d05ef",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "bk2k/bootstrap-package",
+            "version": "9.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benjaminkott/bootstrap_package.git",
+                "reference": "e9fb7d545634a302366f0fee3f5a36af3c8cc08d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benjaminkott/bootstrap_package/zipball/e9fb7d545634a302366f0fee3f5a36af3c8cc08d",
+                "reference": "e9fb7d545634a302366f0fee3f5a36af3c8cc08d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "typo3/cms-core": "^8.7.0 || ^9.0",
+                "typo3/cms-rte-ckeditor": "^8.7.0 || ^9.0"
+            },
+            "replace": {
+                "bootstrap_package": "self.version",
+                "typo3-ter/bootstrap-package": "self.version"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.3.1"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "cms-package-dir": "{$vendor-dir}/typo3/cms",
+                    "web-dir": ".build/web"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "BK2K\\BootstrapPackage\\": "Classes"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Benjamin Kott",
+                    "email": "info@bk2k.info",
+                    "homepage": "http://www.bk2k.info/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Bootstrap Package delivers a full configured frontend theme for TYPO3, based on the Bootstrap CSS Framework.",
+            "homepage": "https://github.com/benjaminkott/bootstrap_package",
+            "keywords": [
+                "TYPO3 CMS",
+                "bootstrap",
+                "frontend",
+                "introduction",
+                "responsive",
+                "sitepackage",
+                "theme",
+                "web"
+            ],
+            "time": "2018-12-15T15:52:02+00:00"
+        },
         {
             "name": "blueways/bw-email",
             "version": "v1.0.4",
