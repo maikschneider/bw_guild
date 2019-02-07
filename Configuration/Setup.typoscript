@@ -1,0 +1,3 @@
+
+@import 'EXT:bw_build/Configuration/Setup/config.typoscript'
+@import 'EXT:bw_build/Configuration/Setup/ddev.typoscript'

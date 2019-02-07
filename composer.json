@@ -1,0 +1,35 @@
+{
+  "name": "blueways/bw-guild",
+  "type": "typo3-cms-extension",
+  "description": "Extends TYPO3 for the management of guilds",
+  "homepage": "https://blueways.de",
+  "license": [
+    "proprietary"
+  ],
+  "keywords": [
+    "TYPO3 CMS"
+  ],
+  "version": "1.0.0",
+  "require-dev": {
+    "typo3/cms-base-distribution": "^9.0",
+    "blueways/bw-email": "^1.0"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": "public"
+    }
+  },
+  "config": {
+    "bin-dir": "bin",
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "7.2"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "Blueways\\BwGuild\\": "Classes/"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+config {
+	tx_extbase {
+		objects {
+			TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
+				className = Blueways\BwGuild\Domain\Model\User
+			}
+		}
+
+		persistence.classes {
+			Blueways\BwGuild\Domain\Model\User {
+				mapping.tableName = fe_users
+			}
+		}
+	}
+}
