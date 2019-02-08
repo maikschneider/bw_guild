@@ -1,0 +1,34 @@
+<f:be.container>
+	<div class="module-loading-indicator"></div>
+	<div class="module-docheader">
+		<div class="module-docheader-bar">
+			<div class="module-docheader-bar-column-left">
+				<div class="form-inline">
+					<div class="form-group form-group-sm">
+
+
+						<f:be.menus.actionMenu additionalAttributes="{class: 'form-control'}">
+							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index')}"
+													   controller="Administration"
+													   action="index"/>
+							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.importer')}"
+													   controller="Administration"
+													   action="importer"/>
+						</f:be.menus.actionMenu>
+					</div>
+				</div>
+			</div>
+			<div class="module-docheader-bar-column-right">
+				<f:be.buttons.shortcut/>
+				<f:be.pagePath/>
+				<f:be.pageInfo/>
+			</div>
+		</div>
+		<div class="module-docheader-bar">
+
+		</div>
+	</div>
+	<div class="module-body">
+		<f:render section="main"/>
+	</div>
+</f:be.container>

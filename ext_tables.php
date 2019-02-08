@@ -23,7 +23,7 @@ call_user_func(
             'tx_bwguild_admin',
             '',
             array(
-                'Administration' => 'index',
+                'Administration' => 'index, importer',
             ),
             array(
                 'access' => 'user,group',

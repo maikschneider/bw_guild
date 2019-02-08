@@ -9,6 +9,12 @@
 			<trans-unit id="tx_bwguild_admin">
 				<source>Guild member</source>
 			</trans-unit>
+			<trans-unit id="module.administration.index">
+				<source>Overview</source>
+			</trans-unit>
+			<trans-unit id="module.administration.importer">
+				<source>Importer</source>
+			</trans-unit>
 
 		</body>
 	</file>

@@ -1,7 +1,12 @@
-<h1>Users</h1>
+<f:layout name="Administration/Default"/>
 
-<ul>
-<f:for each="{users}" as="user">
-	<li>{user.username}</li>
-</f:for>
-</ul>
+<f:section name="main">
+	<h1>Users</h1>
+
+	<ul>
+		<f:for each="{users}" as="user">
+			<li>{user.username}</li>
+		</f:for>
+	</ul>
+
+</f:section>
