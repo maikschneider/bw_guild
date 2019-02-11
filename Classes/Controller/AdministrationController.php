@@ -229,6 +229,8 @@ class AdministrationController extends ActionController
             $this->view->assign('fixValue', $this->request->getArgument('fixValue'));
         }
 
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($feFields, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
+
         $this->view->assign('csvFields', $rows[0]);
         $this->view->assign('csvUserCount', sizeof($rows) - 1);
         $this->view->assign('feFields', $feFields);
