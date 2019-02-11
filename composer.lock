@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5838475880aad81b1fa82bf22a9d05ef",
+    "content-hash": "66dfbd7821025fc8ca8a5a1e2f7dfe8a",
     "packages": [],
     "packages-dev": [
         {
@@ -4523,6 +4523,70 @@
             "time": "2019-01-22T10:12:04+00:00"
         },
         {
+            "name": "typo3/cms-styleguide",
+            "version": "10.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3/styleguide.git",
+                "reference": "8cd87680aa290390bc04f50ad0ad3b6a96d5d92b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/TYPO3/styleguide/zipball/8cd87680aa290390bc04f50ad0ad3b6a96d5d92b",
+                "reference": "8cd87680aa290390bc04f50ad0ad3b6a96d5d92b",
+                "shasum": ""
+            },
+            "replace": {
+                "styleguide": "*"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.4",
+                "typo3/cms-about": "10.*.*@dev",
+                "typo3/cms-core": "10.*.*@dev",
+                "typo3/cms-frontend": "10.*.*@dev",
+                "typo3/cms-install": "10.*.*@dev",
+                "typo3/testing-framework": "^5.0.0"
+            },
+            "type": "typo3-cms-extension",
+            "extra": {
+                "typo3/cms": {
+                    "app-dir": ".Build",
+                    "web-dir": ".Build/Web",
+                    "extension-key": "styleguide"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TYPO3\\CMS\\Styleguide\\": "Classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Felix Kopp",
+                    "email": "felix-source@phorax.com",
+                    "homepage": "http://phorax.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "TYPO3 CMS Core Team",
+                    "homepage": "https://forge.typo3.org/projects/typo3cms-core",
+                    "role": "Developer"
+                }
+            ],
+            "description": "TYPO3 CMS Extension to test everything in the TYPO3 Backend",
+            "homepage": "https://github.com/TYPO3/styleguide",
+            "keywords": [
+                "style guide",
+                "typo3",
+                "typo3 backend"
+            ],
+            "time": "2019-01-09T14:55:48+00:00"
+        },
+        {
             "name": "typo3/cms-sys-note",
             "version": "v9.5.4",
             "source": {
@@ -4738,6 +4802,11 @@
         {
             "name": "typo3/minimal",
             "version": "v9.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/TYPO3/minimal.git",
+                "reference": "6ca773e3a90f193ef6cbac7be810d2e8eb6d06fc"
+            },
             "require": {
                 "typo3/cms-backend": "9.5.*@dev",
                 "typo3/cms-core": "9.5.*@dev",

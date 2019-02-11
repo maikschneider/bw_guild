@@ -1,0 +1,61 @@
+<f:layout name="Administration/Default"/>
+
+<f:section name="main">
+
+<h1>CSV Importer</h1>
+
+<f:if condition="{csvFields}">
+
+	<f:if condition="{users}">
+
+		<f:be.infobox title="{users->f:count()} users found" state="-1">With the current mapping, {users->f:count()} users could be created from your CSV <strong>{fileIdentifier}</strong>.</f:be.infobox>
+
+	</f:if>
+
+	<f:if condition="{users}">
+		<f:then>
+			<h3>Update user mapping</h3>
+		</f:then>
+		<f:else>
+			<h3>Create up to {csvUserCount} FE Users from selected CSV file</h3>
+		</f:else>
+	</f:if>
+
+
+	<f:form action="csvImport" method="POST">
+		<f:form.hidden name="file" value="{fileIdentifier}"/>
+		<div class="form-group">
+			<div class="form-section">
+				<f:for each="{feFields}" as="feField" iteration="i">
+					<div class="form-group">
+						<label>{feField.name}</label>
+						<div class="row">
+							<div class="form-control-wrap col-xs-2">
+								CSV field:
+							</div>
+							<div class="form-control-wrap col-xs-4">
+								<f:form.select name="csvMapping[{feField.name}]" class="form-control" value="{f:if(condition: csvMapping, then:'{csvMapping.{feField.name}}', else:'-1')}">
+									<f:form.select.option value="-1" selected="selected">No mapping</f:form.select.option>
+									<f:for each="{csvFields}" as="csvField" iteration="j">
+										<f:form.select.option value="{j.index}">
+											{csvField}
+										</f:form.select.option>
+									</f:for>
+								</f:form.select>
+							</div>
+							<div class="form-control-wrap col-xs-2 text-right">
+								Fix value:
+							</div>
+							<div class="form-control-wrap col-xs-4">
+								<f:form.textfield name="fixValue[{feField.name}]" class="form-control" value="{f:if(condition: fixValue, then: '{fixValue.{feField.name}}')}"/>
+							</div>
+						</div>
+					</div>
+				</f:for>
+			</div>
+		</div>
+		<f:form.submit value="Update mapping" class="btn btn-default" />
+	</f:form>
+</f:if>
+
+</f:section>
