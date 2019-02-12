@@ -7,7 +7,9 @@ use ReflectionClass;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
+use TYPO3\CMS\Core\Http\Message;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class AdministrationController extends ActionController
@@ -222,13 +224,23 @@ class AdministrationController extends ActionController
             $users = $this->createUsersFromCsvDataMapping($rows, (array)$this->request->getArgument('csvMapping'),
                 (array)$this->request->getArgument('fixValue'));
 
+            $this->addFlashMessage('With the current mapping, '. sizeof($users) . ' users can be created from your CSV',
+                sizeof($users). ' users found',
+                FlashMessage::INFO, false);
+
             $this->view->assign('users', $users);
             $this->view->assign('csvMapping', $this->request->getArgument('csvMapping'));
             $this->view->assign('fixValue', $this->request->getArgument('fixValue'));
         }
 
         if ($this->request->hasArgument('actionCreate')) {
+            foreach ($users as $user) {
+                $this->userRepository->add($user);
+            }
 
+            $this->addFlashMessage(sizeof($users). ' users have been created on this page', 'Import success', FlashMessage::OK, true);
+
+            $this->redirect('importer', 'Administration', 'bw_guild');
         }
 
         $this->view->assign('csvFields', $rows[0]);
@@ -265,7 +277,7 @@ class AdministrationController extends ActionController
                 return $arr['username'];
             }, $usernames);
         }
-        
+
         foreach ($rows as $key => $row) {
 
             // username is always required abort if not given

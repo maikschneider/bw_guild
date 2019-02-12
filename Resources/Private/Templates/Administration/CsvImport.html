@@ -10,12 +10,6 @@
 		<f:form action="csvImport" method="POST">
 			<f:form.hidden name="file" value="{fileIdentifier}"/>
 
-			<f:if condition="{users}">
-				<f:be.infobox title="{users->f:count()} users found" state="-1">With the current mapping,
-					{users->f:count()} users can be created from your CSV <strong>{fileIdentifier}</strong>.
-				</f:be.infobox>
-			</f:if>
-
 			<div class="panel panel-space panel-default recordlist">
 				<div class="panel-heading">
 					<a href="#" data-toggle="collapse" data-target="#mappings">Update user mappings

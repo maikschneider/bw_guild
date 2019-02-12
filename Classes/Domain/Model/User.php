@@ -15,17 +15,17 @@ class User extends FrontendUser
     /**
      * @var string
      */
-    protected $shortName;
+    protected $shortName = '';
 
     /**
      * @var string
      */
-    protected $mobile;
+    protected $mobile = '';
 
     /**
      * @var string
      */
-    protected $memberNr;
+    protected $memberNr = '';
 
     /**
      * @return string
