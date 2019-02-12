@@ -8,7 +8,6 @@ use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class AdministrationController extends ActionController
@@ -63,7 +62,6 @@ class AdministrationController extends ActionController
                 $feFields = $this->getFeUserFields();
 
                 $this->view->assign('csvFields', $rows[0]);
-                $this->view->assign('csvUserCount', sizeof($rows) - 1);
                 $this->view->assign('feFields', $feFields);
                 $this->view->assign('fileIdentifier', $this->request->getArgument('file'));
 
@@ -229,10 +227,11 @@ class AdministrationController extends ActionController
             $this->view->assign('fixValue', $this->request->getArgument('fixValue'));
         }
 
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($feFields, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
+        if ($this->request->hasArgument('actionCreate')) {
+
+        }
 
         $this->view->assign('csvFields', $rows[0]);
-        $this->view->assign('csvUserCount', sizeof($rows) - 1);
         $this->view->assign('feFields', $feFields);
         $this->view->assign('fileIdentifier', $fileIdentifier);
         $this->view->assign('token', $formToken);
@@ -279,7 +278,7 @@ class AdministrationController extends ActionController
             }
 
             // create users
-            $user = new FrontendUser($username, $password);
+            $user = new User($username, $password);
 
             // set all properties from mapping (except username, password, -1, values outside from $row)
             foreach ($csvMappings as $propertyName => $mapping) {
