@@ -258,11 +258,19 @@ class AdministrationController extends ActionController
         // remove csv header
         unset($rows[0]);
 
+        // get list of usernames
+        $usernames = $this->userRepository->getUsernames();
+        if ($usernames && sizeof($usernames)) {
+            $usernames = array_map(function ($arr) {
+                return $arr['username'];
+            }, $usernames);
+        }
+        
         foreach ($rows as $key => $row) {
 
             // username is always required abort if not given
             $username = $row[$csvMappings['username']];
-            if (!$username || strlen($username) < 2) {
+            if (!$username || strlen($username) < 2 || in_array(strtolower($username), $usernames)) {
                 continue;
             }
 
