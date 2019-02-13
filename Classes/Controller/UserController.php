@@ -77,9 +77,20 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $this->userRepository->update($user);
 
-        $this->addFlashMessage('Successfully updated user data', \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+        $this->addFlashMessage(
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $this->redirect('edit');
+    }
+
+    /**
+     * @return \TYPO3\CMS\Lang\LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
     }
 
 }
