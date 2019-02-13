@@ -281,15 +281,15 @@ class AdministrationController extends ActionController
         foreach ($rows as $key => $row) {
 
             // username is always required abort if not given
-            $username = $row[$csvMappings['username']];
+            $username = trim($row[$csvMappings['username']]);
             if (!$username || strlen($username) < 2 || in_array(strtolower($username), $usernames)) {
                 continue;
             }
 
             // get password from mapping and override if given
-            $password = $row[$csvMappings['password']];
-            if ($fixValues['password'] && strlen($fixValues['password']) > 2) {
-                $password = $fixValues['password'];
+            $password = trim($row[$csvMappings['password']]);
+            if ($fixValues['password'] && strlen(trim($fixValues['password'])) > 2) {
+                $password = trim($fixValues['password']);
             }
 
             // check for required valid password (+3 characters)
@@ -312,13 +312,14 @@ class AdministrationController extends ActionController
 
             // set all overrides from fixed values
             foreach ($fixValues as $propertyName => $value) {
-                if ($propertyName == 'username' || $propertyName == 'password' || !$value || !strlen($value)) {
+                if ($propertyName == 'username' || $propertyName == 'password' || !$value || !strlen(trim($value))) {
                     continue;
                 }
 
-                $user->_setProperty($propertyName, $value);
+                $user->_setProperty($propertyName, trim($value));
             }
 
+            $usernames[] = strtolower($user->getUsername());
             $users[] = $user;
         }
 
