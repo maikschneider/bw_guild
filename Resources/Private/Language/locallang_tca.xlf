@@ -15,6 +15,31 @@
 			<trans-unit id="user.member_nr">
 				<source>Member number</source>
 			</trans-unit>
+			<trans-unit id="user.offers">
+				<source>Offers</source>
+			</trans-unit>
+
+			<trans-unit id="tx_bwguild_domain_model_offer">
+				<source>Offer</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type">
+				<source>Type</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.0">
+				<source>Job</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.1">
+				<source>Education</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.2">
+				<source>Internship</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.description">
+				<source>Job description</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.start_date">
+				<source>Available from</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

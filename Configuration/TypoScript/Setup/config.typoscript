@@ -10,6 +10,35 @@ config {
 			Blueways\BwGuild\Domain\Model\User {
 				mapping.tableName = fe_users
 			}
+
+			Blueways\BwGuild\Domain\Model\Offer {
+				subclasses {
+					0 = Blueways\BwGuild\Domain\Model\Job
+					1 = Blueways\BwGuild\Domain\Model\Education
+					2 = Blueways\BwGuild\Domain\Model\Internship
+				}
+			}
+
+			Blueways\BwGuild\Domain\Model\Job {
+				mapping {
+					recordType = 0
+					tableName = tx_bwguild_domain_model_offer
+				}
+			}
+
+			Blueways\BwGuild\Domain\Model\Education {
+				mapping {
+					recordType = 1
+					tableName = tx_bwguild_domain_model_offer
+				}
+			}
+
+			Blueways\BwGuild\Domain\Model\Internship {
+				mapping {
+					recordType = 2
+					tableName = tx_bwguild_domain_model_offer
+				}
+			}
 		}
 	}
 }

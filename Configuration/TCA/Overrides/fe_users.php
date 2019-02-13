@@ -37,12 +37,12 @@ call_user_func(function () {
                 'eval' => 'trim'
             ],
         ],
-        'jobs' => [
+        'offers' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.jobs',
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers',
             'config' => [
                 'type' => 'inline',
-                'foreign_table' => 'tx_bwguild_domain_model_job',
+                'foreign_table' => 'tx_bwguild_domain_model_offer',
                 'foreign_field' => 'fe_user'
             ]
         ]
@@ -51,6 +51,7 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobile', '', 'after:telephone');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'member_nr', '', 'before:company');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'offers', '', 'after:www');
     /* @TODO: organize fields in paletts
      * $GLOBALS['TCA']['fe_users']['palettes'][] = [
      * 'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang.xlf:user.palette.contactPerson',

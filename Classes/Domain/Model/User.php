@@ -29,7 +29,7 @@ class User extends FrontendUser
     protected $memberNr = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Job>
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
      */
     protected $jobs;
 
