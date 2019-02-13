@@ -21,6 +21,12 @@ class AdministrationController extends ActionController
      */
     protected $userRepository;
 
+    /**
+     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @inject
+     */
+    protected $usergroupRepository;
+
     public function indexAction()
     {
         $users = $this->userRepository->findAll();
@@ -62,10 +68,12 @@ class AdministrationController extends ActionController
 
             if ($rows) {
                 $feFields = $this->getFeUserFields();
+                $groups = $this->usergroupRepository->findAll();
 
                 $this->view->assign('csvFields', $rows[0]);
                 $this->view->assign('feFields', $feFields);
                 $this->view->assign('fileIdentifier', $this->request->getArgument('file'));
+                $this->view->assign('groups', $groups);
 
                 $this->view->setTemplate('CsvImport');
             }
@@ -178,8 +186,7 @@ class AdministrationController extends ActionController
                 'uid',
                 '_localizedUid',
                 '_languageUid',
-                '_versionedUid',
-                'usergroup'
+                '_versionedUid'
             ];
             return !in_array($obj->name, $excludeFields);
         });
@@ -218,6 +225,7 @@ class AdministrationController extends ActionController
         $formProtectionFactory = FormProtectionFactory::get();
         $formToken = $formProtectionFactory->generateToken('FE User action', 'import');
         $feFields = $this->getFeUserFields();
+        $groups = $this->usergroupRepository->findAll();
 
         if ($this->request->hasArgument('csvMapping') && $this->request->hasArgument('fixValue')) {
 
@@ -243,6 +251,7 @@ class AdministrationController extends ActionController
             $this->redirect('importer', 'Administration', 'bw_guild');
         }
 
+        $this->view->assign('groups', $groups);
         $this->view->assign('csvFields', $rows[0]);
         $this->view->assign('feFields', $feFields);
         $this->view->assign('fileIdentifier', $fileIdentifier);
@@ -300,9 +309,25 @@ class AdministrationController extends ActionController
             // create users
             $user = new User($username, $password);
 
+            // usergroup get uid
+            $groupUid = (int)trim($row[$csvMappings['usergroup']]);
+            if ($fixValues['usergroup'] && (int)trim($fixValues['usergroup'])) {
+                $groupUid = (int)trim($fixValues['usergroup']);
+            }
+
+            // get usergroup and add to user
+            if ($groupUid) {
+                $group = $this->usergroupRepository->findByUid($groupUid);
+                if ($group) {
+                    $groupStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+                    $groupStorage->attach($group);
+                    $user->setUsergroup($groupStorage);
+                }
+            }
+
             // set all properties from mapping (except username, password, -1, values outside from $row)
             foreach ($csvMappings as $propertyName => $mapping) {
-                if ($propertyName == 'username' || $propertyName == 'password' || $mapping == '-1' || !(int)$mapping || !key_exists((int)$mapping,
+                if ($propertyName == 'username' || $propertyName == 'password' || $propertyName == 'usergroup' || $mapping == '-1' || !(int)$mapping || !key_exists((int)$mapping,
                         $row)) {
                     continue;
                 }
@@ -312,7 +337,7 @@ class AdministrationController extends ActionController
 
             // set all overrides from fixed values
             foreach ($fixValues as $propertyName => $value) {
-                if ($propertyName == 'username' || $propertyName == 'password' || !$value || !strlen(trim($value))) {
+                if ($propertyName == 'username' || $propertyName == 'password' || $propertyName == 'usergroup' || !$value || !strlen(trim($value))) {
                     continue;
                 }
 
