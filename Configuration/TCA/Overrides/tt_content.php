@@ -1,0 +1,13 @@
+<?php
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'Blueways.BwGuild',
+    'Userlist',
+    'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.title',
+    'tx_bwguild_userlist'
+);
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_userlist'] = 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+    'bwguild_userlist',
+    'FILE:EXT:bw_guild/Configuration/FlexForms/flexform_userlist.xml'
+);

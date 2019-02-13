@@ -1,0 +1,23 @@
+<h2>{users->f:count()} Betriebe</h2>
+
+<f:widget.paginate as="pagedUsers" objects="{users}">
+	<f:for each="{pagedUsers}" as="user">
+		<div class="user__item">
+			<h3>{user.company}</h3>
+			<p>{user.address}<br/> {user.zip} {user.city}</p>
+			<p>
+				<f:if condition="{user.telephone}">
+					<span class="icon-phone"></span>
+					{user.telephone }
+				</f:if>
+			</p>
+			<f:if condition="{user.email}">
+				<a href="mailto:{user.email}">
+					<span class="icon-envelope"></span>
+					{user.email}
+				</a>
+			</f:if>
+
+		</div>
+	</f:for>
+</f:widget.paginate>

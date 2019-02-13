@@ -21,6 +21,30 @@
 			<trans-unit id="module.administration.importer">
 				<source>Importer</source>
 			</trans-unit>
+			<trans-unit id="userlist">
+				<source>User list</source>
+			</trans-unit>
+			<trans-unit id="userlist.wizard.title">
+				<source>User list</source>
+			</trans-unit>
+			<trans-unit id="userlist.wizard.description">
+				<source>Displays registered frontend users</source>
+			</trans-unit>
+			<trans-unit id="userlist.wizard.description">
+				<source>Displays registered frontend users</source>
+			</trans-unit>
+			<trans-unit id="userlist.mode">
+				<source>Display mode</source>
+			</trans-unit>
+			<trans-unit id="userlist.mode.list">
+				<source>List users</source>
+			</trans-unit>
+			<trans-unit id="userlist.mode.edit">
+				<source>Edit user</source>
+			</trans-unit>
+			<trans-unit id="userlist.storagePid">
+				<source>Storage PID</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
