@@ -5,6 +5,7 @@ namespace Blueways\BwGuild\Controller;
 use Blueways\BwGuild\Domain\Model\User;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -263,6 +264,7 @@ class AdministrationController extends ActionController
      * @param array $csvMappings
      * @param array $fixValues
      * @return array
+     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
      */
     private function createUsersFromCsvDataMapping($rows, $csvMappings, $fixValues)
     {
@@ -287,6 +289,8 @@ class AdministrationController extends ActionController
             }, $usernames);
         }
 
+        $hashInstance = $this->objectManager->get(PasswordHashFactory::class)->getDefaultHashInstance('FE');
+
         foreach ($rows as $key => $row) {
 
             // username is always required abort if not given
@@ -305,6 +309,9 @@ class AdministrationController extends ActionController
             if (!$password || strlen($password) < 3) {
                 continue;
             }
+
+            // hash password
+            $password = $hashInstance->getHashedPassword($password);
 
             // create users
             $user = new User($username, $password);

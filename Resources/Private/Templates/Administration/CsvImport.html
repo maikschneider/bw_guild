@@ -127,7 +127,14 @@
 														{user.usergroup.0.title}
 													</f:then>
 													<f:else>
-														{user.{feField.name}}
+														<f:if condition="{feField.name}=='password'">
+															<f:then>
+																*****
+															</f:then>
+															<f:else>
+																{user.{feField.name}}
+															</f:else>
+														</f:if>
 													</f:else>
 												</f:if>
 											</td>

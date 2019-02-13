@@ -4,6 +4,7 @@ namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Service\AccessControlService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 
 /**
  * Class UserController
@@ -35,6 +36,14 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $users = $this->userRepository->findAll();
 
         $this->view->assign('users', $users);
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $user
+     */
+    public function showAction(FrontendUser $user)
+    {
+        $this->view->assign('user', $user);
     }
 
     /**
