@@ -34,7 +34,7 @@
 	<ul>
 		<f:for each="{files}" as="file">
 			<li>
-				<f:link.action arguments="{file: file.identifier}">{file.name}</f:link.action>
+				<f:link.action action="csvImport" arguments="{file: file.identifier}">{file.name}</f:link.action>
 			</li>
 		</f:for>
 	</ul>

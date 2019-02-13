@@ -3,10 +3,14 @@
 <f:section name="main">
 	<h1>Users</h1>
 
-	<ul>
-		<f:for each="{users}" as="user">
-			<li>{user.username}</li>
-		</f:for>
-	</ul>
+	<f:if condition="{users}">
+		<f:else>
+			<f:be.infobox title="{f:translate(key:'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index.noUserBox.title')}"
+						  message="{f:translate(key:'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index.noUserBox.message')}"
+						  state="-1"/>
+		</f:else>
+	</f:if>
+
+	<f:be.tableList tableName="fe_users" fieldList="{settings.tableFields.users}" clickTitleMode="edit"/>
 
 </f:section>

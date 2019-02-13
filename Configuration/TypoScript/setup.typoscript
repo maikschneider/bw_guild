@@ -1,6 +1,12 @@
 module.tx_bwguild {
 	settings {
 		importFolderPath = /bw_guild/
+		tableFields.users {
+			1 = username
+			2 = company
+			3 = email
+			4 = www
+		}
 	}
 }
 

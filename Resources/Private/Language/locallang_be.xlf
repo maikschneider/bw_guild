@@ -12,10 +12,15 @@
 			<trans-unit id="module.administration.index">
 				<source>Overview</source>
 			</trans-unit>
+			<trans-unit id="module.administration.index.noUserBox.title">
+				<source>No users found</source>
+			</trans-unit>
+			<trans-unit id="module.administration.index.noUserBox.message">
+				<source>There are no users on the current page. You need to select the correct storage folder.</source>
+			</trans-unit>
 			<trans-unit id="module.administration.importer">
 				<source>Importer</source>
 			</trans-unit>
-
 		</body>
 	</file>
 </xliff>
