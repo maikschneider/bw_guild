@@ -36,6 +36,15 @@ call_user_func(function () {
                 'size' => 20,
                 'eval' => 'trim'
             ],
+        ],
+        'jobs' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.jobs',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_bwguild_domain_model_job',
+                'foreign_field' => 'fe_user'
+            ]
         ]
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);

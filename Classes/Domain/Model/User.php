@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class User
@@ -26,6 +27,18 @@ class User extends FrontendUser
      * @var string
      */
     protected $memberNr = '';
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Job>
+     */
+    protected $jobs;
+
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+
+        $this->jobs = new ObjectStorage();
+    }
 
     /**
      * @return string
