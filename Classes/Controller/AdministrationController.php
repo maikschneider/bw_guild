@@ -186,7 +186,8 @@ class AdministrationController extends ActionController
                 'uid',
                 '_localizedUid',
                 '_languageUid',
-                '_versionedUid'
+                '_versionedUid',
+                'offers'
             ];
             return !in_array($obj->name, $excludeFields);
         });
@@ -317,7 +318,7 @@ class AdministrationController extends ActionController
             $user = new User($username, $password);
 
             // usergroup get uid
-            $groupUid = (int)trim($row[$csvMappings['usergroup']]);
+            $groupUid = (int)$csvMappings['usergroup'] > 0 ? (int)trim($row[$csvMappings['usergroup']]) : false;
             if ($fixValues['usergroup'] && (int)trim($fixValues['usergroup'])) {
                 $groupUid = (int)trim($fixValues['usergroup']);
             }

@@ -30,14 +30,31 @@ class User extends FrontendUser
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
+     * @lazy
      */
-    protected $jobs;
+    protected $offers;
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->offers;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $offers
+     */
+    public function setOffers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $offers): void
+    {
+        $this->offers = $offers;
+    }
 
     public function __construct(string $username = '', string $password = '')
     {
         parent::__construct($username, $password);
 
-        $this->jobs = new ObjectStorage();
+        $this->offers = new ObjectStorage();
     }
 
     /**

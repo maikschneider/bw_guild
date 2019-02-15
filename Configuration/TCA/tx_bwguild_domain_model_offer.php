@@ -34,15 +34,15 @@ return [
     'types' => [
         // Job
         '0' => [
-            'showitem' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
         ],
         // Education
         '1' => [
-            'showitem' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
         ],
         // Internship
         '2' => [
-            'showitem' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
         ]
     ],
     'columns' => [
@@ -211,5 +211,31 @@ return [
                 'size' => 30,
             ]
         ],
+        'fe_user' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_user',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'fe_users',
+                'foreign_table' => 'fe_users',
+                'foreign_table_field' => 'offers',
+                'size' => 1,
+                'maxitems' => 1,
+                'eval' => 'int',
+                'default' => 0,
+                'suggestOptions' => [
+                    'fe_users' => [
+                        'searchWholePhrase' => 1,
+                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name'
+                    ]
+                ],
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
+            ]
+        ]
     ]
 ];

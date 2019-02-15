@@ -40,6 +40,9 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.start_date">
 				<source>Available from</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.fe_user">
+				<source>User</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
