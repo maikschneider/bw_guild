@@ -74,9 +74,30 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $possibilities;
 
     /**
+     * @var integer
+     */
+    protected $recordType;
+
+    /**
      * @return int
      */
-    abstract public function getRecordType();
+    public function getRecordType(): int
+    {
+        return $this->recordType;
+    }
+
+    /**
+     * @param int $recordType
+     */
+    public function setRecordType(int $recordType): void
+    {
+        $this->recordType = $recordType;
+    }
+
+    /**
+     * @var boolean
+     */
+    protected $hidden;
 
     /**
      * @return bool
@@ -93,11 +114,6 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->hidden = $hidden;
     }
-
-    /**
-     * @var boolean
-     */
-    protected $hidden;
 
     /**
      * @return string

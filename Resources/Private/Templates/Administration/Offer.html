@@ -12,13 +12,13 @@
 			   data-toggle="tab">
 				<div class="card-header">
 					<div class="card-icon">
-						<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{i.index}.svg"
+						<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{offerGroup.0.recordType}.svg"
 								 width="40"
 								 height="40"/>
 					</div>
 					<div class="card-header-body">
 						<h1 class="card-title">
-							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{i.index}"/>
+							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{offerGroup.0.recordType}"/>
 						</h1>
 						<span class="card-subtitle">{offerGroup->f:count()}
 							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
@@ -53,7 +53,7 @@
 									   class="t3js-contextmenutrigger"
 									   data-table="tx_bwguild_domain_model_offer"
 									   data-uid="{offer.uid}">
-										<core:icon identifier="tx_bwguild_domain_model_offer-{i.index}" overlay="{f:if(condition: offer.hidden, then: 'overlay-hidden')}" />
+										<core:icon identifier="tx_bwguild_domain_model_offer-{offer.recordType}" overlay="{f:if(condition: offer.hidden, then: 'overlay-hidden')}" />
 									</a>
 								</td>
 								<td>
