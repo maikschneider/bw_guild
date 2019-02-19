@@ -52,6 +52,9 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobile', '', 'after:telephone');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'member_nr', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '', 'after:description');
+
+    $GLOBALS['TCA']['fe_users']['ctrl']['label'] = 'company';
+    $GLOBALS['TCA']['fe_users']['ctrl']['label_userFunc'] = 'Blueways\\BwGuild\\Utility\\LabelUtility->feUserLabel';
     /* @TODO: organize fields in paletts
      * $GLOBALS['TCA']['fe_users']['palettes'][] = [
      * 'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang.xlf:user.palette.contactPerson',

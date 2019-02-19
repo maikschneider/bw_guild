@@ -41,6 +41,9 @@
 								<f:translate key="LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel"/>
 							</th>
 							<th>
+								<f:translate key="LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.company"/>
+							</th>
+							<th>
 								<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_user"/>
 							</th>
 						</tr>
@@ -59,6 +62,7 @@
 								<td>
 									<be:link.editRecord uid="{offer.uid}" table="tx_bwguild_domain_model_offer">{offer.title}</be:link.editRecord></td>
 								<td>{offer.feUser.name}</td>
+								<td>{offer.feUser.company}</td>
 							</tr>
 						</f:for>
 					</table>
