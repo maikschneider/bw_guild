@@ -17,5 +17,15 @@ module.tx_bwguild {
 	}
 }
 
+plugin.tx_bwguild_offerlist {
+	settings {
+		maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
+		showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
+	}
+	persistence {
+		storagePid = {$plugin.tx_bwguild_offerlist.persistence.storagePid}
+	}
+}
+
 @import 'EXT:bw_guild/Configuration/TypoScript/Setup/config.typoscript'
 @import 'EXT:bw_guild/Configuration/TypoScript/Setup/ddev.typoscript'

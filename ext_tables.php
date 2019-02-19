@@ -14,6 +14,11 @@ call_user_func(
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_userlist.svg']
         );
         $iconRegistry->registerIcon(
+            'tx_bwguild_offerlist',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_offerlist.svg']
+        );
+        $iconRegistry->registerIcon(
             'tx_bwguild_domain_model_offer',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg']

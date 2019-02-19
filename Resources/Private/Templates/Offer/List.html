@@ -1,0 +1,9 @@
+<h1>{offers->f:count()} Angebote</h1>
+
+<div class="orders orders--list">
+	<f:widget.paginate as="pagedOffer" objects="{offers}">
+		<f:for each="{pagedOffer}" as="offer">
+			<f:render partial="Offer/Item" arguments="{offer: offer, showPid: settings.showPid}"/>
+		</f:for>
+	</f:widget.paginate>
+</div>

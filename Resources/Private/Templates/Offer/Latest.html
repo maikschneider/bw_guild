@@ -1,0 +1,5 @@
+<div class="orders orders--latest">
+	<f:for each="{offers}" as="offer">
+		<f:render partial="Offer/Item" arguments="{offer: offer, showPid: settings.showPid}"/>
+	</f:for>
+</div>

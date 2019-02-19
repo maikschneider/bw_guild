@@ -39,9 +39,6 @@
 			<trans-unit id="userlist.wizard.description">
 				<source>Displays registered frontend users</source>
 			</trans-unit>
-			<trans-unit id="userlist.wizard.description">
-				<source>Displays registered frontend users</source>
-			</trans-unit>
 			<trans-unit id="userlist.mode">
 				<source>Display mode</source>
 			</trans-unit>
@@ -56,6 +53,57 @@
 			</trans-unit>
 			<trans-unit id="userlist.entries">
 				<source>entries</source>
+			</trans-unit>
+			<trans-unit id="userlist.offerPid">
+				<source>Offer PID</source>
+			</trans-unit>
+			<trans-unit id="offerlist.wizard.title">
+				<source>Offer list</source>
+			</trans-unit>
+			<trans-unit id="offerlist.wizard.description">
+				<source>Displays offers like jobs, educations, internships,..</source>
+			</trans-unit>
+			<trans-unit id="offerlist">
+				<source>Offer list</source>
+			</trans-unit>
+			<trans-unit id="offerlist.mode">
+				<source>Display mode</source>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.list">
+				<source>List offers</source>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.edit">
+				<source>Edit offers</source>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.latest">
+				<source>List latest offers</source>
+			</trans-unit>
+			<trans-unit id="offerlist.showPid">
+				<source>Show PID</source>
+			</trans-unit>
+			<trans-unit id="offerlist.maxItems">
+				<source>Max items</source>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type">
+				<source>Record type</source>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.default">
+				<source>All</source>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.jobs">
+				<source>Jobs</source>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.educations">
+				<source>Educations</source>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.internships">
+				<source>Internships</source>
+			</trans-unit>
+			<trans-unit id="offerlist.storagePid">
+				<source>Storage PID</source>
+			</trans-unit>
+			<trans-unit id="offerlist.userPid">
+				<source>User show PID</source>
 			</trans-unit>
 		</body>
 	</file>

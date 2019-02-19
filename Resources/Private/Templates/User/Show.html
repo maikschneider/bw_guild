@@ -1,1 +1,10 @@
-<h1>{user.username}</h1>
+<h1>{user.company}</h1>
+
+<p>{user.address}<br/> {user.zip} {user.city}</p>
+
+<f:if condition="{user.offers}">
+	<h4>{user.offers->f:count()} offers</h4>
+	<f:for each="{user.offers}" as="offer">
+		<f:render partial="Offer/Item" arguments="{offer: offer, showPid: settings.offerPid}"/>
+	</f:for>
+</f:if>

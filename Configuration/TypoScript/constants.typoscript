@@ -1,0 +1,7 @@
+plugin.tx_bwguild_offerlist {
+	settings {
+		maxItems = 2
+		showPid =
+	}
+	persistence.storagePid =
+}

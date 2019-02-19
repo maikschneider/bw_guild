@@ -1,0 +1,8 @@
+<div class="orders__item">
+	<h3>{offer.title}</h3>
+	<p>
+		<f:format.crop maxCharacters="10">{offer.description->f:format.stripTags()}</f:format.crop>
+	</p>
+
+	<f:link.action pageUid="{showPid}" action="show" controller="Offer" arguments="{offer: offer}">Show offer</f:link.action>
+</div>

@@ -14,32 +14,32 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $address;
+    protected $address = '';
 
     /**
      * @var string
      */
-    protected $zip;
+    protected $zip = '';
 
     /**
      * @var string
      */
-    protected $city;
-
-    /**
-     * @var
-     */
-    protected $country;
+    protected $city = '';
 
     /**
      * @var string
      */
-    protected $description;
+    protected $country = '';
 
     /**
      * @var string
      */
-    protected $start_date;
+    protected $description = '';
+
+    /**
+     * @var string
+     */
+    protected $start_date = '';
 
     /**
      * @var \Blueways\BwGuild\Domain\Model\User
@@ -49,13 +49,13 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $contactPerson;
+    protected $contactPerson = '';
 
     /**
      * @var string
      * @validate EmailAddress
      */
-    protected $contactMail;
+    protected $contactMail = '';
 
     /**
      * @var float
@@ -70,12 +70,12 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $conditions;
+    protected $conditions = '';
 
     /**
      * @var string
      */
-    protected $possibilities;
+    protected $possibilities = '';
 
     /**
      * @var integer
