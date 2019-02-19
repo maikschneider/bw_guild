@@ -169,7 +169,7 @@ class AdministrationController extends ActionController
         while (($data = fgetcsv($handle, 1000, ";")) !== false) {
             $singleRow = [];
             for ($c = 0; $c < count($data); $c++) {
-                $singleRow[$c] = utf8_decode($data[$c]);
+                $singleRow[$c] = iconv('ISO-8859-1', 'UTF-8', $data[$c]);
             }
             array_push($rows, $singleRow);
         }
