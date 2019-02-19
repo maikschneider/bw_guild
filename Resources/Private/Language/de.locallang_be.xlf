@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-06-23T11:36:30Z">
+		<header>
+			<authorName>Maik Schneider</authorName>
+			<authorEmail>m.schneider@blueways.de</authorEmail>
+		</header>
+		<body>
+			<trans-unit id="tx_bwguild_admin">
+				<source>Guild administration</source>
+				<target>Innung Verwaltung</target>
+			</trans-unit>
+			<trans-unit id="module.administration.index">
+				<source>Overview</source>
+				<target>Überblick</target>
+			</trans-unit>
+			<trans-unit id="module.administration.offer">
+				<source>Offer</source>
+				<target>Angebote</target>
+			</trans-unit>
+			<trans-unit id="module.administration.index.noUserBox.title">
+				<source>No users found</source>
+				<target>Keine Benutzer gefunden</target>
+			</trans-unit>
+			<trans-unit id="module.administration.index.noUserBox.message">
+				<source>There are no users on the current page. You need to select the correct storage folder.</source>
+				<target>Auf der aktuellen Seite wurden keine Benutzer gefunden. Bitte korrekten Ordner auswählen.</target>
+			</trans-unit>
+			<trans-unit id="module.administration.importer">
+				<source>Importer</source>
+				<target>Importer</target>
+			</trans-unit>
+			<trans-unit id="module.administration.newOffer">
+				<source>New offer</source>
+				<target>Neues Angebot</target>
+			</trans-unit>
+			<trans-unit id="module.administration.newUser">
+				<source>New user</source>
+				<target>Neuer Benutzer</target>
+			</trans-unit>
+			<trans-unit id="userlist">
+				<source>User list</source>
+				<target>Benutzerliste</target>
+			</trans-unit>
+			<trans-unit id="userlist.wizard.title">
+				<source>User list</source>
+				<target>Benutzerliste</target>
+			</trans-unit>
+			<trans-unit id="userlist.wizard.description">
+				<source>Displays registered frontend users</source>
+				<target>Zeigt Benutzer an</target>
+			</trans-unit>
+			<trans-unit id="userlist.mode">
+				<source>Display mode</source>
+				<target>Anzeigemodus</target>
+			</trans-unit>
+			<trans-unit id="userlist.mode.list">
+				<source>List users</source>
+				<target>Benutzerliste</target>
+			</trans-unit>
+			<trans-unit id="userlist.mode.edit">
+				<source>Edit user</source>
+				<target>Benutzer bearbeiten</target>
+			</trans-unit>
+			<trans-unit id="userlist.storagePid">
+				<source>Storage PID</source>
+				<target>Datensatz Ordner</target>
+			</trans-unit>
+			<trans-unit id="userlist.entries">
+				<source>entries</source>
+				<target>Einträge</target>
+			</trans-unit>
+			<trans-unit id="userlist.offerPid">
+				<source>Offer PID</source>
+				<target>Angebot Seite</target>
+			</trans-unit>
+			<trans-unit id="offerlist.wizard.title">
+				<source>Offer list</source>
+				<target>Angebot Liste</target>
+			</trans-unit>
+			<trans-unit id="offerlist.wizard.description">
+				<source>Displays offers like jobs, educations, internships,..</source>
+				<target>Zeigt Angebote, wie Jobs, Ausbildungen, Praktika,.. an</target>
+			</trans-unit>
+			<trans-unit id="offerlist">
+				<source>Offer list</source>
+				<target>Angebot Liste</target>
+			</trans-unit>
+			<trans-unit id="offerlist.mode">
+				<source>Display mode</source>
+				<target>Anzeigemodus</target>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.list">
+				<source>List offers</source>
+				<target>Liste von Angeboten</target>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.edit">
+				<source>Edit offers</source>
+				<target>Edit offers</target>
+			</trans-unit>
+			<trans-unit id="offerlist.mode.latest">
+				<source>List latest offers</source>
+				<target>Liste der letzten Angebote</target>
+			</trans-unit>
+			<trans-unit id="offerlist.showPid">
+				<source>Show PID</source>
+				<target>Detailseite</target>
+			</trans-unit>
+			<trans-unit id="offerlist.maxItems">
+				<source>Max items</source>
+				<target>Maximale Anzahl</target>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type">
+				<source>Record type</source>
+				<target>Art der Datensätze</target>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.default">
+				<source>All</source>
+				<target>Alle</target>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.jobs">
+				<source>Jobs</source>
+				<target>Jobs</target>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.educations">
+				<source>Educations</source>
+				<target>Ausbildungen</target>
+			</trans-unit>
+			<trans-unit id="offerlist.record_type.internships">
+				<source>Internships</source>
+				<target>Praktikas</target>
+			</trans-unit>
+			<trans-unit id="offerlist.storagePid">
+				<source>Storage PID</source>
+				<target>Datensatz Ordner</target>
+			</trans-unit>
+			<trans-unit id="offerlist.userPid">
+				<source>User show PID</source>
+				<target>Benutzer Detailseite</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>
