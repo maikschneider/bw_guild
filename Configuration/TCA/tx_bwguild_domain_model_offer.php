@@ -34,15 +34,15 @@ return [
     'types' => [
         // Job
         '0' => [
-            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ],
         // Education
         '1' => [
-            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ],
         // Internship
         '2' => [
-            'showitem' => 'fe_user, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, conditions, possibilities, contact_person, contact_mail'
+            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ]
     ],
     'columns' => [
@@ -236,6 +236,85 @@ return [
                     ],
                 ],
             ]
-        ]
+        ],
+        'possibilities' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.possibilities',
+            'config' => [
+                'type' => 'text',
+                'cols' => 30,
+                'rows' => 5,
+                'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+            ]
+        ],
+        'conditions' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.conditions',
+            'config' => [
+                'type' => 'text',
+                'cols' => 30,
+                'rows' => 5,
+                'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
+                'enableRichtext' => true,
+                'richtextConfiguration' => 'default',
+            ]
+        ],
+        'contact_person' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.contact_person',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+            ]
+        ],
+        'contact_mail' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.contact_mail',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+            ]
+        ],
+        'address' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address',
+            'config' => [
+                'type' => 'text',
+                'cols' => 20,
+                'rows' => 3
+            ]
+        ],
+        'zip' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.zip',
+            'config' => [
+                'type' => 'input',
+                'eval' => 'trim',
+                'size' => 10,
+                'max' => 10
+            ]
+        ],
+        'city' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.city',
+            'config' => [
+                'type' => 'input',
+                'size' => 20,
+                'eval' => 'trim',
+                'max' => 50
+            ]
+        ],
+        'country' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.country',
+            'config' => [
+                'type' => 'input',
+                'size' => 20,
+                'eval' => 'trim',
+                'max' => 40
+            ]
+        ],
     ]
 ];

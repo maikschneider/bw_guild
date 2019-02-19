@@ -43,6 +43,21 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.fe_user">
 				<source>User</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.more">
+				<source>More</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.possibilities">
+				<source>Possibilities</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.conditions">
+				<source>Conditions</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.contact_person">
+				<source>Contact person</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.contact_mail">
+				<source>Contact mail</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

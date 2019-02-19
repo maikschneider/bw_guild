@@ -22,6 +22,11 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $zip;
 
     /**
+     * @var string
+     */
+    protected $city;
+
+    /**
      * @var
      */
     protected $country;
@@ -32,8 +37,7 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $description;
 
     /**
-     * @var \DateTime
-     * @validate DateTime
+     * @var string
      */
     protected $start_date;
 
@@ -79,6 +83,27 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $recordType;
 
     /**
+     * @var boolean
+     */
+    protected $hidden;
+
+    /**
+     * @return string
+     */
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
      * @return int
      */
     public function getRecordType(): int
@@ -93,11 +118,6 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->recordType = $recordType;
     }
-
-    /**
-     * @var boolean
-     */
-    protected $hidden;
 
     /**
      * @return bool
@@ -148,17 +168,17 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \DateTime
+     * @return string
      */
-    public function getStartDate(): \DateTime
+    public function getStartDate(): string
     {
         return $this->start_date;
     }
 
     /**
-     * @param \DateTime $start_date
+     * @param string $start_date
      */
-    public function setStartDate(\DateTime $start_date): void
+    public function setStartDate(string $start_date): void
     {
         $this->start_date = $start_date;
     }
