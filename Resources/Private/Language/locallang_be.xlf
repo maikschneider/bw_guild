@@ -24,6 +24,12 @@
 			<trans-unit id="module.administration.importer">
 				<source>Importer</source>
 			</trans-unit>
+			<trans-unit id="module.administration.newOffer">
+				<source>New offer</source>
+			</trans-unit>
+			<trans-unit id="module.administration.newUser">
+				<source>New user</source>
+			</trans-unit>
 			<trans-unit id="userlist">
 				<source>User list</source>
 			</trans-unit>

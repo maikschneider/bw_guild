@@ -1,3 +1,5 @@
+{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
 <f:be.container includeRequireJsModules="{0:'TYPO3/CMS/Backend/ContextMenu'}" pageTitle="Guild management">
 	<div class="module-loading-indicator"></div>
 	<div class="module-docheader">
@@ -28,6 +30,18 @@
 			</div>
 		</div>
 		<div class="module-docheader-bar">
+			<div class="module-docheader-bar-column-left">
+				<div class="btn-toolbar">
+					<div class="btn-group">
+						<be:link.newRecord class="btn btn-default btn-sm" table="tx_bwguild_domain_model_offer" title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newOffer')}">
+							<core:icon identifier="tx_bwguild_domain_model_offer" />
+						</be:link.newRecord>
+						<be:link.newRecord class="btn btn-default btn-sm" table="fe_users" title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newUser')}">
+							<core:icon identifier="status-user-frontend"/>
+						</be:link.newRecord>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="module-body">
