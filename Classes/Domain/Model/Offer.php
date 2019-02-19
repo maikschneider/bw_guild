@@ -79,6 +79,27 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     abstract public function getRecordType();
 
     /**
+     * @return bool
+     */
+    public function isHidden(): bool
+    {
+        return $this->hidden;
+    }
+
+    /**
+     * @param bool $hidden
+     */
+    public function setHidden(bool $hidden): void
+    {
+        $this->hidden = $hidden;
+    }
+
+    /**
+     * @var boolean
+     */
+    protected $hidden;
+
+    /**
      * @return string
      */
     public function getTitle(): string

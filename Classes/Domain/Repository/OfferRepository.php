@@ -14,7 +14,10 @@ class OfferRepository extends Repository
 
     public function getGroupedOffers()
     {
-        $allOffers = $this->createQuery()->execute();
+        $query = $this->createQuery();
+        $query->getQuerySettings()->setIgnoreEnableFields(true);
+
+        $allOffers = $query->execute();
 
         $offers = [];
 
