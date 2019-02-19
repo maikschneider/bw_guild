@@ -2,7 +2,7 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
-class Offer
+abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
@@ -74,11 +74,24 @@ class Offer
     protected $possibilities;
 
     /**
+     * @return int
+     */
+    abstract public function getRecordType();
+
+    /**
      * @return string
      */
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
     }
 
     /**
@@ -226,14 +239,6 @@ class Offer
     }
 
     /**
-     * @param string $title
-     */
-    public function setTitle(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    /**
      * @return string
      */
     public function getAddress(): string
@@ -280,5 +285,4 @@ class Offer
     {
         $this->country = $country;
     }
-
 }

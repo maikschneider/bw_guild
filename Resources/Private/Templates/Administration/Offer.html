@@ -1,0 +1,92 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+<f:layout name="Administration/Default"/>
+
+<f:section name="main">
+	<h1>Offers</h1>
+
+	<div class="card-container">
+		<f:for each="{offerGroups}" as="offerGroup" iteration="i">
+			<a href="#tab-{i.cycle}"
+			   class="card card-size-fixed-small t3js-tabmenu-item  {f:if(condition: i.isFirst, then: 'active')}"
+			   data-toggle="tab">
+				<div class="card-header">
+					<div class="card-icon">
+						<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{i.cycle}.svg"
+								 width="40"
+								 height="40"/>
+					</div>
+					<div class="card-header-body">
+						<h1 class="card-title">
+							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{i.cycle}"/>
+						</h1>
+						<span class="card-subtitle">{offerGroup->f:count()}
+							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
+						</span>
+					</div>
+				</div>
+			</a>
+		</f:for>
+	</div>
+
+	<div role="tabpanel">
+		<div class="tab-content">
+			<f:for each="{offerGroups}" as="offerGroup" iteration="i">
+				<div role="tabpanel" class="tab-pane {f:if(condition: i.isFirst, then: 'active')}" id="tab-{i.cycle}">
+					<table class="table table-striped table-hover">
+						<thead>
+						<tr>
+							<th></th>
+							<th>
+								<f:translate key="LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel"/>
+							</th>
+							<th>
+								<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_user"/>
+							</th>
+						</tr>
+						</thead>
+						<tbody>
+						<f:for each="{offerGroup}" as="offer">
+							<tr>
+								<td>
+									<a href="#"
+									   class="t3js-contextmenutrigger"
+									   data-table="tx_bwguild_domain_model_offer"
+									   data-uid="{offer.uid}">
+										<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{i.cycle}.svg"
+												 width="16"
+												 height="16"/>
+									</a>
+								</td>
+								<td>
+									<be:link.editRecord uid="{offer.uid}" table="tx_bwguild_domain_model_offer">{offer.title}</be:link.editRecord></td>
+								<td>{offer.feUser.name}</td>
+							</tr>
+						</f:for>
+					</table>
+				</div>
+			</f:for>
+		</div>
+	</div>
+
+	<style type="text/css">
+		.panel-body {
+			padding: 1px;
+		}
+
+		.panel.panel-space.panel-default.recordlist {
+			margin: 0;
+			box-shadow: none;
+		}
+
+		/*
+		.card.active {
+			background-color: #efefef;
+		}
+		*/
+
+		.card:active, .card:focus {
+			text-decoration: none;
+		}
+	</style>
+
+</f:section>

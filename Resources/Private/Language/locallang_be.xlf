@@ -12,6 +12,9 @@
 			<trans-unit id="module.administration.index">
 				<source>Overview</source>
 			</trans-unit>
+			<trans-unit id="module.administration.offer">
+				<source>Offer</source>
+			</trans-unit>
 			<trans-unit id="module.administration.index.noUserBox.title">
 				<source>No users found</source>
 			</trans-unit>
@@ -44,6 +47,9 @@
 			</trans-unit>
 			<trans-unit id="userlist.storagePid">
 				<source>Storage PID</source>
+			</trans-unit>
+			<trans-unit id="userlist.entries">
+				<source>entries</source>
 			</trans-unit>
 		</body>
 	</file>

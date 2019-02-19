@@ -10,4 +10,11 @@ namespace Blueways\BwGuild\Domain\Model;
 class Job extends Offer
 {
 
+    /**
+     * @return int
+     */
+    public function getRecordType()
+    {
+        return 0;
+    }
 }

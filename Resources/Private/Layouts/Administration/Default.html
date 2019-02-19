@@ -1,4 +1,4 @@
-<f:be.container>
+<f:be.container includeRequireJsModules="{0:'TYPO3/CMS/Backend/ContextMenu'}" pageTitle="Guild management">
 	<div class="module-loading-indicator"></div>
 	<div class="module-docheader">
 		<div class="module-docheader-bar">
@@ -11,6 +11,9 @@
 							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index')}"
 													   controller="Administration"
 													   action="index"/>
+							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.offer')}"
+													   controller="Administration"
+													   action="offer"/>
 							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.importer')}"
 													   controller="Administration"
 													   action="importer"/>
@@ -25,7 +28,6 @@
 			</div>
 		</div>
 		<div class="module-docheader-bar">
-
 		</div>
 	</div>
 	<div class="module-body">

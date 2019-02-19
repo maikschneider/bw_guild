@@ -27,11 +27,24 @@ class AdministrationController extends ActionController
      */
     protected $usergroupRepository;
 
+    /**
+     * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
+     * @inject
+     */
+    protected $offerRepository;
+
     public function indexAction()
     {
         $users = $this->userRepository->findAll();
 
         $this->view->assign('users', $users);
+    }
+
+    public function offerAction()
+    {
+        $offerGroups = $this->offerRepository->getGroupedOffers();
+
+        $this->view->assign('offerGroups', $offerGroups);
     }
 
     /**
@@ -234,8 +247,8 @@ class AdministrationController extends ActionController
             $users = $this->createUsersFromCsvDataMapping($rows, (array)$this->request->getArgument('csvMapping'),
                 (array)$this->request->getArgument('fixValue'));
 
-            $this->addFlashMessage('With the current mapping, '. sizeof($users) . ' users can be created from your CSV',
-                sizeof($users). ' users found',
+            $this->addFlashMessage('With the current mapping, ' . sizeof($users) . ' users can be created from your CSV',
+                sizeof($users) . ' users found',
                 FlashMessage::INFO, false);
 
             $this->view->assign('users', $users);
@@ -248,7 +261,8 @@ class AdministrationController extends ActionController
                 $this->userRepository->add($user);
             }
 
-            $this->addFlashMessage(sizeof($users). ' users have been created on this page', 'Import success', FlashMessage::OK, true);
+            $this->addFlashMessage(sizeof($users) . ' users have been created on this page', 'Import success',
+                FlashMessage::OK, true);
 
             $this->redirect('importer', 'Administration', 'bw_guild');
         }
