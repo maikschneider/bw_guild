@@ -29,7 +29,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	zip varchar(255) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,
 	country varchar(255) DEFAULT '' NOT NULL,
-	description varchar(255) DEFAULT '' NOT NULL,
+	description mediumtext,
 	start_date varchar(255) DEFAULT '' NOT NULL,
 	geo_lat decimal(10, 8) DEFAULT 0 NOT NULL,
 	geo_long decimal(11, 8) DEFAULT 0 NOT NULL,
