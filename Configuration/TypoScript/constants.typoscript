@@ -1,7 +1,12 @@
+plugin.tx_bwguild {
+	persistence.storagePid = 13
+}
+
 plugin.tx_bwguild_offerlist {
 	settings {
-		maxItems = 2
-		showPid =
+		maxItems = 3
+		showPid = 3
 	}
-	persistence.storagePid =
 }
+
+@import 'EXT:bw_guild/Configuration/TypoScript/Constants/ddev.typoscript'

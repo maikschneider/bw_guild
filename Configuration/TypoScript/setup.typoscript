@@ -14,6 +14,17 @@ module.tx_bwguild {
 				3 = feUser
 			}
 		}
+		storagePid = {$plugin.tx_bwguild.persistence.storagePid}
+	}
+}
+
+plugin.tx_bwguild {
+	persistence {
+		storagePid = {$plugin.tx_bwguild.persistence.storagePid}
+		classes {
+			Blueways\BwGuild\Domain\Model\User.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+			Blueways\BwGuild\Domain\Model\Offer.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+		}
 	}
 }
 
@@ -21,9 +32,6 @@ plugin.tx_bwguild_offerlist {
 	settings {
 		maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
 		showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
-	}
-	persistence {
-		storagePid = {$plugin.tx_bwguild_offerlist.persistence.storagePid}
 	}
 }
 

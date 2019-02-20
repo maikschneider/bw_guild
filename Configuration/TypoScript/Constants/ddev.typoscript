@@ -1,0 +1,8 @@
+[globalString = IENV:HTTP_HOST = *.ddev.local]
+
+	plugin.tx_bwguild {
+		persistence.storagePid = 2
+	}
+
+[GLOBAL]
+
