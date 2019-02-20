@@ -3,3 +3,4 @@ public
 bin
 vendor
 var
+!/Resources/Public/

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>tt_content_joblist</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="tt_content_joblist">
+            <polygon id="Shape" fill="#FFFFFF" points="0 0 14 0 14 14 0 14"></polygon>
+            <rect id="Rectangle-2" fill="#FFFFFF" x="2" y="3" width="10" height="8"></rect>
+            <polygon id="Rectangle-2" fill="#E0E0E0" points="2 5 2 4 11 4 11 5"></polygon>
+            <rect id="Rectangle-2-Copy" fill="#337F99" transform="translate(4.000000, 11.500000) scale(-1, 1) rotate(-180.000000) translate(-4.000000, -11.500000) " x="2" y="11" width="4" height="1"></rect>
+            <rect id="Rectangle-2" fill="#494949" x="2" y="2" width="10" height="1"></rect>
+            <path d="M0,0 L0,14 L14,14 L14,0 L0,0 Z M1,1 L13,1 L13,13 L1,13 L1,1 Z" id="Shape" fill="#999999" fill-rule="nonzero"></path>
+            <polygon id="Rectangle" fill="#B1B1B1" points="11 6 11 7 4 7 4 6"></polygon>
+            <circle id="Oval" fill="#B1B1B1" cx="2.5" cy="6.5" r="1"></circle>
+            <circle id="Oval-Copy" fill="#B1B1B1" cx="2.5" cy="8.5" r="1"></circle>
+            <polygon id="Rectangle" fill="#B1B1B1" points="11 8 11 9 4 9 4 8"></polygon>
+        </g>
+    </g>
+</svg>

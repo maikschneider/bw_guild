@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="91px" viewBox="0 0 60 91" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>tx_bwguild_domain_model_offer.2</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="tx_bwguild_domain_model_offer.2" transform="translate(0.000000, 0.410156)">
+            <path d="M30,12 C29,12 19,18 17,20 L17,33 C19,35 29,41 30,41 C31,41 41,35 43,33 L43,20 C41,18 31,12 30,12 Z M35,29.5 L30,32.5 L25,29.5 L25,23.5 L30,20.5 L35,23.5 L35,29.5 Z" id="Shape" fill="#3E9F38" fill-rule="nonzero"></path>
+            <path d="M50,2 C48,0 47,0 46,0 C45,0 45,2 45,2 L45,32 C45,37 35,42 30,42 C25,42 15,37 15,32 L15,2 C15,2 15.007812,0 14,0 C13,0 12,0 10,2 C5,7 0,22 0,37 C0,47 15,57 15,57 L15,90 L25,90 L25,72 C25,72 25,67 30,67 C35,67 35,72 35,72 L35,90 L45,90 L45,57 C45,57 60,47 60,37 C60,22 55,7 50,2 Z" id="Path" fill="#616161"></path>
+        </g>
+    </g>
+</svg>
