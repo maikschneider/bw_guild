@@ -316,7 +316,8 @@ class AdministrationController extends ActionController
             }
 
             // get password from mapping and override if given
-            $password = trim($row[$csvMappings['password']]);
+            // @TODO: here a "0" is prepended due to csv removal of leading zero - need to delete!!
+            $password = '0' . trim($row[$csvMappings['password']]);
             if ($fixValues['password'] && strlen(trim($fixValues['password'])) > 2) {
                 $password = trim($fixValues['password']);
             }
