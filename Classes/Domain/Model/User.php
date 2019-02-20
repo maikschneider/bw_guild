@@ -35,6 +35,36 @@ class User extends FrontendUser
     protected $offers;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @lazy
+     */
+    protected $categories;
+
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+
+        $this->categories = new ObjectStorage();
+        $this->offers = new ObjectStorage();
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCategories(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     */
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories): void
+    {
+        $this->categories = $categories;
+    }
+
+    /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
@@ -48,13 +78,6 @@ class User extends FrontendUser
     public function setOffers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $offers): void
     {
         $this->offers = $offers;
-    }
-
-    public function __construct(string $username = '', string $password = '')
-    {
-        parent::__construct($username, $password);
-
-        $this->offers = new ObjectStorage();
     }
 
     /**

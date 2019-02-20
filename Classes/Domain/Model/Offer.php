@@ -2,6 +2,8 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
 abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
@@ -86,6 +88,36 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @var boolean
      */
     protected $hidden;
+
+    /**
+     * Offer constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new ObjectStorage();
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getCategories(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     */
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories): void
+    {
+        $this->categories = $categories;
+    }
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @lazy
+     */
+    protected $categories;
 
     /**
      * @return string
