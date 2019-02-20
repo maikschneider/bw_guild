@@ -6,6 +6,7 @@ CREATE TABLE fe_users (
 
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
+	categories int(11) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE tx_bwguild_domain_model_offer (
@@ -38,6 +39,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	possibilities mediumtext,
 	contact_person varchar(255) DEFAULT '' NOT NULL,
 	contact_mail varchar(255) DEFAULT '' NOT NULL,
+	categories int(11) DEFAULT 0 NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
