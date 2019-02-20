@@ -1,11 +1,18 @@
-plugin.tx_bwguild {
-	persistence.storagePid = 13
-}
+plugin {
+	tx_bwguild {
+		persistence.storagePid =
+		view {
+			templateRootPath =
+			partialRootPath =
+			layoutRootPath =
+		}
+	}
 
-plugin.tx_bwguild_offerlist {
-	settings {
-		maxItems = 3
-		showPid = 3
+	tx_bwguild_offerlist {
+		settings {
+			maxItems =
+			showPid =
+		}
 	}
 }
 

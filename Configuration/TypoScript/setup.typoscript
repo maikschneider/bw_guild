@@ -1,39 +1,4 @@
-module.tx_bwguild {
-	settings {
-		importFolderPath = /bw_guild/
-		tableFields.users {
-			1 = username
-			2 = company
-			3 = email
-			4 = www
-		}
-		tableFields.offers {
-			0 {
-				1 = title
-				2 = description
-				3 = feUser
-			}
-		}
-		storagePid = {$plugin.tx_bwguild.persistence.storagePid}
-	}
-}
-
-plugin.tx_bwguild {
-	persistence {
-		storagePid = {$plugin.tx_bwguild.persistence.storagePid}
-		classes {
-			Blueways\BwGuild\Domain\Model\User.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
-			Blueways\BwGuild\Domain\Model\Offer.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
-		}
-	}
-}
-
-plugin.tx_bwguild_offerlist {
-	settings {
-		maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
-		showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
-	}
-}
-
+@import 'EXT:bw_guild/Configuration/TypoScript/Setup/module.typoscript'
+@import 'EXT:bw_guild/Configuration/TypoScript/Setup/plugin.typoscript'
 @import 'EXT:bw_guild/Configuration/TypoScript/Setup/config.typoscript'
 @import 'EXT:bw_guild/Configuration/TypoScript/Setup/ddev.typoscript'
