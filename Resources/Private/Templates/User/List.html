@@ -1,23 +1,81 @@
-<h2>{users->f:count()} Betriebe</h2>
+<div class="filter">
+	<h3>Filter</h3>
+	<f:form action="list" controller="User" method="POST">
+		<label> Textsuche
+			<f:form.textfield name="search"/>
+		</label> <label>Branchen</label>
 
-<f:widget.paginate as="pagedUsers" objects="{users}">
-	<f:for each="{pagedUsers}" as="user">
-		<div class="user__item">
-			<h3>{user.company}</h3>
-			<p>{user.address}<br/> {user.zip} {user.city}</p>
-			<p>
-				<f:if condition="{user.telephone}">
-					<span class="icon-phone"></span>
-					{user.telephone }
-				</f:if>
-			</p>
-			<f:if condition="{user.email}">
-				<a href="mailto:{user.email}">
-					<span class="icon-envelope"></span>
-					{user.email}
-				</a>
-			</f:if>
-			<f:link.action action="show" arguments="{user: user}">Show user</f:link.action>
-		</div>
-	</f:for>
-</f:widget.paginate>
+		<button type="submit" class="button hollow small">
+			<span>Ansicht aktualisieren</span>
+			<span class="icon-refresh"></span>
+		</button>
+	</f:form>
+</div>
+
+
+<div class="toggle__headline">
+	<h1 class="h2">{users->f:count()} Betriebe</h1>
+	<div class="toggle__wrap">
+		<p class="h6">Ansicht:</p>
+		<a href="#" class="toggle">
+			<span class="tleft">
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+			<span class="tright">
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</a>
+	</div>
+</div>
+
+
+<div class="users users--list">
+	<f:widget.paginate as="pagedUsers" objects="{users}" configuration="{itemsPerPage: 20}">
+		<f:for each="{pagedUsers}" as="user">
+			<div class="users__item">
+				<div class="users__item__main">
+					<h3>{user.company}</h3>
+					<p>{user.address}<br/> {user.zip} {user.city}</p>
+
+					<f:if condition="{user.telephone}">
+						<p class="no-margin">
+							<span class="icon-phone"></span>
+							{user.telephone }
+						</p>
+					</f:if>
+
+					<f:if condition="{user.email}">
+						<p class="no-margin">
+							<a href="mailto:{user.email}">
+								<span class="icon-envelope"></span>
+								{user.email}
+							</a>
+						</p>
+					</f:if>
+
+				</div>
+				<div class="users__item__cats">
+					<f:for each="{user.categories}" as="category">
+						<f:link.action action="list" controller="User" arguments="{category: category}">
+							<span class="icon-checkmark"></span>
+							{category.title}
+						</f:link.action>
+					</f:for>
+				</div>
+				<div class="users__item__map">
+					<f:link.action class="button hollow small" action="show" arguments="{user: user}">Vollständiges
+						Profil
+						<span class="icon icon-chevron"></span>
+					</f:link.action>
+				</div>
+			</div>
+		</f:for>
+	</f:widget.paginate>
+</div>

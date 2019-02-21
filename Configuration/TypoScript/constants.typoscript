@@ -6,6 +6,9 @@ plugin {
 			partialRootPath =
 			layoutRootPath =
 		}
+		settings {
+			includeSubCategories = 0
+		}
 	}
 
 	tx_bwguild_offerlist {

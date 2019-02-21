@@ -18,6 +18,16 @@ plugin {
 
 			}
 		}
+
+		settings {
+			includeSubCategories = {$plugin.tx_bwguild.settings.includeSubCategories}
+		}
+	}
+
+	tx_bwguild_userlist {
+		settings {
+			includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
+		}
 	}
 
 	tx_bwguild_offerlist {

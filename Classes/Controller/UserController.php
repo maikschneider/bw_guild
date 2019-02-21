@@ -3,7 +3,10 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Service\AccessControlService;
+use Blueways\BwGuild\Utility\DemandUtility;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 
 /**
@@ -28,12 +31,38 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function initializeAction()
     {
         parent::initializeAction();
+
         $this->accessControlService = GeneralUtility::makeInstance(AccessControlService::class);
+        $this->mergeTyposcriptSettings();
     }
 
+    /**
+     * Merges the typoscript settings with the settings from flexform
+     */
+    private function mergeTyposcriptSettings()
+    {
+        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
+        try {
+            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $typoscript['plugin.']['tx_bwguild.']['settings.'], true, false, false);
+            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $this->settings, true, false, false);
+            $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
+        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
+        }
+    }
+
+    /**
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     */
     public function listAction()
     {
-        $users = $this->userRepository->findAll();
+        /** @var \Blueways\BwGuild\Domain\Model\Dto\UserDemand $demand */
+        $demandUtility = $this->objectManager->get(DemandUtility::class);
+        $demand = $demandUtility::createDemandObjectFromSettings($this->settings);
+
+        $users = $this->userRepository->findDemanded($demand);
 
         $this->view->assign('users', $users);
     }
