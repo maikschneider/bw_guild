@@ -60,14 +60,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\UserDemand $demand
-     */
-    public function filterAction($demand)
-    {
-        $request = $this->request->getArguments();
-    }
-
-    /**
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      */

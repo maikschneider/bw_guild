@@ -85,6 +85,7 @@ class DemandUtility
         foreach ($categories as $category) {
             if ($includeSubCategories) {
                 // @TODO see news extension
+                // need to find child categories and add them to the constraint
             }
             $categoryConstraints[] = $query->contains('categories', $category);
         }
