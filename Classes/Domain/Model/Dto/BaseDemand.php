@@ -2,8 +2,11 @@
 
 namespace Blueways\BwGuild\Domain\Model\Dto;
 
-class BaseDemand
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+class BaseDemand extends AbstractEntity
 {
+
     /**
      * @var array
      */
@@ -12,12 +15,12 @@ class BaseDemand
     /**
      * @var string
      */
-    protected $categoryConjunction;
+    protected $categoryConjunction = '';
 
     /**
-     * @var \Blueways\BwGuild\Domain\Model\Dto\Search
+     * @var string
      */
-    protected $search;
+    protected $search = '';
 
     /**
      * @var bool
@@ -73,19 +76,29 @@ class BaseDemand
     }
 
     /**
-     * @return \Blueways\BwGuild\Domain\Model\Dto\Search
+     * @return string
      */
-    public function getSearch(): \Blueways\BwGuild\Domain\Model\Dto\Search
+    public function getSearch(): string
     {
         return $this->search;
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\Search $search
+     * @param string $search
      */
-    public function setSearch(\Blueways\BwGuild\Domain\Model\Dto\Search $search): void
+    public function setSearch(string $search): void
     {
         $this->search = $search;
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
+     */
+    public function overrideDemand($demand)
+    {
+        foreach ($demand as $key => $value) {
+            $this->_setProperty($key, $value);
+        }
     }
 
 }

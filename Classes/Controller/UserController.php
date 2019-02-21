@@ -24,6 +24,12 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $userRepository;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
+     * @inject
+     */
+    protected $categoryRepository;
+
+    /**
      * @var \Blueways\BwGuild\Service\AccessControlService
      */
     protected $accessControlService;
@@ -54,7 +60,16 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\UserDemand $demand
+     */
+    public function filterAction($demand)
+    {
+        $request = $this->request->getArguments();
+    }
+
+    /**
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      */
     public function listAction()
     {
@@ -62,9 +77,17 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $demandUtility = $this->objectManager->get(DemandUtility::class);
         $demand = $demandUtility::createDemandObjectFromSettings($this->settings);
 
+        // override filter from form
+        if ($this->request->hasArgument('demand')) {
+            $demand->overrideDemand($this->request->getArgument('demand'));
+        }
+
         $users = $this->userRepository->findDemanded($demand);
+        $categories = $this->categoryRepository->findAll();
 
         $this->view->assign('users', $users);
+        $this->view->assign('demand', $demand);
+        $this->view->assign('categories', $categories);
     }
 
     /**

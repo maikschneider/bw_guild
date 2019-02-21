@@ -17,6 +17,12 @@ plugin {
 			showPid =
 		}
 	}
+
+	tx_bwguild_userlist {
+		settings {
+			includeSubCategories = 0
+		}
+	}
 }
 
 @import 'EXT:bw_guild/Configuration/TypoScript/Constants/ddev.typoscript'

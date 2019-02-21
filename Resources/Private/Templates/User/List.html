@@ -1,9 +1,17 @@
 <div class="filter">
 	<h3>Filter</h3>
-	<f:form action="list" controller="User" method="POST">
+	<f:form action="list" name="demand" controller="User" object="{demand}">
 		<label> Textsuche
-			<f:form.textfield name="search"/>
+			<f:form.textfield property="search"/>
 		</label> <label>Branchen</label>
+
+		<f:for each="{categories}" as="category" iteration="i">
+			<label>
+				<f:form.checkbox value="{category.uid}" property="categories.{i.index}"/>
+				{category.title} </label>
+		</f:for>
+
+
 
 		<button type="submit" class="button hollow small">
 			<span>Ansicht aktualisieren</span>
@@ -11,6 +19,8 @@
 		</button>
 	</f:form>
 </div>
+
+<f:debug>{_all}</f:debug>
 
 
 <div class="toggle__headline">

@@ -35,6 +35,7 @@ class DemandUtility
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function createConstraintsFromDemand(
