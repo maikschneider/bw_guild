@@ -8,6 +8,8 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class BaseDemand extends AbstractEntity
 {
 
+    CONST EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
+
     /**
      * @var array
      */
@@ -22,11 +24,6 @@ class BaseDemand extends AbstractEntity
      * @var string
      */
     protected $search = '';
-
-    /**
-     * @var string
-     */
-    protected $searchFields = '';
 
     /**
      * @var string
@@ -126,16 +123,6 @@ class BaseDemand extends AbstractEntity
         foreach ($demand as $key => $value) {
             $this->_setProperty($key, $value);
         }
-    }
-
-    public function getSearchFields()
-    {
-        $searchFields = GeneralUtility::trimExplode(',', $this->searchFields, true);
-        $excludeSearchFields = GeneralUtility::trimExplode(',', $this->excludeSearchFields, true);
-
-        $searchFields = array_diff($searchFields, $excludeSearchFields);
-
-        return $searchFields;
     }
 
 }

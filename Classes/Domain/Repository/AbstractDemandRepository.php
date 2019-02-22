@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
+use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -139,7 +140,7 @@ class AbstractDemandRepository extends Repository
         $searchConstraints = [];
 
         $searchSplitted = str_getcsv($demand->getSearch(), ' ');
-        $searchFields = $demand->getSearchFields();
+        $searchFields = $this->getObjectSearchFields($demand);
 
         foreach ($searchFields as $cleanProperty) {
 
@@ -201,5 +202,33 @@ class AbstractDemandRepository extends Repository
         $demand->setIncludeSubCategories($settings['includeSubCategories']);
 
         return $demand;
+    }
+
+    /**
+     * @param BaseDemand $demand
+     * @return array
+     */
+    private function getObjectSearchFields($demand)
+    {
+        // get and merge exclude fields
+        $excludeFields = GeneralUtility::trimExplode(',', $demand::EXCLUDE_FIELDS, true);
+        $excludeSearchFields = GeneralUtility::trimExplode(',', $demand->getExcludeSearchFields(), true);
+        $excludeSearchFields = array_merge($excludeSearchFields, $excludeFields);
+
+        // use reflection class to get all properties of object (e.g. User, Offer,..)
+        $reflectionClass = $this->objectManager->get(ReflectionClass::class, $this->objectType);
+        $searchFields = $reflectionClass->getProperties();
+
+        // map ReflectionProperty to normal array
+        $searchFields = array_map(function($field) {
+            return $field->name;
+        }, $searchFields);
+
+        // remove all fields that are excluded by constant or exclude property
+        $searchFields = array_filter($searchFields, function ($obj) use ($excludeSearchFields) {
+            return !in_array($obj, $excludeSearchFields);
+        });
+
+        return $searchFields;
     }
 }
