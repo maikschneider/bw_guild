@@ -186,7 +186,7 @@ class AbstractDemandRepository extends Repository
      * @param string $class
      * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand|mixed
      */
-    protected function createDemandObjectFromSettings(
+    public function createDemandObjectFromSettings(
         $settings,
         $class = 'Blueways\\BwGuild\\Domain\\Model\\Dto\\BaseDemand'
     ) {
