@@ -197,7 +197,7 @@ class AbstractDemandRepository extends Repository
         $demand = $this->objectManager->get($class);
 
         $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
-        $demand->setCategoryConjunction($settings['categoryConjunction']);
+        $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
         $demand->setIncludeSubCategories($settings['includeSubCategories']);
 
         return $demand;
