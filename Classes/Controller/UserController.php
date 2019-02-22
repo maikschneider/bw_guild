@@ -65,9 +65,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function listAction()
     {
-        /** @var \Blueways\BwGuild\Domain\Model\Dto\UserDemand $demand */
-        $demandUtility = $this->objectManager->get(DemandUtility::class);
-        $demand = $demandUtility::createDemandObjectFromSettings($this->settings);
+        $demand = $this->userRepository->createDemandObjectFromSettings($this->settings);
 
         // override filter from form
         if ($this->request->hasArgument('demand')) {
