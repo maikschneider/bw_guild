@@ -175,6 +175,8 @@ class AbstractDemandRepository extends Repository
     }
 
     /**
+     * Get property fields of associated repository object
+     *
      * @param BaseDemand $demand
      * @return array
      */
@@ -189,7 +191,7 @@ class AbstractDemandRepository extends Repository
         $reflectionClass = $this->objectManager->get(ReflectionClass::class, $this->objectType);
         $searchFields = $reflectionClass->getProperties();
 
-        // map ReflectionProperty to normal array
+        // map name of ReflectionProperty to array
         $searchFields = array_map(function ($field) {
             return $field->name;
         }, $searchFields);
@@ -200,6 +202,43 @@ class AbstractDemandRepository extends Repository
         });
 
         return $searchFields;
+    }
+
+    /**
+     * Create order constraints
+     *
+     * @TODO: use order field to hold comma separated list of order fields
+     * @TODO: create new flexform setting for asc/desc
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return array
+     */
+    protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
+    {
+        // default ordering displays newest entry first
+        $orderings = [];
+
+        if (!$demand->getOrder() || $demand->getOrder() === '') {
+            $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
+        }
+
+        return $orderings;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return int|null
+     */
+    protected function createLimitFromDemand(QueryInterface $query, BaseDemand $demand)
+    {
+        $limit = null;
+
+        if ($demand->getLimit() && $demand->getLimit() !== '' && (int)$demand->getLimit() > 0) {
+            $limit = (int)$demand->getLimit();
+        }
+
+        return $limit;
     }
 
     /**
@@ -251,43 +290,5 @@ class AbstractDemandRepository extends Repository
         $demand->setOrder($settings['order'] ?? '');
 
         return $demand;
-    }
-
-    /**
-     * Create order constraints
-     *
-     * @TODO: use order field to hold comma separated list of order fields
-     * @TODO: create new flexform setting for asc/desc
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return array
-     */
-    protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
-    {
-        // default ordering displays newest entry first
-        $orderings = [];
-
-        if(!$demand->getOrder() || $demand->getOrder() === '') {
-            $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
-        }
-
-        return $orderings;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return int|null
-     */
-    protected function createLimitFromDemand(QueryInterface $query, BaseDemand $demand)
-    {
-        $limit = null;
-
-        if($demand->getLimit() && $demand->getLimit() !== '' && (int)$demand->getLimit() > 0) {
-            $limit = (int)$demand->getLimit();
-        }
-
-        return $limit;
     }
 }
