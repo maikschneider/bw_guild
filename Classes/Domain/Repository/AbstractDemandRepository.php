@@ -5,7 +5,6 @@ namespace Blueways\BwGuild\Domain\Repository;
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrderingInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -229,6 +228,8 @@ class AbstractDemandRepository extends Repository
     }
 
     /**
+     * Create Demand by settings array (see typoscript constants)
+     *
      * @param $settings
      * @param string $class
      * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand|mixed
@@ -237,7 +238,7 @@ class AbstractDemandRepository extends Repository
         $settings,
         $class = 'Blueways\\BwGuild\\Domain\\Model\\Dto\\BaseDemand'
     ) {
-        // @TODO check if this demandClass setting in typoscript makes sense
+        // @TODO: check if this typoscript demandClass setting makes sense
         $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
 
         /** @var \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand */
@@ -253,6 +254,11 @@ class AbstractDemandRepository extends Repository
     }
 
     /**
+     * Create order constraints
+     *
+     * @TODO: use order field to hold comma separated list of order fields
+     * @TODO: create new flexform setting for asc/desc
+     *
      * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return array
