@@ -36,9 +36,11 @@ class OfferController extends ActionController
      */
     public function listAction()
     {
+        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, 'Blueways\BwGuild\Domain\Model\Dto\OfferDemand');
+
         $repository =  $this->objectManager->get($this->settings['record_type']);
 
-        $offers = $repository->findAll();
+        $offers = $repository->findDemanded($demand);
 
         $this->view->assign('offers', $offers);
     }

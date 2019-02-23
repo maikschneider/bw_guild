@@ -106,10 +106,6 @@
 				<source>Show PID</source>
 				<target>Detailseite</target>
 			</trans-unit>
-			<trans-unit id="offerlist.maxItems">
-				<source>Max items</source>
-				<target>Maximale Anzahl</target>
-			</trans-unit>
 			<trans-unit id="offerlist.record_type">
 				<source>Record type</source>
 				<target>Art der Datensätze</target>
@@ -137,6 +133,18 @@
 			<trans-unit id="offerlist.userPid">
 				<source>User show PID</source>
 				<target>Benutzer Detailseite</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.limit">
+				<source>Limit (max items)</source>
+				<target>Limit (maximale Einträge)</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.order">
+				<source>Order</source>
+				<target>Reihenfolge</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.order.default">
+				<source>Default (Newest first)</source>
+				<target>Standard (Neuste zuerst)</target>
 			</trans-unit>
 		</body>
 	</file>

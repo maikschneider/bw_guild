@@ -117,10 +117,10 @@
 							</config>
 						</TCEforms>
 					</settings.userPid>
-					<settings.maxItems>
+					<settings.limit>
 						<TCEforms>
 							<label>
-								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.maxItems
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.limit
 							</label>
 							<config>
 								<type>input</type>
@@ -129,7 +129,25 @@
 								<eval>trim,int</eval>
 							</config>
 						</TCEforms>
-					</settings.maxItems>
+					</settings.limit>
+					<settings.order>
+						<TCEforms>
+							<label>
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.order
+							</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.order.default
+										</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.order>
 					<persistence.storagePid>
 						<TCEforms>
 							<label>

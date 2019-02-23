@@ -5,6 +5,7 @@ namespace Blueways\BwGuild\Domain\Repository;
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrderingInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -20,12 +21,18 @@ class AbstractDemandRepository extends Repository
     {
         $query = $this->createQuery();
 
+        // filter constraints
         $constraints = $this->createConstraintsFromDemand($query, $demand);
-
         if (!empty($constraints)) {
             $query->matching(
                 $query->logicalAnd($constraints)
             );
+        }
+
+        // orderings
+        $orderings = $this->createOrderingsFromDemand($query, $demand);
+        if ($orderings) {
+            $query->setOrderings($orderings);
         }
 
         return $query->execute();
@@ -163,6 +170,34 @@ class AbstractDemandRepository extends Repository
     }
 
     /**
+     * @param BaseDemand $demand
+     * @return array
+     */
+    private function getObjectSearchFields($demand)
+    {
+        // get and merge exclude fields
+        $excludeFields = GeneralUtility::trimExplode(',', $demand::EXCLUDE_FIELDS, true);
+        $excludeSearchFields = GeneralUtility::trimExplode(',', $demand->getExcludeSearchFields(), true);
+        $excludeSearchFields = array_merge($excludeSearchFields, $excludeFields);
+
+        // use reflection class to get all properties of object (e.g. User, Offer,..)
+        $reflectionClass = $this->objectManager->get(ReflectionClass::class, $this->objectType);
+        $searchFields = $reflectionClass->getProperties();
+
+        // map ReflectionProperty to normal array
+        $searchFields = array_map(function ($field) {
+            return $field->name;
+        }, $searchFields);
+
+        // remove all fields that are excluded by constant or exclude property
+        $searchFields = array_filter($searchFields, function ($obj) use ($excludeSearchFields) {
+            return !in_array($obj, $excludeSearchFields);
+        });
+
+        return $searchFields;
+    }
+
+    /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return int
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
@@ -199,36 +234,22 @@ class AbstractDemandRepository extends Repository
 
         $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
-        $demand->setIncludeSubCategories($settings['includeSubCategories']);
+        $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
+        $demand->setLimit($settings['limit'] ?? -1);
+        $demand->setOrder($settings['order'] ?? '');
 
         return $demand;
     }
 
-    /**
-     * @param BaseDemand $demand
-     * @return array
-     */
-    private function getObjectSearchFields($demand)
+    protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
     {
-        // get and merge exclude fields
-        $excludeFields = GeneralUtility::trimExplode(',', $demand::EXCLUDE_FIELDS, true);
-        $excludeSearchFields = GeneralUtility::trimExplode(',', $demand->getExcludeSearchFields(), true);
-        $excludeSearchFields = array_merge($excludeSearchFields, $excludeFields);
+        // default ordering displays newest entry first
+        $orderings = [];
 
-        // use reflection class to get all properties of object (e.g. User, Offer,..)
-        $reflectionClass = $this->objectManager->get(ReflectionClass::class, $this->objectType);
-        $searchFields = $reflectionClass->getProperties();
+        if(!$demand->getOrder() || $demand->getOrder() === '') {
+            $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
+        }
 
-        // map ReflectionProperty to normal array
-        $searchFields = array_map(function($field) {
-            return $field->name;
-        }, $searchFields);
-
-        // remove all fields that are excluded by constant or exclude property
-        $searchFields = array_filter($searchFields, function ($obj) use ($excludeSearchFields) {
-            return !in_array($obj, $excludeSearchFields);
-        });
-
-        return $searchFields;
+        return $orderings;
     }
 }

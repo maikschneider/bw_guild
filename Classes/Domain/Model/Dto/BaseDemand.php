@@ -36,6 +36,48 @@ class BaseDemand extends AbstractEntity
     protected $includeSubCategories = false;
 
     /**
+     * @var string
+     */
+    protected $order;
+
+    /**
+     * @return string
+     */
+    public function getOrder(): string
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $order
+     */
+    public function setOrder(string $order): void
+    {
+        $this->order = $order;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit(): int
+    {
+        return $this->limit;
+    }
+
+    /**
+     * @param int $limit
+     */
+    public function setLimit(int $limit): void
+    {
+        $this->limit = $limit;
+    }
+
+    /**
+     * @var int
+     */
+    protected $limit;
+
+    /**
      * @return string
      */
     public function getExcludeSearchFields(): string

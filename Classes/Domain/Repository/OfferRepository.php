@@ -2,14 +2,12 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
-
 /**
  * Class OfferRepository
  *
  * @package Blueways\BwGuild\Domain\Repository
  */
-class OfferRepository extends Repository
+class OfferRepository extends AbstractDemandRepository
 {
 
     public function getGroupedOffers()

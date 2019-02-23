@@ -127,6 +127,15 @@
 			<trans-unit id="flexforms_general.categoryConjunction.notand">
 				<source>Do NOT show items with selected categories (AND)</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.limit">
+				<source>Limit (max items)</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.order">
+				<source>Order</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.order.default">
+				<source>Default (Newest first)</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
