@@ -35,6 +35,12 @@ class AbstractDemandRepository extends Repository
             $query->setOrderings($orderings);
         }
 
+        // limit
+        $limit = $this->createLimitFromDemand($query, $demand);
+        if ($limit != null) {
+            $query->setLimit($limit);
+        }
+
         return $query->execute();
     }
 
@@ -206,12 +212,17 @@ class AbstractDemandRepository extends Repository
     {
         $query = $this->createQuery();
 
+        // filter constraints
         $constraints = $this->createConstraintsFromDemand($query, $demand);
-
         if (!empty($constraints)) {
             $query->matching(
                 $query->logicalAnd($constraints)
             );
+        }
+
+        // limit
+        if ($demand->getLimit() != null) {
+            $query->setLimit((int)$demand->getLimit());
         }
 
         return $query->count();
@@ -241,6 +252,11 @@ class AbstractDemandRepository extends Repository
         return $demand;
     }
 
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return array
+     */
     protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
     {
         // default ordering displays newest entry first
@@ -251,5 +267,21 @@ class AbstractDemandRepository extends Repository
         }
 
         return $orderings;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return int|null
+     */
+    protected function createLimitFromDemand(QueryInterface $query, BaseDemand $demand)
+    {
+        $limit = null;
+
+        if($demand->getLimit() && $demand->getLimit() !== '' && (int)$demand->getLimit() > 0) {
+            $limit = (int)$demand->getLimit();
+        }
+
+        return $limit;
     }
 }
