@@ -2,6 +2,9 @@
 
 	plugin.tx_bwguild {
 		persistence.storagePid = 2
+		settings {
+			googleApiKey = AIzaSyBt91UA0Np4_-bvchL6vgo1qRV3V1aA4kk
+		}
 	}
 
 [GLOBAL]

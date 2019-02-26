@@ -6,7 +6,9 @@ CREATE TABLE fe_users (
 
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
-	categories int(11) DEFAULT 0 NOT NULL
+	categories int(11) DEFAULT 0 NOT NULL,
+	latitude decimal(10, 8) DEFAULT 0 NOT NULL,
+	longitude decimal(11, 8) DEFAULT 0 NOT NULL
 );
 
 CREATE TABLE tx_bwguild_domain_model_offer (
@@ -32,8 +34,8 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	country varchar(255) DEFAULT '' NOT NULL,
 	description mediumtext,
 	start_date varchar(255) DEFAULT '' NOT NULL,
-	geo_lat decimal(10, 8) DEFAULT 0 NOT NULL,
-	geo_long decimal(11, 8) DEFAULT 0 NOT NULL,
+	latitude decimal(10, 8) DEFAULT 0 NOT NULL,
+	longitude decimal(11, 8) DEFAULT 0 NOT NULL,
 	fe_user int(11) DEFAULT 0 NOT NULL,
 	conditions mediumtext,
 	possibilities mediumtext,
