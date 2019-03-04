@@ -45,12 +45,28 @@ call_user_func(function () {
                 'foreign_table' => 'tx_bwguild_domain_model_offer',
                 'foreign_field' => 'fe_user'
             ]
-        ]
+        ],
+        'latitude' => [
+            'exclude' => false,
+            'label' => 'LAT',
+            'config' => [
+                'type' => 'passthrough',
+            ],
+        ],
+        'longitude' => [
+            'exclude' => false,
+            'label' => 'LONG',
+            'config' => [
+                'type' => 'passthrough'
+            ],
+        ],
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'mobile', '', 'after:telephone');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'member_nr', '', 'before:company');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'latitude', '', 'before:company');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'longitude', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '', 'after:description');
 
     $GLOBALS['TCA']['fe_users']['ctrl']['label'] = 'company';
