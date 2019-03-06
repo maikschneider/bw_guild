@@ -41,7 +41,7 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var string
      */
-    protected $start_date = '';
+    protected $startDate = '';
 
     /**
      * @var \Blueways\BwGuild\Domain\Model\User
@@ -246,15 +246,15 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getStartDate(): string
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
     /**
-     * @param string $start_date
+     * @param string $startDate
      */
-    public function setStartDate(string $start_date): void
+    public function setStartDate(string $startDate): void
     {
-        $this->start_date = $start_date;
+        $this->startDate = $startDate;
     }
 
     /**
