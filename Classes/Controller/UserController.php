@@ -24,7 +24,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $userRepository;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
+     * @var \Blueways\BwGuild\Domain\Repository\CategoryRepository
      * @inject
      */
     protected $categoryRepository;
@@ -91,6 +91,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function editAction()
     {
@@ -99,8 +100,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $user = $this->userRepository->findByUid($this->accessControlService->getFrontendUserUid());
+        $categories = $this->categoryRepository->findFromUidList($this->settings['categories']);
 
         $this->view->assign('user', $user);
+        $this->view->assign('categories', $categories);
     }
 
     /**

@@ -1,4 +1,4 @@
-<f:flashMessages />
+<f:flashMessages/>
 
 <f:form controller="User" action="update" object="{user}" name="user" method="POST">
 
@@ -29,6 +29,14 @@
 			<f:form.textfield property="email"/>
 		</label>
 	</div>
+	<f:if condition="{categories}">
+		<label>Branchen</label>
+		<f:for each="{categories}" as="category" iteration="i">
+			<label for="category{category.uid}">
+				<f:form.checkbox property="categories" id="category{category.uid}" value="{category.uid}"/>
+				{category.title} </label>
+		</f:for>
+	</f:if>
 	<div class="form__item form__item--submit">
 		<button type="submit" class="button hollow">
 			<span class="icon-save"></span>

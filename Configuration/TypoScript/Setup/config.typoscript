@@ -7,6 +7,10 @@ config {
 		}
 
 		persistence.classes {
+			Blueways\BwGuild\Domain\Model\Category {
+				mapping.tableName = sys_category
+			}
+
 			Blueways\BwGuild\Domain\Model\User {
 				mapping.tableName = fe_users
 			}
