@@ -1,0 +1,34 @@
+<h4>Edit offer</h4>
+
+<f:flashMessages/>
+
+<f:form object="{offer}" action="{action}" controller="Offer" name="offer" method="POST">
+	<f:form.hidden property="feUser" value="{offer.feUser}" />
+
+
+	<div class="form__item">
+		<label> Type
+			<f:form.select property="recordType">
+				<f:form.select.option value="0">Job</f:form.select.option>
+				<f:form.select.option value="1">Education</f:form.select.option>
+				<f:form.select.option value="2">Intership</f:form.select.option>
+			</f:form.select>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Title
+			<f:form.textfield property="title"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Description
+			<f:form.textarea property="description"/>
+		</label>
+	</div>
+	<div class="form__item form__item--submit">
+		<button type="submit" class="button hollow">
+			<span class="icon-save"></span>
+			Speichern
+		</button>
+	</div>
+</f:form>

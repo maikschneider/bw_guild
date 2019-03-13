@@ -1,0 +1,18 @@
+<h2>Offers</h2>
+
+<f:flashMessages/>
+
+<f:link.action action="new" controller="Offer">+ Create new offer</f:link.action>
+
+<f:if condition="{offers}">
+	<h3>Edit offers</h3>
+	<ul>
+		<f:for each="{offers}" as="offer">
+			<li><f:link.action action="edit" controller="Offer" arguments="{offer: offer}">{offer.title}</f:link.action></li>
+		</f:for>
+	</ul>
+</f:if>
+
+<f:if condition="{offer}">
+	<f:render partial="Offer/Form" arguments="{offer: offer, action: 'update'}"/>
+</f:if>

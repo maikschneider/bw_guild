@@ -4,14 +4,14 @@ namespace Blueways\BwGuild\Domain\Model;
 
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
 
     /**
      * @var string
      * @validate NotEmpty
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * @var string
@@ -82,7 +82,7 @@ abstract class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var integer
      */
-    protected $recordType;
+    protected $recordType = 0;
 
     /**
      * @var boolean

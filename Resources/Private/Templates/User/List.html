@@ -19,9 +19,6 @@
 	</f:form>
 </div>
 
-<f:debug>{_all}</f:debug>
-
-
 <div class="toggle__headline">
 	<h1 class="h2">{users->f:count()} Betriebe</h1>
 	<div class="toggle__wrap">
@@ -50,7 +47,7 @@
 		<f:for each="{pagedUsers}" as="user">
 			<div class="users__item">
 				<div class="users__item__main">
-					<h3>{user.company}</h3>
+					<f:link.action action="show" controller="User" arguments="{user: user}"><h3>{user.company}</h3></f:link.action>
 					<p>{user.address}<br/> {user.zip} {user.city}</p>
 
 					<f:if condition="{user.telephone}">
