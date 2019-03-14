@@ -106,6 +106,10 @@
 				<source>Show PID</source>
 				<target>Detailseite</target>
 			</trans-unit>
+			<trans-unit id="offerlist.editPid">
+				<source>Edit PID</source>
+				<target>Bearbeitenseite</target>
+			</trans-unit>
 			<trans-unit id="offerlist.record_type">
 				<source>Record type</source>
 				<target>Art der Datensätze</target>

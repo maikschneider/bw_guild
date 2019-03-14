@@ -1,3 +1,4 @@
+{namespace bw=Blueways\BwGuild\ViewHelpers}
 <div class="orders__item card card__content">
 	<h3>{offer.title}</h3>
 	<p>
@@ -5,4 +6,9 @@
 	</p>
 
 	<f:link.action pageUid="{showPid}" action="show" controller="Offer" arguments="{offer: offer}">Show offer</f:link.action>
+	<f:if condition="{bw:isEditable(offer: offer)}">
+		<f:link.action pageUid="{showPid}" action="edit" controller="Offer" arguments="{offer: offer}">Edit offer
+		</f:link.action>
+	</f:if>
+
 </div>

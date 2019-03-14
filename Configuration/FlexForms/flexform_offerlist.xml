@@ -170,6 +170,22 @@
 							</config>
 						</TCEforms>
 					</settings.showPid>
+					<settings.editPid>
+						<TCEforms>
+							<label>
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.editPid
+							</label>
+							<config>
+								<type>group</type>
+								<internal_type>db</internal_type>
+								<allowed>pages</allowed>
+								<size>1</size>
+								<maxitems>1</maxitems>
+								<minitems>0</minitems>
+								<show_thumbs>1</show_thumbs>
+							</config>
+						</TCEforms>
+					</settings.editPid>
 					<settings.userPid>
 						<TCEforms>
 							<label>

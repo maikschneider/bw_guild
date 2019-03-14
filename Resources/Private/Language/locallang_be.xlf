@@ -81,6 +81,9 @@
 			<trans-unit id="offerlist.showPid">
 				<source>Show PID</source>
 			</trans-unit>
+			<trans-unit id="offerlist.editPid">
+				<source>Edit PID</source>
+			</trans-unit>
 			<trans-unit id="offerlist.maxItems">
 				<source>Max items</source>
 			</trans-unit>
