@@ -3,12 +3,15 @@
 	<h3>{offer.title}</h3>
 	<p>
 		<f:format.crop maxCharacters="10">{offer.description->f:format.stripTags()}</f:format.crop>
-	</p>
 
+	<br />
 	<f:link.action pageUid="{showPid}" action="show" controller="Offer" arguments="{offer: offer}">Show offer</f:link.action>
-	<f:if condition="{bw:isEditable(offer: offer)}">
-		<f:link.action pageUid="{showPid}" action="edit" controller="Offer" arguments="{offer: offer}">Edit offer
+	<f:if condition="{bw:isEditable(offer: offer)} && {settings.editPid}}">
+		<br /><f:link.action pageUid="{settings.editPid}" action="edit" controller="Offer" arguments="{offer: offer}">Edit offer
+		</f:link.action>
+		<br /><f:link.action pageUid="{settings.editPid}" action="delete" controller="Offer" arguments="{offer: offer}">Delete offer
 		</f:link.action>
 	</f:if>
 
+	</p>
 </div>

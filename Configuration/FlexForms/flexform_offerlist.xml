@@ -32,7 +32,7 @@
 											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.mode.edit
 										</numIndex>
 										<numIndex index="1">
-											Offer->edit;Offer->update;Offer->new
+											Offer->edit;Offer->update;Offer->new;Offer->delete
 										</numIndex>
 									</numIndex>
 									<numIndex index="2" type="array">

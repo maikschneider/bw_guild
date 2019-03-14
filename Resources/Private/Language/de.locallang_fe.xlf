@@ -14,6 +14,15 @@
 				<source>Your data has been successfully updated.</source>
 				<target>Ihre Daten wurden erfolgreich gespeichert.</target>
 			</trans-unit>
+
+			<trans-unit id="offer.delete.success.title">
+				<source>Delete success</source>
+				<target>Löschen erfolgreich</target>
+			</trans-unit>
+			<trans-unit id="offer.delete.success.message">
+				<source>Your data has been successfully deleted.</source>
+				<source>Ihre Daten wurden erfolgreich gelöscht.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

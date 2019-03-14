@@ -17,7 +17,7 @@ defined('TYPO3_MODE') || die();
     'Blueways.BwGuild',
     'Offerlist',
     [
-        'Offer' => 'list, show, edit, update, new',
+        'Offer' => 'list, show, edit, update, new, delete',
     ],
     // non-cacheable actions
     [

@@ -110,6 +110,29 @@ class OfferController extends ActionController
         $this->redirect('edit');
     }
 
+    public function deleteAction(Offer $offer)
+    {
+        if (!$this->accessControlService->hasLoggedInFrontendUser()) {
+            $this->throwStatus(403, 'Not logged in');
+        }
+
+        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        $user = $this->userRepository->findByUid($this->accessControlService->getFrontendUserUid());
+
+        if ($offer && $offer->getFeUser()->getUid() !== $user->getUid()) {
+            $this->throwStatus(403, 'Not allowed to delete this offer');
+        }
+
+        $this->offerRepository->remove($offer);
+
+        $this->addFlashMessage(
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.message'),
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.title'),
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+
+        $this->redirect('edit');
+    }
+
     /**
      * @return \TYPO3\CMS\Lang\LanguageService
      */

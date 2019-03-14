@@ -12,6 +12,13 @@
 			<trans-unit id="user.update.success.message">
 				<source>Your data has been successfully updated.</source>
 			</trans-unit>
+
+			<trans-unit id="offer.delete.success.title">
+				<source>Delete success</source>
+			</trans-unit>
+			<trans-unit id="offer.delete.success.message">
+				<source>Your data has been successfully deleted.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
