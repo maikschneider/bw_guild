@@ -60,6 +60,27 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $contactMail = '';
 
     /**
+     * @return string
+     */
+    public function getContactPhone(): string
+    {
+        return $this->contactPhone;
+    }
+
+    /**
+     * @param string $contactPhone
+     */
+    public function setContactPhone(string $contactPhone): void
+    {
+        $this->contactPhone = $contactPhone;
+    }
+
+    /**
+     * @var string 
+     */
+    protected $contactPhone = '';
+
+    /**
      * @var float
      */
     protected $geo_lat;

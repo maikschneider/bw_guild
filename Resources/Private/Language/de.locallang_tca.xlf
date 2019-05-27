@@ -74,6 +74,9 @@
 				<source>Contact mail</source>
 				<target>Kontaktmail</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.contact_phone">
+				<source>Kontakt Telefon</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

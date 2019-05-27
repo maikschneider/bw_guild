@@ -41,6 +41,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	possibilities mediumtext,
 	contact_person varchar(255) DEFAULT '' NOT NULL,
 	contact_mail varchar(255) DEFAULT '' NOT NULL,
+	contact_phone varchar(255) DEFAULT '' NOT NULL,
 	categories int(11) DEFAULT 0 NOT NULL,
 
 	PRIMARY KEY (uid),
