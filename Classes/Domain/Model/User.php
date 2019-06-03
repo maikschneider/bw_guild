@@ -14,9 +14,52 @@ class User extends FrontendUser
 {
 
     /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+    /**
      * @var string
      */
     protected $shortName = '';
+
+    /**
+     * @var string
+     * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 3, "maximum": 50})
+     */
+    protected $password = '';
+
+    /**
+     * @return string
+     */
+    public function getPasswordRepeat(): string
+    {
+        return $this->passwordRepeat;
+    }
+
+    /**
+     * @param string $passwordRepeat
+     */
+    public function setPasswordRepeat(string $passwordRepeat): void
+    {
+        $this->passwordRepeat = $passwordRepeat;
+    }
+
+    /**
+     * @var string
+     * @validate
+     */
+    protected $passwordRepeat = '';
 
     /**
      * @var string

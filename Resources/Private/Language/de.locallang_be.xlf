@@ -62,6 +62,10 @@
 				<source>Edit user</source>
 				<target>Benutzer bearbeiten</target>
 			</trans-unit>
+			<trans-unit id="userlist.mode.new">
+				<source>Create user</source>
+				<target>Benutzer Registrierung</target>
+			</trans-unit>
 			<trans-unit id="userlist.storagePid">
 				<source>Storage PID</source>
 				<target>Datensatz Ordner</target>

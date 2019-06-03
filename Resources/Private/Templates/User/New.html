@@ -1,0 +1,81 @@
+<f:flashMessages/>
+
+<f:form controller="User" action="create" object="{user}" name="user" method="POST">
+
+	<f:form.validationResults>
+		<f:if condition="{validationResults.flattenedErrors}">
+			<ul class="errors">
+				<f:for each="{validationResults.flattenedErrors}" as="errors" key="propertyPath">
+					<li>{propertyPath}
+						<ul>
+							<f:for each="{errors}" as="error">
+								<li>{error}</li>
+							</f:for>
+						</ul>
+					</li>
+				</f:for>
+			</ul>
+		</f:if>
+	</f:form.validationResults>
+
+	<div class="form__item">
+		<label> Username
+			<f:form.textfield property="username"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Password
+			<f:form.textfield property="password"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Password wiederholen
+			<f:form.textfield property="passwordRepeat"/>
+		</label>
+	</div>
+
+	<hr />
+
+	<div class="form__item">
+		<label> Firmenname
+			<f:form.textfield property="company"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Anschrift
+			<f:form.textfield property="address"/>
+		</label>
+	</div>
+	<div class="form__item form__item--2">
+		<label> PLZ
+			<f:form.textfield property="zip"/>
+		</label> <label> Stadt
+		<f:form.textfield property="city"/>
+	</label>
+	</div>
+	<div class="form__item">
+		<label> Telefon
+			<f:form.textfield property="telephone"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Email
+			<f:form.textfield property="email"/>
+		</label>
+	</div>
+	<f:if condition="{categories}">
+		<label>Branchen</label>
+		<f:for each="{categories}" as="category" iteration="i">
+			<label for="category{category.uid}">
+				<f:form.checkbox property="categories" id="category{category.uid}" value="{category.uid}"/>
+				{category.title} </label>
+		</f:for>
+	</f:if>
+	<div class="form__item form__item--submit">
+		<button type="submit" class="button hollow">
+			<span class="icon-save"></span>
+			Speichern
+		</button>
+	</div>
+
+</f:form>

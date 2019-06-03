@@ -12,6 +12,24 @@
 			<trans-unit id="user.update.success.message">
 				<source>Your data has been successfully updated.</source>
 			</trans-unit>
+			<trans-unit id="user.create.loggedin.title">
+				<source>Registration not possible</source>
+			</trans-unit>
+			<trans-unit id="user.create.loggedin.message">
+				<source>You are already logged in and cannot create a new user.</source>
+			</trans-unit>
+			<trans-unit id="user.create.exists.title">
+				<source>Registration error</source>
+			</trans-unit>
+			<trans-unit id="user.create.exists.message">
+				<source>The user you are trying to create already exists</source>
+			</trans-unit>
+			<trans-unit id="user.create.success.title">
+				<source>Registration complete</source>
+			</trans-unit>
+			<trans-unit id="user.create.success.message">
+				<source>You user has been successfully created.</source>
+			</trans-unit>
 
 			<trans-unit id="offer.delete.success.title">
 				<source>Delete success</source>

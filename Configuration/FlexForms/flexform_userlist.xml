@@ -35,6 +35,14 @@
 											User->edit;User->update
 										</numIndex>
 									</numIndex>
+									<numIndex index="2">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.mode.new
+										</numIndex>
+										<numIndex index="1">
+											User->new;User->create
+										</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>

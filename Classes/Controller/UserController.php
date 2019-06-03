@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Service\AccessControlService;
 use Blueways\BwGuild\Utility\DemandUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -136,6 +137,75 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected function getLanguageService()
     {
         return $GLOBALS['LANG'];
+    }
+
+    /**
+     * @param User $user
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
+     */
+    public function newAction(User $user = null)
+    {
+        if (!$user) {
+            $user = new User();
+        }
+        $this->view->assign('user', $user);
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\User $user
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\PasswordRepeatValidator", param="user")
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\CustomUsernameValidator", param="user")
+     */
+    public function createAction($user)
+    {
+        if ($this->accessControlService->hasLoggedInFrontendUser()) {
+            $this->addFlashMessage(
+                $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.message'),
+                $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.title'),
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+            $this->redirect('new');
+        }
+
+        if ($user->getUid()) {
+            $this->addFlashMessage(
+                $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.message'),
+                $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.title'),
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+            $this->redirect('new');
+        }
+
+        if ($this->settings['useEmailAsUsername'] === "1") {
+            $user->setUsername($user->getEmail());
+        }
+
+        $user->setPassword($this->encryptPassword($user->getPassword()));
+
+        $this->userRepository->add($user);
+
+        $this->addFlashMessage(
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.message'),
+            $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.title'),
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+
+        $this->view->assign('user', $user);
+    }
+
+    /**
+     * @param string $password
+     * @return string
+     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
+     */
+    private function encryptPassword(string $password): string
+    {
+        /** @var \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory $passwordHashFactory */
+        $passwordHashFactory = $this->objectManager->get(
+            \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class
+        );
+        $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
+        return $passwordHash->getHashedPassword($password);
     }
 
 }

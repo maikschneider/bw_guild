@@ -48,6 +48,9 @@
 			<trans-unit id="userlist.mode.edit">
 				<source>Edit user</source>
 			</trans-unit>
+			<trans-unit id="userlist.mode.new">
+				<source>Create user</source>
+			</trans-unit>
 			<trans-unit id="userlist.storagePid">
 				<source>Storage PID</source>
 			</trans-unit>
