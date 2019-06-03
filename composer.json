@@ -9,7 +9,6 @@
   "keywords": [
     "TYPO3 CMS"
   ],
-  "version": "1.0.0",
   "require-dev": {
     "typo3/cms-base-distribution": "^9.0",
     "blueways/bw-email": "^1.0",
