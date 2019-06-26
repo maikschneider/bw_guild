@@ -73,8 +73,18 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $demand->overrideDemand($this->request->getArgument('demand'));
         }
 
+        // find user by demand
         $users = $this->userRepository->findDemanded($demand);
-        $categories = $this->categoryRepository->findAll();
+
+        // get categories by category settings in plugin
+        $catConjunction = $this->settings['categoryConjunction'];
+        if ($catConjunction === 'or' || $catConjunction === 'and') {
+            $categories = $this->categoryRepository->findFromUidList($this->settings['categories']);
+        } elseif ($catConjunction === 'notor' || $catConjunction === 'notand') {
+            $categories = $this->categoryRepository->findFromUidListNot($this->settings['categories']);
+        } else {
+            $categories = $this->categoryRepository->findAll();
+        }
 
         $this->view->assign('users', $users);
         $this->view->assign('demand', $demand);
