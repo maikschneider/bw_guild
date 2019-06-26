@@ -222,7 +222,7 @@ return [
                 'foreign_table_field' => 'offers',
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => 'int',
+                'eval' => 'int,required',
                 'default' => 0,
                 'suggestOptions' => [
                     'fe_users' => [
