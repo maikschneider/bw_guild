@@ -14,21 +14,6 @@ class User extends FrontendUser
 {
 
     /**
-     * @return string
-     */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-    /**
      * @var string
      */
     protected $shortName = '';
@@ -38,22 +23,6 @@ class User extends FrontendUser
      * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 3, "maximum": 50})
      */
     protected $password = '';
-
-    /**
-     * @return string
-     */
-    public function getPasswordRepeat(): string
-    {
-        return $this->passwordRepeat;
-    }
-
-    /**
-     * @param string $passwordRepeat
-     */
-    public function setPasswordRepeat(string $passwordRepeat): void
-    {
-        $this->passwordRepeat = $passwordRepeat;
-    }
 
     /**
      * @var string
@@ -99,6 +68,47 @@ class User extends FrontendUser
      */
     protected $sharedOffers;
 
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+
+        $this->categories = new ObjectStorage();
+        $this->offers = new ObjectStorage();
+        $this->sharedOffers = new ObjectStorage();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordRepeat(): string
+    {
+        return $this->passwordRepeat;
+    }
+
+    /**
+     * @param string $passwordRepeat
+     */
+    public function setPasswordRepeat(string $passwordRepeat): void
+    {
+        $this->passwordRepeat = $passwordRepeat;
+    }
+
     /**
      * @return float
      */
@@ -108,19 +118,19 @@ class User extends FrontendUser
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @param float $latitude
      */
-    public function getSharedOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function setLatitude(float $latitude): void
     {
-        return $this->sharedOffers;
+        $this->latitude = $latitude;
     }
 
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
      */
-    public function getAllOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getSharedOffers()
     {
-        return $this->offers ? $this->offers->addAll($this->sharedOffers) : $this->sharedOffers;
+        return $this->sharedOffers;
     }
 
     /**
@@ -132,11 +142,20 @@ class User extends FrontendUser
     }
 
     /**
-     * @param float $latitude
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
      */
-    public function setLatitude(float $latitude): void
+    public function getAllOffers()
     {
-        $this->latitude = $latitude;
+        if ($this->offers && $this->sharedOffers) {
+            return $this->offers->addAll($this->sharedOffers);
+        }
+        if ($this->offers) {
+            return $this->offers;
+        }
+        if ($this->sharedOffers) {
+            return $this->sharedOffers;
+        }
+        return null;
     }
 
     /**
@@ -153,14 +172,6 @@ class User extends FrontendUser
     public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
-    }
-
-    public function __construct(string $username = '', string $password = '')
-    {
-        parent::__construct($username, $password);
-
-        $this->categories = new ObjectStorage();
-        $this->offers = new ObjectStorage();
     }
 
     /**
