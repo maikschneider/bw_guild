@@ -116,11 +116,11 @@ class User extends FrontendUser
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
      */
     public function getAllOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
     {
-        return $this->offers->addAll($this->sharedOffers);
+        return $this->offers ? $this->offers->addAll($this->sharedOffers) : $this->sharedOffers;
     }
 
     /**
