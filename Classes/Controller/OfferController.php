@@ -51,6 +51,7 @@ class OfferController extends ActionController
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\Offer $offer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("offer")
      */
     public function showAction(Offer $offer)
     {
