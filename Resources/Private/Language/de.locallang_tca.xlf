@@ -54,6 +54,10 @@
 				<source>User</source>
 				<target>Benutzer</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.fe_users">
+				<source>Multiple User</source>
+				<target>Mehrere Benutzer</target>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.more">
 				<source>More</source>
 				<target>Mehr</target>

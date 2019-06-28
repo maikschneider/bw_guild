@@ -25,24 +25,24 @@ return [
             'starttime' => 'starttime',
             'endtime' => 'endtime',
         ],
-        'searchFields' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, conditions, possibilities, contact_person, contact_mail',
+        'searchFields' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail',
         'iconfile' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg',
     ],
     'interface' => [
-        'showRecordFieldList' => 'cruser_id,pid,sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, conditions, possibilities, contact_person, contact_mail, contact_phone',
+        'showRecordFieldList' => 'cruser_id,pid,sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail, contact_phone',
     ],
     'types' => [
         // Job
         '0' => [
-            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
+            'showitem' => 'fe_user, fe_users, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ],
         // Education
         '1' => [
-            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
+            'showitem' => 'fe_user, fe_users, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ],
         // Internship
         '2' => [
-            'showitem' => 'fe_user, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
+            'showitem' => 'fe_user, fe_users, record_type, title, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ]
     ],
     'columns' => [
@@ -222,7 +222,34 @@ return [
                 'foreign_table_field' => 'offers',
                 'size' => 1,
                 'maxitems' => 1,
-                'eval' => 'int,required',
+                'eval' => 'int',
+                'default' => 0,
+                'suggestOptions' => [
+                    'fe_users' => [
+                        'searchWholePhrase' => 1,
+                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name'
+                    ]
+                ],
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
+            ]
+        ],
+        'fe_users' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_users',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'fe_users',
+                'foreign_table' => 'fe_users',
+                'MM' => 'tx_bwguild_offer_feuser_mm',
+                'MM_opposite_field' => 'shared_offers',
+                'size' => 10,
+                'maxitems' => 9999,
+                'eval' => 'int',
                 'default' => 0,
                 'suggestOptions' => [
                     'fe_users' => [

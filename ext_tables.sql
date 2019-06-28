@@ -3,6 +3,7 @@ CREATE TABLE fe_users (
 	mobile varchar(255) DEFAULT '' NOT NULL,
 	member_nr varchar(255) DEFAULT '' NOT NULL,
 	offers varchar(11) DEFAULT 0 NOT NULL,
+	shared_offers int(11) unsigned DEFAULT '0' NOT NULL,
 
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -37,6 +38,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	latitude decimal(10, 8) DEFAULT 0 NOT NULL,
 	longitude decimal(11, 8) DEFAULT 0 NOT NULL,
 	fe_user int(11) DEFAULT 0 NOT NULL,
+	fe_users int(11) unsigned DEFAULT '0' NOT NULL,
 	conditions mediumtext,
 	possibilities mediumtext,
 	contact_person varchar(255) DEFAULT '' NOT NULL,
@@ -47,4 +49,14 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	PRIMARY KEY (uid),
 	KEY parent (pid),
 	KEY sys_language_uid_l10n_parent (sys_language_uid,l10n_parent),
+);
+
+CREATE TABLE tx_bwguild_offer_feuser_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
 );

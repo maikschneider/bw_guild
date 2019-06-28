@@ -46,7 +46,29 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var \Blueways\BwGuild\Domain\Model\User
      */
-    protected $feUser;
+    protected $feUser = null;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\User>
+     * @lazy
+     */
+    protected $feUsers = null;
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getFeUsers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->feUsers;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
+     */
+    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers): void
+    {
+        $this->feUsers = $feUsers;
+    }
 
     /**
      * @var string
@@ -76,7 +98,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @var string 
+     * @var string
      */
     protected $contactPhone = '';
 

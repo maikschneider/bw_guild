@@ -94,6 +94,12 @@ class User extends FrontendUser
     protected $longitude;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
+     * @lazy
+     */
+    protected $sharedOffers;
+
+    /**
      * @return float
      */
     public function getLatitude(): float
