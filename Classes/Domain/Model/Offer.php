@@ -55,9 +55,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $feUsers = null;
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
      */
-    public function getFeUsers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getFeUsers()
     {
         return $this->feUsers;
     }
@@ -301,9 +301,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \Blueways\BwGuild\Domain\Model\User
+     * @return \Blueways\BwGuild\Domain\Model\User|null
      */
-    public function getFeUser(): \Blueways\BwGuild\Domain\Model\User
+    public function getFeUser()
     {
         return $this->feUser;
     }
