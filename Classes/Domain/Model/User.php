@@ -108,6 +108,30 @@ class User extends FrontendUser
     }
 
     /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getSharedOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->sharedOffers;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getAllOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->offers->addAll($this->sharedOffers);
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $sharedOffers
+     */
+    public function setSharedOffers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $sharedOffers): void
+    {
+        $this->sharedOffers = $sharedOffers;
+    }
+
+    /**
      * @param float $latitude
      */
     public function setLatitude(float $latitude): void
