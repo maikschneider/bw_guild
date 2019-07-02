@@ -14,6 +14,7 @@ plugin {
 
 	tx_bwguild_offerlist {
 		settings {
+			demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
 			maxItems =
 			showPid =
 		}
@@ -21,6 +22,7 @@ plugin {
 
 	tx_bwguild_userlist {
 		settings {
+			demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
 			includeSubCategories = 0
 		}
 	}
