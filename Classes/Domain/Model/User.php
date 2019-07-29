@@ -80,22 +80,6 @@ class User extends FrontendUser
     /**
      * @return string
      */
-    public function getPassword(): string
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     */
-    public function setPassword(string $password): void
-    {
-        $this->password = $password;
-    }
-
-    /**
-     * @return string
-     */
     public function getPasswordRepeat(): string
     {
         return $this->passwordRepeat;

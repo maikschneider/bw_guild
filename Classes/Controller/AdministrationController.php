@@ -379,9 +379,7 @@ class AdministrationController extends ActionController
     public function passwordRefreshAction()
     {
         $users = $this->userRepository->findAll();
-
-        $args = $this->request->getArguments();
-
+        
         if ($this->request->hasArgument('refresh')) {
 
             $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
