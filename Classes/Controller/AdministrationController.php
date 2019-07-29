@@ -378,8 +378,9 @@ class AdministrationController extends ActionController
 
     public function passwordRefreshAction()
     {
+        $updated = 0;
         $users = $this->userRepository->findAll();
-        
+
         if ($this->request->hasArgument('refresh')) {
 
             $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
@@ -396,10 +397,12 @@ class AdministrationController extends ActionController
 
                 if ($hashedPassword) {
                     $user->setPassword($hashedPassword);
+                    $updated++;
                 }
             }
         }
 
         $this->view->assign('users', $users);
+        $this->view->assign('updated', $updated);
     }
 }
