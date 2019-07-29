@@ -380,18 +380,26 @@ class AdministrationController extends ActionController
     {
         $users = $this->userRepository->findAll();
 
-        if ($this->request->hasArgument('passwordField')) {
+        $args = $this->request->getArguments();
+
+        if ($this->request->hasArgument('refresh')) {
+
+            $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
 
             /** @var User $user */
-            foreach($users as $user) {
+            foreach ($users as $user) {
 
                 $password = $user->getZip();
-                $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
+
+                if (!$password) {
+                    continue;
+                }
                 $hashedPassword = $hashInstance->getHashedPassword($password);
-                $user->setPassword($hashedPassword);
 
+                if ($hashedPassword) {
+                    $user->setPassword($hashedPassword);
+                }
             }
-
         }
 
         $this->view->assign('users', $users);
