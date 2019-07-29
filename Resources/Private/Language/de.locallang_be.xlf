@@ -38,6 +38,10 @@
 				<source>New user</source>
 				<target>Neuer Benutzer</target>
 			</trans-unit>
+			<trans-unit id="module.administration.passwordRefresh">
+				<source>Password refresh</source>
+				<target>Passwort aktualisieren</target>
+			</trans-unit>
 			<trans-unit id="userlist">
 				<source>User list</source>
 				<target>Benutzerliste</target>

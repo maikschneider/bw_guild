@@ -10,6 +10,7 @@ use TYPO3\CMS\Core\FormProtection\FormProtectionFactory;
 use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class AdministrationController extends ActionController
@@ -373,5 +374,26 @@ class AdministrationController extends ActionController
         }
 
         return $users;
+    }
+
+    public function passwordRefreshAction()
+    {
+        $users = $this->userRepository->findAll();
+
+        if ($this->request->hasArgument('passwordField')) {
+
+            /** @var User $user */
+            foreach($users as $user) {
+
+                $password = $user->getZip();
+                $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
+                $hashedPassword = $hashInstance->getHashedPassword($password);
+                $user->setPassword($hashedPassword);
+
+            }
+
+        }
+
+        $this->view->assign('users', $users);
     }
 }

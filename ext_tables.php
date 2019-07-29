@@ -48,7 +48,7 @@ call_user_func(
             'tx_bwguild_admin',
             '',
             array(
-                'Administration' => 'index, importer, csv, csvImport, offer',
+                'Administration' => 'index, importer, csv, csvImport, offer, passwordRefresh',
             ),
             array(
                 'access' => 'user,group',
