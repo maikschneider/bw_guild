@@ -397,6 +397,7 @@ class AdministrationController extends ActionController
 
                 if ($hashedPassword) {
                     $user->setPassword($hashedPassword);
+                    $this->userRepository->update($user);
                     $updated++;
                 }
             }
