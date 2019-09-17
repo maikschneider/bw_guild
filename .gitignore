@@ -1,6 +1,7 @@
 .idea
+.ddev
 public
 bin
 vendor
 var
-!/Resources/Public/
+!/Resources/Public
