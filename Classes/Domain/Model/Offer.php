@@ -65,7 +65,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
      */
-    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers): void
+    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
     }
@@ -84,7 +84,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getContactPhone(): string
+    public function getContactPhone()
     {
         return $this->contactPhone;
     }
@@ -92,7 +92,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $contactPhone
      */
-    public function setContactPhone(string $contactPhone): void
+    public function setContactPhone(string $contactPhone)
     {
         $this->contactPhone = $contactPhone;
     }
@@ -145,7 +145,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return float
      */
-    public function getLatitude(): float
+    public function getLatitude()
     {
         return $this->latitude;
     }
@@ -153,7 +153,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param float $latitude
      */
-    public function setLatitude(float $latitude): void
+    public function setLatitude(float $latitude)
     {
         $this->latitude = $latitude;
     }
@@ -161,7 +161,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return float
      */
-    public function getLongitude(): float
+    public function getLongitude()
     {
         return $this->longitude;
     }
@@ -169,7 +169,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param float $longitude
      */
-    public function setLongitude(float $longitude): void
+    public function setLongitude(float $longitude)
     {
         $this->longitude = $longitude;
     }
@@ -185,7 +185,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
-    public function getCategories(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getCategories()
     {
         return $this->categories;
     }
@@ -193,7 +193,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories): void
+    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
     {
         $this->categories = $categories;
     }
@@ -207,7 +207,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity()
     {
         return $this->city;
     }
@@ -215,7 +215,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $city
      */
-    public function setCity(string $city): void
+    public function setCity(string $city)
     {
         $this->city = $city;
     }
@@ -223,7 +223,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return int
      */
-    public function getRecordType(): int
+    public function getRecordType()
     {
         return $this->recordType;
     }
@@ -231,7 +231,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param int $recordType
      */
-    public function setRecordType(int $recordType): void
+    public function setRecordType(int $recordType)
     {
         $this->recordType = $recordType;
     }
@@ -239,7 +239,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return bool
      */
-    public function isHidden(): bool
+    public function isHidden()
     {
         return $this->hidden;
     }
@@ -247,7 +247,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param bool $hidden
      */
-    public function setHidden(bool $hidden): void
+    public function setHidden(bool $hidden)
     {
         $this->hidden = $hidden;
     }
@@ -255,7 +255,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -263,7 +263,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $title
      */
-    public function setTitle(string $title): void
+    public function setTitle(string $title)
     {
         $this->title = $title;
     }
@@ -271,7 +271,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -279,7 +279,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -287,7 +287,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getStartDate(): string
+    public function getStartDate()
     {
         return $this->startDate;
     }
@@ -295,7 +295,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $startDate
      */
-    public function setStartDate(string $startDate): void
+    public function setStartDate(string $startDate)
     {
         $this->startDate = $startDate;
     }
@@ -311,7 +311,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param \Blueways\BwGuild\Domain\Model\User $feUser
      */
-    public function setFeUser(\Blueways\BwGuild\Domain\Model\User $feUser): void
+    public function setFeUser(\Blueways\BwGuild\Domain\Model\User $feUser)
     {
         $this->feUser = $feUser;
     }
@@ -319,7 +319,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getContactPerson(): string
+    public function getContactPerson()
     {
         return $this->contactPerson;
     }
@@ -327,7 +327,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $contactPerson
      */
-    public function setContactPerson(string $contactPerson): void
+    public function setContactPerson(string $contactPerson)
     {
         $this->contactPerson = $contactPerson;
     }
@@ -335,7 +335,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getContactMail(): string
+    public function getContactMail()
     {
         return $this->contactMail;
     }
@@ -343,7 +343,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $contactMail
      */
-    public function setContactMail(string $contactMail): void
+    public function setContactMail(string $contactMail)
     {
         $this->contactMail = $contactMail;
     }
@@ -351,7 +351,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return float
      */
-    public function getGeoLat(): float
+    public function getGeoLat()
     {
         return $this->geo_lat;
     }
@@ -359,7 +359,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param float $geo_lat
      */
-    public function setGeoLat(float $geo_lat): void
+    public function setGeoLat(float $geo_lat)
     {
         $this->geo_lat = $geo_lat;
     }
@@ -367,7 +367,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return float
      */
-    public function getGeoLong(): float
+    public function getGeoLong()
     {
         return $this->geo_long;
     }
@@ -375,7 +375,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param float $geo_long
      */
-    public function setGeoLong(float $geo_long): void
+    public function setGeoLong(float $geo_long)
     {
         $this->geo_long = $geo_long;
     }
@@ -383,7 +383,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getConditions(): string
+    public function getConditions()
     {
         return $this->conditions;
     }
@@ -391,7 +391,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $conditions
      */
-    public function setConditions(string $conditions): void
+    public function setConditions(string $conditions)
     {
         $this->conditions = $conditions;
     }
@@ -399,7 +399,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getPossibilities(): string
+    public function getPossibilities()
     {
         return $this->possibilities;
     }
@@ -407,7 +407,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $possibilities
      */
-    public function setPossibilities(string $possibilities): void
+    public function setPossibilities(string $possibilities)
     {
         $this->possibilities = $possibilities;
     }
@@ -415,7 +415,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getAddress(): string
+    public function getAddress()
     {
         return $this->address;
     }
@@ -423,7 +423,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $address
      */
-    public function setAddress(string $address): void
+    public function setAddress(string $address)
     {
         $this->address = $address;
     }
@@ -431,7 +431,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getZip(): string
+    public function getZip()
     {
         return $this->zip;
     }
@@ -439,7 +439,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param string $zip
      */
-    public function setZip(string $zip): void
+    public function setZip(string $zip)
     {
         $this->zip = $zip;
     }
@@ -455,7 +455,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @param mixed $country
      */
-    public function setCountry($country): void
+    public function setCountry($country)
     {
         $this->country = $country;
     }
