@@ -26,6 +26,14 @@
 				<source>There are no users on the current page. You need to select the correct storage folder.</source>
 				<target>Auf der aktuellen Seite wurden keine Benutzer gefunden. Bitte korrekten Ordner auswählen.</target>
 			</trans-unit>
+			<trans-unit id="module.administration.index.noOfferBox.title">
+				<source>No offers found</source>
+				<target>Keine Angebote gefunden</target>
+			</trans-unit>
+			<trans-unit id="module.administration.index.noOfferBox.message">
+				<source>There are no offers on the current page. You need to select the correct storage folder.</source>
+				<target>Auf der aktuellen Seite wurden keine Angebote gefunden. Bitte korrekten Ordner auswählen.</target>
+			</trans-unit>
 			<trans-unit id="module.administration.importer">
 				<source>Importer</source>
 				<target>Importer</target>

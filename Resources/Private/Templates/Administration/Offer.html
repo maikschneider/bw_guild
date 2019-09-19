@@ -1,9 +1,14 @@
-{namespace be=TYPO3\CMS\Backend\ViewHelpers}
-{namespace core=TYPO3\CMS\Core\ViewHelpers}
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}{namespace core=TYPO3\CMS\Core\ViewHelpers}
 <f:layout name="Administration/Default"/>
 
 <f:section name="main">
-	<h1>Offers</h1>
+	<h1>{f:translate(key:'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers')}</h1>
+
+	<f:if condition="{offers->f:count()}==0">
+		<f:be.infobox title="{f:translate(key:'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index.noOfferBox.title')}"
+					  message="{f:translate(key:'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index.noOfferBox.message')}"
+					  state="-1"/>
+	</f:if>
 
 	<div class="card-container">
 		<f:for each="{offerGroups}" as="offerGroup" iteration="i">
@@ -56,11 +61,15 @@
 									   class="t3js-contextmenutrigger"
 									   data-table="tx_bwguild_domain_model_offer"
 									   data-uid="{offer.uid}">
-										<core:icon identifier="tx_bwguild_domain_model_offer-{offer.recordType}" overlay="{f:if(condition: offer.hidden, then: 'overlay-hidden')}" />
+										<core:icon identifier="tx_bwguild_domain_model_offer-{offer.recordType}"
+												   overlay="{f:if(condition: offer.hidden, then: 'overlay-hidden')}"/>
 									</a>
 								</td>
 								<td>
-									<be:link.editRecord uid="{offer.uid}" table="tx_bwguild_domain_model_offer">{offer.title}</be:link.editRecord></td>
+									<be:link.editRecord uid="{offer.uid}" table="tx_bwguild_domain_model_offer">
+										{offer.title}
+									</be:link.editRecord>
+								</td>
 								<td>{offer.feUser.name}</td>
 								<td>{offer.feUser.company}</td>
 							</tr>

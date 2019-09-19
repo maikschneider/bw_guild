@@ -61,8 +61,10 @@ class AdministrationController extends ActionController
 
     public function offerAction()
     {
+        $offers = $this->offerRepository->findAll();
         $offerGroups = $this->offerRepository->getGroupedOffers();
 
+        $this->view->assign('offers', $offers);
         $this->view->assign('offerGroups', $offerGroups);
     }
 
