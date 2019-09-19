@@ -29,6 +29,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 
 	record_type varchar(255) DEFAULT '' NOT NULL,
 	title varchar(255) DEFAULT '' NOT NULL,
+	slug varchar(255) DEFAULT '' NOT NULL,
 	address varchar(255) DEFAULT '' NOT NULL,
 	zip varchar(255) DEFAULT '' NOT NULL,
 	city varchar(255) DEFAULT '' NOT NULL,

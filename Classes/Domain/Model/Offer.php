@@ -55,6 +55,27 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $feUsers = null;
 
     /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @var string
+     */
+    protected $slug;
+
+    /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
      */
     public function getFeUsers()
