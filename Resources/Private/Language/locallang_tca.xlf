@@ -18,6 +18,9 @@
 			<trans-unit id="user.offers">
 				<source>Offers</source>
 			</trans-unit>
+			<trans-unit id="user.sorting_field">
+				<source>Sorting field</source>
+			</trans-unit>
 
 			<trans-unit id="tx_bwguild_domain_model_offer">
 				<source>Offer</source>

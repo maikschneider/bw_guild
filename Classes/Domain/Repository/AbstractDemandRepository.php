@@ -222,6 +222,10 @@ class AbstractDemandRepository extends Repository
             $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
         }
 
+        if($demand->getOrder()) {
+            $orderings[$demand->getOrder()] = QueryInterface::ORDER_ASCENDING;
+        }
+
         return $orderings;
     }
 

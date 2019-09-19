@@ -68,6 +68,48 @@ class User extends FrontendUser
      */
     protected $sharedOffers;
 
+    /**
+     * @var string
+     */
+    protected $sortingText;
+
+    /**
+     * @var string
+     */
+    protected $sortingField;
+
+    /**
+     * @return string
+     */
+    public function getSortingText()
+    {
+        return $this->sortingText;
+    }
+
+    /**
+     * @param string $sortingText
+     */
+    public function setSortingText(string $sortingText)
+    {
+        $this->sortingText = $sortingText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSortingField()
+    {
+        return $this->sortingField;
+    }
+
+    /**
+     * @param string $sortingField
+     */
+    public function setSortingField(string $sortingField)
+    {
+        $this->sortingField = $sortingField;
+    }
+
     public function __construct(string $username = '', string $password = '')
     {
         parent::__construct($username, $password);
@@ -75,6 +117,7 @@ class User extends FrontendUser
         $this->categories = new ObjectStorage();
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
+        $this->sortingField = 'company';
     }
 
     /**

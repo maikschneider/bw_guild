@@ -22,6 +22,10 @@
 				<source>Offers</source>
 				<target>Angebote</target>
 			</trans-unit>
+			<trans-unit id="user.sorting_field">
+				<source>Sorting field</source>
+				<target>Sortierfeld</target>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer">
 				<source>Offer</source>
 				<target>Angebot</target>

@@ -31,7 +31,7 @@ class UserRepository extends AbstractDemandRepository
      */
     protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
     {
-        $orderings = [];
+        $orderings = parent::createOrderingsFromDemand($query, $demand);
 
         if (!$demand->getOrder() || $demand->getOrder() === '') {
             $orderings['company'] = QueryInterface::ORDER_ASCENDING;

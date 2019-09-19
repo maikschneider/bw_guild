@@ -48,3 +48,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Blueways\BwGuil
     'title' => 'Geocoding of fe_user records',
     'description' => 'Check all fe_user records for geocoding information and write them into the fields'
 ];
+
+// Register hook to set sorting field
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']['bw_guild'] = 'Blueways\\BwGuild\\Hooks\\TCEmainHook';
+$GLOBALS ['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass']['bw_guild'] = 'Blueways\\BwGuild\\Hooks\\TCEmainHook';

@@ -30,6 +30,7 @@ plugin {
 		settings {
 			demandClass = {$plugin.tx_bwguild_userlist.settings.demandClass}
 			includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
+			order = {$plugin.tx_bwguild_userlist.settings.order}
 		}
 	}
 

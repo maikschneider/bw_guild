@@ -43,7 +43,7 @@ class BaseDemand extends AbstractEntity
     /**
      * @return string
      */
-    public function getOrder(): string
+    public function getOrder()
     {
         return $this->order;
     }
