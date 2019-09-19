@@ -15,3 +15,19 @@ languages:
     flag: us
 errorHandling: {  }
 routes: {  }
+routeEnhancers:
+  BwGuildOffer:
+    type: Extbase
+    extension: BwGuild
+    plugin: Offerlist
+    routes:
+      - routePath: '/{offer}'
+        _controller: 'Offer::show'
+        _arguments:
+          offer: offer
+    defaultController: 'Offer::show'
+    aspects:
+      offer:
+        type: PersistedAliasMapper
+        tableName: tx_bwguild_domain_model_offer
+        routeFieldName: slug
