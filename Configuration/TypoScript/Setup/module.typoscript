@@ -1,5 +1,6 @@
 module.tx_bwguild {
 	settings {
+		startView =
 		importFolderPath = /bw_guild/
 		tableFields.users {
 			1 = username

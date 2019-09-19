@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Messaging\FlashMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class AdministrationController extends ActionController
@@ -36,9 +37,26 @@ class AdministrationController extends ActionController
 
     public function indexAction()
     {
+        $this->selectFirstView();
+
         $users = $this->userRepository->findAll();
 
         $this->view->assign('users', $users);
+    }
+
+    /**
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     */
+    protected function selectFirstView()
+    {
+        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
+        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $startView = $typoscript['module.']['tx_bwguild.']['settings.']['startView'];
+
+        if ($startView && $startView !== 'index') {
+            $this->forward($startView);
+        }
     }
 
     public function offerAction()
