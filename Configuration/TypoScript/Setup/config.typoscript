@@ -21,6 +21,10 @@ config {
 					1 = Blueways\BwGuild\Domain\Model\Education
 					2 = Blueways\BwGuild\Domain\Model\Internship
 				}
+
+				mapping {
+					columns.crdate.mapOnProperty = crdate
+				}
 			}
 
 			Blueways\BwGuild\Domain\Model\Job {

@@ -64,6 +64,9 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.contact_phone">
 				<source>Contact phone</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.slug">
+				<source>Slug</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

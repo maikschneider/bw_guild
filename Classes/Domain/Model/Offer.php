@@ -55,41 +55,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $feUsers = null;
 
     /**
-     * @return string
-     */
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * @param string $slug
-     */
-    public function setSlug(string $slug): void
-    {
-        $this->slug = $slug;
-    }
-
-    /**
      * @var string
      */
     protected $slug;
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
-     */
-    public function getFeUsers()
-    {
-        return $this->feUsers;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
-     */
-    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers)
-    {
-        $this->feUsers = $feUsers;
-    }
 
     /**
      * @var string
@@ -101,22 +69,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * @validate EmailAddress
      */
     protected $contactMail = '';
-
-    /**
-     * @return string
-     */
-    public function getContactPhone()
-    {
-        return $this->contactPhone;
-    }
-
-    /**
-     * @param string $contactPhone
-     */
-    public function setContactPhone(string $contactPhone)
-    {
-        $this->contactPhone = $contactPhone;
-    }
 
     /**
      * @var string
@@ -164,6 +116,73 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $longitude;
 
     /**
+     * @var \DateTime
+     */
+    protected $crdate;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
+     * @lazy
+     */
+    protected $categories;
+
+    /**
+     * Offer constructor.
+     */
+    public function __construct()
+    {
+        $this->categories = new ObjectStorage();
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
+     */
+    public function getFeUsers()
+    {
+        return $this->feUsers;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
+     */
+    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers)
+    {
+        $this->feUsers = $feUsers;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactPhone()
+    {
+        return $this->contactPhone;
+    }
+
+    /**
+     * @param string $contactPhone
+     */
+    public function setContactPhone(string $contactPhone)
+    {
+        $this->contactPhone = $contactPhone;
+    }
+
+    /**
      * @return float
      */
     public function getLatitude()
@@ -196,14 +215,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * Offer constructor.
-     */
-    public function __construct()
-    {
-        $this->categories = new ObjectStorage();
-    }
-
-    /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
     public function getCategories()
@@ -217,28 +228,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
     {
         $this->categories = $categories;
-    }
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
-     * @lazy
-     */
-    protected $categories;
-
-    /**
-     * @return string
-     */
-    public function getCity()
-    {
-        return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity(string $city)
-    {
-        $this->city = $city;
     }
 
     /**
@@ -276,38 +265,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @return string
      */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param string $title
-     */
-    public function setTitle(string $title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description)
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return string
-     */
     public function getStartDate()
     {
         return $this->startDate;
@@ -319,22 +276,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setStartDate(string $startDate)
     {
         $this->startDate = $startDate;
-    }
-
-    /**
-     * @return \Blueways\BwGuild\Domain\Model\User|null
-     */
-    public function getFeUser()
-    {
-        return $this->feUser;
-    }
-
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\User $feUser
-     */
-    public function setFeUser(\Blueways\BwGuild\Domain\Model\User $feUser)
-    {
-        $this->feUser = $feUser;
     }
 
     /**
@@ -433,6 +374,122 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->possibilities = $possibilities;
     }
 
+    public function getJsonSchema($typoscript)
+    {
+        $name = $this->getFeUser() ? $this->getFeUser()->getCompany() : '';
+        $url = $this->getFeUser() ? $this->getFeUser()->getWww() : '';
+
+        $schema = [
+            '@context' => 'http://schema.org/',
+            '@type' => 'JobPosting',
+            'title' => $this->getTitle(),
+            'description' => strip_tags($this->getDescription()),
+            'hiringOrganization' => [
+                'name' => $name,
+                '@type' => 'Organization',
+                'sameAs' => $url
+            ],
+            'employmentType' => 'FULL_TIME',
+            'datePosted' => $this->getCrdate()->format('Y-m-d'),
+            'jobLocation' => [
+                '@type' => 'Place',
+                'address' => [
+                    'streetAddress' => $this->getAddress(),
+                    'addressLocality' => $this->getCity(),
+                    'postalCode' => $this->getZip(),
+                    'addressCountry' => $this->getCountry()
+                ]
+            ]
+        ];
+
+        // overrides from fe_user
+        if ($this->feUser) {
+            if (!$this->getAddress() && $this->feUser->getAddress()) {
+                $schema['jobLocation']['address']['streetAddress'] = $this->feUser->getAddress();
+            }
+            if (!$this->getCity() && $this->feUser->getCity()) {
+                $schema['jobLocation']['address']['addressLocality'] = $this->feUser->getCity();
+            }
+            if (!$this->getZip() && $this->feUser->getZip()) {
+                $schema['jobLocation']['address']['postalCode'] = $this->feUser->getZip();
+            }
+            if (!$this->getCountry() && $this->feUser->getCountry()) {
+                $schema['jobLocation']['address']['addressCountry'] = $this->feUser->getCountry();
+            }
+        }
+
+        // overrides from typoscript
+        if ($typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['hiringOrganization.']['name']) {
+            $schema['hiringOrganization']['name'] = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['hiringOrganization.']['name'];
+        }
+
+        return $schema;
+    }
+
+    /**
+     * @return \Blueways\BwGuild\Domain\Model\User|null
+     */
+    public function getFeUser()
+    {
+        return $this->feUser;
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\User $feUser
+     */
+    public function setFeUser(\Blueways\BwGuild\Domain\Model\User $feUser)
+    {
+        $this->feUser = $feUser;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCrdate()
+    {
+        return $this->crdate;
+    }
+
+    /**
+     * @param \DateTime $crdate
+     */
+    public function setCrdate(\DateTime $crdate)
+    {
+        $this->crdate = $crdate;
+    }
+
     /**
      * @return string
      */
@@ -447,6 +504,22 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setAddress(string $address)
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param string $city
+     */
+    public function setCity(string $city)
+    {
+        $this->city = $city;
     }
 
     /**

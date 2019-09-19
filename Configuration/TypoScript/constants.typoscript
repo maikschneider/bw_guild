@@ -17,6 +17,10 @@ plugin {
 			demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
 			maxItems =
 			showPid =
+			schema {
+				enable = 1
+				hiringOrganization.name =
+			}
 		}
 	}
 

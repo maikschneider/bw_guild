@@ -6,7 +6,6 @@ use Blueways\BwGuild\Domain\Model\Offer;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * Class OfferController
@@ -55,6 +54,15 @@ class OfferController extends ActionController
      */
     public function showAction(Offer $offer)
     {
+        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
+        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+
+        if ((int)$typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['enable']) {
+            $json = json_encode($offer->getJsonSchema($typoscript));
+            $jsCode = '<script type="application/ld+json">' . $json . '</script>';
+            $this->response->addAdditionalHeaderData($jsCode);
+        }
+
         $this->view->assign('offer', $offer);
     }
 
@@ -111,6 +119,14 @@ class OfferController extends ActionController
         $this->redirect('edit');
     }
 
+    /**
+     * @return \TYPO3\CMS\Lang\LanguageService
+     */
+    protected function getLanguageService()
+    {
+        return $this->objectManager->get(\TYPO3\CMS\Lang\LanguageService::class);
+    }
+
     public function deleteAction(Offer $offer)
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
@@ -132,14 +148,6 @@ class OfferController extends ActionController
             \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $this->redirect('edit');
-    }
-
-    /**
-     * @return \TYPO3\CMS\Lang\LanguageService
-     */
-    protected function getLanguageService()
-    {
-        return $this->objectManager->get(\TYPO3\CMS\Lang\LanguageService::class);
     }
 
     /**
