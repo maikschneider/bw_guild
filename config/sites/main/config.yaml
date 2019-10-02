@@ -1,5 +1,5 @@
 rootPageId: 1
-base: 'http://bw-guild.ddev.local/'
+base: '/'
 languages:
   -
     title: English
