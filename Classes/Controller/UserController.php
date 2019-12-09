@@ -9,6 +9,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * Class UserController
@@ -146,7 +147,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected function getLanguageService()
     {
-        return $GLOBALS['LANG'];
+        return $GLOBALS['LANG'] ?? $this->objectManager->get(LanguageService::class);
     }
 
     /**
