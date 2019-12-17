@@ -1,11 +1,11 @@
 rootPageId: 1
-base: '/'
+base: /
 languages:
   -
     title: English
     enabled: true
-    languageId: 0
-    base: /en/
+    languageId: '0'
+    base: /
     typo3Language: default
     locale: en_US.UTF-8
     iso-639-1: en
@@ -21,7 +21,8 @@ routeEnhancers:
     extension: BwGuild
     plugin: Offerlist
     routes:
-      - routePath: '/{offer}'
+      -
+        routePath: '/{offer}'
         _controller: 'Offer::show'
         _arguments:
           offer: offer
@@ -31,3 +32,4 @@ routeEnhancers:
         type: PersistedAliasMapper
         tableName: tx_bwguild_domain_model_offer
         routeFieldName: slug
+baseVariants: {  }
