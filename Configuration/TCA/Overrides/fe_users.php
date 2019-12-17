@@ -94,7 +94,7 @@ call_user_func(function () {
                 'type' => 'slug',
                 'generatorOptions' => [
                     'fields' => ['company', 'name'],
-                    'fieldSeparator' => '/',
+                    'fieldSeparator' => '-',
                     'prefixParentPageSlug' => true,
                     'replacements' => [
                         '/' => '',
