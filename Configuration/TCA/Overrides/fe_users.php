@@ -86,7 +86,24 @@ call_user_func(function () {
             'config' => [
                 'type' => 'passthrough'
             ]
-        ]
+        ],
+        'slug' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.slug',
+            'exclude' => 1,
+            'config' => [
+                'type' => 'slug',
+                'generatorOptions' => [
+                    'fields' => ['company', 'name'],
+                    'fieldSeparator' => '/',
+                    'prefixParentPageSlug' => true,
+                    'replacements' => [
+                        '/' => '',
+                    ],
+                ],
+                'fallbackCharacter' => '-',
+                'eval' => 'uniqueInSite',
+            ],
+        ],
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
@@ -95,7 +112,7 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'member_nr', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'latitude', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'longitude', '', 'before:company');
-    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'sorting_text', '', 'before:company');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'slug', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '', 'after:description');
 
     $GLOBALS['TCA']['fe_users']['ctrl']['label'] = 'company';
