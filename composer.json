@@ -35,5 +35,13 @@
   },
   "require": {
     "ext-iconv": "*"
-  }
+  },
+  "authors": [
+    {
+      "name": "Maik Schneider",
+      "homepage": "https://blueways.de",
+      "email": "m.schneider@blueways.de",
+      "role": "Developer"
+    }
+  ]
 }
