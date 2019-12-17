@@ -1,0 +1,26 @@
+routeEnhancers:
+  BwGuildUser:
+    type: Extbase
+    extension: BwGuild
+    plugin: Userlist
+    routes:
+      - routePath: '/{user}'
+        _controller: 'User::show'
+        _arguments:
+          user: user
+      - routePath: '/page-{page}'
+        _controller: 'User::list'
+        _arguments:
+          page: '@widget_0/currentPage'
+    defaultController: 'User::list'
+    defaults:
+      page: '0'
+    aspects:
+      user:
+        type: PersistedAliasMapper
+        tableName: fe_users
+        routeFieldName: slug
+      page:
+        type: StaticRangeMapper
+        start: '1'
+        end: '100'
