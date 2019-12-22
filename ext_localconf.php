@@ -22,6 +22,7 @@ defined('TYPO3_MODE') || die();
     ],
     // non-cacheable actions
     [
+        'Offer' => 'edit, update'
     ]
 );
 

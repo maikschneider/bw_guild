@@ -12,6 +12,12 @@ routeEnhancers:
         _controller: 'User::list'
         _arguments:
           page: '@widget_0/currentPage'
+      - routePath: '/'
+        _controller: 'User::edit'
+      - routePath: '/hello'
+        _controller: 'User::new'
+      - routePath: '/create'
+        _controller: 'User::create'
     defaultController: 'User::list'
     defaults:
       page: '0'

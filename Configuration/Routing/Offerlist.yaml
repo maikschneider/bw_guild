@@ -8,9 +8,29 @@ routeEnhancers:
         _controller: 'Offer::show'
         _arguments:
           offer: offer
-    defaultController: 'Offer::show'
+      - routePath: '/'
+        _controller: 'Offer::list'
+      - routePath: '/{localized_edit}'
+        _controller: 'Offer::edit'
+      - routePath: '/update'
+        _controller: 'Offer:update'
+      - routePath: '/{localized_new}'
+        _controller: 'Offer:new'
+    defaultController: 'Offer::list'
     aspects:
       offer:
         type: PersistedAliasMapper
         tableName: tx_bwguild_domain_model_offer
         routeFieldName: slug
+      localized_archive:
+        type: LocaleModifier
+        default: 'edit'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'bearbeiten'
+      localized_new:
+        type: LocaleModifier
+        default: 'new'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'neu'

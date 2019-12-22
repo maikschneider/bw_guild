@@ -20,13 +20,6 @@ class User extends FrontendUser
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("StringLength", options={"minimum": 3, "maximum": 50})
-     */
-    protected $password = '';
-
-    /**
-     * @var string
-     * @validate
      */
     protected $passwordRepeat = '';
 
@@ -169,20 +162,14 @@ class User extends FrontendUser
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
      */
     public function getAllOffers()
     {
-        if ($this->offers && $this->sharedOffers) {
-            return $this->offers->addAll($this->sharedOffers);
-        }
-        if ($this->offers) {
-            return $this->offers;
-        }
-        if ($this->sharedOffers) {
-            return $this->sharedOffers;
-        }
-        return null;
+        $offers = $this->offers;
+        $offers->addAll($this->sharedOffers);
+
+        return $offers;
     }
 
     /**

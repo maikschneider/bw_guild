@@ -68,6 +68,7 @@ class OfferController extends ActionController
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\Offer|null $offer
+     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("offer")
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      */

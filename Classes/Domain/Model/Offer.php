@@ -46,13 +46,13 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var \Blueways\BwGuild\Domain\Model\User
      */
-    protected $feUser = null;
+    protected $feUser;
 
     /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\User>
      * @lazy
      */
-    protected $feUsers = null;
+    protected $feUsers;
 
     /**
      * @var string
@@ -131,6 +131,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function __construct()
     {
+        $this->feUsers = new ObjectStorage();
         $this->categories = new ObjectStorage();
     }
 
