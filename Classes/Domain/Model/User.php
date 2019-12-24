@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use Blueways\BwGuild\Service\GeoService;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -71,6 +72,16 @@ class User extends FrontendUser
      */
     protected $sortingField;
 
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+
+        $this->categories = new ObjectStorage();
+        $this->offers = new ObjectStorage();
+        $this->sharedOffers = new ObjectStorage();
+        $this->sortingField = 'company';
+    }
+
     /**
      * @return string
      */
@@ -101,16 +112,6 @@ class User extends FrontendUser
     public function setSortingField(string $sortingField)
     {
         $this->sortingField = $sortingField;
-    }
-
-    public function __construct(string $username = '', string $password = '')
-    {
-        parent::__construct($username, $password);
-
-        $this->categories = new ObjectStorage();
-        $this->offers = new ObjectStorage();
-        $this->sharedOffers = new ObjectStorage();
-        $this->sortingField = 'company';
     }
 
     /**
@@ -266,5 +267,17 @@ class User extends FrontendUser
     public function setMemberNr(string $memberNr): void
     {
         $this->memberNr = $memberNr;
+    }
+
+    public function geoCodeAddress()
+    {
+        $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
+        $coords = $geocodingService->getCoordinatesForAddress($this->getAddress(), $this->getZip(), $this->getCity(),
+            $this->getCountry());
+
+        if (count($coords)) {
+            $this->latitude = $coords['latitude'];
+            $this->longitude = $coords['longitude'];
+        }
     }
 }

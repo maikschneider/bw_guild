@@ -132,6 +132,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->throwStatus(403, 'No access to edit this user');
         }
 
+        $user->geoCodeAddress();
         $this->userRepository->update($user);
 
         $this->addFlashMessage(
@@ -193,6 +194,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $user->setPassword($this->encryptPassword($user->getPassword()));
+        $user->geoCodeAddress();
 
         $this->userRepository->add($user);
 
