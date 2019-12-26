@@ -42,8 +42,6 @@ class AbstractDemandRepository extends Repository
         $this->setOrderConstraints($demand);
         $this->setLimitConstraint($demand);
 
-        debug($this->queryBuilder->getSQL());
-
         return $this->queryBuilder->execute()->fetchAll();
     }
 
