@@ -37,22 +37,4 @@ class UserRepository extends AbstractDemandRepository
         return $query->execute(true);
     }
 
-    /**
-     * Set default ordering to order by company name
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return array
-     */
-    protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
-    {
-        $orderings = parent::createOrderingsFromDemand($query, $demand);
-
-        if (!$demand->getOrder() || $demand->getOrder() === '') {
-            $orderings['company'] = QueryInterface::ORDER_ASCENDING;
-        }
-
-        return $orderings;
-    }
-
 }

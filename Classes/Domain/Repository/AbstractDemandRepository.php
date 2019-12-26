@@ -3,7 +3,6 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
-use ReflectionClass;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
@@ -16,6 +15,16 @@ class AbstractDemandRepository extends Repository
      * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder
      */
     protected $queryBuilder;
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return int
+     */
+    public function countDemanded($demand): int
+    {
+        $records = $this->findDemanded($demand);
+        return $records->count();
+    }
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
@@ -158,9 +167,9 @@ class AbstractDemandRepository extends Repository
      */
     private function setOrderConstraints(BaseDemand $demand): void
     {
-        $orderField = $demand->getOrder() ? $demand->getOrder() : 'crdate';
+        $orderField = $demand->getOrder() ?: 'crdate';
         $orderFields = GeneralUtility::trimExplode(',', $orderField, true);
-        $orderDirection = $demand->getOrderDirection() ? $demand->getOrderDirection() : QueryInterface::ORDER_ASCENDING;
+        $orderDirection = $demand->getOrderDirection() ?: QueryInterface::ORDER_ASCENDING;
 
         foreach ($orderFields as $orderField) {
             $this->queryBuilder->addOrderBy($orderField, $orderDirection);
@@ -175,17 +184,6 @@ class AbstractDemandRepository extends Repository
         if ($demand->getLimit() && $demand->getLimit() !== '' && $limit = (int)$demand->getLimit() > 0) {
             $this->queryBuilder->setMaxResults($limit);
         }
-    }
-
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return int
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     */
-    public function countDemanded($demand): int
-    {
-        $records = $this->findDemanded($demand);
-        return $records->count();
     }
 
     /**
@@ -213,131 +211,5 @@ class AbstractDemandRepository extends Repository
         $demand->setOrderDirection($settings['orderDirection'] ?? '');
 
         return $demand;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface|null
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     */
-    protected function getSearchConstraint(QueryInterface $query, BaseDemand $demand)
-    {
-        $constraint = null;
-
-        // abort if empty search string
-        if (empty($demand->getSearch())) {
-            return $constraint;
-        }
-
-        $searchConstraints = [];
-
-        $searchSplitted = str_getcsv($demand->getSearch(), ' ');
-        $searchFields = $this->getObjectSearchFields($demand);
-
-        foreach ($searchFields as $cleanProperty) {
-
-            $subConstraints = [];
-
-            foreach ($searchSplitted as $searchSplittedPart) {
-                $searchSplittedPart = trim($searchSplittedPart);
-                if ($searchSplittedPart) {
-                    $subConstraints[] = $query->like($cleanProperty, '%' . $searchSplittedPart . '%');
-                }
-            }
-            $searchConstraints[] = $query->logicalOr($subConstraints);
-        }
-
-        if (sizeof($searchConstraints)) {
-            $constraint = $query->logicalOr($searchConstraints);
-        }
-
-        return $constraint;
-    }
-
-    /**
-     * Get property fields of associated repository object
-     *
-     * @param BaseDemand $demand
-     * @return array
-     */
-    private function getObjectSearchFields($demand)
-    {
-        // get and merge exclude fields
-        $excludeFields = GeneralUtility::trimExplode(',', $demand::EXCLUDE_FIELDS, true);
-        $excludeSearchFields = GeneralUtility::trimExplode(',', $demand->getExcludeSearchFields(), true);
-        $excludeSearchFields = array_merge($excludeSearchFields, $excludeFields);
-
-        // use reflection class to get all properties of object (e.g. User, Offer,..)
-        $reflectionClass = $this->objectManager->get(ReflectionClass::class, $this->objectType);
-        $searchFields = $reflectionClass->getProperties();
-
-        // map name of ReflectionProperty to array
-        $searchFields = array_map(function ($field) {
-            return $field->name;
-        }, $searchFields);
-
-        // remove all fields that are excluded by constant or exclude property
-        $searchFields = array_filter($searchFields, function ($obj) use ($excludeSearchFields) {
-            return !in_array($obj, $excludeSearchFields);
-        });
-
-        return $searchFields;
-    }
-
-    /**
-     * Create order constraints
-     *
-     * @TODO: use order field to hold comma separated list of order fields
-     * @TODO: create new flexform setting for asc/desc
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return array
-     */
-    protected function createOrderingsFromDemand(QueryInterface $query, BaseDemand $demand)
-    {
-        // default ordering displays newest entry first
-        $orderings = [];
-
-        if (!$demand->getOrder() || $demand->getOrder() === '') {
-            $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
-        }
-
-        if ($demand->getOrder()) {
-            $orderings[$demand->getOrder()] = QueryInterface::ORDER_ASCENDING;
-        }
-
-        return $orderings;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return int|null
-     */
-    protected function createLimitFromDemand(QueryInterface $query, BaseDemand $demand)
-    {
-        $limit = null;
-
-        if ($demand->getLimit() && $demand->getLimit() !== '' && (int)$demand->getLimit() > 0) {
-            $limit = (int)$demand->getLimit();
-        }
-
-        return $limit;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param $demand
-     */
-    protected function insertDistanceConstraints($query, $demand)
-    {
-        $earthRadius = 6378.1;
-
-        $distanceSqlCalc = 'ACOS(SIN(RADIANS(' . $query->quoteIdentifier($latitudeField) . ')) * SIN(RADIANS(' . (float)$coordinates['latitude'] . ')) + COS(RADIANS(' . $query->quoteIdentifier($latitudeField) . ')) * COS(RADIANS(' . (float)$coordinates['latitude'] . ')) * COS(RADIANS(' . $query->quoteIdentifier($longitudeField) . ') - RADIANS(' . (float)$coordinates['longitude'] . '))) * ' . $earthRadius;
-
-        $query->addSelectLiteral(
-            $distanceSqlCalc . ' AS `distance`'
-        );
     }
 }

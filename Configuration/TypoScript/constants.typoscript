@@ -30,7 +30,7 @@ plugin {
 		settings {
 			demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
 			includeSubCategories = 0
-			order =
+			order = company
 			orderDirection =
 		}
 	}
