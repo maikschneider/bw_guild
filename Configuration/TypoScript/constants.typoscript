@@ -21,6 +21,8 @@ plugin {
 				enable = 1
 				hiringOrganization.name =
 			}
+			order =
+			orderDirection =
 		}
 	}
 
@@ -28,7 +30,8 @@ plugin {
 		settings {
 			demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
 			includeSubCategories = 0
-			order = 
+			order =
+			orderDirection =
 		}
 	}
 }

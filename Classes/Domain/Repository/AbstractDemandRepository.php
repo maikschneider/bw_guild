@@ -4,6 +4,7 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use ReflectionClass;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -12,126 +13,206 @@ class AbstractDemandRepository extends Repository
 {
 
     /**
+     * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder
+     */
+    protected $queryBuilder;
+
+    /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
     public function findDemanded($demand)
     {
-        $query = $this->createQuery();
+        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+        $this->queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($demand::TABLE);
+        $this->queryBuilder->select('*');
+        $this->queryBuilder->from($demand::TABLE);
 
-        // filter constraints
-        $constraints = $this->createConstraintsFromDemand($query, $demand);
-        if (!empty($constraints)) {
-            $query->matching(
-                $query->logicalAnd($constraints)
-            );
-        }
+        $this->setSearchFilterContraints($demand);
+        $this->setCategoryConstraints($demand);
+        $this->setOrderConstraints($demand);
+        $this->setLimitConstraint($demand);
 
-        // orderings
-        $orderings = $this->createOrderingsFromDemand($query, $demand);
-        if ($orderings) {
-            $query->setOrderings($orderings);
-        }
 
-        // limit
-        $limit = $this->createLimitFromDemand($query, $demand);
-        if ($limit != null) {
-            $query->setLimit($limit);
-        }
-
-        return $query->execute();
+        return $this->queryBuilder->execute()->fetchAll();
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return array<\TYPO3\CMS\Extbase\Persistence\Generic\Qom\ConstraintInterface>
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @param BaseDemand $demand
      */
-    protected function createConstraintsFromDemand(
-        QueryInterface $query,
-        \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-    ) {
+    private function setSearchFilterContraints($demand): void
+    {
+        if (empty($demand->getSearch())) {
+            return;
+        }
+
         $constraints = [];
+        $searchSplittedParts = $demand->getSearchParts();
 
-        // category filter
-        if ($demand->getCategories() && $demand->getCategories() !== '0') {
-            $constraints['categories'] = $this->createCategoryConstraint(
-                $query,
-                $demand->getCategories(),
-                $demand->getCategoryConjunction(),
-                $demand->isIncludeSubCategories()
-            );
-        }
+        $tcaSearchFields = $GLOBALS['TCA'][$demand::TABLE]['ctrl']['searchFields'];
+        $searchFields = GeneralUtility::trimExplode(',', $tcaSearchFields, true);
 
-        // string search
-        $searchConstraint = $this->getSearchConstraint($query, $demand);
-        if ($searchConstraint) {
-            $constraints['search'] = $searchConstraint;
-        }
+        foreach ($searchSplittedParts as $searchSplittedPart) {
 
-        // Clean not used constraints
-        foreach ($constraints as $key => $value) {
-            if (null === $value) {
-                unset($constraints[$key]);
+            $subConstraints = [];
+
+            foreach ($searchFields as $cleanProperty) {
+                $searchSplittedPart = trim($searchSplittedPart);
+                if ($searchSplittedPart) {
+                    $subConstraints[] = $this->queryBuilder->expr()->like(
+                        $cleanProperty,
+                        $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
+                    );
+                }
             }
+            $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
         }
 
-        return $constraints;
+        $this->queryBuilder->andWhere($this->queryBuilder->expr()->andX(...$constraints));
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
-     * @param array|string $categories
-     * @param string $conjunction
-     * @param boolean $includeSubCategories
-     * @return \TYPO3\CMS\Extbase\Persistence\Generic\Qom\AndInterface|\TYPO3\CMS\Extbase\Persistence\Generic\Qom\NotInterface|\TYPO3\CMS\Extbase\Persistence\Generic\Qom\OrInterface|null
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     */
+    private function setCategoryConstraints(BaseDemand $demand): void
+    {
+        $categories = $demand->getCategories();
+        $categoryConjunction = $demand->getCategoryConjunction();
+
+        // abort if no category settings
+        if (!count($categories) || !$categoryConjunction) {
+            return;
+        }
+
+        switch (strtolower($categoryConjunction)) {
+            case 'or':
+                // join tables
+                $this->queryBuilder->join(
+                    $demand::TABLE,
+                    'sys_category_record_mm',
+                    'c',
+                    $this->queryBuilder->expr()->eq('c.uid_foreign',
+                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid'))
+                );
+
+                // any match
+                $this->queryBuilder->andWhere(
+                    $this->queryBuilder->expr()->in('c.uid_local', $categories)
+                );
+                break;
+            case 'notor':
+                // join tables
+                $this->queryBuilder->join(
+                    $demand::TABLE,
+                    'sys_category_record_mm',
+                    'c',
+                    $this->queryBuilder->expr()->eq('c.uid_foreign',
+                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid'))
+                );
+
+                // not any match
+                $this->queryBuilder->andWhere(
+                    $this->queryBuilder->expr()->notIn('c.uid_local', $categories)
+                );
+                break;
+            case 'notand':
+                // join for every category - include check for category uid in join statement
+                foreach ($categories as $key => $category) {
+                    $this->queryBuilder->join(
+                        $demand::TABLE,
+                        'sys_category_record_mm',
+                        'c' . $key,
+                        $this->queryBuilder->expr()->andX(
+                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_foreign',
+                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')),
+                            $this->queryBuilder->expr()->neq('c' . $key . '.uid_local',
+                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT))
+                        )
+                    );
+                }
+                break;
+            case 'and':
+            default:
+                // join for every category - include check for category uid in join statement
+                foreach ($categories as $key => $category) {
+                    $this->queryBuilder->join(
+                        $demand::TABLE,
+                        'sys_category_record_mm',
+                        'c' . $key,
+                        $this->queryBuilder->expr()->andX(
+                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_foreign',
+                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')),
+                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_local',
+                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT))
+                        )
+                    );
+                }
+        }
+
+        // make result distinct
+        $this->queryBuilder->groupBy('uid');
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     */
+    private function setOrderConstraints(BaseDemand $demand): void
+    {
+        $orderField = $demand->getOrder() ? $demand->getOrder() : 'crdate';
+        $orderFields = GeneralUtility::trimExplode(',', $orderField, true);
+        $orderDirection = $demand->getOrderDirection() ? $demand->getOrderDirection() : QueryInterface::ORDER_ASCENDING;
+
+        foreach ($orderFields as $orderField) {
+            $this->queryBuilder->addOrderBy($orderField, $orderDirection);
+        }
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     */
+    private function setLimitConstraint(BaseDemand $demand): void
+    {
+        if ($demand->getLimit() && $demand->getLimit() !== '' && $limit = (int)$demand->getLimit() > 0) {
+            $this->queryBuilder->setMaxResults($limit);
+        }
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return int
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    protected function createCategoryConstraint(
-        QueryInterface $query,
-        $categories,
-        string $conjunction,
-        bool $includeSubCategories
+    public function countDemanded($demand): int
+    {
+        $records = $this->findDemanded($demand);
+        return $records->count();
+    }
+
+    /**
+     * Create Demand by settings array (see typoscript constants)
+     *
+     * @param $settings
+     * @param string $class
+     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand|mixed
+     */
+    public function createDemandObjectFromSettings(
+        $settings,
+        $class = BaseDemand::class
     ) {
-        $constraint = null;
-        $categoryConstraints = [];
+        // @TODO: check if this typoscript demandClass setting makes sense
+        $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
 
-        // If "ignore category selection" is used, nothing needs to be done
-        if (empty($conjunction)) {
-            return $constraint;
-        }
+        /** @var \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand */
+        $demand = $this->objectManager->get($class);
 
-        if (!is_array($categories)) {
-            $categories = GeneralUtility::intExplode(',', $categories, true);
-        }
-        foreach ($categories as $category) {
-            if ($includeSubCategories) {
-                // @TODO see news extension
-                // need to find child categories and add them to the constraint
-            }
-            $categoryConstraints[] = $query->contains('categories', $category);
-        }
+        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
+        $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
+        $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
+        $demand->setLimit($settings['limit'] ?? -1);
+        $demand->setOrder($settings['order'] ?? '');
+        $demand->setOrderDirection($settings['orderDirection'] ?? '');
 
-        if ($categoryConstraints) {
-            switch (strtolower($conjunction)) {
-                case 'or':
-                    $constraint = $query->logicalOr($categoryConstraints);
-                    break;
-                case 'notor':
-                    $constraint = $query->logicalNot($query->logicalOr($categoryConstraints));
-                    break;
-                case 'notand':
-                    $constraint = $query->logicalNot($query->logicalAnd($categoryConstraints));
-                    break;
-                case 'and':
-                default:
-                    $constraint = $query->logicalAnd($categoryConstraints);
-            }
-        }
-
-        return $constraint;
+        return $demand;
     }
 
     /**
@@ -222,7 +303,7 @@ class AbstractDemandRepository extends Repository
             $orderings['crdate'] = QueryInterface::ORDER_ASCENDING;
         }
 
-        if($demand->getOrder()) {
+        if ($demand->getOrder()) {
             $orderings[$demand->getOrder()] = QueryInterface::ORDER_ASCENDING;
         }
 
@@ -246,53 +327,17 @@ class AbstractDemandRepository extends Repository
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return int
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @param \TYPO3\CMS\Extbase\Persistence\QueryInterface $query
+     * @param $demand
      */
-    public function countDemanded($demand)
+    protected function insertDistanceConstraints($query, $demand)
     {
-        $query = $this->createQuery();
+        $earthRadius = 6378.1;
 
-        // filter constraints
-        $constraints = $this->createConstraintsFromDemand($query, $demand);
-        if (!empty($constraints)) {
-            $query->matching(
-                $query->logicalAnd($constraints)
-            );
-        }
+        $distanceSqlCalc = 'ACOS(SIN(RADIANS(' . $query->quoteIdentifier($latitudeField) . ')) * SIN(RADIANS(' . (float)$coordinates['latitude'] . ')) + COS(RADIANS(' . $query->quoteIdentifier($latitudeField) . ')) * COS(RADIANS(' . (float)$coordinates['latitude'] . ')) * COS(RADIANS(' . $query->quoteIdentifier($longitudeField) . ') - RADIANS(' . (float)$coordinates['longitude'] . '))) * ' . $earthRadius;
 
-        // limit
-        if ($demand->getLimit() != null) {
-            $query->setLimit((int)$demand->getLimit());
-        }
-
-        return $query->count();
-    }
-
-    /**
-     * Create Demand by settings array (see typoscript constants)
-     *
-     * @param $settings
-     * @param string $class
-     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand|mixed
-     */
-    public function createDemandObjectFromSettings(
-        $settings,
-        $class = 'Blueways\\BwGuild\\Domain\\Model\\Dto\\BaseDemand'
-    ) {
-        // @TODO: check if this typoscript demandClass setting makes sense
-        $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
-
-        /** @var \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand */
-        $demand = $this->objectManager->get($class);
-
-        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
-        $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
-        $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
-        $demand->setLimit($settings['limit'] ?? -1);
-        $demand->setOrder($settings['order'] ?? '');
-
-        return $demand;
+        $query->addSelectLiteral(
+            $distanceSqlCalc . ' AS `distance`'
+        );
     }
 }

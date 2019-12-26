@@ -6,6 +6,7 @@ use Blueways\BwGuild\Domain\Model\Offer;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 
 /**
  * Class OfferController
@@ -38,9 +39,9 @@ class OfferController extends ActionController
      */
     public function listAction()
     {
-        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings,
-            'Blueways\BwGuild\Domain\Model\Dto\OfferDemand');
+        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
+        /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
         $repository = $this->objectManager->get($this->settings['record_type']);
 
         $offers = $repository->findDemanded($demand);
