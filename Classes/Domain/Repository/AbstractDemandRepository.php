@@ -4,6 +4,7 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -37,12 +38,21 @@ class AbstractDemandRepository extends Repository
         $this->queryBuilder->select('*');
         $this->queryBuilder->from($demand::TABLE);
 
+        $this->setConstraints($demand);
+
+        return $this->queryBuilder->execute()->fetchAll();
+    }
+
+    /**
+     * @param BaseDemand $demand
+     */
+    protected function setConstraints($demand): void
+    {
         $this->setSearchFilterConstraints($demand);
         $this->setCategoryConstraints($demand);
         $this->setOrderConstraints($demand);
         $this->setLimitConstraint($demand);
-
-        return $this->queryBuilder->execute()->fetchAll();
+        $this->setGeoCodeConstraint($demand);
     }
 
     /**
@@ -183,6 +193,27 @@ class AbstractDemandRepository extends Repository
         if ($demand->getLimit() && $demand->getLimit() !== '' && $limit = (int)$demand->getLimit() > 0) {
             $this->queryBuilder->setMaxResults($limit);
         }
+    }
+
+    /**
+     * @param BaseDemand $demand
+     */
+    private function setGeoCodeConstraint($demand): void
+    {
+        if (!$demand->getSearchDistanceAddress() || !$demand->geoCodeSearchString()) {
+            return;
+        }
+
+        $earthRadius = 6378.1;
+        $maxDistance = $demand->getMaxDistance() ?: 999;
+
+        $distanceSqlCalc = 'ACOS(SIN(RADIANS(' . $this->queryBuilder->quoteIdentifier('latitude') . ')) * SIN(RADIANS(' . $demand->getLatitude() . ')) + COS(RADIANS(' . $this->queryBuilder->quoteIdentifier('latitude') . ')) * COS(RADIANS(' . $demand->getLatitude() . ')) * COS(RADIANS(' . $this->queryBuilder->quoteIdentifier('longitude') . ') - RADIANS(' . $demand->getLongitude() . '))) * ' . $earthRadius;
+
+        $this->queryBuilder->addSelectLiteral($distanceSqlCalc . ' AS `distance`');
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->comparison($distanceSqlCalc, ExpressionBuilder::LT, $maxDistance)
+        );
+        $this->queryBuilder->addOrderBy('distance');
     }
 
     /**
