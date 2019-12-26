@@ -10,7 +10,7 @@ defined('TYPO3_MODE') || die();
     ],
     // non-cacheable actions
     [
-        'User' => 'edit, update'
+        'User' => 'edit, update, list'
     ]
 );
 
