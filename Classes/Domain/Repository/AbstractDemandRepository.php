@@ -37,11 +37,12 @@ class AbstractDemandRepository extends Repository
         $this->queryBuilder->select('*');
         $this->queryBuilder->from($demand::TABLE);
 
-        $this->setSearchFilterContraints($demand);
+        $this->setSearchFilterConstraints($demand);
         $this->setCategoryConstraints($demand);
         $this->setOrderConstraints($demand);
         $this->setLimitConstraint($demand);
 
+        debug($this->queryBuilder->getSQL());
 
         return $this->queryBuilder->execute()->fetchAll();
     }
@@ -49,7 +50,7 @@ class AbstractDemandRepository extends Repository
     /**
      * @param BaseDemand $demand
      */
-    private function setSearchFilterContraints($demand): void
+    private function setSearchFilterConstraints($demand): void
     {
         if (empty($demand->getSearch())) {
             return;
