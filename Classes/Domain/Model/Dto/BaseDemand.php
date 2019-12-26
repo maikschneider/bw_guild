@@ -2,13 +2,16 @@
 
 namespace Blueways\BwGuild\Domain\Model\Dto;
 
+use Blueways\BwGuild\Service\GeoService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class BaseDemand extends AbstractEntity
 {
 
-    CONST EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
+    public CONST TABLE = 'tx_bwguild_domain_model_offer';
+
+    public CONST EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
 
     /**
      * @var array
@@ -39,6 +42,111 @@ class BaseDemand extends AbstractEntity
      * @var string
      */
     protected $order;
+
+    /**
+     * @var string
+     */
+    protected $orderDirection = '';
+
+    /**
+     * @return string
+     */
+    public function getOrderDirection(): string
+    {
+        return $this->orderDirection;
+    }
+
+    /**
+     * @param string $orderDirection
+     */
+    public function setOrderDirection(string $orderDirection): void
+    {
+        $this->orderDirection = $orderDirection;
+    }
+
+    /**
+     * @var int
+     */
+    protected $maxDistance = 10;
+
+    /**
+     * @var string
+     */
+    protected $searchDistanceAddress = '';
+
+    /**
+     * @var float
+     */
+    protected $latitude;
+
+    /**
+     * @var float;
+     */
+    protected $longitude;
+
+    /**
+     * @return int
+     */
+    public function getMaxDistance(): int
+    {
+        return $this->maxDistance;
+    }
+
+    /**
+     * @param int $maxDistance
+     */
+    public function setMaxDistance(int $maxDistance): void
+    {
+        $this->maxDistance = $maxDistance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchDistanceAddress(): string
+    {
+        return $this->searchDistanceAddress;
+    }
+
+    /**
+     * @param string $searchDistanceAddress
+     */
+    public function setSearchDistanceAddress(string $searchDistanceAddress): void
+    {
+        $this->searchDistanceAddress = $searchDistanceAddress;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLatitude(): float
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * @param float $latitude
+     */
+    public function setLatitude(float $latitude): void
+    {
+        $this->latitude = $latitude;
+    }
+
+    /**
+     * @return float
+     */
+    public function getLongitude(): float
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * @param float $longitude
+     */
+    public function setLongitude(float $longitude): void
+    {
+        $this->longitude = $longitude;
+    }
 
     /**
      * @return string
@@ -114,7 +222,7 @@ class BaseDemand extends AbstractEntity
      */
     public function getCategories(): array
     {
-        return $this->categories;
+        return array_filter($this->categories);
     }
 
     /**
@@ -165,6 +273,32 @@ class BaseDemand extends AbstractEntity
         foreach ($demand as $key => $value) {
             $this->_setProperty($key, $value);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function geoCodeSearchString()
+    {
+        $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
+        $coords = $geocodingService->getCoordinatesForAddress($this->searchDistanceAddress);
+
+        if (!count($coords)) {
+            return false;
+        }
+
+        $this->latitude = $coords['latitude'];
+        $this->longitude = $coords['longitude'];
+
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSearchParts()
+    {
+        return GeneralUtility::trimExplode(' ', $this->search, true);
     }
 
 }
