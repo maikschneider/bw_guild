@@ -34,7 +34,8 @@
     }
   },
   "require": {
-    "ext-iconv": "*"
+    "ext-iconv": "*",
+    "ext-pdo": "*"
   },
   "authors": [
     {
