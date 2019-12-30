@@ -168,7 +168,9 @@ class User extends FrontendUser
     public function getAllOffers()
     {
         $offers = $this->offers;
-        $offers->addAll($this->sharedOffers);
+        if($this->sharedOffers) {
+            $offers->addAll($this->sharedOffers);
+        }
 
         return $offers;
     }
