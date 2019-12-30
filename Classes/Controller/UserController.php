@@ -74,6 +74,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $demand->overrideDemand($this->request->getArgument('demand'));
         }
 
+        // redirect to search action to display another view
+        if ($this->settings['mode'] === 'search') {
+            $this->forward('search');
+        }
+        
         // find user by demand
         $users = $this->userRepository->findDemanded($demand);
 
@@ -90,6 +95,18 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('users', $users);
         $this->view->assign('demand', $demand);
         $this->view->assign('categories', $categories);
+    }
+
+    public function searchAction()
+    {
+        $demand = $this->userRepository->createDemandObjectFromSettings($this->settings);
+
+        // override filter from form
+        if ($this->request->hasArgument('demand')) {
+            $demand->overrideDemand($this->request->getArgument('demand'));
+        }
+
+        $this->view->assign('demand', $demand);
     }
 
     /**

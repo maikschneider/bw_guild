@@ -43,6 +43,14 @@
 											User->new;User->create
 										</numIndex>
 									</numIndex>
+									<numIndex index="3">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.mode.search
+										</numIndex>
+										<numIndex index="1">
+											User->search;User->list
+										</numIndex>
+									</numIndex>
 								</items>
 							</config>
 						</TCEforms>
@@ -130,21 +138,31 @@
 							</config>
 						</TCEforms>
 					</settings.categoryConjunction>
-					<persistence.storagePid>
+					<settings.mode>
 						<TCEforms>
 							<label>
-								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.storagePid
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode
 							</label>
 							<config>
-								<type>group</type>
-								<internal_type>db</internal_type>
-								<allowed>pages</allowed>
-								<size>2</size>
-								<maxitems>99</maxitems>
-								<minitems>0</minitems>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items>
+									<numIndex index="0" type="array">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.default
+										</numIndex>
+										<numIndex index="1"></numIndex>
+									</numIndex>
+									<numIndex index="1">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.mode.search
+										</numIndex>
+										<numIndex index="1">search</numIndex>
+									</numIndex>
+								</items>
 							</config>
 						</TCEforms>
-					</persistence.storagePid>
+					</settings.mode>
 				</el>
 			</ROOT>
 		</sDEF>

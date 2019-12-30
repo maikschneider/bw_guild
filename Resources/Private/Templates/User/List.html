@@ -6,18 +6,14 @@
 		</label> <label>Branchen</label>
 
 		<f:form.hidden property="categoryConjunction" value="or" />
+		<f:form.hidden property="searchDistanceAddress" />
+		<f:form.hidden property="maxDistance" />
 
 		<f:for each="{categories}" as="category" iteration="i">
 			<label>
 				<f:form.checkbox value="{category.uid}" property="categories.{i.index}"/>
 				{category.title} </label>
 		</f:for>
-
-		<label> In Umgebung von
-			<f:form.textfield property="searchDistanceAddress"/>
-			<f:form.textfield property="maxDistance" /> km
-		</label>
-
 
 		<button type="submit" class="button hollow small">
 			<span>Ansicht aktualisieren</span>

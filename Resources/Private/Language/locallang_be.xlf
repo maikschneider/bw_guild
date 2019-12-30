@@ -151,6 +151,15 @@
 			<trans-unit id="flexforms_general.order.default">
 				<source>Default (Newest first)</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.mode">
+				<source>Mode</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.mode.default">
+				<source>Default</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.mode.search">
+				<source>Search</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

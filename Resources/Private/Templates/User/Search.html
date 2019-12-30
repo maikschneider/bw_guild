@@ -1,0 +1,15 @@
+<div class="search">
+	<f:form action="list" name="demand" controller="User" object="{demand}">
+
+		<label> In Umgebung von
+			<f:form.textfield property="searchDistanceAddress"/>
+			<f:form.textfield property="maxDistance"/>
+			km </label>
+
+
+		<button type="submit" class="button hollow small">
+			<span>Ansicht aktualisieren</span>
+			<span class="icon-refresh"></span>
+		</button>
+	</f:form>
+</div>

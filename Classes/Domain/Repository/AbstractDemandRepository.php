@@ -200,7 +200,13 @@ class AbstractDemandRepository extends Repository
      */
     private function setGeoCodeConstraint($demand): void
     {
-        if (!$demand->getSearchDistanceAddress() || !$demand->geoCodeSearchString()) {
+        if (!$demand->getSearchDistanceAddress()) {
+            return;
+        }
+
+        // return no results if search string could not be geo coded
+        if(!$demand->geoCodeSearchString()) {
+            $this->queryBuilder->setMaxResults(0);
             return;
         }
 
