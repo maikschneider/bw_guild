@@ -219,7 +219,7 @@ class AbstractDemandRepository extends Repository
         $this->queryBuilder->andWhere(
             $this->queryBuilder->expr()->comparison($distanceSqlCalc, ExpressionBuilder::LT, $maxDistance)
         );
-        $this->queryBuilder->addOrderBy('distance');
+        $this->queryBuilder->orderBy('distance');
     }
 
     /**
