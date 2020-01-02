@@ -242,7 +242,10 @@ class GeoService
     {
         $response = GeneralUtility::getUrl($url);
         $result = json_decode($response, true);
-        if ($result['status'] !== 'OVER_QUERY_LIMIT' || $remainingTries <= 0) {
+        if ($remainingTries === 0 && $result === null) {
+            return [];
+        }
+        if (is_array($result) && ($result['status'] !== 'OVER_QUERY_LIMIT' || $remainingTries <= 0)) {
             return $result;
         }
         return $this->getApiCallResult($url, $remainingTries - 1);
