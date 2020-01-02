@@ -7,6 +7,7 @@ CREATE TABLE fe_users (
 	sorting_field varchar(255) DEFAULT '' NOT NULL,
 	sorting_text varchar(255) DEFAULT '' NOT NULL,
 	slug varchar(255) DEFAULT '' NOT NULL,
+	public_profile tinyint(4) DEFAULT '0' NOT NULL,
 
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,

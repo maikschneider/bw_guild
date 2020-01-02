@@ -72,6 +72,27 @@ class User extends FrontendUser
      */
     protected $sortingField;
 
+    /**
+     * @return bool
+     */
+    public function isPublicProfile(): bool
+    {
+        return (bool)$this->publicProfile;
+    }
+
+    /**
+     * @param bool $publicProfile
+     */
+    public function setPublicProfile(bool $publicProfile): void
+    {
+        $this->publicProfile = $publicProfile;
+    }
+
+    /**
+     * @var boolean
+     */
+    protected $publicProfile;
+
     public function __construct(string $username = '', string $password = '')
     {
         parent::__construct($username, $password);

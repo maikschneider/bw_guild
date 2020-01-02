@@ -93,6 +93,10 @@
 				<source>Slug</source>
 				<target>Slug</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.publicProfile">
+				<source>Public profile</source>
+				<target>Öffentliches Profil</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

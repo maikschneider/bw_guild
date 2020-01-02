@@ -104,6 +104,13 @@ call_user_func(function () {
                 'eval' => 'uniqueInSite',
             ],
         ],
+        'public_profile' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.publicProfile',
+            'exclude' => 1,
+            'config' => [
+                'type' => 'check',
+            ]
+        ]
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
@@ -113,7 +120,10 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'latitude', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'longitude', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'slug', '', 'after:image');
-    ExtensionManagementUtility::addToAllTCAtypes('fe_users', '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '', 'after:description');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'public_profile', '', 'after:password');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users',
+        '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '',
+        'after:description');
 
     $GLOBALS['TCA']['fe_users']['ctrl']['label'] = 'company';
     $GLOBALS['TCA']['fe_users']['ctrl']['label_userFunc'] = 'Blueways\\BwGuild\\Utility\\LabelUtility->feUserLabel';

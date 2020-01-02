@@ -28,6 +28,20 @@ class UserRepository extends AbstractDemandRepository
         );
     }
 
+    public function setConstraints($demand): void
+    {
+        parent::setConstraints($demand);
+
+        $this->setPublicProfileConstraint();
+    }
+
+    private function setPublicProfileConstraint(): void
+    {
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->eq('public_profile', $this->queryBuilder->createNamedParameter(1, \PDO::PARAM_BOOL))
+        );
+    }
+
     public function getUsernames()
     {
         $query = $this->createQuery();
