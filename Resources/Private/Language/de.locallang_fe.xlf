@@ -21,7 +21,7 @@
 			</trans-unit>
 			<trans-unit id="offer.delete.success.message">
 				<source>Your data has been successfully deleted.</source>
-				<source>Ihre Daten wurden erfolgreich gelöscht.</source>
+				<target>Ihre Daten wurden erfolgreich gelöscht.</target>
 			</trans-unit>
 		</body>
 	</file>
