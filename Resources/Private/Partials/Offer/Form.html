@@ -3,7 +3,7 @@
 <f:flashMessages/>
 
 <f:form object="{offer}" action="{action}" controller="Offer" name="offer" method="POST">
-	<f:form.hidden property="feUser" value="{offer.feUser}" />
+	<f:form.hidden property="feUser" value="{offer.feUser}"/>
 
 
 	<div class="form__item">
@@ -30,5 +30,16 @@
 			<span class="icon-save"></span>
 			Speichern
 		</button>
+	</div>
+
+	<div class="form__item form__item--submit">
+		<f:link.action pageUid="{settings.editPid}"
+					   class="button secondary hollow alert"
+					   action="delete"
+					   controller="Offer"
+					   onclick="return confirm('Are you sure?')"
+					   arguments="{offer: offer.uid}">Delete offer
+			<span class="icon-trash-can"></span>
+		</f:link.action>
 	</div>
 </f:form>
