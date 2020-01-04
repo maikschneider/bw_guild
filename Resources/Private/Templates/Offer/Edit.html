@@ -8,7 +8,7 @@
 	<h3>Edit offers</h3>
 	<ul>
 		<f:for each="{offers}" as="offer">
-			<li><f:link.action action="edit" controller="Offer" arguments="{offer: offer}">{offer.title}</f:link.action></li>
+			<li><f:link.action action="edit" controller="Offer" arguments="{offer: offer.uid}">{offer.title}</f:link.action></li>
 		</f:for>
 	</ul>
 </f:if>

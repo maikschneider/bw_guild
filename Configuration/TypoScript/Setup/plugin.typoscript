@@ -23,6 +23,7 @@ plugin {
 			includeSubCategories = {$plugin.tx_bwguild.settings.includeSubCategories}
 			googleApiKey = {$plugin.tx_bwguild.settings.googleApiKey}
 			useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}
+			storagePid = {$plugin.tx_bwguild.persistence.storagePid}
 		}
 	}
 

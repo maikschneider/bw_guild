@@ -2,6 +2,8 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use Blueways\BwGuild\Utility\SlugUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
@@ -553,5 +555,12 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setCountry($country)
     {
         $this->country = $country;
+    }
+
+    public function updateSlug(): void
+    {
+        $slugUtility = GeneralUtility::makeInstance(SlugUtility::class);
+        $slug = $slugUtility->getSlug($this);
+        $this->setSlug($slug);
     }
 }

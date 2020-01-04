@@ -3,10 +3,12 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Offer;
+use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * Class OfferController
@@ -108,9 +110,17 @@ class OfferController extends ActionController
         }
 
         if ($offer->getUid()) {
+            $offer->updateSlug();
             $this->offerRepository->update($offer);
         } else {
             $this->offerRepository->add($offer);
+
+            // persist to set pid and generate slug
+            $persistenceManager = $this->objectManager->get(PersistenceManager::class);
+            $persistenceManager->persistAll();
+
+            $offer->updateSlug();
+            $this->offerRepository->update($offer);
         }
 
         $this->addFlashMessage(
@@ -195,4 +205,5 @@ class OfferController extends ActionController
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
     }
+
 }

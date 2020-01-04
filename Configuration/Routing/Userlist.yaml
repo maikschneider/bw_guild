@@ -8,11 +8,13 @@ routeEnhancers:
         _controller: 'User::show'
         _arguments:
           user: user
-      - routePath: '/page-{page}'
+      - routePath: '/'
+        _controller: 'User::list'
+      - routePath: '/{localized_page}-{page}'
         _controller: 'User::list'
         _arguments:
           page: '@widget_0/currentPage'
-      - routePath: '/'
+      - routePath: '/{localized_edit}'
         _controller: 'User::edit'
       - routePath: '/hello'
         _controller: 'User::new'
@@ -30,3 +32,21 @@ routeEnhancers:
         type: StaticRangeMapper
         start: '1'
         end: '100'
+      localized_new:
+        type: LocaleModifier
+        default: 'search'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'suche'
+      localized_page:
+        type: LocaleModifier
+        default: 'page'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'seite'
+      localized_edit:
+        type: LocaleModifier
+        default: 'edit'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'bearbeiten'
