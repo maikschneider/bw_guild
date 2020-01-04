@@ -159,6 +159,7 @@ class OfferController extends ActionController
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.title'),
             \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
+        $this->request->setDispatched(true);
         $this->redirect('edit');
     }
 

@@ -20,6 +20,10 @@ routeEnhancers:
         _controller: 'Offer::update'
       - routePath: '/{localized_new}'
         _controller: 'Offer::new'
+      - routePath: '/{localized_delete}/{offer}'
+        _controller: 'Offer::delete'
+        _arguments:
+          offer: offer
     defaultController: 'Offer::list'
     aspects:
       offer:
@@ -38,3 +42,9 @@ routeEnhancers:
         localeMap:
           - locale: 'de_DE.*'
             value: 'bearbeiten'
+      localized_delete:
+        type: LocaleModifier
+        default: 'delete'
+        localeMap:
+          - locale: 'de_DE.*'
+            value: 'loeschen'
