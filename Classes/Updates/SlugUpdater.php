@@ -5,6 +5,7 @@ namespace Blueways\BwGuild\Updates;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\DataHandling\SlugHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
@@ -68,8 +69,11 @@ class SlugUpdater implements UpgradeWizardInterface
 
             while ($record = $elements->fetch()) {
 
-                // generate slug for record
-                $slug = $slugHelper->generate($record, $record['pid']);
+                // generate unique slug for record
+                $value = $slugHelper->generate($record, $record['pid']);
+                $state = RecordStateFactory::forName($table)
+                    ->fromArray($record, $record['pid'], $record['uid']);
+                $slug = $slugHelper->buildSlugForUniqueInPid($value, $state);
 
                 // update slug field of record
                 $queryBuilder->update($table)
@@ -105,7 +109,8 @@ class SlugUpdater implements UpgradeWizardInterface
             ->from($table)
             ->where(
                 $queryBuilder->expr()->orX(
-                    $queryBuilder->expr()->eq(self::TABLES[$table], $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)),
+                    $queryBuilder->expr()->eq(self::TABLES[$table],
+                        $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)),
                     $queryBuilder->expr()->isNull(self::TABLES[$table])
                 )
             )
