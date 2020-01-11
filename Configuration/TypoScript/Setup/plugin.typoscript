@@ -33,8 +33,12 @@ plugin {
 			includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
 			order = {$plugin.tx_bwguild_userlist.settings.order}
 			orderDirection = {$plugin.tx_bwguild_userlist.settings.orderDirection}
+			showPid = {$plugin.tx_bwguild_userlist.settings.showPid}
 			schema {
 				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
+			}
+			sitemap {
+				enable = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}
 			}
 		}
 	}
@@ -47,6 +51,9 @@ plugin {
 			schema {
 				enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
 				hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}
+			}
+			sitemap {
+				enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
 			}
 		}
 	}

@@ -23,6 +23,9 @@ plugin {
 			}
 			order =
 			orderDirection =
+			sitemap {
+				enable = 0
+			}
 		}
 	}
 
@@ -32,8 +35,12 @@ plugin {
 			includeSubCategories = 0
 			order = company
 			orderDirection =
+			showPid =
 			schema  {
 				enable = 1
+			}
+			sitemap {
+				enable = 0
 			}
 		}
 	}
