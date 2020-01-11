@@ -32,6 +32,9 @@ plugin {
 			includeSubCategories = 0
 			order = company
 			orderDirection =
+			schema  {
+				enable = 1
+			}
 		}
 	}
 }

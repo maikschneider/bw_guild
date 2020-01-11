@@ -33,6 +33,9 @@ plugin {
 			includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
 			order = {$plugin.tx_bwguild_userlist.settings.order}
 			orderDirection = {$plugin.tx_bwguild_userlist.settings.orderDirection}
+			schema {
+				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
+			}
 		}
 	}
 

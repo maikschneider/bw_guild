@@ -4,7 +4,9 @@ namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Offer;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
@@ -60,11 +62,20 @@ class OfferController extends ActionController
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
         $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
+        $schema = $offer->getJsonSchema($typoscript);
+
         if ((int)$typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['enable']) {
-            $json = json_encode($offer->getJsonSchema($typoscript));
+            $json = json_encode($schema);
             $jsCode = '<script type="application/ld+json">' . $json . '</script>';
             $this->response->addAdditionalHeaderData($jsCode);
         }
+
+        $GLOBALS['TSFE']->page['title'] = $schema['title'];
+        $GLOBALS['TSFE']->page['description'] = $schema['description'];
+
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+        $metaTagManager->getManagerForProperty('og:title')->addProperty('og:title', $schema['title']);
+        $metaTagManager->getManagerForProperty('og:description')->addProperty('og:description', $schema['description']);
 
         $this->view->assign('offer', $offer);
     }

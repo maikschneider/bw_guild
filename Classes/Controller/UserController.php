@@ -5,6 +5,7 @@ namespace Blueways\BwGuild\Controller;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Service\AccessControlService;
 use Blueways\BwGuild\Utility\DemandUtility;
+use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -78,7 +79,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->settings['mode'] === 'search') {
             $this->forward('search');
         }
-        
+
         // find user by demand
         $users = $this->userRepository->findDemanded($demand);
 
@@ -114,6 +115,21 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function showAction(FrontendUser $user)
     {
+        $schema = $user->getJsonSchema();
+
+        if ((int)$this->settings['schema.']['enable']) {
+            $json = json_encode($schema);
+            $jsCode = '<script type="application/ld+json">' . $json . '</script>';
+            $this->response->addAdditionalHeaderData($jsCode);
+        }
+
+        $GLOBALS['TSFE']->page['title'] = $schema['title'];
+        $GLOBALS['TSFE']->page['description'] = $schema['description'];
+
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+        $metaTagManager->getManagerForProperty('og:title')->addProperty('og:title', $schema['title']);
+        $metaTagManager->getManagerForProperty('og:description')->addProperty('og:description', $schema['description']);
+
         $this->view->assign('user', $user);
     }
 

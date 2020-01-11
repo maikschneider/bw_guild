@@ -73,6 +73,21 @@ class User extends FrontendUser
     protected $sortingField;
 
     /**
+     * @var boolean
+     */
+    protected $publicProfile;
+
+    public function __construct(string $username = '', string $password = '')
+    {
+        parent::__construct($username, $password);
+
+        $this->categories = new ObjectStorage();
+        $this->offers = new ObjectStorage();
+        $this->sharedOffers = new ObjectStorage();
+        $this->sortingField = 'company';
+    }
+
+    /**
      * @return bool
      */
     public function isPublicProfile(): bool
@@ -86,21 +101,6 @@ class User extends FrontendUser
     public function setPublicProfile(bool $publicProfile): void
     {
         $this->publicProfile = $publicProfile;
-    }
-
-    /**
-     * @var boolean
-     */
-    protected $publicProfile;
-
-    public function __construct(string $username = '', string $password = '')
-    {
-        parent::__construct($username, $password);
-
-        $this->categories = new ObjectStorage();
-        $this->offers = new ObjectStorage();
-        $this->sharedOffers = new ObjectStorage();
-        $this->sortingField = 'company';
     }
 
     /**
@@ -189,7 +189,7 @@ class User extends FrontendUser
     public function getAllOffers()
     {
         $offers = $this->offers;
-        if($this->sharedOffers) {
+        if ($this->sharedOffers) {
             $offers->addAll($this->sharedOffers);
         }
 
@@ -302,5 +302,33 @@ class User extends FrontendUser
             $this->latitude = $coords['latitude'];
             $this->longitude = $coords['longitude'];
         }
+    }
+
+    public function getJsonSchema()
+    {
+        $schema = [
+            '@context' => 'http://schema.org/',
+            '@type' => 'LocalBusiness',
+            'title' => $this->getCompany(),
+            'description' => $this->getName(),
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => $this->getCity(),
+                'postalCode' => $this->getZip(),
+                'streetAddress' => $this->getAddress(),
+                'addressCountry' => $this->getCountry() === 'Deutschland' ? 'Germany' : '',
+            ],
+            'member' => [
+                '@type' => 'Person',
+                'familyName' => $this->getLastName(),
+                'givenName' => $this->getFirstName()
+            ],
+            'telephone' => $this->getTelephone(),
+            'faxNumber' => $this->getFax(),
+            'email' => $this->getEmail(),
+            'url' => $this->getWww(),
+        ];
+
+        return $schema;
     }
 }
