@@ -1,4 +1,4 @@
-[globalVar = LIT:1 = {$plugin.tx_bwguild_userlist.settings.schema.enable}]
+[globalVar = LIT:1 = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}]
 	plugin.tx_seo {
 		config {
 			xmlSitemap {
@@ -32,7 +32,7 @@
 	}
 [GLOBAL]
 
-[globalVar = LIT:1 = {$plugin.tx_bwguild_offerlist.settings.schema.enable}]
+[globalVar = LIT:1 = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}]
 	plugin.tx_seo {
 		config {
 			xmlSitemap {
