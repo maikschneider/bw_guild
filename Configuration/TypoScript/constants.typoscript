@@ -38,6 +38,7 @@ plugin {
 			showPid =
 			schema  {
 				enable = 1
+				defaultImage =
 			}
 			sitemap {
 				enable = 0

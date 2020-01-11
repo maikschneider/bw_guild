@@ -115,7 +115,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function showAction(FrontendUser $user)
     {
-        $schema = $user->getJsonSchema();
+        $schema = $user->getJsonSchema($this->settings);
 
         if ((int)$this->settings['schema.']['enable']) {
             $json = json_encode($schema);
@@ -123,11 +123,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->response->addAdditionalHeaderData($jsCode);
         }
 
-        $GLOBALS['TSFE']->page['title'] = $schema['title'];
+        $GLOBALS['TSFE']->page['title'] = $schema['name'];
         $GLOBALS['TSFE']->page['description'] = $schema['description'];
 
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
-        $metaTagManager->getManagerForProperty('og:title')->addProperty('og:title', $schema['title']);
+        $metaTagManager->getManagerForProperty('og:title')->addProperty('og:title', $schema['name']);
         $metaTagManager->getManagerForProperty('og:description')->addProperty('og:description', $schema['description']);
 
         $this->view->assign('user', $user);

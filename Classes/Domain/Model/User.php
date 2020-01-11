@@ -304,13 +304,17 @@ class User extends FrontendUser
         }
     }
 
-    public function getJsonSchema()
+    public function getJsonSchema($settings)
     {
+        $image = $settings['schema.']['defaultImage'] ?: '';
+
         $schema = [
             '@context' => 'http://schema.org/',
             '@type' => 'LocalBusiness',
-            'title' => $this->getCompany(),
+            'name' => $this->getCompany(),
             'description' => $this->getName(),
+            'image' => $image,
+
             'address' => [
                 '@type' => 'PostalAddress',
                 'addressLocality' => $this->getCity(),

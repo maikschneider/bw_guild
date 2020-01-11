@@ -36,6 +36,7 @@ plugin {
 			showPid = {$plugin.tx_bwguild_userlist.settings.showPid}
 			schema {
 				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
+				defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}
 			}
 			sitemap {
 				enable = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}
