@@ -13,7 +13,7 @@ routeEnhancers:
       - routePath: '/{localized_page}-{page}'
         _controller: 'User::list'
         _arguments:
-          page: '@widget_0/currentPage'
+          userpage: '@widget_0/currentPage'
       - routePath: '/{localized_edit}'
         _controller: 'User::edit'
       - routePath: '/hello'
@@ -28,7 +28,7 @@ routeEnhancers:
         type: PersistedAliasMapper
         tableName: fe_users
         routeFieldName: slug
-      page:
+      userpage:
         type: StaticRangeMapper
         start: '1'
         end: '100'
