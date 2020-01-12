@@ -11,7 +11,14 @@
 
 		<f:for each="{categories}" as="category" iteration="i">
 			<label>
-				<f:form.checkbox value="{category.uid}" property="categories.{i.index}"/>
+				<f:variable name="checked" value="0"/>
+				<f:for each="{demand.categories}" as="demandCategory">
+					<f:if condition="{category.uid} == {demandCategory}">
+						<f:variable name="checked" value="1"/>
+					</f:if>
+				</f:for>
+
+				<f:form.checkbox value="{category.uid}" property="categories.{i.index}" checked="{checked}"/>
 				{category.title} </label>
 		</f:for>
 
