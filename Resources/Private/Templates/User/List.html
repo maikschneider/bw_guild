@@ -5,9 +5,9 @@
 			<f:form.textfield property="search"/>
 		</label> <label>Branchen</label>
 
-		<f:form.hidden property="categoryConjunction" value="or" />
-		<f:form.hidden property="searchDistanceAddress" />
-		<f:form.hidden property="maxDistance" />
+		<f:form.hidden property="categoryConjunction" value="or"/>
+		<f:form.hidden property="searchDistanceAddress"/>
+		<f:form.hidden property="maxDistance"/>
 
 		<f:for each="{categories}" as="category" iteration="i">
 			<label>
@@ -57,7 +57,8 @@
 		<f:for each="{pagedUsers}" as="user">
 			<div class="users__item">
 				<div class="users__item__main">
-					<f:link.action action="show" controller="User" arguments="{user: user}"><h3>{user.company}</h3></f:link.action>
+					<f:link.action action="show" controller="User" arguments="{user: user}"><h3>{user.company}</h3>
+					</f:link.action>
 					<p>{user.address}<br/> {user.zip} {user.city}</p>
 
 					<f:if condition="{user.telephone}">
@@ -79,7 +80,9 @@
 				</div>
 				<div class="users__item__cats">
 					<f:for each="{user.categories}" as="category">
-						<f:link.action action="list" controller="User" arguments="{demand: {categories: {0: category.uid}}}">
+						<f:link.action action="list"
+									   controller="User"
+									   arguments="{demand: {categories: {0: category.uid}}}">
 							<span class="icon-checkmark"></span>
 							{category.title}
 						</f:link.action>
