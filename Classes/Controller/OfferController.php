@@ -50,6 +50,10 @@ class OfferController extends ActionController
 
         $offers = $repository->findDemanded($demand);
 
+        // disbale indexing of list view
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+        $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
+
         $this->view->assign('offers', $offers);
     }
 

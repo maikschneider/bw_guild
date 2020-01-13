@@ -93,6 +93,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $categories = $this->categoryRepository->findAll();
         }
 
+        // disbale indexing of list view
+        $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
+        $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
+
         $this->view->assign('users', $users);
         $this->view->assign('demand', $demand);
         $this->view->assign('categories', $categories);

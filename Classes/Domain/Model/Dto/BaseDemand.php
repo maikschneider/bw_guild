@@ -270,6 +270,12 @@ class BaseDemand extends AbstractEntity
      */
     public function overrideDemand($demand)
     {
+        // abort if no valid demand
+        if(!$demand || !is_array($demand)) {
+            return;
+        }
+
+        // override properties
         foreach ($demand as $key => $value) {
             $this->_setProperty($key, $value);
         }
