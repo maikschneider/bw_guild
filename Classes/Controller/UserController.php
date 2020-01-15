@@ -186,7 +186,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @param $user
+     * @param \Blueways\BwGuild\Domain\Model\User $user
      * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
      * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
@@ -196,7 +196,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
      */
-    public function updateAction($user)
+    public function updateAction(User $user): void
     {
         if (!$this->accessControlService->isLoggedIn($user)) {
             $this->throwStatus(403, 'No access to edit this user');
@@ -234,7 +234,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
      * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
      */
-    private function moveLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo)
+    private function moveLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo): void
     {
         $resourceFactory = $this->objectManager->get(ResourceFactory::class);
 
