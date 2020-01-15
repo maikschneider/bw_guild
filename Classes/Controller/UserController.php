@@ -11,7 +11,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Lang\LanguageService;
 
@@ -118,11 +117,16 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $user
+     * @param \Blueways\BwGuild\Domain\Model\User $user
      */
-    public function showAction(FrontendUser $user)
+    public function showAction(User $user)
     {
         $schema = $user->getJsonSchema($this->settings);
+
+        if (isset($schema['logo'])) {
+            $schema['logo'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $schema['logo'];
+            $schema['image'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $schema['logo'];
+        }
 
         if ((int)$this->settings['schema.']['enable']) {
             $json = json_encode($schema);
@@ -136,6 +140,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
         $metaTagManager->getManagerForProperty('og:title')->addProperty('og:title', $schema['name']);
         $metaTagManager->getManagerForProperty('og:description')->addProperty('og:description', $schema['description']);
+        $metaTagManager->getManagerForProperty('og:image')->addProperty('og:image', $schema['image']);
 
         $this->view->assign('user', $user);
     }
@@ -201,7 +206,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if (!$this->accessControlService->isLoggedIn($user)) {
             $this->throwStatus(403, 'No access to edit this user');
         }
-
 
         // delete all logos
         if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {

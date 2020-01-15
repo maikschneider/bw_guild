@@ -355,6 +355,10 @@ class User extends FrontendUser
             'url' => $this->getWww(),
         ];
 
+        if($this->getLogo()) {
+            $schema['logo'] = $this->getLogo()->getOriginalResource()->getPublicUrl();
+        }
+
         return $schema;
     }
 }
