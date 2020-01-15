@@ -110,6 +110,23 @@ call_user_func(function () {
             'config' => [
                 'type' => 'check',
             ]
+        ],
+        'logo' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.logo',
+            'exclude' => 1,
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'logo',
+                [
+                    'minitems' => 0,
+                    'maxitems' => 1,
+                    'foreign_match_fields' => [
+                        'fieldname' => 'logo',
+                        'tablenames' => 'fe_users',
+                        'table_local' => 'sys_file',
+                    ],
+                ],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
         ]
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
@@ -121,6 +138,7 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'longitude', '', 'before:company');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'slug', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'public_profile', '', 'after:password');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'logo', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users',
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '',
         'after:description');

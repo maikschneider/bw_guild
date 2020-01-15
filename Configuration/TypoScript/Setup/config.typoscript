@@ -49,4 +49,24 @@ config {
 			}
 		}
 	}
+
+	# Extend FileReference to add references from frontend context
+	persistence {
+		classes {
+			Blueways\BwGuild\Domain\Model\FileReference {
+				mapping {
+					tableName = sys_file_reference
+					columns {
+						uid_local.mapOnProperty = originalFileIdentifier
+					}
+				}
+			}
+		}
+
+		objects {
+			TYPO3\CMS\Extbase\Domain\Model\FileReference.className = Blueways\BwGuild\Domain\Model\FileReference
+		}
+
+		updateReferenceIndex = 1
+	}
 }

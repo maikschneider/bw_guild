@@ -6,10 +6,13 @@ use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Service\AccessControlService;
 use Blueways\BwGuild\Utility\DemandUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Lang\LanguageService;
 
 /**
@@ -155,19 +158,64 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('categories', $categories);
     }
 
+    public function initializeUpdateAction()
+    {
+        if ($this->arguments->hasArgument('user')) {
+
+            $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') ? true : false;
+
+            // ignore logo parameter if empty
+            if ($deleteLog || $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '') {
+                // unset logo argument
+                $userArgument = $this->request->getArgument('user');
+                unset($userArgument['logo']);
+                $this->request->setArgument('user', $userArgument);
+
+                // unset logo validator
+                $validator = $this->arguments->getArgument('user')->getValidator();
+                foreach ($validator->getValidators() as $subValidator) {
+                    /** @var GenericObjectValidator $subValidatorSub */
+                    foreach ($subValidator->getValidators() as $subValidatorSub) {
+                        $subValidatorSub->getPropertyValidators('logo')->removeAll(
+                            $subValidatorSub->getPropertyValidators('logo')
+                        );
+                    }
+                }
+            }
+        }
+    }
+
     /**
-     * @param \Blueways\BwGuild\Domain\Model\User $user
+     * @param $user
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
     public function updateAction($user)
     {
         if (!$this->accessControlService->isLoggedIn($user)) {
             $this->throwStatus(403, 'No access to edit this user');
         }
+
+
+        // delete all logos
+        if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {
+            $this->userRepository->deleteAllUserLogos($user->getUid());
+        }
+
+        // move logo if newly created
+        $userArguments = $this->request->getArgument('user');
+        if (isset($userArguments['logo']) && $logo = $user->getLogo()) {
+            $this->userRepository->deleteAllUserLogos($user->getUid());
+            $this->moveLogo($logo);
+        }
+
+        // delete old file references -> backend would show up these
 
         $user->geoCodeAddress();
         $this->userRepository->update($user);
@@ -178,6 +226,45 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $this->redirect('edit');
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
+     */
+    private function moveLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo)
+    {
+        $resourceFactory = $this->objectManager->get(ResourceFactory::class);
+
+        // determine target storage and directory
+        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
+        $targetFolder = count($targetParts) === 2 ? $targetParts[1] : $targetParts[0];
+        $storageUid = count($targetParts) === 2 ? $targetParts[0] : null;
+        $storage = $storageUid ? $resourceFactory->getStorageObject($storageUid) : $resourceFactory->getDefaultStorage();
+
+        // abort if no valid storage
+        if (!$storage) {
+            return;
+        }
+
+        // create logo folder
+        if (!$storage->hasFolder($targetFolder)) {
+            $storage->createFolder($targetFolder);
+        }
+
+        // move file
+        $file = $resourceFactory->getFileObjectByStorageAndIdentifier(
+            $logo->getOriginalResource()->getStorage()->getUid(),
+            $logo->getOriginalResource()->getIdentifier());
+
+        if (!$file) {
+            return;
+        }
+
+        $file->moveTo($storage->getFolder($targetFolder), $logo->getOriginalResource()->getName(),
+            DuplicationBehavior::RENAME);
     }
 
     /**

@@ -77,6 +77,12 @@ class User extends FrontendUser
      */
     protected $publicProfile;
 
+    /**
+     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
+     * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\UserLogoValidator")
+     */
+    protected $logo;
+
     public function __construct(string $username = '', string $password = '')
     {
         parent::__construct($username, $password);
@@ -85,6 +91,22 @@ class User extends FrontendUser
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
         $this->sortingField = 'company';
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
+     */
+    public function getLogo(): ?\TYPO3\CMS\Extbase\Domain\Model\FileReference
+    {
+        return $this->logo;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
+     */
+    public function setLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo): void
+    {
+        $this->logo = $logo;
     }
 
     /**

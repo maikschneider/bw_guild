@@ -9,6 +9,7 @@ plugin {
 		settings {
 			includeSubCategories = 0
 			useEmailAsUsername = 0
+			userLogoFolder = logos
 		}
 	}
 
