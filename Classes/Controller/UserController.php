@@ -125,7 +125,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         if (isset($schema['logo'])) {
             $schema['logo'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $schema['logo'];
-            $schema['image'] = 'https://' . $_SERVER['SERVER_NAME'] . '/' . $schema['logo'];
+            $schema['image'] = $schema['logo'];
         }
 
         if ((int)$this->settings['schema.']['enable']) {
