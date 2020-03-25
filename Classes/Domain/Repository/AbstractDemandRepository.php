@@ -3,9 +3,12 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
+use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
+use TYPO3\CMS\Core\Database\Query\Restriction\FrontendGroupRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
@@ -20,6 +23,7 @@ class AbstractDemandRepository extends Repository
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return int
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function countDemanded($demand): int
     {
@@ -30,17 +34,48 @@ class AbstractDemandRepository extends Repository
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
     public function findDemanded($demand)
     {
-        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
-        $this->queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($demand::TABLE);
+        $this->createQueryBuilder();
+
         $this->queryBuilder->select('*');
-        $this->queryBuilder->from($demand::TABLE);
 
         $this->setConstraints($demand);
 
         return $this->queryBuilder->execute()->fetchAll();
+    }
+
+    /**
+     * Create queryBuilder for current repository table + add filter for correct subclass (record_type)
+     * 
+     * @return void
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @see https://gist.github.com/Nemo64/d6bf6561fc4b32d490b1b39966107ff5
+     */
+    private function createQueryBuilder(): void
+    {
+        $dataMapper = $this->objectManager->get(DataMapper::class);
+        $dataMap = $dataMapper->getDataMap($this->objectType);
+        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+        $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($dataMap->getTableName());
+        $qb->from($dataMap->getTableName());
+
+        $recordTypeColumnName = $dataMap->getRecordTypeColumnName();
+        if ($recordTypeColumnName) {
+            $typeNames = [$dataMap->getRecordType()];
+
+            foreach ($dataMap->getSubclasses() as $subclass) {
+                $typeNames[] = $dataMapper->getDataMap($subclass)->getRecordType();
+            }
+
+            $typeNameParameter = $qb->createNamedParameter($typeNames,
+                Connection::PARAM_STR_ARRAY);
+            $qb->andWhere($qb->expr()->in($recordTypeColumnName, $typeNameParameter));
+        }
+
+        $this->queryBuilder = $qb;
     }
 
     /**
@@ -53,6 +88,7 @@ class AbstractDemandRepository extends Repository
         $this->setOrderConstraints($demand);
         $this->setLimitConstraint($demand);
         $this->setGeoCodeConstraint($demand);
+        $this->setRestritions($demand);
     }
 
     /**
@@ -205,7 +241,7 @@ class AbstractDemandRepository extends Repository
         }
 
         // return no results if search string could not be geo coded
-        if(!$demand->geoCodeSearchString()) {
+        if (!$demand->geoCodeSearchString()) {
             $this->queryBuilder->setMaxResults(0);
             return;
         }
@@ -220,6 +256,19 @@ class AbstractDemandRepository extends Repository
             $this->queryBuilder->expr()->comparison($distanceSqlCalc, ExpressionBuilder::LT, $maxDistance)
         );
         $this->queryBuilder->orderBy('distance');
+    }
+
+    /**
+     * Change DefaultRestrictions to FrontendRestrictions in order to respect fe_group
+     *
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @return void
+     */
+    private function setRestritions(BaseDemand $demand)
+    {
+        $this->queryBuilder->getRestrictions()
+            ->removeAll()
+            ->add(GeneralUtility::makeInstance(FrontendGroupRestriction::class));
     }
 
     /**

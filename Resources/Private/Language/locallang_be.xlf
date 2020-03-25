@@ -114,6 +114,9 @@
 			<trans-unit id="offerlist.record_type.internships">
 				<source>Internships</source>
 			</trans-unit>
+			<trans-unit id="offerlist.record_type.helpings">
+				<source>Helpings</source>
+			</trans-unit>
 			<trans-unit id="offerlist.storagePid">
 				<source>Storage PID</source>
 			</trans-unit>

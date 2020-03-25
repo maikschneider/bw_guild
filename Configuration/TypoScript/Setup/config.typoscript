@@ -20,6 +20,7 @@ config {
 					0 = Blueways\BwGuild\Domain\Model\Job
 					1 = Blueways\BwGuild\Domain\Model\Education
 					2 = Blueways\BwGuild\Domain\Model\Internship
+					3 = Blueways\BwGuild\Domain\Model\Help
 				}
 
 				mapping {
@@ -47,26 +48,13 @@ config {
 					tableName = tx_bwguild_domain_model_offer
 				}
 			}
-		}
-	}
 
-	# Extend FileReference to add references from frontend context
-	persistence {
-		classes {
-			Blueways\BwGuild\Domain\Model\FileReference {
+			Blueways\BwGuild\Domain\Model\Help {
 				mapping {
-					tableName = sys_file_reference
-					columns {
-						uid_local.mapOnProperty = originalFileIdentifier
-					}
+					recordType = 3
+					tableName = tx_bwguild_domain_model_offer
 				}
 			}
 		}
-
-		objects {
-			TYPO3\CMS\Extbase\Domain\Model\FileReference.className = Blueways\BwGuild\Domain\Model\FileReference
-		}
-
-		updateReferenceIndex = 1
 	}
 }

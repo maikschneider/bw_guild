@@ -53,33 +53,35 @@
 							<config>
 								<type>select</type>
 								<items>
-									<numIndex index="0">
+									<numIndex index="0" type="array">
 										<numIndex index="0">
 											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.record_type.default
 										</numIndex>
-										<numIndex index="1">Blueways\BwGuild\Domain\Repository\OfferRepository
-										</numIndex>
+										<numIndex index="1">Blueways\BwGuild\Domain\Repository\OfferRepository</numIndex>
 									</numIndex>
-									<numIndex index="1">
+									<numIndex index="1" type="array">
 										<numIndex index="0">
 											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.record_type.jobs
 										</numIndex>
-										<numIndex index="1">Blueways\BwGuild\Domain\Repository\JobRepository
-										</numIndex>
+										<numIndex index="1">Blueways\BwGuild\Domain\Repository\JobRepository</numIndex>
 									</numIndex>
-									<numIndex index="2">
+									<numIndex index="2" type="array">
 										<numIndex index="0">
 											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.record_type.educations
 										</numIndex>
-										<numIndex index="1">Blueways\BwGuild\Domain\Repository\EducationRepository
-										</numIndex>
+										<numIndex index="1">Blueways\BwGuild\Domain\Repository\EducationRepository</numIndex>
 									</numIndex>
-									<numIndex index="3">
+									<numIndex index="3" type="array">
 										<numIndex index="0">
 											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.record_type.internships
 										</numIndex>
-										<numIndex index="1">Blueways\BwGuild\Domain\Repository\InternshipRepository
+										<numIndex index="1">Blueways\BwGuild\Domain\Repository\InternshipRepository</numIndex>
+									</numIndex>
+									<numIndex index="4" type="array">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.record_type.helpings
 										</numIndex>
+										<numIndex index="1">Blueways\BwGuild\Domain\Repository\HelpRepository</numIndex>
 									</numIndex>
 								</items>
 							</config>

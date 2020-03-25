@@ -146,6 +146,10 @@
 				<source>Internships</source>
 				<target>Praktikas</target>
 			</trans-unit>
+			<trans-unit id="offerlist.record_type.helpings">
+				<source>Helpings</source>
+				<target>Hilfen</target>
+			</trans-unit>
 			<trans-unit id="offerlist.storagePid">
 				<source>Storage PID</source>
 				<target>Datensatz Ordner</target>
