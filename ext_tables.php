@@ -38,6 +38,11 @@ call_user_func(
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.2.svg']
         );
+        $iconRegistry->registerIcon(
+            'tx_bwguild_domain_model_offer-3',
+            \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+            ['source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.3.svg']
+        );
 
         /**
          * Register BE Module

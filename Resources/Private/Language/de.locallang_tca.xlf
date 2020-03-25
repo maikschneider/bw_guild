@@ -50,6 +50,10 @@
 				<source>Internship</source>
 				<target>Praktikum</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.3">
+				<source>Help</source>
+				<target>Hilfe</target>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.description">
 				<source>Job description</source>
 				<target>Jobbeschreibung</target>

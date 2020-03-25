@@ -18,6 +18,7 @@ return [
             '0' => 'tx_bwguild_domain_model_offer-0',
             '1' => 'tx_bwguild_domain_model_offer-1',
             '2' => 'tx_bwguild_domain_model_offer-2',
+            '3' => 'tx_bwguild_domain_model_offer-3',
         ],
         'useColumnsForDefaultValues' => 'record_type',
         'enablecolumns' => [
@@ -43,6 +44,10 @@ return [
         // Internship
         '2' => [
             'showitem' => 'fe_user, fe_users, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
+        ],
+        // Internship
+        '3' => [
+            'showitem' => 'fe_user, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country'
         ]
     ],
     'columns' => [
@@ -67,6 +72,11 @@ return [
                         'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.2',
                         2,
                         'tx_bwguild_domain_model_offer-2'
+                    ],
+                    [
+                        'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.3',
+                        3,
+                        'tx_bwguild_domain_model_offer-3'
                     ],
                 ],
                 'fieldWizard' => [

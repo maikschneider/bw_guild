@@ -46,6 +46,9 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.record_type.2">
 				<source>Internship</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.3">
+				<source>Help</source>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.description">
 				<source>Job description</source>
 			</trans-unit>
