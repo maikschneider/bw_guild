@@ -124,19 +124,30 @@ class OfferController extends ActionController
             $this->throwStatus(403, 'Not logged in');
         }
 
-        if ($offer->getUid()) {
-            $offer->updateSlug();
-            $this->offerRepository->update($offer);
-        } else {
+        $userId = $this->accessControlService->getFrontendUserUid();
+        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        $user = $this->userRepository->findByUid($userId);
+
+        // update: check access
+        if ($offer->getUid() && $offer->getFeUser() && $offer->getFeUser()->getUid() !== $userId) {
+            $this->throwStatus(403, 'Not allowed to update this offer');
+        }
+
+        // new: add current user
+        if (!$offer->getUid()) {
+            // set current user as owner
+            $offer->setFeUser($user);
+
             $this->offerRepository->add($offer);
 
             // persist to set pid and generate slug
             $persistenceManager = $this->objectManager->get(PersistenceManager::class);
             $persistenceManager->persistAll();
-
-            $offer->updateSlug();
-            $this->offerRepository->update($offer);
         }
+
+        // all time: update slug
+        $offer->updateSlug();
+        $this->offerRepository->update($offer);
 
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
