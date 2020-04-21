@@ -18,18 +18,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 class UserRepository extends AbstractDemandRepository
 {
 
-    public function findDemanded($demand)
-    {
-        $result = parent::findDemanded($demand);
-
-        $dataMapper = $this->objectManager->get(DataMapper::class);
-
-        return $dataMapper->map(
-            User::class,
-            $result
-        );
-    }
-
     public function setConstraints($demand): void
     {
         parent::setConstraints($demand);

@@ -42,9 +42,21 @@ class AbstractDemandRepository extends Repository
 
         $this->queryBuilder->select('*');
 
+        $dataMapper = $this->objectManager->get(DataMapper::class);
+        $dataMap = $dataMapper->getDataMap($this->objectType);
+
+        if ($dataMap->getTableName() === 'fe_users') {
+            $this->queryBuilder->setParameter('dcValue1', [0]);
+        }
+
         $this->setConstraints($demand);
 
-        return $this->queryBuilder->execute()->fetchAll();
+        $result = $this->queryBuilder->execute()->fetchAll();
+
+        return $dataMapper->map(
+            $dataMap->getClassName(),
+            $result
+        );
     }
 
     /**
