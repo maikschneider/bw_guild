@@ -49,7 +49,7 @@ class AbstractDemandRepository extends Repository
 
     /**
      * Create queryBuilder for current repository table + add filter for correct subclass (record_type)
-     * 
+     *
      * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @see https://gist.github.com/Nemo64/d6bf6561fc4b32d490b1b39966107ff5
@@ -267,7 +267,6 @@ class AbstractDemandRepository extends Repository
     private function setRestritions(BaseDemand $demand)
     {
         $this->queryBuilder->getRestrictions()
-            ->removeAll()
             ->add(GeneralUtility::makeInstance(FrontendGroupRestriction::class));
     }
 
