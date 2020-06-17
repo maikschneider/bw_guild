@@ -399,7 +399,7 @@ return [
                     ],
                 ],
                 'fallbackCharacter' => '-',
-                'eval' => 'uniqueInSite',
+                'eval' => 'unique',
             ],
         ],
         'fe_group' => [
