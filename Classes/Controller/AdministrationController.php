@@ -19,19 +19,19 @@ class AdministrationController extends ActionController
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     * @inject
+     *
      */
     protected $userRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     * @inject
+     *
      */
     protected $usergroupRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
-     * @inject
+     *
      */
     protected $offerRepository;
 
@@ -42,6 +42,22 @@ class AdministrationController extends ActionController
         $users = $this->userRepository->findAll();
 
         $this->view->assign('users', $users);
+    }
+
+    public function injectOfferRepository(\Blueways\BwGuild\Domain\Repository\OfferRepository $offerRepository)
+    {
+        $this->offerRepository = $offerRepository;
+    }
+
+    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    public function injectUsergroupRepository(
+        \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository $usergroupRepository
+    ) {
+        $this->usergroupRepository = $usergroupRepository;
     }
 
     /**

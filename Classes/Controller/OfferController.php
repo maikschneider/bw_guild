@@ -22,19 +22,19 @@ class OfferController extends ActionController
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
-     * @inject
+     *
      */
     protected $offerRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     * @inject
+     *
      */
     protected $userRepository;
 
     /**
      * @var \Blueways\BwGuild\Service\AccessControlService
-     * @inject
+     *
      */
     protected $accessControlService;
 
@@ -215,6 +215,21 @@ class OfferController extends ActionController
         parent::initializeAction();
 
         $this->mergeTyposcriptSettings();
+    }
+
+    public function injectAccessControlService(\Blueways\BwGuild\Service\AccessControlService $accessControlService)
+    {
+        $this->accessControlService = $accessControlService;
+    }
+
+    public function injectOfferRepository(\Blueways\BwGuild\Domain\Repository\OfferRepository $offerRepository)
+    {
+        $this->offerRepository = $offerRepository;
+    }
+
+    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
     }
 
     /**

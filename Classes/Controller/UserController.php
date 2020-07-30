@@ -24,13 +24,13 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     * @inject
+     *
      */
     protected $userRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\CategoryRepository
-     * @inject
+     *
      */
     protected $categoryRepository;
 
@@ -188,6 +188,16 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
+    }
+
+    public function injectCategoryRepository(\Blueways\BwGuild\Domain\Repository\CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
+    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
     }
 
     /**
