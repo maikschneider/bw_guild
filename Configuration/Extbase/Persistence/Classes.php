@@ -13,6 +13,12 @@ return [
             'crdate' => [
                 'mapOnProperty' => 'crdate'
             ]
+        ],
+        'subclasses' => [
+            Blueways\BwGuild\Domain\Model\Job::class,
+            Blueways\BwGuild\Domain\Model\Education::class,
+            Blueways\BwGuild\Domain\Model\Internship::class,
+            Blueways\BwGuild\Domain\Model\Help::class,
         ]
     ],
     Blueways\BwGuild\Domain\Model\Job::class => [
