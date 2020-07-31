@@ -20,6 +20,7 @@
 							</label>
 							<config>
 								<type>select</type>
+								<renderType>selectSingle</renderType>
 								<items>
 									<numIndex index="0">
 										<numIndex index="0">
@@ -77,6 +78,7 @@
 							<label>LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.categories</label>
 							<config>
 								<type>select</type>
+								<renderType>selectTree</renderType>
 								<autoSizeMax>20</autoSizeMax>
 								<foreign_table>sys_category</foreign_table>
 								<foreign_table_where>AND sys_category.sys_language_uid IN (-1, 0) ORDER BY
