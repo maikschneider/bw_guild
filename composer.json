@@ -37,7 +37,8 @@
     "ext-iconv": "*",
     "ext-pdo": "*",
     "ext-json": "*",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "typo3/cms-core": "^9.0 || ^10.0"
   },
   "authors": [
     {
