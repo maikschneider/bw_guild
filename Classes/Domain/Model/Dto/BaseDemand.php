@@ -80,7 +80,7 @@ class BaseDemand extends AbstractEntity
     protected $latitude;
 
     /**
-     * @var float;
+     * @var float
      */
     protected $longitude;
 
