@@ -101,6 +101,7 @@ class AbstractDemandRepository extends Repository
         $this->setLimitConstraint($demand);
         $this->setGeoCodeConstraint($demand);
         $this->setRestritions($demand);
+        $this->setLanguageConstraint($demand);
     }
 
     /**
@@ -280,6 +281,20 @@ class AbstractDemandRepository extends Repository
     {
         $this->queryBuilder->getRestrictions()
             ->add(GeneralUtility::makeInstance(FrontendGroupRestriction::class));
+    }
+
+    /**
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
+     */
+    private function setLanguageConstraint(BaseDemand $demand)
+    {
+        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
+        $sysLanguageUid = $languageAspect->getId();
+
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->eq('sys_language_uid',
+                $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)));
     }
 
     /**
