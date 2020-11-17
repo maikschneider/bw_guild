@@ -287,7 +287,7 @@ class AbstractDemandRepository extends Repository
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
-    private function setLanguageConstraint(BaseDemand $demand)
+    protected function setLanguageConstraint(BaseDemand $demand)
     {
         $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
         $sysLanguageUid = $languageAspect->getId();

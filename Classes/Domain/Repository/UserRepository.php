@@ -63,4 +63,13 @@ class UserRepository extends AbstractDemandRepository
 
     }
 
+    /**
+     * Override this constraint since fe_users aren't localized
+     *
+     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
+     */
+    protected function setLanguageConstraint(BaseDemand $demand) {
+
+    }
+
 }
