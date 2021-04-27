@@ -163,6 +163,12 @@
 			<trans-unit id="flexforms_general.mode.search">
 				<source>Search</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.template">
+				<source>Template</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.template.default">
+				<source>Default</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

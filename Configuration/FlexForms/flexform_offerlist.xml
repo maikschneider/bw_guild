@@ -237,6 +237,26 @@
 							</config>
 						</TCEforms>
 					</settings.order>
+					<settings.template>
+						<TCEforms>
+							<label>
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.template
+							</label>
+							<displayCond>FIELD:switchableControllerActions:=:Offer->list;Offer->show</displayCond>
+							<config>
+								<type>select</type>
+								<renderType>selectSingle</renderType>
+								<items type="array">
+									<numIndex index="0" type="array">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.template.default
+										</numIndex>
+										<numIndex index="1">List</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.template>
 				</el>
 			</ROOT>
 		</sDEF>

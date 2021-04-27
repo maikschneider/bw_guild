@@ -54,6 +54,7 @@ class OfferController extends ActionController
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
         $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
 
+        $this->view->setTemplate($this->settings['template']);
         $this->view->assign('offers', $offers);
     }
 

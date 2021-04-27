@@ -182,6 +182,14 @@
 				<source>Search</source>
 				<target>Suche</target>
 			</trans-unit>
+			<trans-unit id="flexforms_general.template">
+				<source>Template</source>
+				<target>Template</target>
+			</trans-unit>
+			<trans-unit id="flexforms_general.template.default">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
