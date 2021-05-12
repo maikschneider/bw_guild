@@ -18,6 +18,12 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_user
     'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.title',
     'tx_bwguild_offerlist'
 );
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'Blueways.BwGuild',
+    'Offerlatest',
+    'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.title',
+    'tx_bwguild_offerlatest'
+);
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_offerlist'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     'bwguild_offerlist',

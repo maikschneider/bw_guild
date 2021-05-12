@@ -46,6 +46,14 @@ plugin {
 			}
 		}
 	}
+
+	tx_bwguild_offerlatest{
+		settings {
+			record_type = Blueways\BwGuild\Domain\Repository\OfferRepository
+			showPid =
+			maxItems = 3
+		}
+	}
 }
 
 @import 'EXT:bw_guild/Configuration/TypoScript/Constants/ddev.typoscript'

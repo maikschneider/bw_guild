@@ -58,6 +58,19 @@ class OfferController extends ActionController
         $this->view->assign('offers', $offers);
     }
 
+    public function latestAction(): void
+    {
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($this->settings, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
+        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
+
+        /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
+        $repository = $this->objectManager->get($this->settings['record_type']);
+
+        $offers = $repository->findDemanded($demand);
+        $this->view->setTemplate($this->settings['template'] ?? 'Latest');
+        $this->view->assign('offers', $offers);
+    }
+
     /**
      * @param \Blueways\BwGuild\Domain\Model\Offer $offer
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("offer")

@@ -72,6 +72,9 @@
 			<trans-unit id="offerlist.wizard.title">
 				<source>Offer list</source>
 			</trans-unit>
+			<trans-unit id="offerlatest.wizard.title">
+				<source>Offer latest</source>
+			</trans-unit>
 			<trans-unit id="offerlist.wizard.description">
 				<source>Displays offers like jobs, educations, internships,..</source>
 			</trans-unit>

@@ -26,6 +26,16 @@ defined('TYPO3_MODE') || die();
     ]
 );
 
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'Blueways.BwGuild',
+    'Offerlatest',
+    [
+        'Offer' => 'latest',
+    ],
+    [
+    ]
+);
+
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
     'bw_guild',
     'fe_users'
