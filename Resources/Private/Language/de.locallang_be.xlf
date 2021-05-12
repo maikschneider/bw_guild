@@ -114,10 +114,6 @@
 				<source>Edit offers</source>
 				<target>Edit offers</target>
 			</trans-unit>
-			<trans-unit id="offerlist.mode.latest">
-				<source>List latest offers</source>
-				<target>Liste der letzten Angebote</target>
-			</trans-unit>
 			<trans-unit id="offerlist.showPid">
 				<source>Show PID</source>
 				<target>Detailseite</target>
@@ -189,6 +185,10 @@
 			<trans-unit id="flexforms_general.template.default">
 				<source>Default</source>
 				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="offerlatest.wizard.title">
+				<source>Offer latest</source>
+				<target>Letzte Angebote</target>
 			</trans-unit>
 		</body>
 	</file>

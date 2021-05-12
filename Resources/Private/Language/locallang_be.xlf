@@ -90,9 +90,6 @@
 			<trans-unit id="offerlist.mode.edit">
 				<source>Edit offers</source>
 			</trans-unit>
-			<trans-unit id="offerlist.mode.latest">
-				<source>List latest offers</source>
-			</trans-unit>
 			<trans-unit id="offerlist.showPid">
 				<source>Show PID</source>
 			</trans-unit>

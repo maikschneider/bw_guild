@@ -34,12 +34,6 @@
 										</numIndex>
 										<numIndex index="1">Offer->edit;Offer->update;Offer->new;Offer->delete</numIndex>
 									</numIndex>
-									<numIndex index="2" type="array">
-										<numIndex index="0">
-											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.mode.latest
-										</numIndex>
-										<numIndex index="1">Offer->latest;Offer->show</numIndex>
-									</numIndex>
 								</items>
 							</config>
 						</TCEforms>
