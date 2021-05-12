@@ -14,7 +14,7 @@ call_user_func(
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_userlist.svg']
         );
         $iconRegistry->registerIcon(
-            'tx_bwguild_userlatest',
+            'tx_bwguild_offerlatest',
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_userlist.svg']
         );

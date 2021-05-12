@@ -98,6 +98,10 @@
 				<source>Displays offers like jobs, educations, internships,..</source>
 				<target>Zeigt Angebote, wie Jobs, Ausbildungen, Praktika,.. an</target>
 			</trans-unit>
+			<trans-unit id="offerlatest.wizard.description">
+				<source>Displays only latest offers</source>
+				<target>Zeigt nur die letzten Angebote an</target>
+			</trans-unit>
 			<trans-unit id="offerlist">
 				<source>Offer list</source>
 				<target>Angebot Liste</target>

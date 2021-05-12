@@ -1,0 +1,36 @@
+mod.wizards.newContentElement.wizardItems.plugins {
+	elements {
+
+		offerlist {
+			iconIdentifier = tx_bwguild_offerlist
+			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.title
+			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.description
+			tt_content_defValues {
+				CType = list
+				list_type = bwguild_offerlist
+			}
+		}
+
+		offerlatest {
+			iconIdentifier = tx_bwguild_offerlatest
+			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.title
+			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.description
+			tt_content_defValues {
+				CType = list
+				list_type = bwguild_offerlatest
+			}
+		}
+
+		userlist {
+			iconIdentifier = tx_bwguild_userlist
+			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.title
+			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.description
+			tt_content_defValues {
+				CType = list
+				list_type = bwguild_userlist
+			}
+		}
+	}
+
+	show = *
+}
