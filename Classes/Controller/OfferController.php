@@ -60,7 +60,6 @@ class OfferController extends ActionController
 
     public function latestAction(): void
     {
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($this->settings, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
         /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */

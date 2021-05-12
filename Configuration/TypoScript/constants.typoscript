@@ -52,6 +52,8 @@ plugin {
 			record_type = Blueways\BwGuild\Domain\Repository\OfferRepository
 			showPid =
 			maxItems = 3
+			order = crdate
+			orderDirection = DESC
 		}
 	}
 }

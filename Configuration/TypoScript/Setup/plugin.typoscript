@@ -65,6 +65,8 @@ plugin {
 			record_type = {$plugin.tx_bwguild_offerlatest.settings.record_type}
 			showPid = {$plugin.tx_bwguild_offerlatest.settings.showPid}
 			maxItems = {$plugin.tx_bwguild_offerlatest.settings.maxItems}
+			order = {$plugin.tx_bwguild_offerlatest.settings.order}
+			orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
 		}
 	}
 }
