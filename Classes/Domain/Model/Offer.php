@@ -379,8 +379,27 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     public function getJsonSchema($typoscript)
     {
-        $name = $this->getFeUser() ? $this->getFeUser()->getCompany() : '';
-        $url = $this->getFeUser() ? $this->getFeUser()->getWww() : '';
+        $name = '';
+        $url = '';
+        $logo = '';
+
+        // defaults from typoscript
+        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['name']) {
+            $name = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['name'];
+        }
+        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['url']) {
+            $url = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['url'];
+        }
+        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['logo']) {
+            $logo = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['logo'];
+        }
+
+        // override from feUser
+        if ($this->getFeUser()) {
+            $name = $this->getFeUser()->getCompany();
+            $url = $this->getFeUser()->getWww();
+            $logo = $this->getFeUser()->getLogo() ? $this->getFeUser()->getLogo()->getOriginalResource()->getPublicUrl() : $logo;
+        }
 
         $schema = [
             '@context' => 'http://schema.org/',
@@ -390,7 +409,8 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             'hiringOrganization' => [
                 'name' => $name,
                 '@type' => 'Organization',
-                'sameAs' => $url
+                'sameAs' => $url,
+                'logo' => $logo
             ],
             'employmentType' => 'FULL_TIME',
             'datePosted' => $this->getCrdate()->format('Y-m-d'),
@@ -419,11 +439,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             if (!$this->getCountry() && $this->feUser->getCountry()) {
                 $schema['jobLocation']['address']['addressCountry'] = $this->feUser->getCountry();
             }
-        }
-
-        // overrides from typoscript
-        if ($typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['hiringOrganization.']['name']) {
-            $schema['hiringOrganization']['name'] = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['hiringOrganization.']['name'];
         }
 
         return $schema;

@@ -25,6 +25,11 @@ plugin {
 			useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}
 			storagePid = {$plugin.tx_bwguild.persistence.storagePid}
 			userLogoFolder = {$plugin.tx_bwguild.settings.userLogoFolder}
+			schema.hiringOrganization {
+				name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
+				url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}
+				logo = {$plugin.tx_bwguild.settings.schema.hiringOrganization.logo}
+			}
 		}
 	}
 
@@ -39,6 +44,7 @@ plugin {
 				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
 				defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}
 			}
+
 			sitemap {
 				enable = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}
 			}
@@ -54,6 +60,7 @@ plugin {
 				enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
 				hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}
 			}
+
 			sitemap {
 				enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
 			}

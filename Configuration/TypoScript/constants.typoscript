@@ -10,6 +10,11 @@ plugin {
 			includeSubCategories = 0
 			useEmailAsUsername = 0
 			userLogoFolder = logos
+			schema.hiringOrganization {
+				name =
+				url =
+				logo = 
+			}
 		}
 	}
 
