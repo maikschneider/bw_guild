@@ -183,7 +183,7 @@ class BaseDemand extends AbstractEntity
     /**
      * @var int
      */
-    protected $limit;
+    protected $limit = -1;
 
     /**
      * @return string
