@@ -239,8 +239,8 @@ class AbstractDemandRepository extends Repository
      */
     private function setLimitConstraint(BaseDemand $demand): void
     {
-        if ($demand->getLimit() && $demand->getLimit() !== '' && $limit = (int)$demand->getLimit() > 0) {
-            $this->queryBuilder->setMaxResults($limit);
+        if ($demand->getLimit() && $demand->getLimit() > 0) {
+            $this->queryBuilder->setMaxResults($demand->getLimit());
         }
     }
 
@@ -317,9 +317,16 @@ class AbstractDemandRepository extends Repository
         $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
         $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
-        $demand->setLimit($settings['limit'] ?? -1);
         $demand->setOrder($settings['order'] ?? '');
         $demand->setOrderDirection($settings['orderDirection'] ?? '');
+
+        if ($settings['limit']) {
+            $demand->setLimit((int)$settings['limit']);
+        }
+
+        if ($settings['maxItems']) {
+            $demand->setLimit((int)$settings['maxItems']);
+        }
 
         return $demand;
     }
