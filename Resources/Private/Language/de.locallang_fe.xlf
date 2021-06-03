@@ -23,6 +23,31 @@
 				<source>Your data has been successfully deleted.</source>
 				<target>Ihre Daten wurden erfolgreich gelöscht.</target>
 			</trans-unit>
+
+			<trans-unit id="user.create.loggedin.title">
+				<source>Registration not possible</source>
+				<target>Registrierung nicht möglich</target>
+			</trans-unit>
+			<trans-unit id="user.create.loggedin.message">
+				<source>You are already logged in and cannot create a new user.</source>
+				<target>Sie sind bereits eingeloggt und können daher keinen neuen Benutzer erstellen.</target>
+			</trans-unit>
+			<trans-unit id="user.create.exists.title">
+				<source>Registration error</source>
+				<target>Registrierung Fehler</target>
+			</trans-unit>
+			<trans-unit id="user.create.exists.message">
+				<source>The user you are trying to create already exists.</source>
+				<target>Der Benutzer existiert bereits.</target>
+			</trans-unit>
+			<trans-unit id="user.create.success.title">
+				<source>Registration complete</source>
+				<target>Registrierung abgeschlossen</target>
+			</trans-unit>
+			<trans-unit id="user.create.success.message">
+				<source>You user has been successfully created.</source>
+				<target>Ihr Benutzer wurde erfolgreich erstellt.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>
