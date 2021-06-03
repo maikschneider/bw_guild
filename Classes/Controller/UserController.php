@@ -3,14 +3,15 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\User;
+use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
-use Blueways\BwGuild\Utility\DemandUtility;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Lang\LanguageService;
 
@@ -24,13 +25,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     *
      */
     protected $userRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\CategoryRepository
-     *
      */
     protected $categoryRepository;
 
@@ -167,6 +166,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         if ($this->arguments->hasArgument('user')) {
 
+            $this->setTypeConverterConfigurationForImageUpload('user');
+
             $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') ? true : false;
 
             // ignore logo parameter if empty
@@ -188,6 +189,45 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 }
             }
         }
+    }
+
+    protected function setTypeConverterConfigurationForImageUpload($argumentName)
+    {
+        \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+            ->registerImplementation(
+                \TYPO3\CMS\Extbase\Domain\Model\FileReference::class,
+                \Blueways\BwGuild\Domain\Model\FileReference::class
+            );
+
+        $uploadFolder = $this->getTargetLogoStorageUid() . ':/' . $this->getTargetLogoFolderName();
+
+        $uploadConfiguration = [
+            UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+            UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => $uploadFolder,
+        ];
+        $newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
+        $newExampleConfiguration->forProperty('logo')
+            ->setTypeConverterOptions(
+                UploadedFileReferenceConverter::class,
+                $uploadConfiguration
+            );
+    }
+
+    private function getTargetLogoStorageUid(): int
+    {
+        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
+        if (count($targetParts) === 2) {
+            return (int)$targetParts[0];
+        }
+        /** @var ResourceFactory $resourceFactory */
+        $resourceFactory = $this->objectManager->get(ResourceFactory::class);
+        return $resourceFactory->getDefaultStorage() ? $resourceFactory->getDefaultStorage()->getUid() : 0;
+    }
+
+    private function getTargetLogoFolderName(): string
+    {
+        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
+        return count($targetParts) === 2 ? $targetParts[1] : $targetParts[0];
     }
 
     public function injectCategoryRepository(\Blueways\BwGuild\Domain\Repository\CategoryRepository $categoryRepository)
@@ -222,11 +262,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->userRepository->deleteAllUserLogos($user->getUid());
         }
 
-        // move logo if newly created
+        // delete existing logo(s) if new one is created
         $userArguments = $this->request->getArgument('user');
         if (isset($userArguments['logo']) && $logo = $user->getLogo()) {
             $this->userRepository->deleteAllUserLogos($user->getUid());
-            $this->moveLogo($logo);
         }
 
         // delete old file references -> backend would show up these
@@ -240,45 +279,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
 
         $this->redirect('edit');
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
-     */
-    private function moveLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo): void
-    {
-        $resourceFactory = $this->objectManager->get(ResourceFactory::class);
-
-        // determine target storage and directory
-        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
-        $targetFolder = count($targetParts) === 2 ? $targetParts[1] : $targetParts[0];
-        $storageUid = count($targetParts) === 2 ? $targetParts[0] : null;
-        $storage = $storageUid ? $resourceFactory->getStorageObject($storageUid) : $resourceFactory->getDefaultStorage();
-
-        // abort if no valid storage
-        if (!$storage) {
-            return;
-        }
-
-        // create logo folder
-        if (!$storage->hasFolder($targetFolder)) {
-            $storage->createFolder($targetFolder);
-        }
-
-        // move file
-        $file = $resourceFactory->getFileObjectByStorageAndIdentifier(
-            $logo->getOriginalResource()->getStorage()->getUid(),
-            $logo->getOriginalResource()->getIdentifier());
-
-        if (!$file) {
-            return;
-        }
-
-        $file->moveTo($storage->getFolder($targetFolder), $logo->getOriginalResource()->getName(),
-            DuplicationBehavior::RENAME);
     }
 
     /**
