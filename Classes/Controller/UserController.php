@@ -6,12 +6,10 @@ use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
-use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Property\PropertyMappingConfiguration;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Lang\LanguageService;
 
@@ -38,7 +36,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     protected $accessControlService;
 
-    public function initializeAction()
+    public function initializeAction(): void
     {
         parent::initializeAction();
 
@@ -49,7 +47,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * Merges the typoscript settings with the settings from flexform
      */
-    private function mergeTyposcriptSettings()
+    private function mergeTyposcriptSettings(): void
     {
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
         try {
@@ -64,10 +62,12 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function listAction()
+    public function listAction(): void
     {
         $demand = $this->userRepository->createDemandObjectFromSettings($this->settings);
 
@@ -103,7 +103,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('categories', $categories);
     }
 
-    public function searchAction()
+    public function searchAction(): void
     {
         $demand = $this->userRepository->createDemandObjectFromSettings($this->settings);
 
@@ -118,7 +118,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @param \Blueways\BwGuild\Domain\Model\User $user
      */
-    public function showAction(User $user)
+    public function showAction(User $user): void
     {
         $schema = $user->getJsonSchema($this->settings);
 
@@ -149,7 +149,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      */
-    public function editAction()
+    public function editAction(): void
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
             $this->throwStatus(403, 'Not logged in');
@@ -162,13 +162,13 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('categories', $categories);
     }
 
-    public function initializeUpdateAction()
+    public function initializeUpdateAction(): void
     {
         if ($this->arguments->hasArgument('user')) {
 
             $this->setTypeConverterConfigurationForImageUpload('user');
 
-            $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') ? true : false;
+            $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
 
             // ignore logo parameter if empty
             if ($deleteLog || $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '') {
@@ -191,7 +191,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
     }
 
-    protected function setTypeConverterConfigurationForImageUpload($argumentName)
+    protected function setTypeConverterConfigurationForImageUpload($argumentName): void
     {
         \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
             ->registerImplementation(
@@ -242,9 +242,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\User $user
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
@@ -268,8 +265,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->userRepository->deleteAllUserLogos($user->getUid());
         }
 
-        // delete old file references -> backend would show up these
-
         $user->geoCodeAddress();
         $this->userRepository->update($user);
 
@@ -284,16 +279,16 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @return \TYPO3\CMS\Lang\LanguageService
      */
-    protected function getLanguageService()
+    protected function getLanguageService(): LanguageService
     {
         return $GLOBALS['LANG'] ?? $this->objectManager->get(LanguageService::class);
     }
 
     /**
-     * @param User $user
+     * @param \Blueways\BwGuild\Domain\Model\User|null $user
      * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
      */
-    public function newAction(User $user = null)
+    public function newAction(User $user = null): void
     {
         if (!$user) {
             $user = new User();
@@ -305,11 +300,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @param \Blueways\BwGuild\Domain\Model\User $user
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException|\TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
      * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\PasswordRepeatValidator", param="user")
      * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\CustomUsernameValidator", param="user")
      */
-    public function createAction($user)
+    public function createAction(User $user): void
     {
         if ($this->accessControlService->hasLoggedInFrontendUser()) {
             $this->addFlashMessage(
