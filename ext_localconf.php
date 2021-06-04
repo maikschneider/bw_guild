@@ -36,15 +36,7 @@ defined('TYPO3_MODE') || die();
     ]
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-    'bw_guild',
-    'fe_users'
-);
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-    'bw_guild',
-    'tx_bwguild_domain_model_offer'
-);
 
 // Define state cache, if not already defined
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bwguild'])) {

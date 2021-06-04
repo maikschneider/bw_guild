@@ -151,4 +151,12 @@ call_user_func(function () {
      * 'showitem' => 'first_name, last_name'
      * ];
      * */
+
+    /**
+     * Connect to sys_categories
+     */
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
+        'bw_guild',
+        'fe_users'
+    );
 });
