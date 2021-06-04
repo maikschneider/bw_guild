@@ -4,7 +4,14 @@ config {
 			TYPO3\CMS\Extbase\Domain\Model\FrontendUser {
 				className = Blueways\BwGuild\Domain\Model\User
 			}
+
+			TYPO3\CMS\Extbase\Domain\Model\FileReference {
+				className = Blueways\BwGuild\Domain\Model\FileReference
+			}
+
 		}
+
+		persistence.updateReferenceIndex = 1
 
 		persistence.classes {
 			Blueways\BwGuild\Domain\Model\Category {
@@ -55,6 +62,17 @@ config {
 					tableName = tx_bwguild_domain_model_offer
 				}
 			}
+
+			Blueways\BwGuild\Domain\Model\FileReference {
+				mapping {
+					className = Blueways\BwGuild\Domain\Model\FileReference
+					tableName = sys_file_reference
+					columns {
+						uid_local.mapOnProperty = originalFileIdentifier
+					}
+				}
+			}
+
 		}
 	}
 }
