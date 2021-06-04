@@ -1,4 +1,4 @@
-[globalVar = LIT:1 = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}]
+[{$plugin.tx_bwguild_userlist.settings.sitemap.enable} == '1']
 	plugin.tx_seo {
 		config {
 			xmlSitemap {

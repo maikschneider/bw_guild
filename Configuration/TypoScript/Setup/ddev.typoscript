@@ -1,4 +1,4 @@
-[applicationContext = Development*]
+[applicationContext == "Development*"]
 
 	config {
 		no_cache = 1

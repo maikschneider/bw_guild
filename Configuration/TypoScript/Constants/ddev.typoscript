@@ -1,4 +1,4 @@
-[applicationContext = Development*]
+[applicationContext == "Development*"]
 
 	plugin.tx_bwguild {
 		settings {
