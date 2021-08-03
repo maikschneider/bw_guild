@@ -32,7 +32,7 @@
 	}
 [GLOBAL]
 
-[globalVar = LIT:1 = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}]
+[{$plugin.tx_bwguild_offerlist.settings.sitemap.enable} == '1']
 	plugin.tx_seo {
 		config {
 			xmlSitemap {
