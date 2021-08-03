@@ -1,10 +1,10 @@
-rootPageId: 1
-base: /
+base: 'http://bw-guild.ddev.site/'
+errorHandling: {  }
 languages:
   -
     title: English
     enabled: true
-    languageId: '0'
+    languageId: 0
     base: /
     typo3Language: default
     locale: en_US.UTF-8
@@ -13,9 +13,10 @@ languages:
     hreflang: en-us
     direction: ltr
     flag: us
-errorHandling: {  }
+rootPageId: 1
 routes: {  }
-baseVariants: {  }
 imports:
-  - resource: 'EXT:bw_guild/Configuration/Routing/Offerlist.yaml'
-  - resource: 'EXT:bw_guild/Configuration/Routing/Userlist.yaml'
+  -
+    resource: 'EXT:bw_guild/Configuration/Routing/Offerlist.yaml'
+  -
+    resource: 'EXT:bw_guild/Configuration/Routing/Userlist.yaml'
