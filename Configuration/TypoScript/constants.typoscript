@@ -7,13 +7,14 @@ plugin {
 			layoutRootPath =
 		}
 		settings {
+			googleApiKey =
 			includeSubCategories = 0
 			useEmailAsUsername = 0
 			userLogoFolder = logos
 			schema.hiringOrganization {
 				name =
 				url =
-				logo = 
+				logo =
 			}
 		}
 	}

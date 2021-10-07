@@ -302,12 +302,12 @@ class AbstractDemandRepository extends Repository
      *
      * @param $settings
      * @param string $class
-     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand|mixed
+     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
      */
     public function createDemandObjectFromSettings(
         $settings,
-        $class = BaseDemand::class
-    ) {
+        string $class = BaseDemand::class
+    ): BaseDemand {
         // @TODO: check if this typoscript demandClass setting makes sense
         $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
 

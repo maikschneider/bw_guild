@@ -49,8 +49,8 @@ if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations
 // Register geo coding task
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Blueways\BwGuild\Task\GeocodingTask::class] = [
     'extension' => 'bw_guild',
-    'title' => 'Geocoding of fe_user records',
-    'description' => 'Check all fe_user records for geocoding information and write them into the fields'
+    'title' => 'Geocoding of fe_user & offer records',
+    'description' => 'Check all fe_user and offer records for geocoding information and write them into the fields'
 ];
 
 // Register hook to set sorting field

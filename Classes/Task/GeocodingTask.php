@@ -27,6 +27,15 @@ class GeocodingTask extends \TYPO3\CMS\Scheduler\Task\AbstractTask
             'city',
             'country'
         );
+        $geocodingService->calculateCoordinatesForAllRecordsInTable(
+            'tx_bwguild_domain_model_offer',
+            'latitude',
+            'longitude',
+            'address',
+            'zip',
+            'city',
+            'country'
+        );
         return true;
     }
 }

@@ -45,6 +45,11 @@ class OfferController extends ActionController
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
+        // override filter from form
+        if ($this->request->hasArgument('demand')) {
+            $demand->overrideDemand($this->request->getArgument('demand'));
+        }
+
         /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
         $repository = $this->objectManager->get($this->settings['record_type']);
 
