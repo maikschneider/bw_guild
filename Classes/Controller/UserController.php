@@ -5,12 +5,15 @@ namespace Blueways\BwGuild\Controller;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
+use TYPO3\CMS\Frontend\Controller\ErrorController;
+use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 use TYPO3\CMS\Lang\LanguageService;
 
 /**
@@ -117,9 +120,19 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\User $user
+     * @throws \TYPO3\CMS\Core\Http\ImmediateResponseException|\TYPO3\CMS\Core\Error\Http\PageNotFoundException
      */
     public function showAction(User $user): void
     {
+        if (!$user->isPublicProfile()) {
+            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
+                $GLOBALS['TYPO3_REQUEST'],
+                'Profile not found',
+                ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
+            );
+            throw new ImmediateResponseException($response);
+        }
+
         $schema = $user->getJsonSchema($this->settings);
 
         if (isset($schema['logo'])) {
