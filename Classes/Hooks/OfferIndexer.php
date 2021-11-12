@@ -37,7 +37,7 @@ class OfferIndexer extends IndexerBase
      */
     public function customIndexer(array &$indexerConfig, IndexerRunner &$indexerObject): string
     {
-        if ($indexerConfig['type'] !== ExampleIndexer::KEY) {
+        if ($indexerConfig['type'] !== self::KEY) {
             return '';
         }
 
