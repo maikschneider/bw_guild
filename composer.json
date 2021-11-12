@@ -25,10 +25,7 @@
   },
   "config": {
     "bin-dir": "bin",
-    "vendor-dir": "vendor",
-    "platform": {
-      "php": "7.4"
-    }
+    "vendor-dir": "vendor"
   },
   "autoload": {
     "psr-4": {
