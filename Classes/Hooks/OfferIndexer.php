@@ -8,9 +8,7 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class OfferIndexer extends IndexerBase
 {
@@ -63,8 +61,19 @@ class OfferIndexer extends IndexerBase
         $folders = GeneralUtility::trimExplode(',', htmlentities($indexerConfig['storagepid']));
         $statement = $queryBuilder
             ->select('*')
+            ->addSelectLiteral('GROUP_CONCAT(c.uid_local) as categories')
             ->from($table)
-            ->where($queryBuilder->expr()->in('pid', $folders))
+            ->leftJoin($table, 'sys_category_record_mm', 'c',
+                $queryBuilder->expr()->andX(
+                    $queryBuilder->expr()->eq('c.uid_foreign', $queryBuilder->quoteIdentifier($table . '.uid')),
+                    $queryBuilder->expr()->eq('c.tablenames',
+                        $queryBuilder->createNamedParameter($table, \PDO::PARAM_STR))
+                )
+            )
+            ->where(
+                $queryBuilder->expr()->in($table . '.pid', $folders)
+            )
+            ->groupBy($table . '.uid')
             ->execute();
 
         // Loop through the records and write them to the index.
@@ -85,6 +94,10 @@ class OfferIndexer extends IndexerBase
             // Tags
             // If you use Sphinx, use "_" instead of "#" (configurable in the extension manager).
             $tags = '';
+            if ($record['categories']) {
+                $tags = GeneralUtility::intExplode(',', $record['categories']);
+                $tags = '#syscat' . implode('#syscat', $tags);
+            }
 
             // Additional information
             $additionalFields = array(
