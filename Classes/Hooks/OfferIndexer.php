@@ -45,15 +45,6 @@ class OfferIndexer extends IndexerBase
 
         $table = 'tx_bwguild_domain_model_offer';
 
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $showPid = '';
-        try {
-            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            $settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
-            $showPid = $settings['showPid'] ? '&pid='. $settings['showPid'] : '';
-        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
-        }
-
         // Doctrine DBAL using Connection Pool.
         /** @var Connection $connection */
         $connection = GeneralUtility::makeInstance(ConnectionPool::class)->getConnectionForTable($table);
@@ -69,7 +60,7 @@ class OfferIndexer extends IndexerBase
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
-        $folders = GeneralUtility::trimExplode(',', htmlentities($indexerConfig['targetpid']));
+        $folders = GeneralUtility::trimExplode(',', htmlentities($indexerConfig['storagepid']));
         $statement = $queryBuilder
             ->select('*')
             ->from($table)
@@ -89,7 +80,7 @@ class OfferIndexer extends IndexerBase
 
             // Link to detail view
             $params = '&tx_bwguild_offerlist[offer]=' . $record['uid']
-                . '&tx_bwguild_offerlist[controller]=Offer&tx_bwguild_offerlist[action]=show' . $showPid;
+                . '&tx_bwguild_offerlist[controller]=Offer&tx_bwguild_offerlist[action]=show';
 
             // Tags
             // If you use Sphinx, use "_" instead of "#" (configurable in the extension manager).
