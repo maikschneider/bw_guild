@@ -49,7 +49,7 @@ class OfferIndexer extends IndexerBase
         $showPid = '';
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            $settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
+            $settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
             $showPid = $settings['showPid'] ? '&pid='. $settings['showPid'] : '';
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
