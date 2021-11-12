@@ -8,7 +8,9 @@ use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Database\Query\Restriction\HiddenRestriction;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class OfferIndexer extends IndexerBase
 {
@@ -42,6 +44,15 @@ class OfferIndexer extends IndexerBase
         }
 
         $table = 'tx_bwguild_domain_model_offer';
+
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $showPid = '';
+        try {
+            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
+            $showPid = $settings['showPid'] ? '&pid='. $settings['showPid'] : '';
+        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
+        }
 
         // Doctrine DBAL using Connection Pool.
         /** @var Connection $connection */
@@ -78,7 +89,7 @@ class OfferIndexer extends IndexerBase
 
             // Link to detail view
             $params = '&tx_bwguild_offerlist[offer]=' . $record['uid']
-                . '&tx_bwguild_offerlist[controller]=Offer&tx_bwguild_offerlist[action]=show';
+                . '&tx_bwguild_offerlist[controller]=Offer&tx_bwguild_offerlist[action]=show' . $showPid;
 
             // Tags
             // If you use Sphinx, use "_" instead of "#" (configurable in the extension manager).
