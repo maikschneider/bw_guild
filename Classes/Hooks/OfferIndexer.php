@@ -23,9 +23,9 @@ class OfferIndexer extends IndexerBase
     {
         // Set a name and an icon for your indexer.
         $customIndexer = array(
-            'Offer-Indexer (ext:news)',
+            'Offer-Indexer (ext:bw_guild)',
             self::KEY,
-            'EXT:bw_guild/Resources/Public/Images/tt_content_offerlist.svg'
+            'EXT:bw_guild/ext_icon.svg'
         );
         $params['items'][] = $customIndexer;
     }
@@ -58,7 +58,7 @@ class OfferIndexer extends IndexerBase
             ->add(GeneralUtility::makeInstance(DeletedRestriction::class))
             ->add(GeneralUtility::makeInstance(HiddenRestriction::class));
 
-        $folders = GeneralUtility::trimExplode(',', htmlentities($indexerConfig['sysfolder']));
+        $folders = GeneralUtility::trimExplode(',', htmlentities($indexerConfig['targetpid']));
         $statement = $queryBuilder
             ->select('*')
             ->from($table)
