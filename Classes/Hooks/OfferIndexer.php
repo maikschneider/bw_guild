@@ -15,6 +15,31 @@ class OfferIndexer extends IndexerBase
 
     const KEY = 'tx_bwguild_domain_model_offer';
 
+    protected array $hookObjectsArr = [];
+
+    /**
+     * @param $pObj
+     */
+    public function __construct($pObj)
+    {
+        parent::__construct($pObj);
+
+        // prepare hooks
+        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'])) {
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'] as $classRef) {
+                $this->hookObjectsArr[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($classRef);
+            }
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartMicrotime(): int
+    {
+        return $this->startMicrotime;
+    }
+
     /**
      * @param $params
      * @param $pObj
@@ -92,7 +117,6 @@ class OfferIndexer extends IndexerBase
                 . '&tx_bwguild_offerlist[controller]=Offer&tx_bwguild_offerlist[action]=show';
 
             // Tags
-            // If you use Sphinx, use "_" instead of "#" (configurable in the extension manager).
             $tags = '';
             if ($record['categories']) {
                 $tags = GeneralUtility::intExplode(',', $record['categories']);
@@ -105,13 +129,6 @@ class OfferIndexer extends IndexerBase
                 'orig_pid' => $record['pid'],
                 'sortdate' => $record['tstamp'],
             );
-
-            // set custom sorting
-            //$additionalFields['mysorting'] = $counter;
-
-            // Add something to the title, just to identify the entries
-            // in the frontend.
-            $title = '' . $title;
 
             // ... and store the information in the index
             $indexerObject->storeInIndex(
@@ -130,6 +147,11 @@ class OfferIndexer extends IndexerBase
                 false,                          // debug only?
                 $additionalFields               // additionalFields
             );
+
+            // Call Hook
+            foreach($this->hookObjectsArr ?? [] as $hookObject) {
+                $hookObject->updateIndexOfRecord($indexerObject, $record);
+            }
 
             $counter++;
         }
