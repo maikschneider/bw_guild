@@ -60,7 +60,8 @@ plugin {
 				enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
 				hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}
 			}
-
+			order = {$plugin.tx_bwguild_offerlatest.settings.order}
+			orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
 			sitemap {
 				enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
 			}
