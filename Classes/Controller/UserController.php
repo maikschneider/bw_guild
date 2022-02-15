@@ -33,7 +33,6 @@ use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
  */
 class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
-
     protected UserRepository $userRepository;
 
     protected CategoryRepository $categoryRepository;
@@ -65,10 +64,20 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $typoscript['plugin.']['tx_bwguild.']['settings.'], true, false, false);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $this->settings, true, false, false);
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $typoscript['plugin.']['tx_bwguild.']['settings.'],
+                true,
+                false,
+                false
+            );
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $this->settings,
+                true,
+                false,
+                false
+            );
             $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
@@ -207,7 +216,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function initializeUpdateAction(): void
     {
         if ($this->arguments->hasArgument('user')) {
-
             $this->setTypeConverterConfigurationForImageUpload('user');
 
             $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
@@ -312,7 +320,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->redirect('edit');
     }
@@ -348,7 +357,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+            );
             $this->redirect('new');
         }
 
@@ -356,7 +366,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
+            );
             $this->redirect('new');
         }
 
@@ -372,7 +383,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->view->assign('user', $user);
     }
@@ -387,5 +399,4 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $passwordHashFactory = GeneralUtility::makeInstance(PasswordHashFactory::class);
         return $passwordHashFactory->getDefaultHashInstance('FE')->getHashedPassword($password);
     }
-
 }
