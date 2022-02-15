@@ -2,15 +2,19 @@
 
 defined('TYPO3_MODE') || die();
 
+$typo3Version = TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray(TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version());
+$userControllerName = $typo3Version['version_main'] >= 10 ? \Blueways\BwGuild\Controller\UserController::class : 'User';
+$offerControllerName = $typo3Version['version_main'] >= 10 ? \Blueways\BwGuild\Controller\OfferController::class : 'User';
+
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'Blueways.BwGuild',
     'Userlist',
     [
-        'User' => 'list, show, edit, update, new, search',
+        $userControllerName => 'list, show, edit, update, new, search',
     ],
     // non-cacheable actions
     [
-        'User' => 'edit, update, list'
+        $userControllerName => 'edit, update, list'
     ]
 );
 
@@ -18,11 +22,11 @@ defined('TYPO3_MODE') || die();
     'Blueways.BwGuild',
     'Offerlist',
     [
-        'Offer' => 'list, show, edit, update, new, delete',
+        $offerControllerName => 'list, show, edit, update, new, delete',
     ],
     // non-cacheable actions
     [
-        'Offer' => 'edit, update, delete, new'
+        $offerControllerName => 'edit, update, delete, new'
     ]
 );
 
@@ -30,7 +34,7 @@ defined('TYPO3_MODE') || die();
     'Blueways.BwGuild',
     'Offerlatest',
     [
-        'Offer' => 'latest',
+        $offerControllerName => 'latest',
     ],
     [
     ]
