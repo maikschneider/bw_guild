@@ -398,7 +398,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         if ($this->getFeUser()) {
             $name = $this->getFeUser()->getCompany();
             $url = $this->getFeUser()->getWww();
-            $logo = $this->getFeUser()->getLogo() ? $this->getFeUser()->getLogo()->getOriginalResource()->getPublicUrl() : $logo;
+            $logo = $this->getFeUser()->getLogo() ? '/' . $this->getFeUser()->getLogo()->getOriginalResource()->getPublicUrl() : $logo;
         }
 
         $schema = [
