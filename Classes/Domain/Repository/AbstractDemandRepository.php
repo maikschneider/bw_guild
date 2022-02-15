@@ -297,28 +297,23 @@ class AbstractDemandRepository extends Repository
                 $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)));
     }
 
-    /**
-     * Create Demand by settings array (see typoscript constants)
-     *
-     * @param $settings
-     * @param string $class
-     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
-     */
+
     public function createDemandObjectFromSettings(
-        $settings,
+        array $settings,
         string $class = BaseDemand::class
     ): BaseDemand {
         // @TODO: check if this typoscript demandClass setting makes sense
         $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
 
         /** @var \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand */
-        $demand = $this->objectManager->get($class);
+        $demand = new $class();
 
         $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
         $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
         $demand->setOrder($settings['order'] ?? '');
         $demand->setOrderDirection($settings['orderDirection'] ?? '');
+        $demand->setItemsPerPage((int)$settings['itemsPerPage']);
 
         if ($settings['limit']) {
             $demand->setLimit((int)$settings['limit']);

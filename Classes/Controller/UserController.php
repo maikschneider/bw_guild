@@ -7,10 +7,13 @@ use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
@@ -87,6 +90,12 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         // find user by demand
         $users = $this->userRepository->findDemanded($demand);
 
+        // create pagnation
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+        $itemsPerPage = (int)$this->settings['itemsPerPage'];
+        $paginator = new ArrayPaginator($users, $currentPage, $itemsPerPage);
+        $pagination = new SimplePagination($paginator);
+
         // get categories by category settings in plugin
         $catConjunction = $this->settings['categoryConjunction'];
         if ($catConjunction === 'or' || $catConjunction === 'and') {
@@ -104,6 +113,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('users', $users);
         $this->view->assign('demand', $demand);
         $this->view->assign('categories', $categories);
+        $this->view->assign('pagination', [
+            'currentPage' => $currentPage,
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ]);
     }
 
     public function searchAction(): void

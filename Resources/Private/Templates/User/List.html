@@ -53,48 +53,47 @@
 
 
 <div class="users users--list">
-	<f:widget.paginate as="pagedUsers" objects="{users}" configuration="{itemsPerPage: 20}">
-		<f:for each="{pagedUsers}" as="user">
-			<div class="users__item">
-				<div class="users__item__main">
-					<f:link.action action="show" controller="User" arguments="{user: user}"><h3>{user.company}</h3>
-					</f:link.action>
-					<p>{user.address}<br/> {user.zip} {user.city}</p>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
+	<f:for each="{pagination.paginator.paginatedItems}" as="user">
+		<div class="users__item">
+			<div class="users__item__main">
+				<f:link.action action="show" controller="User" arguments="{user: user}"><h3>{user.company}</h3>
+				</f:link.action>
+				<p>{user.address}<br/> {user.zip} {user.city}</p>
 
-					<f:if condition="{user.telephone}">
-						<p class="no-margin">
-							<span class="icon-phone"></span>
-							{user.telephone }
-						</p>
-					</f:if>
+				<f:if condition="{user.telephone}">
+					<p class="no-margin">
+						<span class="icon-phone"></span>
+						{user.telephone }
+					</p>
+				</f:if>
 
-					<f:if condition="{user.email}">
-						<p class="no-margin">
-							<a href="mailto:{user.email}">
-								<span class="icon-envelope"></span>
-								{user.email}
-							</a>
-						</p>
-					</f:if>
+				<f:if condition="{user.email}">
+					<p class="no-margin">
+						<a href="mailto:{user.email}">
+							<span class="icon-envelope"></span>
+							{user.email}
+						</a>
+					</p>
+				</f:if>
 
-				</div>
-				<div class="users__item__cats">
-					<f:for each="{user.categories}" as="category">
-						<f:link.action action="list"
-									   controller="User"
-									   arguments="{demand: {categories: {0: category.uid}}}">
-							<span class="icon-checkmark"></span>
-							{category.title}
-						</f:link.action>
-					</f:for>
-				</div>
-				<div class="users__item__map">
-					<f:link.action class="button hollow small" action="show" arguments="{user: user}">Vollständiges
-						Profil
-						<span class="icon icon-chevron"></span>
-					</f:link.action>
-				</div>
 			</div>
-		</f:for>
-	</f:widget.paginate>
+			<div class="users__item__cats">
+				<f:for each="{user.categories}" as="category">
+					<f:link.action action="list"
+								   controller="User"
+								   arguments="{demand: {categories: {0: category.uid}}}">
+						<span class="icon-checkmark"></span>
+						{category.title}
+					</f:link.action>
+				</f:for>
+			</div>
+			<div class="users__item__map">
+				<f:link.action class="button hollow small" action="show" arguments="{user: user}">Vollständiges Profil
+					<span class="icon icon-chevron"></span>
+				</f:link.action>
+			</div>
+		</div>
+	</f:for>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
 </div>

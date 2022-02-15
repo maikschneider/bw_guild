@@ -25,6 +25,7 @@ plugin {
 			useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}
 			storagePid = {$plugin.tx_bwguild.persistence.storagePid}
 			userLogoFolder = {$plugin.tx_bwguild.settings.userLogoFolder}
+			itemsPerPage = {$plugin.tx_bwguild.settings.itemsPerPage}
 			schema.hiringOrganization {
 				name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
 				url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}
