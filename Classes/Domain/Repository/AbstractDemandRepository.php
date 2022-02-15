@@ -297,7 +297,12 @@ class AbstractDemandRepository extends Repository
                 $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)));
     }
 
-
+    /**
+     * @param array $settings
+     * @param string $class
+     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
+     * @deprecated
+     */
     public function createDemandObjectFromSettings(
         array $settings,
         string $class = BaseDemand::class
