@@ -9,44 +9,49 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class BaseDemand extends AbstractEntity
 {
 
-    public CONST TABLE = 'tx_bwguild_domain_model_offer';
+    public const TABLE = 'tx_bwguild_domain_model_offer';
 
-    public CONST EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
+    public const EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
 
-    /**
-     * @var array
-     */
-    protected $categories;
+    protected array $categories = [];
 
-    /**
-     * @var string
-     */
-    protected $categoryConjunction = '';
+    protected string $categoryConjunction = '';
 
-    /**
-     * @var string
-     */
-    protected $search = '';
+    protected string $search = '';
 
-    /**
-     * @var string
-     */
-    protected $excludeSearchFields = '';
+    protected string $excludeSearchFields = '';
 
-    /**
-     * @var bool
-     */
-    protected $includeSubCategories = false;
+    protected bool $includeSubCategories = false;
 
-    /**
-     * @var string
-     */
-    protected $order;
+    protected string $order = '';
+
+    protected string $orderDirection = '';
+
+    protected int $itemsPerPage = 0;
+
+    protected int $maxDistance = 10;
+
+    protected string $searchDistanceAddress = '';
+
+    protected float $latitude = 0.0;
+
+    protected float $longitude = 0.0;
 
     /**
-     * @var string
+     * @return int
      */
-    protected $orderDirection = '';
+    public function getItemsPerPage(): int
+    {
+        return $this->itemsPerPage;
+    }
+
+    /**
+     * @param int $itemsPerPage
+     */
+    public function setItemsPerPage(int $itemsPerPage): void
+    {
+        $this->itemsPerPage = $itemsPerPage;
+    }
 
     /**
      * @return string
@@ -63,26 +68,6 @@ class BaseDemand extends AbstractEntity
     {
         $this->orderDirection = $orderDirection;
     }
-
-    /**
-     * @var int
-     */
-    protected $maxDistance = 10;
-
-    /**
-     * @var string
-     */
-    protected $searchDistanceAddress = '';
-
-    /**
-     * @var float
-     */
-    protected $latitude;
-
-    /**
-     * @var float
-     */
-    protected $longitude;
 
     /**
      * @return int
@@ -151,7 +136,7 @@ class BaseDemand extends AbstractEntity
     /**
      * @return string
      */
-    public function getOrder()
+    public function getOrder(): string
     {
         return $this->order;
     }
@@ -268,10 +253,10 @@ class BaseDemand extends AbstractEntity
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
      */
-    public function overrideDemand($demand)
+    public function overrideDemand($demand): void
     {
         // abort if no valid demand
-        if(!$demand || !is_array($demand)) {
+        if (!$demand || !is_array($demand)) {
             return;
         }
 
@@ -284,7 +269,7 @@ class BaseDemand extends AbstractEntity
     /**
      * @return bool
      */
-    public function geoCodeSearchString()
+    public function geoCodeSearchString(): bool
     {
         $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
         $coords = $geocodingService->getCoordinatesForAddress($this->searchDistanceAddress);
@@ -302,7 +287,7 @@ class BaseDemand extends AbstractEntity
     /**
      * @return array
      */
-    public function getSearchParts()
+    public function getSearchParts(): array
     {
         return GeneralUtility::trimExplode(' ', $this->search, true);
     }
