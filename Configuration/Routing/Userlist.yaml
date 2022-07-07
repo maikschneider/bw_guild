@@ -10,7 +10,7 @@ routeEnhancers:
           user: user
       - routePath: '/'
         _controller: 'User::list'
-      - routePath: '/{localized_page}-{page}'
+      - routePath: '/{localized_page}/{page}'
         _controller: 'User::list'
         _arguments:
           page: 'currentPage'
@@ -21,8 +21,10 @@ routeEnhancers:
       - routePath: '/create'
         _controller: 'User::create'
     defaultController: 'User::list'
+    requirements:
+      page: '\d+'
     defaults:
-      page: '0'
+      page: '1'
     aspects:
       user:
         type: PersistedAliasMapper

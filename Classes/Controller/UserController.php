@@ -107,6 +107,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // create pagination
         $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+        $currentPage = $currentPage > 0 ? $currentPage : 1;
         $itemsPerPage = (int)$this->settings['itemsPerPage'];
         $paginator = new ArrayPaginator($users, $currentPage, $itemsPerPage);
         $pagination = new SimplePagination($paginator);

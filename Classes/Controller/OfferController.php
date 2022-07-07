@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Offer;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -41,17 +42,17 @@ class OfferController extends ActionController
     /**
      *
      */
-    public function listAction()
+    public function listAction(): ResponseInterface
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
         // override filter from form
         if ($this->request->hasArgument('demand')) {
-            $demand->overrideDemand($this->request->getArgument('demand'));
+            $demand->overrideFromRequest($this->request->getArgument('demand'));
         }
 
         /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
-        $repository = $this->objectManager->get($this->settings['record_type']);
+        $repository = GeneralUtility::makeInstance($this->settings['record_type']);
 
         $offers = $repository->findDemanded($demand);
 
@@ -61,6 +62,8 @@ class OfferController extends ActionController
 
         $this->view->setTemplate($this->settings['template'] ?? 'List');
         $this->view->assign('offers', $offers);
+
+        return $this->htmlResponse($this->view->render());
     }
 
     public function latestAction(): void
