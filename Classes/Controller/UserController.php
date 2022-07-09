@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
-use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
@@ -240,33 +239,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 );
             }
         }
-    }
-
-    private function getTargetLogoStorageUid(): int
-    {
-        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
-        if (count($targetParts) === 2) {
-            return (int)$targetParts[0];
-        }
-        /** @var ResourceFactory $resourceFactory */
-        $resourceFactory = $this->objectManager->get(ResourceFactory::class);
-        return $resourceFactory->getDefaultStorage() ? $resourceFactory->getDefaultStorage()->getUid() : 0;
-    }
-
-    private function getTargetLogoFolderName(): string
-    {
-        $targetParts = GeneralUtility::trimExplode(':', $this->settings['userLogoFolder']);
-        return count($targetParts) === 2 ? $targetParts[1] : $targetParts[0];
-    }
-
-    public function injectCategoryRepository(\Blueways\BwGuild\Domain\Repository\CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
-
-    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
     }
 
     /**
