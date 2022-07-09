@@ -6,7 +6,6 @@ use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\CategoryRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
-use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
@@ -216,52 +215,31 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      */
     public function initializeUpdateAction(): void
     {
-        if ($this->arguments->hasArgument('user')) {
-            $this->setTypeConverterConfigurationForImageUpload('user');
+        $isLogoDelete = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
+        $isEmptyLogoUpdate = $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '';
 
-            $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
-
-            // ignore logo parameter if empty
-            if ($deleteLog || $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '') {
-                // unset logo argument
-                $userArgument = $this->request->getArgument('user');
-                unset($userArgument['logo']);
-                $this->request->setArgument('user', $userArgument);
-
-                // unset logo validator
-                $validator = $this->arguments->getArgument('user')->getValidator();
-                foreach ($validator->getValidators() as $subValidator) {
-                    /** @var GenericObjectValidator $subValidatorSub */
-                    foreach ($subValidator->getValidators() as $subValidatorSub) {
-                        $subValidatorSub->getPropertyValidators('logo')->removeAll(
-                            $subValidatorSub->getPropertyValidators('logo')
-                        );
-                    }
-                }
-            }
+        if ($isLogoDelete || $isEmptyLogoUpdate) {
+            $this->ignoreLogoArgumentInUpdate();
         }
     }
 
-    protected function setTypeConverterConfigurationForImageUpload($argumentName): void
+    protected function ignoreLogoArgumentInUpdate(): void
     {
-        \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
-            ->registerImplementation(
-                \TYPO3\CMS\Extbase\Domain\Model\FileReference::class,
-                \Blueways\BwGuild\Domain\Model\FileReference::class
-            );
+        // unset logo argument
+        $userArgument = $this->request->getArgument('user');
+        unset($userArgument['logo']);
+        $this->request->setArgument('user', $userArgument);
 
-        $uploadFolder = $this->getTargetLogoStorageUid() . ':/' . $this->getTargetLogoFolderName();
-
-        $uploadConfiguration = [
-            UploadedFileReferenceConverter::CONFIGURATION_ALLOWED_FILE_EXTENSIONS => $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-            UploadedFileReferenceConverter::CONFIGURATION_UPLOAD_FOLDER => $uploadFolder,
-        ];
-        $newExampleConfiguration = $this->arguments[$argumentName]->getPropertyMappingConfiguration();
-        $newExampleConfiguration->forProperty('logo')
-            ->setTypeConverterOptions(
-                UploadedFileReferenceConverter::class,
-                $uploadConfiguration
-            );
+        // unset logo validator
+        $validator = $this->arguments->getArgument('user')->getValidator();
+        foreach ($validator->getValidators() as $subValidator) {
+            /** @var GenericObjectValidator $subValidatorSub */
+            foreach ($subValidator->getValidators() as $subValidatorSub) {
+                $subValidatorSub->getPropertyValidators('logo')->removeAll(
+                    $subValidatorSub->getPropertyValidators('logo')
+                );
+            }
+        }
     }
 
     private function getTargetLogoStorageUid(): int
@@ -311,7 +289,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // delete existing logo(s) if new one is created
         $userArguments = $this->request->getArgument('user');
-        if (isset($userArguments['logo']) && $logo = $user->getLogo()) {
+        if (isset($userArguments['logo']) && $user->getLogo()) {
             $this->userRepository->deleteAllUserLogos($user->getUid());
         }
 
