@@ -26,8 +26,6 @@ use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 /**
  * Class UserController
- *
- * @package Blueways\BwGuild\Controller
  */
 class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
@@ -97,7 +95,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // redirect to search action to display another view
         if ($this->settings['mode'] === 'search') {
-            return (new ForwardResponse('search'));
+            return new ForwardResponse('search');
         }
 
         // find user by demand
@@ -322,7 +320,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->redirect('new');
         }
 
-        if ($this->settings['useEmailAsUsername'] === "1") {
+        if ($this->settings['useEmailAsUsername'] === '1') {
             $user->setUsername($user->getEmail());
         }
 

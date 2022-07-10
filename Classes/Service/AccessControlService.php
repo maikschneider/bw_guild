@@ -27,7 +27,7 @@ class AccessControlService implements SingletonInterface
     public function getFrontendUserUid()
     {
         if ($this->hasLoggedInFrontendUser() && !empty($GLOBALS['TSFE']->fe_user->user['uid'])) {
-            return intval($GLOBALS['TSFE']->fe_user->user['uid']);
+            return (int)($GLOBALS['TSFE']->fe_user->user['uid']);
         }
         return null;
     }
@@ -39,5 +39,4 @@ class AccessControlService implements SingletonInterface
     {
         return !empty($GLOBALS['TSFE']->fe_user->user);
     }
-
 }

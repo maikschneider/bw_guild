@@ -1,7 +1,5 @@
 <?php
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
@@ -14,5 +12,4 @@ call_user_func(function () {
         'Configuration/TSconfig/Page.tsconfig',
         'Bw Guild PageTS'
     );
-
 });

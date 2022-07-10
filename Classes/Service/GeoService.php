@@ -196,8 +196,12 @@ class GeoService
                 }
                 // do the geocoding
                 if (!empty($record[$zipField]) || !empty($record[$cityField])) {
-                    $coords = $this->getCoordinatesForAddress($record[$streetField], $record[$zipField],
-                        $record[$cityField], $country);
+                    $coords = $this->getCoordinatesForAddress(
+                        $record[$streetField],
+                        $record[$zipField],
+                        $record[$cityField],
+                        $country
+                    );
                     if ($coords) {
                         // Update the record to fill in the latitude and longitude values in the DB
                         $connection->update(
@@ -207,7 +211,7 @@ class GeoService
                                 $longitudeField => $coords['longitude'],
                             ],
                             [
-                                'uid' => $record['uid']
+                                'uid' => $record['uid'],
                             ]
                         );
                     }

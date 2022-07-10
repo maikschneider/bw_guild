@@ -81,7 +81,6 @@ class RadiusService
         $longitudeField = 'longitude',
         $additionalFields = ''
     ) {
-
         $fields = GeneralUtility::trimExplode(',', 'uid,' . $additionalFields, true);
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($tableName);
 

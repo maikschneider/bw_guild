@@ -12,7 +12,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class OfferIndexer extends IndexerBase
 {
-
     const KEY = 'tx_bwguild_domain_model_offer';
 
     protected array $hookObjectsArr = [];
@@ -47,11 +46,11 @@ class OfferIndexer extends IndexerBase
     public function registerIndexerConfiguration(&$params, $pObj)
     {
         // Set a name and an icon for your indexer.
-        $customIndexer = array(
+        $customIndexer = [
             'Offer-Indexer (ext:bw_guild)',
             self::KEY,
-            'EXT:bw_guild/ext_icon.svg'
-        );
+            'EXT:bw_guild/ext_icon.svg',
+        ];
         $params['items'][] = $customIndexer;
     }
 
@@ -88,11 +87,16 @@ class OfferIndexer extends IndexerBase
             ->select('*')
             ->addSelectLiteral('GROUP_CONCAT(c.uid_local) as categories')
             ->from($table)
-            ->leftJoin($table, 'sys_category_record_mm', 'c',
+            ->leftJoin(
+                $table,
+                'sys_category_record_mm',
+                'c',
                 $queryBuilder->expr()->andX(
                     $queryBuilder->expr()->eq('c.uid_foreign', $queryBuilder->quoteIdentifier($table . '.uid')),
-                    $queryBuilder->expr()->eq('c.tablenames',
-                        $queryBuilder->createNamedParameter($table, \PDO::PARAM_STR))
+                    $queryBuilder->expr()->eq(
+                        'c.tablenames',
+                        $queryBuilder->createNamedParameter($table, \PDO::PARAM_STR)
+                    )
                 )
             )
             ->where(
@@ -124,11 +128,11 @@ class OfferIndexer extends IndexerBase
             }
 
             // Additional information
-            $additionalFields = array(
+            $additionalFields = [
                 'orig_uid' => $record['uid'],
                 'orig_pid' => $record['pid'],
                 'sortdate' => $record['tstamp'],
-            );
+            ];
 
             // ... and store the information in the index
             $indexerObject->storeInIndex(
@@ -149,7 +153,7 @@ class OfferIndexer extends IndexerBase
             );
 
             // Call Hook
-            foreach($this->hookObjectsArr ?? [] as $hookObject) {
+            foreach ($this->hookObjectsArr ?? [] as $hookObject) {
                 $hookObject->updateIndexOfRecord($indexerObject, $record);
             }
 

@@ -9,7 +9,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 
 class CustomUsernameValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-
     protected function isValid($value)
     {
         /** @var User $user */
@@ -21,7 +20,7 @@ class CustomUsernameValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Ab
                 $this->addError('Email is not valid', 1559595750);
             }
         } else {
-            if(!$user->getUsername() || strlen($user->getUsername()) < 3) {
+            if (!$user->getUsername() || strlen($user->getUsername()) < 3) {
                 $this->addError('Username is not valid', 1559595750);
             }
         }
@@ -38,14 +37,23 @@ class CustomUsernameValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Ab
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $typoscript['plugin.']['tx_bwguild.']['settings.'], true, false, false);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $settings, true, false, false);
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $typoscript['plugin.']['tx_bwguild.']['settings.'],
+                true,
+                false,
+                false
+            );
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $settings,
+                true,
+                false,
+                false
+            );
             $settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
             return $settings;
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
     }
-
 }

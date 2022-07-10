@@ -33,7 +33,6 @@ use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
 use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 
 /**
  * Class UploadedFileReferenceConverter
@@ -134,12 +133,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                     if (strpos($resourcePointer, 'file:') === 0) {
                         $fileUid = substr($resourcePointer, 5);
                         return $this->createFileReferenceFromFalFileObject($this->resourceFactory->getFileObject($fileUid));
-                    } else {
-                        return $this->createFileReferenceFromFalFileReferenceObject(
-                            $this->resourceFactory->getFileReferenceObject($resourcePointer),
-                            $resourcePointer
-                        );
                     }
+                    return $this->createFileReferenceFromFalFileReferenceObject(
+                        $this->resourceFactory->getFileReferenceObject($resourcePointer),
+                        $resourcePointer
+                    );
                 } catch (\InvalidArgumentException $e) {
                     // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
                 }
@@ -192,7 +190,6 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         );
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
     }
-
 
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,

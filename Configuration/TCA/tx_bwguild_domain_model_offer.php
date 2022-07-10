@@ -25,7 +25,7 @@ return [
             'disabled' => 'hidden',
             'starttime' => 'starttime',
             'endtime' => 'endtime',
-            'fe_group' => 'fe_group'
+            'fe_group' => 'fe_group',
         ],
         'searchFields' => 'record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail',
         'iconfile' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg',
@@ -38,25 +38,25 @@ return [
         '0' => [
             'showitem' => 'fe_user, fe_users, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                    --palette--;;access,'
+                    --palette--;;access,',
         ],
         // Education
         '1' => [
             'showitem' => 'fe_user, fe_users, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                    --palette--;;access,'
+                    --palette--;;access,',
         ],
         // Internship
         '2' => [
             'showitem' => 'fe_user, fe_users, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                    --palette--;;access,'
+                    --palette--;;access,',
         ],
         // Help
         '3' => [
             'showitem' => 'fe_user, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
-                    --palette--;;access,'
+                    --palette--;;access,',
         ],
     ],
     'palettes' => [
@@ -82,22 +82,22 @@ return [
                     [
                         'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.0',
                         0,
-                        'tx_bwguild_domain_model_offer-0'
+                        'tx_bwguild_domain_model_offer-0',
                     ],
                     [
                         'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.1',
                         1,
-                        'tx_bwguild_domain_model_offer-1'
+                        'tx_bwguild_domain_model_offer-1',
                     ],
                     [
                         'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.2',
                         2,
-                        'tx_bwguild_domain_model_offer-2'
+                        'tx_bwguild_domain_model_offer-2',
                     ],
                     [
                         'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.3',
                         3,
-                        'tx_bwguild_domain_model_offer-3'
+                        'tx_bwguild_domain_model_offer-3',
                     ],
                 ],
                 'fieldWizard' => [
@@ -107,7 +107,7 @@ return [
                 ],
                 'size' => 1,
                 'maxitems' => 1,
-            ]
+            ],
         ],
         'sys_language_uid' => [
             'exclude' => true,
@@ -120,11 +120,11 @@ return [
                     [
                         'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.allLanguages',
                         -1,
-                        'flags-multiple'
+                        'flags-multiple',
                     ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'l10n_parent' => [
             'displayCond' => 'FIELD:sys_language_uid:>:0',
@@ -144,45 +144,45 @@ return [
                     ],
                 ],
                 'default' => 0,
-            ]
+            ],
         ],
         'l10n_diffsource' => [
             'config' => [
                 'type' => 'passthrough',
-                'default' => ''
-            ]
+                'default' => '',
+            ],
         ],
         'hidden' => [
             'exclude' => true,
             'label' => 'LLL:EXT:lang/Resources/Private/Language/locallang_general.xlf:LGL.hidden',
             'config' => [
                 'type' => 'check',
-                'default' => 0
-            ]
+                'default' => 0,
+            ],
         ],
         'cruser_id' => [
             'label' => 'cruser_id',
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'pid' => [
             'label' => 'pid',
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'crdate' => [
             'label' => 'crdate',
             'config' => [
                 'type' => 'passthrough',
-            ]
+            ],
         ],
         'tstamp' => [
             'label' => 'tstamp',
             'config' => [
                 'type' => 'passthrough',
-            ]
+            ],
         ],
         'starttime' => [
             'exclude' => true,
@@ -196,7 +196,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'endtime' => [
             'exclude' => true,
@@ -210,7 +210,7 @@ return [
                 'behaviour' => [
                     'allowLanguageSynchronization' => true,
                 ],
-            ]
+            ],
         ],
         'title' => [
             'exclude' => false,
@@ -220,7 +220,7 @@ return [
                 'type' => 'input',
                 'size' => 60,
                 'eval' => 'required',
-            ]
+            ],
         ],
         'description' => [
             'exclude' => false,
@@ -232,7 +232,7 @@ return [
                 'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'enableRichtext' => true,
                 'richtextConfiguration' => 'default',
-            ]
+            ],
         ],
         'start_date' => [
             'exclude' => false,
@@ -240,7 +240,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-            ]
+            ],
         ],
         'fe_user' => [
             'exclude' => false,
@@ -258,15 +258,15 @@ return [
                 'suggestOptions' => [
                     'fe_users' => [
                         'searchWholePhrase' => 1,
-                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name'
-                    ]
+                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name',
+                    ],
                 ],
                 'fieldWizard' => [
                     'recordsOverview' => [
                         'disabled' => true,
                     ],
                 ],
-            ]
+            ],
         ],
         'fe_users' => [
             'exclude' => false,
@@ -285,15 +285,15 @@ return [
                 'suggestOptions' => [
                     'fe_users' => [
                         'searchWholePhrase' => 1,
-                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name'
-                    ]
+                        'additionalSearchFields' => 'company, name, short_name, first_name, last_name',
+                    ],
                 ],
                 'fieldWizard' => [
                     'recordsOverview' => [
                         'disabled' => true,
                     ],
                 ],
-            ]
+            ],
         ],
         'possibilities' => [
             'exclude' => false,
@@ -305,7 +305,7 @@ return [
                 'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'enableRichtext' => true,
                 'richtextConfiguration' => 'default',
-            ]
+            ],
         ],
         'conditions' => [
             'exclude' => false,
@@ -317,7 +317,7 @@ return [
                 'softref' => 'rtehtmlarea_images,typolink_tag,images,email[subst],url',
                 'enableRichtext' => true,
                 'richtextConfiguration' => 'default',
-            ]
+            ],
         ],
         'contact_person' => [
             'exclude' => false,
@@ -325,7 +325,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-            ]
+            ],
         ],
         'contact_mail' => [
             'exclude' => false,
@@ -333,7 +333,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-            ]
+            ],
         ],
         'contact_phone' => [
             'exclude' => false,
@@ -341,7 +341,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-            ]
+            ],
         ],
         'address' => [
             'exclude' => true,
@@ -349,8 +349,8 @@ return [
             'config' => [
                 'type' => 'text',
                 'cols' => 20,
-                'rows' => 3
-            ]
+                'rows' => 3,
+            ],
         ],
         'zip' => [
             'exclude' => true,
@@ -359,8 +359,8 @@ return [
                 'type' => 'input',
                 'eval' => 'trim',
                 'size' => 10,
-                'max' => 10
-            ]
+                'max' => 10,
+            ],
         ],
         'city' => [
             'exclude' => true,
@@ -369,8 +369,8 @@ return [
                 'type' => 'input',
                 'size' => 20,
                 'eval' => 'trim',
-                'max' => 50
-            ]
+                'max' => 50,
+            ],
         ],
         'country' => [
             'exclude' => true,
@@ -379,8 +379,8 @@ return [
                 'type' => 'input',
                 'size' => 20,
                 'eval' => 'trim',
-                'max' => 40
-            ]
+                'max' => 40,
+            ],
         ],
         'slug' => [
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.slug',
@@ -413,22 +413,22 @@ return [
                 'items' => [
                     [
                         'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.hide_at_login',
-                        -1
+                        -1,
                     ],
                     [
                         'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.any_login',
-                        -2
+                        -2,
                     ],
                     [
                         'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.usergroups',
-                        '--div--'
-                    ]
+                        '--div--',
+                    ],
                 ],
                 'exclusiveKeys' => '-1,-2',
                 'foreign_table' => 'fe_groups',
                 'foreign_table_where' => 'ORDER BY fe_groups.title',
-                'enableMultiSelectFilterTextfield' => true
-            ]
+                'enableMultiSelectFilterTextfield' => true,
+            ],
         ],
-    ]
+    ],
 ];

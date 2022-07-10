@@ -10,7 +10,6 @@ use TYPO3\CMS\Extbase\Mvc\Request;
 
 class BaseDemand extends AbstractEntity
 {
-
     public const TABLE = 'tx_bwguild_domain_model_offer';
 
     public const EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
@@ -249,7 +248,6 @@ class BaseDemand extends AbstractEntity
         $this->search = $search;
     }
 
-
     public function overrideFromRequest(Request $request): void
     {
         // abort if no valid demand array
@@ -317,5 +315,4 @@ class BaseDemand extends AbstractEntity
 
         return $demand;
     }
-
 }
