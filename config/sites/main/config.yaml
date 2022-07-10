@@ -1,4 +1,4 @@
-base: 'http://bw-guild.ddev.site/'
+base: /
 languages:
   -
     title: English
