@@ -56,7 +56,6 @@
     }
   },
   "config": {
-    "bin-dir": "bin",
     "vendor-dir": "vendor",
     "allow-plugins": {
       "typo3/cms-composer-installers": true,
@@ -84,7 +83,7 @@
     }
   ],
   "scripts": {
-    "php:fix": "./vendor/bin/php-cs-fixer --config=Configuration/php-cs-fixer.php fix Classes Configuration Tests",
+    "php:fix": "./vendor/bin/php-cs-fixer --config=Configuration/php-cs-fixer.php fix Classes Configuration",
     "ci:php:lint": "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
     "ci:php:fixer": "./vendor/bin/php-cs-fixer --config=Configuration/php-cs-fixer.php fix --dry-run -v --show-progress=dots Classes Configuration Tests",
     "ci:php:stan": "./vendor/bin/phpstan --no-progress",
