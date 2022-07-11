@@ -77,9 +77,9 @@ class User extends FrontendUser
      */
     protected $publicProfile;
 
-    protected ?ObjectStorage $bookmarks = null;
+    protected string $bookmarks = '';
 
-    public function getBookmarks(): ?ObjectStorage
+    public function getBookmarks(): string
     {
         return $this->bookmarks;
     }
@@ -97,7 +97,6 @@ class User extends FrontendUser
         $this->categories = new ObjectStorage();
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
-        $this->bookmarks = new ObjectStorage();
         $this->sortingField = 'company';
     }
 

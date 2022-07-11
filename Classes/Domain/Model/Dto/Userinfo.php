@@ -27,4 +27,10 @@ class Userinfo
         $this->user['uid'] = $feUser->getUid();
     }
 
+    public function setBookmarkOutput(array $relationHandlerResult): void
+    {
+        // @TODO: nice and compact output for all tables
+        $this->bookmarks = $relationHandlerResult;
+    }
+
 }

@@ -128,7 +128,18 @@ call_user_func(function () {
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
             ),
-        ]
+        ],
+        'bookmarks' => [
+            'label' => 'Bookmarks',
+            'exclude' => 1,
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'pages,fe_users,sys_file',
+                'minitems' => 0,
+                'size' => 5,
+            ],
+        ],
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
@@ -140,6 +151,7 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'slug', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'public_profile', '', 'after:password');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'logo', '', 'after:image');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'bookmarks', '', 'after:slug');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users',
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '',
         'after:description');

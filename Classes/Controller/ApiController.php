@@ -7,6 +7,8 @@ use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Database\RelationHandler;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class ApiController extends ActionController
@@ -33,8 +35,17 @@ class ApiController extends ActionController
         if (!$user) {
             return $this->responseFactory->createResponse('404', '');
         }
-
         $userinfo = new Userinfo($user);
+
+        if ($bookmarks = $user->getBookmarks()) {
+            $relationHandler = GeneralUtility::makeInstance(RelationHandler::class);
+            $relationHandler->start($bookmarks,
+                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']['config']['allowed'], '', '', 'fe_users',
+                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']);
+            $relationHandler->getFromDB();
+
+            $userinfo->setBookmarkOutput($relationHandler->results);
+        }
 
         if ($this->settings['showPid']) {
             $url = $this->uriBuilder
@@ -52,4 +63,10 @@ class ApiController extends ActionController
 
         return $this->jsonResponse(json_encode($userinfo));
     }
+
+    //public function createBookmark(string $tableName, int $uid): ResponseInterface
+    //{
+    //
+    //}
+
 }

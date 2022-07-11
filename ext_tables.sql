@@ -10,6 +10,7 @@ CREATE TABLE fe_users (
 	slug varchar(255) DEFAULT '' NOT NULL,
 	public_profile tinyint(4) DEFAULT 1 NOT NULL,
 
+	bookmarks varchar(255) DEFAULT '' NOT NULL,
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	categories int(11) DEFAULT 0 NOT NULL,
@@ -66,3 +67,4 @@ CREATE TABLE tx_bwguild_offer_feuser_mm (
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
 );
+
