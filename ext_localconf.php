@@ -44,6 +44,17 @@ defined('TYPO3_MODE') || die();
     ]
 );
 
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'BwGuild',
+    'Api',
+    [
+        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo',
+    ],
+    [
+        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo',
+    ]
+);
+
 // Define state cache, if not already defined
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bwguild'])) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bwguild'] = [
