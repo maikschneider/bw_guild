@@ -172,6 +172,12 @@
 			<trans-unit id="flexforms_general.template.default">
 				<source>Default</source>
 			</trans-unit>
+			<trans-unit id="usershow.wizard.title">
+				<source>User profile</source>
+			</trans-unit>
+			<trans-unit id="usershow.wizard.description">
+				<source>Shows a user profile page</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

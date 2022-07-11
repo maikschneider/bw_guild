@@ -32,5 +32,15 @@ mod.wizards.newContentElement.wizardItems.plugins {
 		}
 	}
 
+  usershow {
+    iconIdentifier = tx_bwguild_usershow
+    title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.title
+    description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.description
+    tt_content_defValues {
+      CType = list
+      list_type = bwguild_usershow
+    }
+  }
+
 	show = *
 }

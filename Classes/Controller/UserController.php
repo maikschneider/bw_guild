@@ -5,6 +5,7 @@ namespace Blueways\BwGuild\Controller;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Property\TypeConverter\UploadedFileReferenceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -132,13 +133,9 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->view->assign('demand', $demand);
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\User $user
-     * @throws \TYPO3\CMS\Core\Http\ImmediateResponseException|\TYPO3\CMS\Core\Error\Http\PageNotFoundException
-     */
-    public function showAction(User $user): void
+    public function showAction(?User $user = null): ResponseInterface
     {
-        if (!$user->isPublicProfile()) {
+        if (!$user || !$user->isPublicProfile()) {
             $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
                 $GLOBALS['TYPO3_REQUEST'],
                 'Profile not found',
@@ -169,6 +166,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $metaTagManager->getManagerForProperty('og:image')->addProperty('og:image', $schema['image']);
 
         $this->view->assign('user', $user);
+
+        return $this->htmlResponse($this->view->render());
     }
 
     /**
