@@ -109,6 +109,7 @@ call_user_func(function () {
             'exclude' => 1,
             'config' => [
                 'type' => 'check',
+                'default' => 1,
             ]
         ],
         'logo' => [
@@ -142,15 +143,6 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users',
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '',
         'after:description');
-
-    $GLOBALS['TCA']['fe_users']['ctrl']['label'] = 'company';
-    $GLOBALS['TCA']['fe_users']['ctrl']['label_userFunc'] = 'Blueways\\BwGuild\\Utility\\LabelUtility->feUserLabel';
-    /* @TODO: organize fields in paletts
-     * $GLOBALS['TCA']['fe_users']['palettes'][] = [
-     * 'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang.xlf:user.palette.contactPerson',
-     * 'showitem' => 'first_name, last_name'
-     * ];
-     * */
 
     /**
      * Connect to sys_categories

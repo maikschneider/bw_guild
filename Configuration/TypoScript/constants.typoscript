@@ -12,6 +12,7 @@ plugin {
 			useEmailAsUsername = 0
 			userLogoFolder = logos
 			itemsPerPage = 20
+      showPid =
 			schema.hiringOrganization {
 				name =
 				url =
