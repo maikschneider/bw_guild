@@ -2,13 +2,12 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
 
 class ApiController extends ActionController
 {
@@ -27,6 +26,30 @@ class ApiController extends ActionController
         if (!($userId = $this->accessControlService->getFrontendUserUid())) {
             return $this->responseFactory->createResponse('403', '');
         }
-        return $this->jsonResponse('{"success": true}');
+
+        /** @var User $user */
+        $user = $this->userRepository->findByIdentifier($userId);
+
+        if (!$user) {
+            return $this->responseFactory->createResponse('404', '');
+        }
+
+        $userinfo = new Userinfo($user);
+
+        if ($this->settings['showPid']) {
+            $url = $this->uriBuilder
+                ->reset()
+                ->setTargetPageUid((int)$this->settings['showPid'])
+                ->uriFor(
+                    'show',
+                    ['user' => $userinfo->user['uid']],
+                    'User',
+                    'BwGuild',
+                    'Usershow'
+                );
+            $userinfo->user['url'] = $url;
+        }
+
+        return $this->jsonResponse(json_encode($userinfo));
     }
 }

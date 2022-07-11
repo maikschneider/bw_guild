@@ -1,13 +1,23 @@
 routeEnhancers:
-  BwGuildUser:
+  BwGuildUserShow:
     type: Extbase
     extension: BwGuild
-    plugin: Userlist
+    plugin: Usershow
     routes:
       - routePath: '/{user}'
         _controller: 'User::show'
         _arguments:
           user: user
+    aspects:
+      user:
+        type: PersistedAliasMapper
+        tableName: fe_users
+        routeFieldName: slug
+  BwGuildUserList:
+    type: Extbase
+    extension: BwGuild
+    plugin: Userlist
+    routes:
       - routePath: '/'
         _controller: 'User::list'
       - routePath: '/{localized_page}-{page}'
@@ -24,10 +34,6 @@ routeEnhancers:
     defaults:
       page: '0'
     aspects:
-      user:
-        type: PersistedAliasMapper
-        tableName: fe_users
-        routeFieldName: slug
       userpage:
         type: StaticRangeMapper
         start: '1'

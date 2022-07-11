@@ -8,7 +8,7 @@ CREATE TABLE fe_users (
 	sorting_field varchar(255) DEFAULT '' NOT NULL,
 	sorting_text varchar(255) DEFAULT '' NOT NULL,
 	slug varchar(255) DEFAULT '' NOT NULL,
-	public_profile tinyint(4) DEFAULT '0' NOT NULL,
+	public_profile tinyint(4) DEFAULT 1 NOT NULL,
 
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
@@ -65,8 +65,4 @@ CREATE TABLE tx_bwguild_offer_feuser_mm (
 
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
-);
-
-CREATE TABLE tx_bwguild_domain_model_abstractbookmark (
-
 );
