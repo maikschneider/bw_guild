@@ -8,6 +8,7 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
+use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Pagination\SimplePagination;
 use TYPO3\CMS\Core\Resource\ResourceFactory;
@@ -153,8 +154,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         if ((int)$this->settings['schema.']['enable']) {
             $json = json_encode($schema);
-            $jsCode = '<script type="application/ld+json">' . $json . '</script>';
-            $this->response->addAdditionalHeaderData($jsCode);
+            $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
+            $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
         }
 
         $GLOBALS['TSFE']->page['title'] = $schema['name'];
