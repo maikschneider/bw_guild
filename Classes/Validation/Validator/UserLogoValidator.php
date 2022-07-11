@@ -25,8 +25,11 @@ class UserLogoValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Abstract
      */
     private function validateFileExtension(\TYPO3\CMS\Core\Resource\FileReference $reference): void
     {
-        $allowedExtensions = GeneralUtility::trimExplode(',', $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
-            true);
+        $allowedExtensions = GeneralUtility::trimExplode(
+            ',',
+            $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'],
+            true
+        );
 
         if (in_array($reference->getExtension(), $allowedExtensions, true)) {
             return;

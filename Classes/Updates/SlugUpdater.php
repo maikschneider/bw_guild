@@ -12,7 +12,6 @@ use TYPO3\CMS\Install\Updates\UpgradeWizardInterface;
 
 class SlugUpdater implements UpgradeWizardInterface
 {
-
     private const TABLES = ['tx_bwguild_domain_model_offer' => 'slug', 'fe_users' => 'slug'];
 
     /**
@@ -94,7 +93,7 @@ class SlugUpdater implements UpgradeWizardInterface
     /**
      * Gets element with empty or NULL slug field
      *
-     * @param String $table
+     * @param string $table
      * @return \Doctrine\DBAL\Driver\Statement|int
      */
     private function getElementsForTable(String $table)
@@ -109,8 +108,10 @@ class SlugUpdater implements UpgradeWizardInterface
             ->from($table)
             ->where(
                 $queryBuilder->expr()->orX(
-                    $queryBuilder->expr()->eq(self::TABLES[$table],
-                        $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)),
+                    $queryBuilder->expr()->eq(
+                        self::TABLES[$table],
+                        $queryBuilder->createNamedParameter('', \PDO::PARAM_STR)
+                    ),
                     $queryBuilder->expr()->isNull(self::TABLES[$table])
                 )
             )

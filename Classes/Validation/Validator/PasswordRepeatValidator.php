@@ -6,7 +6,6 @@ use Blueways\BwGuild\Domain\Model\User;
 
 class PasswordRepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-
     protected function isValid($value)
     {
         /** @var User $user */
@@ -18,5 +17,4 @@ class PasswordRepeatValidator extends \TYPO3\CMS\Extbase\Validation\Validator\Ab
             $this->addError('Passwords do not match', 1559596203);
         }
     }
-
 }

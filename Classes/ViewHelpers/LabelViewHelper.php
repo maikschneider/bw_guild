@@ -11,7 +11,6 @@ use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithRenderStatic;
 
 class LabelViewHelper extends AbstractViewHelper
 {
-
     use CompileWithRenderStatic;
 
     public static function renderStatic(
@@ -29,7 +28,6 @@ class LabelViewHelper extends AbstractViewHelper
         $propertySnake = $propertySnake === 'telephone' ? 'phone' : $propertySnake;
 
         if ($arguments['class'] === FrontendUser::class) {
-
             $id = 'LLL:EXT:frontend/Resources/Private/Language/locallang_tca.xlf:fe_users.' . $propertySnake;
             $label = LocalizationUtility::translate($id, $extensionName, null, null);
 

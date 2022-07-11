@@ -32,5 +32,4 @@ class Userinfo
         // @TODO: nice and compact output for all tables
         $this->bookmarks = $relationHandlerResult;
     }
-
 }

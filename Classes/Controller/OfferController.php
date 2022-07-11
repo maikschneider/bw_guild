@@ -2,45 +2,36 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
-use TYPO3\CMS\Core\DataHandling\Model\RecordStateFactory;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
  * Class OfferController
- *
- * @package Blueways\BwGuild\Controller
  */
 class OfferController extends ActionController
 {
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
-     *
      */
     protected $offerRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     *
      */
     protected $userRepository;
 
     /**
      * @var \Blueways\BwGuild\Service\AccessControlService
-     *
      */
     protected $accessControlService;
 
-    /**
-     *
-     */
     public function listAction()
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
@@ -170,7 +161,8 @@ class OfferController extends ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->redirect('edit');
     }
@@ -201,7 +193,8 @@ class OfferController extends ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->redirect('edit');
     }
@@ -225,9 +218,6 @@ class OfferController extends ActionController
         $this->view->assign('offer', $offer);
     }
 
-    /**
-     *
-     */
     protected function initializeAction()
     {
         parent::initializeAction();
@@ -258,11 +248,15 @@ class OfferController extends ActionController
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
-                $this->settings, true, false, false);
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
+                $this->settings,
+                true,
+                false,
+                false
+            );
             $this->settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
     }
-
 }

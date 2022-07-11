@@ -4,12 +4,9 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 /**
  * Class OfferRepository
- *
- * @package Blueways\BwGuild\Domain\Repository
  */
 class OfferRepository extends AbstractDemandRepository
 {
-
     public function getGroupedOffers()
     {
         $query = $this->createQuery();

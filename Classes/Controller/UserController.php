@@ -15,7 +15,6 @@ use TYPO3\CMS\Core\Resource\ResourceFactory;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Pagination\QueryResultPaginator;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
@@ -23,8 +22,6 @@ use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * Class UserController
- *
- * @package Blueways\BwGuild\Controller
  */
 class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 {
@@ -60,10 +57,20 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $typoscript['plugin.']['tx_bwguild.']['settings.'], true, false, false);
-            ArrayUtility::mergeRecursiveWithOverrule($typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $this->settings, true, false, false);
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $typoscript['plugin.']['tx_bwguild.']['settings.'],
+                true,
+                false,
+                false
+            );
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+                $this->settings,
+                true,
+                false,
+                false
+            );
             $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
@@ -145,6 +152,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             throw new ImmediateResponseException($response);
         }
 
+        \TYPO3\CMS\Core\Utility\DebugUtility::debug($user, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
+
         $schema = $user->getJsonSchema($this->settings);
 
         if (isset($schema['logo'])) {
@@ -192,7 +201,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function initializeUpdateAction(): void
     {
         if ($this->arguments->hasArgument('user')) {
-
             $this->setTypeConverterConfigurationForImageUpload('user');
 
             $deleteLog = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
@@ -298,7 +306,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->redirect('edit');
     }
@@ -337,7 +346,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING);
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+            );
             $this->redirect('new');
         }
 
@@ -345,11 +355,12 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR);
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
+            );
             $this->redirect('new');
         }
 
-        if ($this->settings['useEmailAsUsername'] === "1") {
+        if ($this->settings['useEmailAsUsername'] === '1') {
             $user->setUsername($user->getEmail());
         }
 
@@ -361,7 +372,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK);
+            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+        );
 
         $this->view->assign('user', $user);
     }
@@ -380,5 +392,4 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $passwordHash = $passwordHashFactory->getDefaultHashInstance('FE');
         return $passwordHash->getHashedPassword($password);
     }
-
 }

@@ -8,7 +8,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class BaseDemand extends AbstractEntity
 {
-
     public const TABLE = 'tx_bwguild_domain_model_offer';
 
     public const EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
@@ -291,5 +290,4 @@ class BaseDemand extends AbstractEntity
     {
         return GeneralUtility::trimExplode(' ', $this->search, true);
     }
-
 }

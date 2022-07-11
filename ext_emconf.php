@@ -1,4 +1,5 @@
 <?php
+
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Bw Guild',
     'description' => 'Guild management based on fe_users',
@@ -13,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'Blueways\\BwGuild\\' => 'Classes'
+            'Blueways\\BwGuild\\' => 'Classes',
         ],
     ],
     'state' => 'stable',

@@ -19,19 +19,16 @@ class AdministrationController extends ActionController
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     *
      */
     protected $userRepository;
 
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
-     *
      */
     protected $usergroupRepository;
 
     /**
      * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
-     *
      */
     protected $offerRepository;
 
@@ -113,7 +110,6 @@ class AdministrationController extends ActionController
 
         // file was selected
         if ($this->request->hasArgument('file')) {
-
             $rows = $this->getCsvDataFromIdentifier($this->request->getArgument('file'));
 
             if ($rows) {
@@ -198,12 +194,12 @@ class AdministrationController extends ActionController
         $filePath = $file->getForLocalProcessing(false);
 
         // check if file can be read
-        if (($handle = fopen($filePath, "r")) === false) {
+        if (($handle = fopen($filePath, 'r')) === false) {
             return false;
         }
 
         $rows = [];
-        while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+        while (($data = fgetcsv($handle, 1000, ';')) !== false) {
             $singleRow = [];
             for ($c = 0; $c < count($data); $c++) {
                 $singleRow[$c] = iconv('ISO-8859-1', 'UTF-8', $data[$c]);
@@ -212,7 +208,7 @@ class AdministrationController extends ActionController
         }
         fclose($handle);
 
-        if (!sizeof($rows)) {
+        if (!count($rows)) {
             return false;
         }
 
@@ -237,7 +233,7 @@ class AdministrationController extends ActionController
                 '_localizedUid',
                 '_languageUid',
                 '_versionedUid',
-                'offers'
+                'offers',
             ];
             return !in_array($obj->name, $excludeFields);
         });
@@ -248,7 +244,6 @@ class AdministrationController extends ActionController
     public function csvAction(
         ServerRequest $request
     ) {
-
         return new HtmlResponse('Upload done');
     }
 
@@ -281,13 +276,18 @@ class AdministrationController extends ActionController
         $groups = $this->usergroupRepository->findAll();
 
         if ($this->request->hasArgument('csvMapping') && $this->request->hasArgument('fixValue')) {
+            $users = $this->createUsersFromCsvDataMapping(
+                $rows,
+                (array)$this->request->getArgument('csvMapping'),
+                (array)$this->request->getArgument('fixValue')
+            );
 
-            $users = $this->createUsersFromCsvDataMapping($rows, (array)$this->request->getArgument('csvMapping'),
-                (array)$this->request->getArgument('fixValue'));
-
-            $this->addFlashMessage('With the current mapping, ' . sizeof($users) . ' users can be created from your CSV',
-                sizeof($users) . ' users found',
-                FlashMessage::INFO, false);
+            $this->addFlashMessage(
+                'With the current mapping, ' . count($users) . ' users can be created from your CSV',
+                count($users) . ' users found',
+                FlashMessage::INFO,
+                false
+            );
 
             $this->view->assign('users', $users);
             $this->view->assign('csvMapping', $this->request->getArgument('csvMapping'));
@@ -299,8 +299,12 @@ class AdministrationController extends ActionController
                 $this->userRepository->add($user);
             }
 
-            $this->addFlashMessage(sizeof($users) . ' users have been created on this page', 'Import success',
-                FlashMessage::OK, true);
+            $this->addFlashMessage(
+                count($users) . ' users have been created on this page',
+                'Import success',
+                FlashMessage::OK,
+                true
+            );
 
             $this->redirect('importer', 'Administration', 'bw_guild');
         }
@@ -336,7 +340,7 @@ class AdministrationController extends ActionController
 
         // get list of usernames
         $usernames = $this->userRepository->getUsernames();
-        if ($usernames && sizeof($usernames)) {
+        if ($usernames && count($usernames)) {
             $usernames = array_map(function ($arr) {
                 return $arr['username'];
             }, $usernames);
@@ -388,8 +392,10 @@ class AdministrationController extends ActionController
 
             // set all properties from mapping (except username, password, -1, values outside from $row)
             foreach ($csvMappings as $propertyName => $mapping) {
-                if ($propertyName == 'username' || $propertyName == 'password' || $propertyName == 'usergroup' || $mapping == '-1' || !(int)$mapping || !key_exists((int)$mapping,
-                        $row)) {
+                if ($propertyName == 'username' || $propertyName == 'password' || $propertyName == 'usergroup' || $mapping == '-1' || !(int)$mapping || !array_key_exists(
+                    (int)$mapping,
+                    $row
+                )) {
                     continue;
                 }
 
@@ -418,12 +424,10 @@ class AdministrationController extends ActionController
         $users = $this->userRepository->findAll();
 
         if ($this->request->hasArgument('refresh')) {
-
             $hashInstance = GeneralUtility::makeInstance(PasswordHashFactory::class)->getDefaultHashInstance('FE');
 
             /** @var User $user */
             foreach ($users as $user) {
-
                 $password = $user->getZip();
 
                 if (!$password) {

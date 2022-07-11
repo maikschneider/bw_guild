@@ -8,8 +8,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Class User
- *
- * @package Blueways\BwGuild\Domain\Model
  */
 class User extends FrontendUser
 {
@@ -73,7 +71,7 @@ class User extends FrontendUser
     protected $sortingField;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $publicProfile;
 
@@ -324,8 +322,12 @@ class User extends FrontendUser
     public function geoCodeAddress()
     {
         $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
-        $coords = $geocodingService->getCoordinatesForAddress($this->getAddress(), $this->getZip(), $this->getCity(),
-            $this->getCountry());
+        $coords = $geocodingService->getCoordinatesForAddress(
+            $this->getAddress(),
+            $this->getZip(),
+            $this->getCity(),
+            $this->getCountry()
+        );
 
         if (count($coords)) {
             $this->latitude = $coords['latitude'];
@@ -354,7 +356,7 @@ class User extends FrontendUser
             'member' => [
                 '@type' => 'Person',
                 'familyName' => $this->getLastName(),
-                'givenName' => $this->getFirstName()
+                'givenName' => $this->getFirstName(),
             ],
             'telephone' => $this->getTelephone(),
             'faxNumber' => $this->getFax(),
@@ -362,7 +364,7 @@ class User extends FrontendUser
             'url' => $this->getWww(),
         ];
 
-        if($this->getLogo()) {
+        if ($this->getLogo()) {
             $schema['logo'] = $this->getLogo()->getOriginalResource()->getPublicUrl();
         }
 

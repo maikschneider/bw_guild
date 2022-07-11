@@ -3,21 +3,15 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
-use Blueways\BwGuild\Domain\Model\User;
 use PDO;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
-use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 
 /**
  * Class UserRepository
- *
- * @package Blueways\BwGuild\Domain\Repository
  */
 class UserRepository extends AbstractDemandRepository
 {
-
     public function setConstraints($demand): void
     {
         parent::setConstraints($demand);
@@ -35,12 +29,11 @@ class UserRepository extends AbstractDemandRepository
     public function getUsernames()
     {
         $query = $this->createQuery();
-        $query->statement("SELECT username from fe_users");
+        $query->statement('SELECT username from fe_users');
         $query->setQuerySettings($query->getQuerySettings()->setRespectStoragePage(false));
 
         return $query->execute(true);
     }
-
 
     public function deleteAllUserLogos(int $userId)
     {
@@ -60,7 +53,6 @@ class UserRepository extends AbstractDemandRepository
             );
 
         return $queryBuilder->execute();
-
     }
 
     /**
@@ -68,8 +60,7 @@ class UserRepository extends AbstractDemandRepository
      *
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      */
-    protected function setLanguageConstraint(BaseDemand $demand) {
-
+    protected function setLanguageConstraint(BaseDemand $demand)
+    {
     }
-
 }

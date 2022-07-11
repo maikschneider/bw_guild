@@ -98,12 +98,12 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $possibilities = '';
 
     /**
-     * @var integer
+     * @var int
      */
     protected $recordType = 0;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $hidden;
 
@@ -410,7 +410,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
                 'name' => $name,
                 '@type' => 'Organization',
                 'sameAs' => $url,
-                'logo' => $logo
+                'logo' => $logo,
             ],
             'employmentType' => 'FULL_TIME',
             'datePosted' => $this->getCrdate()->format('Y-m-d'),
@@ -420,9 +420,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
                     'streetAddress' => $this->getAddress(),
                     'addressLocality' => $this->getCity(),
                     'postalCode' => $this->getZip(),
-                    'addressCountry' => $this->getCountry()
-                ]
-            ]
+                    'addressCountry' => $this->getCountry(),
+                ],
+            ],
         ];
 
         // overrides from fe_user

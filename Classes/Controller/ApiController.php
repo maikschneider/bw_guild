@@ -39,9 +39,14 @@ class ApiController extends ActionController
 
         if ($bookmarks = $user->getBookmarks()) {
             $relationHandler = GeneralUtility::makeInstance(RelationHandler::class);
-            $relationHandler->start($bookmarks,
-                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']['config']['allowed'], '', '', 'fe_users',
-                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']);
+            $relationHandler->start(
+                $bookmarks,
+                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']['config']['allowed'],
+                '',
+                '',
+                'fe_users',
+                $GLOBALS['TCA']['fe_users']['columns']['bookmarks']
+            );
             $relationHandler->getFromDB();
 
             $userinfo->setBookmarkOutput($relationHandler->results);
@@ -68,5 +73,4 @@ class ApiController extends ActionController
     //{
     //
     //}
-
 }

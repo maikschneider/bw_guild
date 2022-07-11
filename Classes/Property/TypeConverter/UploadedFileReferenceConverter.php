@@ -123,10 +123,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                     if (strpos($resourcePointer, 'file:') === 0) {
                         $fileUid = substr($resourcePointer, 5);
                         return $this->createFileReferenceFromFalFileObject($this->resourceFactory->getFileObject($fileUid));
-                    } else {
-                        return $this->createFileReferenceFromFalFileReferenceObject($this->resourceFactory->getFileReferenceObject($resourcePointer),
-                            $resourcePointer);
                     }
+                    return $this->createFileReferenceFromFalFileReferenceObject(
+                        $this->resourceFactory->getFileReferenceObject($resourcePointer),
+                        $resourcePointer
+                    );
                 } catch (\InvalidArgumentException $e) {
                     // Nothing to do. No file is uploaded and resource pointer is invalid. Discard!
                 }
@@ -141,8 +142,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
                 case \UPLOAD_ERR_PARTIAL:
                     return new Error('Error Code: ' . $source['error'], 1264440823);
                 default:
-                    return new Error('An error occurred while uploading. Please try again or contact the administrator if the problem remains',
-                        1340193849);
+                    return new Error(
+                        'An error occurred while uploading. Please try again or contact the administrator if the problem remains',
+                        1340193849
+                    );
             }
         }
 
@@ -191,8 +194,11 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             /** @var $fileReference \Blueways\BwGuild\Domain\Model\FileReference */
             $fileReference = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference');
         } else {
-            $fileReference = $this->persistenceManager->getObjectByIdentifier($resourcePointer,
-                'TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference', false);
+            $fileReference = $this->persistenceManager->getObjectByIdentifier(
+                $resourcePointer,
+                'TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference',
+                false
+            );
         }
 
         $fileReference->setOriginalResource($falFileReference);
@@ -215,8 +221,10 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 
-        $allowedFileExtensions = $configuration->getConfigurationValue('Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
-            self::CONFIGURATION_ALLOWED_FILE_EXTENSIONS);
+        $allowedFileExtensions = $configuration->getConfigurationValue(
+            'Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
+            self::CONFIGURATION_ALLOWED_FILE_EXTENSIONS
+        );
 
         if ($allowedFileExtensions !== null) {
             $filePathInfo = PathUtility::pathinfo($uploadInfo['name']);
@@ -225,22 +233,28 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             }
         }
 
-        $uploadFolderId = $configuration->getConfigurationValue('Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
-            self::CONFIGURATION_UPLOAD_FOLDER) ?: $this->defaultUploadFolder;
+        $uploadFolderId = $configuration->getConfigurationValue(
+            'Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
+            self::CONFIGURATION_UPLOAD_FOLDER
+        ) ?: $this->defaultUploadFolder;
         if (class_exists('TYPO3\\CMS\\Core\\Resource\\DuplicationBehavior')) {
             $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
         } else {
             // @deprecated since 7.6 will be removed once 6.2 support is removed
             $defaultConflictMode = 'changeName';
         }
-        $conflictMode = $configuration->getConfigurationValue('Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
-            self::CONFIGURATION_UPLOAD_CONFLICT_MODE) ?: $defaultConflictMode;
+        $conflictMode = $configuration->getConfigurationValue(
+            'Blueways\\BwGuild\\Property\\TypeConverter\\UploadedFileReferenceConverter',
+            self::CONFIGURATION_UPLOAD_CONFLICT_MODE
+        ) ?: $defaultConflictMode;
 
         $uploadFolder = $this->resourceFactory->retrieveFileOrFolderObject($uploadFolderId);
         $uploadedFile = $uploadFolder->addUploadedFile($uploadInfo, $conflictMode);
 
-        $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer']) && strpos($uploadInfo['submittedFile']['resourcePointer'],
-            'file:') === false
+        $resourcePointer = isset($uploadInfo['submittedFile']['resourcePointer']) && strpos(
+            $uploadInfo['submittedFile']['resourcePointer'],
+            'file:'
+        ) === false
             ? $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer'])
             : null;
 

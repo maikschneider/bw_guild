@@ -16,7 +16,7 @@ call_user_func(function () {
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'mobile' => [
@@ -25,7 +25,7 @@ call_user_func(function () {
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'member_nr' => [
@@ -34,7 +34,7 @@ call_user_func(function () {
             'config' => [
                 'type' => 'input',
                 'size' => 20,
-                'eval' => 'trim'
+                'eval' => 'trim',
             ],
         ],
         'offers' => [
@@ -43,8 +43,8 @@ call_user_func(function () {
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_bwguild_domain_model_offer',
-                'foreign_field' => 'fe_user'
-            ]
+                'foreign_field' => 'fe_user',
+            ],
         ],
         'latitude' => [
             'exclude' => false,
@@ -57,7 +57,7 @@ call_user_func(function () {
             'exclude' => false,
             'label' => 'LONG',
             'config' => [
-                'type' => 'passthrough'
+                'type' => 'passthrough',
             ],
         ],
         'sorting_field' => [
@@ -77,15 +77,15 @@ call_user_func(function () {
                     ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.title', 'title'],
                     ['LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.email', 'email'],
 
-                ]
-            ]
+                ],
+            ],
         ],
         'sorting_text' => [
             'exclude' => false,
             'label' => 'SORTING TEXT',
             'config' => [
-                'type' => 'passthrough'
-            ]
+                'type' => 'passthrough',
+            ],
         ],
         'slug' => [
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.slug',
@@ -110,7 +110,7 @@ call_user_func(function () {
             'config' => [
                 'type' => 'check',
                 'default' => 1,
-            ]
+            ],
         ],
         'logo' => [
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.logo',
@@ -152,9 +152,12 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'public_profile', '', 'after:password');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'logo', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'bookmarks', '', 'after:slug');
-    ExtensionManagementUtility::addToAllTCAtypes('fe_users',
-        '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers', '',
-        'after:description');
+    ExtensionManagementUtility::addToAllTCAtypes(
+        'fe_users',
+        '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers',
+        '',
+        'after:description'
+    );
 
     /**
      * Connect to sys_categories

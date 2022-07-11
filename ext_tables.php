@@ -1,4 +1,5 @@
 <?php
+
 defined('TYPO3_MODE') || die();
 
 call_user_func(
@@ -62,16 +63,14 @@ call_user_func(
             'web',
             'tx_bwguild_admin',
             '',
-            array(
+            [
                 'Administration' => 'index, importer, csv, csvImport, offer, passwordRefresh',
-            ),
-            array(
+            ],
+            [
                 'access' => 'user,group',
                 'icon' => 'EXT:bw_guild/Resources/Public/Images/module_administration.svg',
                 'labels' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:tx_bwguild_admin',
-            )
+            ]
         );
     }
 );
-
-

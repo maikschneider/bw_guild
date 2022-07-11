@@ -62,7 +62,6 @@ class AbstractDemandRepository extends Repository
     /**
      * Create queryBuilder for current repository table + add filter for correct subclass (record_type)
      *
-     * @return void
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      * @see https://gist.github.com/Nemo64/d6bf6561fc4b32d490b1b39966107ff5
      */
@@ -82,8 +81,10 @@ class AbstractDemandRepository extends Repository
                 $typeNames[] = $dataMapper->getDataMap($subclass)->getRecordType();
             }
 
-            $typeNameParameter = $qb->createNamedParameter($typeNames,
-                Connection::PARAM_STR_ARRAY);
+            $typeNameParameter = $qb->createNamedParameter(
+                $typeNames,
+                Connection::PARAM_STR_ARRAY
+            );
             $qb->andWhere($qb->expr()->in($recordTypeColumnName, $typeNameParameter));
         }
 
@@ -120,7 +121,6 @@ class AbstractDemandRepository extends Repository
         $searchFields = GeneralUtility::trimExplode(',', $tcaSearchFields, true);
 
         foreach ($searchSplittedParts as $searchSplittedPart) {
-
             $subConstraints = [];
 
             foreach ($searchFields as $cleanProperty) {
@@ -158,8 +158,10 @@ class AbstractDemandRepository extends Repository
                     $demand::TABLE,
                     'sys_category_record_mm',
                     'c',
-                    $this->queryBuilder->expr()->eq('c.uid_foreign',
-                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid'))
+                    $this->queryBuilder->expr()->eq(
+                        'c.uid_foreign',
+                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')
+                    )
                 );
 
                 // any match
@@ -173,8 +175,10 @@ class AbstractDemandRepository extends Repository
                     $demand::TABLE,
                     'sys_category_record_mm',
                     'c',
-                    $this->queryBuilder->expr()->eq('c.uid_foreign',
-                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid'))
+                    $this->queryBuilder->expr()->eq(
+                        'c.uid_foreign',
+                        $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')
+                    )
                 );
 
                 // not any match
@@ -190,14 +194,18 @@ class AbstractDemandRepository extends Repository
                         'sys_category_record_mm',
                         'c' . $key,
                         $this->queryBuilder->expr()->andX(
-                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_foreign',
-                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')),
-                            $this->queryBuilder->expr()->neq('c' . $key . '.uid_local',
-                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT))
+                            $this->queryBuilder->expr()->eq(
+                                'c' . $key . '.uid_foreign',
+                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')
+                            ),
+                            $this->queryBuilder->expr()->neq(
+                                'c' . $key . '.uid_local',
+                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                            )
                         )
                     );
                 }
-                break;
+            break;
             case 'and':
             default:
                 // join for every category - include check for category uid in join statement
@@ -207,10 +215,14 @@ class AbstractDemandRepository extends Repository
                         'sys_category_record_mm',
                         'c' . $key,
                         $this->queryBuilder->expr()->andX(
-                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_foreign',
-                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')),
-                            $this->queryBuilder->expr()->eq('c' . $key . '.uid_local',
-                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT))
+                            $this->queryBuilder->expr()->eq(
+                                'c' . $key . '.uid_foreign',
+                                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')
+                            ),
+                            $this->queryBuilder->expr()->eq(
+                                'c' . $key . '.uid_local',
+                                $this->queryBuilder->createNamedParameter($category, \PDO::PARAM_INT)
+                            )
                         )
                     );
                 }
@@ -275,7 +287,6 @@ class AbstractDemandRepository extends Repository
      * Change DefaultRestrictions to FrontendRestrictions in order to respect fe_group
      *
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return void
      */
     private function setRestritions(BaseDemand $demand)
     {
@@ -293,10 +304,12 @@ class AbstractDemandRepository extends Repository
         $sysLanguageUid = $languageAspect->getId();
 
         $this->queryBuilder->andWhere(
-            $this->queryBuilder->expr()->eq('sys_language_uid',
-                $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)));
+            $this->queryBuilder->expr()->eq(
+                'sys_language_uid',
+                $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)
+            )
+        );
     }
-
 
     public function createDemandObjectFromSettings(
         array $settings,
