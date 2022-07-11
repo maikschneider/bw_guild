@@ -9,6 +9,7 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\RelationHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class ApiController extends ActionController
@@ -31,10 +32,10 @@ class ApiController extends ActionController
 
         /** @var User $user */
         $user = $this->userRepository->findByIdentifier($userId);
-
         if (!$user) {
             return $this->responseFactory->createResponse('404', '');
         }
+
         $userinfo = new Userinfo($user);
 
         if ($bookmarks = $user->getBookmarks()) {
@@ -69,8 +70,22 @@ class ApiController extends ActionController
         return $this->jsonResponse(json_encode($userinfo));
     }
 
-    //public function createBookmark(string $tableName, int $uid): ResponseInterface
-    //{
-    //
-    //}
+    public function bookmarkAction(string $tableName, int $recordUid): ResponseInterface
+    {
+        if (!($userId = $this->accessControlService->getFrontendUserUid())) {
+            return $this->responseFactory->createResponse('403', '');
+        }
+
+        if ($this->request->getMethod() === 'POST') {
+            $this->userRepository->addBookmarkForUser($userId, $tableName, $recordUid);
+            return new ForwardResponse('userinfo');
+        }
+
+        if ($this->request->getMethod() === 'DELETE') {
+            $this->userRepository->removeBookmarkForUser($userId, $tableName, $recordUid);
+            return new ForwardResponse('userinfo');
+        }
+
+        return $this->responseFactory->createResponse(405);
+    }
 }

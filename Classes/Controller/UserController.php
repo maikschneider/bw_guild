@@ -152,8 +152,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             throw new ImmediateResponseException($response);
         }
 
-        \TYPO3\CMS\Core\Utility\DebugUtility::debug($user, 'Debug: ' . __FILE__ . ' in Line: ' . __LINE__);
-
         $schema = $user->getJsonSchema($this->settings);
 
         if (isset($schema['logo'])) {

@@ -11,4 +11,12 @@ routeEnhancers:
     routes:
       - routePath: '/api/userinfo'
         _controller: 'Api::userinfo'
+      - routePath: '/api/bookmark/{tableName}/{recordUid}'
+        _controller: 'Api::bookmark'
+        _arguments:
+          tableName: tableName
+          recordUid: recordUid
+        requirements:
+          tableName: '[\w\d_]+'
+          recordUid: '\d+'
     defaultController: 'Api::userinfo'
