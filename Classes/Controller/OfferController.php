@@ -4,7 +4,11 @@ namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
+use Blueways\BwGuild\Domain\Repository\OfferRepository;
+use Blueways\BwGuild\Domain\Repository\UserRepository;
+use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -17,21 +21,11 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  */
 class OfferController extends ActionController
 {
+    protected OfferRepository $offerRepository;
 
-    /**
-     * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
-     */
-    protected $offerRepository;
+    protected UserRepository $userRepository;
 
-    /**
-     * @var \Blueways\BwGuild\Domain\Repository\UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * @var \Blueways\BwGuild\Service\AccessControlService
-     */
-    protected $accessControlService;
+    protected AccessControlService $accessControlService;
 
     public function listAction(): ResponseInterface
     {
@@ -69,10 +63,6 @@ class OfferController extends ActionController
         $this->view->assign('offers', $offers);
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Offer $offer
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("offer")
-     */
     public function showAction(Offer $offer)
     {
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
@@ -96,12 +86,6 @@ class OfferController extends ActionController
         $this->view->assign('offer', $offer);
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Offer|null $offer
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("offer")
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     */
     public function editAction(Offer $offer = null)
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
@@ -123,13 +107,6 @@ class OfferController extends ActionController
         }
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Offer $offer
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     */
     public function updateAction(Offer $offer)
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
@@ -170,12 +147,9 @@ class OfferController extends ActionController
         $this->redirect('edit');
     }
 
-    /**
-     * @return \TYPO3\CMS\Lang\LanguageService
-     */
-    protected function getLanguageService()
+    protected function getLanguageService(): LanguageService
     {
-        return $this->objectManager->get(\TYPO3\CMS\Lang\LanguageService::class);
+        return $GLOBALS['LANG'] ?? GeneralUtility::makeInstance(LanguageService::class);
     }
 
     public function deleteAction(Offer $offer)
@@ -202,10 +176,6 @@ class OfferController extends ActionController
         $this->redirect('edit');
     }
 
-    /**
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     */
     public function newAction()
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
@@ -228,24 +198,6 @@ class OfferController extends ActionController
         $this->mergeTyposcriptSettings();
     }
 
-    public function injectAccessControlService(\Blueways\BwGuild\Service\AccessControlService $accessControlService)
-    {
-        $this->accessControlService = $accessControlService;
-    }
-
-    public function injectOfferRepository(\Blueways\BwGuild\Domain\Repository\OfferRepository $offerRepository)
-    {
-        $this->offerRepository = $offerRepository;
-    }
-
-    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
-    {
-        $this->userRepository = $userRepository;
-    }
-
-    /**
-     * Merges the typoscript settings with the settings from flexform
-     */
     private function mergeTyposcriptSettings()
     {
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
