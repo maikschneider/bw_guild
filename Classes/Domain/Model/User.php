@@ -75,6 +75,13 @@ class User extends FrontendUser
      */
     protected $publicProfile;
 
+    protected ?ObjectStorage $bookmarks = null;
+
+    public function getBookmarks(): ?ObjectStorage
+    {
+        return $this->bookmarks;
+    }
+
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
      * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\UserLogoValidator")
@@ -88,6 +95,7 @@ class User extends FrontendUser
         $this->categories = new ObjectStorage();
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
+        $this->bookmarks = new ObjectStorage();
         $this->sortingField = 'company';
     }
 

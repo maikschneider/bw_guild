@@ -1,0 +1,14 @@
+routeEnhancers:
+  PageTypeSuffix:
+    type: PageType
+    default: ''
+    map:
+      .json: 1657523819
+  BwGuildApi:
+    type: Extbase
+    extension: BwGuild
+    plugin: Api
+    routes:
+      - routePath: '/api/userinfo'
+        _controller: 'Api::userinfo'
+    defaultController: 'Api::userinfo'

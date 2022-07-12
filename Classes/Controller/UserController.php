@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Http\ImmediateResponseException;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Pagination\ArrayPaginator;
@@ -147,13 +148,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         return $this->htmlResponse($this->view->render());
     }
-
-    /**
-     * @throws \TYPO3\CMS\Core\Error\Http\PageNotFoundException|\JsonException
-     */
-    public function showAction(User $user): ResponseInterface
+    
+    public function showAction(?User $user = null): ResponseInterface
     {
-        if (!$user->isPublicProfile()) {
+        if (!$user || !$user->isPublicProfile()) {
             $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
                 $GLOBALS['TYPO3_REQUEST'],
                 'Profile not found',

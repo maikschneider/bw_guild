@@ -52,6 +52,15 @@ plugin {
 		}
 	}
 
+  tx_bwguild_usershow {
+    settings {
+      schema {
+        enable = {$plugin.tx_bwguild_usershow.settings.schema.enable}
+        defaultImage = {$plugin.tx_bwguild_usershow.settings.schema.defaultImage}
+      }
+    }
+  }
+
 	tx_bwguild_offerlist {
 		settings {
 			demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}

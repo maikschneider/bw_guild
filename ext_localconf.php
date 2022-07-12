@@ -2,45 +2,58 @@
 
 defined('TYPO3_MODE') || die();
 
-$typo3Version = TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionStringToArray(TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version());
-$userControllerName = $typo3Version['version_main'] >= 10 ? \Blueways\BwGuild\Controller\UserController::class : 'User';
-$offerControllerName = $typo3Version['version_main'] >= 10 ? \Blueways\BwGuild\Controller\OfferController::class : 'User';
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'BwGuild',
+    'Usershow',
+    [
+        \Blueways\BwGuild\Controller\UserController::class => 'show',
+    ],
+    []
+);
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Blueways.BwGuild',
+    'BwGuild',
     'Userlist',
     [
-        $userControllerName => 'list, show, edit, update, new, search',
+        \Blueways\BwGuild\Controller\UserController::class => 'list, edit, update, new, search',
     ],
-    // non-cacheable actions
     [
-        $userControllerName => 'edit, update, list'
+        \Blueways\BwGuild\Controller\UserController::class => 'edit, update, list',
     ]
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Blueways.BwGuild',
+    'BwGuild',
     'Offerlist',
     [
-        $offerControllerName => 'list, show, edit, update, new, delete',
+        \Blueways\BwGuild\Controller\OfferController::class => 'list, show, edit, update, new, delete',
     ],
     // non-cacheable actions
     [
-        $offerControllerName => 'edit, update, delete, new'
+        \Blueways\BwGuild\Controller\OfferController::class => 'edit, update, delete, new',
     ]
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'Blueways.BwGuild',
+    'BwGuild',
     'Offerlatest',
     [
-        $offerControllerName => 'latest',
+        \Blueways\BwGuild\Controller\OfferController::class => 'latest',
     ],
     [
     ]
 );
 
-
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'BwGuild',
+    'Api',
+    [
+        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo',
+    ],
+    [
+        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo',
+    ]
+);
 
 // Define state cache, if not already defined
 if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['bwguild'])) {
@@ -54,7 +67,7 @@ if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['scheduler']['tasks'][\Blueways\BwGuild\Task\GeocodingTask::class] = [
     'extension' => 'bw_guild',
     'title' => 'Geocoding of fe_user & offer records',
-    'description' => 'Check all fe_user and offer records for geocoding information and write them into the fields'
+    'description' => 'Check all fe_user and offer records for geocoding information and write them into the fields',
 ];
 
 // Register hook to set sorting field
@@ -69,7 +82,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['ext/install']['update']['bwGuildSlugU
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerTypeConverter('Blueways\\BwGuild\\Property\\TypeConverter\\ObjectStorageConverter');
 
 // Register ke_search Hook
-if(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['registerIndexerConfiguration'][] =
         \Blueways\BwGuild\Hooks\OfferIndexer::class;
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer'][] =
