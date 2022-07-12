@@ -35,7 +35,6 @@ class Userinfo
         ];
 
         foreach ($relationHandlerResult as $tableName => &$records) {
-
             if (!isset($tableFieldsToKeep[$tableName])) {
                 continue;
             }
