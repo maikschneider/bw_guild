@@ -88,4 +88,19 @@ class ApiController extends ActionController
 
         return $this->responseFactory->createResponse(405);
     }
+
+    public function userEditFormAction(): ResponseInterface
+    {
+        if (!($userId = $this->accessControlService->getFrontendUserUid())) {
+            return $this->responseFactory->createResponse('403', '');
+        }
+
+        $user = $this->userRepository->findByUid($userId);
+
+        $this->view->assign('user', $user);
+        $html = $this->view->render();
+        $response = ['html' => $html];
+
+        return $this->jsonResponse(json_encode($response));
+    }
 }

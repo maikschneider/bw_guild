@@ -1,0 +1,56 @@
+<f:flashMessages/>
+
+<f:form controller="User" action="update" object="{user}" name="user" method="POST" enctype="multipart/form-data">
+
+	<div class="form__item">
+		<label> Firmenname
+			<f:form.textfield property="company"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Anschrift
+			<f:form.textfield property="address"/>
+		</label>
+	</div>
+	<div class="form__item form__item--2">
+		<label> PLZ
+			<f:form.textfield property="zip"/>
+		</label> <label> Stadt
+		<f:form.textfield property="city"/>
+	</label>
+	</div>
+	<div class="form__item">
+		<label> Telefon
+			<f:form.textfield property="telephone"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label> Email
+			<f:form.textfield property="email"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label id="publicProfile"> Öffentliches Profil
+			<f:form.checkbox property="publicProfile" id="publicProfile" value="1"/>
+		</label>
+	</div>
+	<div class="form__item">
+		<label id="logo">New Logo
+			<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
+		</label>
+	</div>
+	<f:if condition="{user.logo}">
+		<div class="form__item">
+			<f:image image="{user.logo}" maxWidth="150" />
+			<label>Delete Logo
+				<f:form.checkbox value="1" name="deleteLogo"/>
+			</label>
+		</div>
+	</f:if>
+	<div class="form__item form__item--submit">
+		<button type="submit" class="button hollow">
+			<span class="icon-save"></span>
+			Speichern
+		</button>
+	</div>
+</f:form>

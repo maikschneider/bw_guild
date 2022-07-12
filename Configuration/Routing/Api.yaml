@@ -19,4 +19,6 @@ routeEnhancers:
         requirements:
           tableName: '[\w\d_]+'
           recordUid: '\d+'
+      - routePath: '/api/userEditForm'
+        _controller: 'Api::userEditForm'
     defaultController: 'Api::userinfo'
