@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Database\RelationHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 
 class ApiController extends ActionController
 {
@@ -102,5 +103,57 @@ class ApiController extends ActionController
         $response = ['html' => $html];
 
         return $this->jsonResponse(json_encode($response));
+    }
+
+    public function initializeUserEditUpdateAction()
+    {
+        $isLogoDelete = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
+        $isEmptyLogoUpdate = $_FILES['tx_bwguild_api']['name']['user']['logo'] === '';
+
+        if ($isLogoDelete || $isEmptyLogoUpdate) {
+            $this->ignoreLogoArgumentInUpdate();
+        }
+    }
+
+    protected function ignoreLogoArgumentInUpdate(): void
+    {
+        // unset logo argument
+        $userArgument = $this->request->getArgument('user');
+        unset($userArgument['logo']);
+        $this->request->setArgument('user', $userArgument);
+
+        // unset logo validator
+        $validator = $this->arguments->getArgument('user')->getValidator();
+        foreach ($validator->getValidators() as $subValidator) {
+            /** @var GenericObjectValidator $subValidatorSub */
+            foreach ($subValidator->getValidators() as $subValidatorSub) {
+                $subValidatorSub->getPropertyValidators('logo')->removeAll(
+                    $subValidatorSub->getPropertyValidators('logo')
+                );
+            }
+        }
+    }
+
+    public function userEditUpdateAction(User $user): ResponseInterface
+    {
+        if (!$this->accessControlService->isLoggedIn($user)) {
+            $this->throwStatus(403, 'No access to edit this user');
+        }
+
+        // delete all logos
+        if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {
+            $this->userRepository->deleteAllUserLogos($user->getUid());
+        }
+
+        // delete existing logo(s) if new one is created
+        $userArguments = $this->request->getArgument('user');
+        if (isset($userArguments['logo']) && $user->getLogo()) {
+            $this->userRepository->deleteAllUserLogos($user->getUid());
+        }
+
+        $user->geoCodeAddress();
+        $this->userRepository->update($user);
+
+        return new ForwardResponse('userEditForm');
     }
 }

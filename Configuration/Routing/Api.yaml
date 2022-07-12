@@ -21,4 +21,6 @@ routeEnhancers:
           recordUid: '\d+'
       - routePath: '/api/userEditForm'
         _controller: 'Api::userEditForm'
+      - routePath: '/api/userEditUpdate'
+        _controller: 'Api::userEditUpdate'
     defaultController: 'Api::userinfo'

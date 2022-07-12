@@ -48,7 +48,7 @@ defined('TYPO3_MODE') || die();
     'BwGuild',
     'Api',
     [
-        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo,bookmark,userEditForm,userUpdate',
+        \Blueways\BwGuild\Controller\ApiController::class => 'userinfo,bookmark,userEditForm,userEditUpdate',
     ],
     [
         \Blueways\BwGuild\Controller\ApiController::class => 'userinfo,bookmark,userEditForm,userEditUpdate',
