@@ -38,4 +38,7 @@ return [
         'recordType' => 3,
         'tableName' => 'tx_bwguild_domain_model_offer',
     ],
+    Blueways\BwGuild\Domain\Model\FileReference::class => [
+        'tableName' => 'sys_file_reference',
+    ],
 ];

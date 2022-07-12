@@ -1,5 +1,4 @@
-base: 'http://bw-guild.ddev.site/'
-errorHandling: {  }
+base: /
 languages:
   -
     title: English
@@ -13,8 +12,24 @@ languages:
     hreflang: en-us
     direction: ltr
     flag: us
+    websiteTitle: ''
+  -
+    title: Deutsch
+    enabled: true
+    base: /de/
+    typo3Language: de
+    locale: de_DE.UTF-8
+    iso-639-1: de
+    websiteTitle: ''
+    navigationTitle: ''
+    hreflang: ''
+    direction: ''
+    fallbackType: strict
+    fallbacks: ''
+    flag: de
+    languageId: 1
 rootPageId: 1
-routes: {  }
+websiteTitle: ''
 imports:
   -
     resource: 'EXT:bw_guild/Configuration/Routing/Offerlist.yaml'

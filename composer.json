@@ -10,6 +10,7 @@
     "TYPO3 CMS"
   ],
   "require-dev": {
+    "roave/security-advisories": "dev-latest",
     "typo3/cms-adminpanel": "^11.5",
     "typo3/cms-backend": "^11.5",
     "typo3/cms-belog": "^11.5",
@@ -41,7 +42,10 @@
     "typo3/cms-viewpage": "^11.5",
     "bk2k/bootstrap-package": "^12.0",
     "tpwd/ke_search": "^4.0",
-    "helhum/typo3-console": "^7.0"
+    "helhum/typo3-console": "^7.0",
+    "phpmd/phpmd": "^2.6.0",
+    "squizlabs/php_codesniffer": "^3.4",
+    "friendsofphp/php-cs-fixer": "^3.3"
   },
   "extra": {
     "typo3/cms": {
@@ -51,7 +55,6 @@
     }
   },
   "config": {
-    "bin-dir": "bin",
     "vendor-dir": "vendor",
     "allow-plugins": {
       "typo3/cms-composer-installers": true,
@@ -77,5 +80,12 @@
       "email": "m.schneider@blueways.de",
       "role": "Developer"
     }
-  ]
+  ],
+  "scripts": {
+    "php:fix": "./vendor/bin/php-cs-fixer --config=Configuration/php-cs-fixer.php fix Classes Configuration",
+    "ci:php:lint": "find *.php Classes Configuration Tests -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l",
+    "ci:php:fixer": "./vendor/bin/php-cs-fixer --config=Configuration/php-cs-fixer.php fix --dry-run -v --show-progress=dots Classes Configuration Tests",
+    "ci:php:stan": "./vendor/bin/phpstan --no-progress",
+    "phpstan:baseline": "./vendor/bin/phpstan  --generate-baseline=phpstan-baseline.neon --allow-empty-baseline"
+  }
 }

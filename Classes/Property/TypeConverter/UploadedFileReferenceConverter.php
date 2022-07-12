@@ -23,12 +23,16 @@ namespace Blueways\BwGuild\Property\TypeConverter;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\Security\FileNameValidator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\PathUtility;
 use TYPO3\CMS\Extbase\Error\Error;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\Exception\TypeConverterException;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\AbstractTypeConverter;
+use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
 
 /**
  * Class UploadedFileReferenceConverter
@@ -39,24 +43,24 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * Folder where the file upload should go to (including storage).
      */
-    const CONFIGURATION_UPLOAD_FOLDER = 1;
+    public const CONFIGURATION_UPLOAD_FOLDER = 1;
 
     /**
      * How to handle a upload when the name of the uploaded file conflicts.
      */
-    const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
+    public const CONFIGURATION_UPLOAD_CONFLICT_MODE = 2;
 
     /**
      * Whether to replace an already present resource.
      * Useful for "maxitems = 1" fields and properties
      * with no ObjectStorage annotation.
      */
-    const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
+    public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
     /**
      * @var string
      */
-    protected $defaultUploadFolder = '1:/user_upload/';
+    protected string $defaultUploadFolder = '1:/user_upload/';
 
     /**
      * @var array<string>
@@ -75,28 +79,31 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     protected $priority = 30;
 
-    /**
-     * @var \TYPO3\CMS\Core\Resource\ResourceFactory
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $resourceFactory;
+    protected ResourceFactory $resourceFactory;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Security\Cryptography\HashService
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $hashService;
+    protected HashService $hashService;
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager
-     * @TYPO3\CMS\Extbase\Annotation\Inject
-     */
-    protected $persistenceManager;
+    protected PersistenceManager $persistenceManager;
 
     /**
      * @var \TYPO3\CMS\Core\Resource\FileInterface[]
      */
-    protected $convertedResources = [];
+    protected array $convertedResources = [];
+
+    /**
+     * @param \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory
+     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     */
+    public function __construct(
+        ResourceFactory $resourceFactory,
+        HashService $hashService,
+        PersistenceManager $persistenceManager
+    ) {
+        $this->resourceFactory = $resourceFactory;
+        $this->hashService = $hashService;
+        $this->persistenceManager = $persistenceManager;
+    }
 
     /**
      * Actually convert from $source to $targetType, taking into account the fully
@@ -105,9 +112,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * @param string|int $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface $configuration
+     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface|null $configuration
      * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
+     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
+     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
+     * @throws \TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException
+     * @throws \TYPO3\CMS\Extbase\Security\Exception\InvalidHashException
      * @api
      */
     public function convertFrom(
@@ -181,18 +191,13 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
     }
 
-    /**
-     * @param FalFileReference $falFileReference
-     * @param int $resourcePointer
-     * @return \Blueways\BwGuild\Domain\Model\FileReference
-     */
     protected function createFileReferenceFromFalFileReferenceObject(
         FalFileReference $falFileReference,
         $resourcePointer = null
     ) {
         if ($resourcePointer === null) {
             /** @var $fileReference \Blueways\BwGuild\Domain\Model\FileReference */
-            $fileReference = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Domain\\Model\\FileReference');
+            $fileReference = GeneralUtility::makeInstance(\Blueways\BwGuild\Domain\Model\FileReference::class);
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,
@@ -217,7 +222,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     protected function importUploadedResource(array $uploadInfo, PropertyMappingConfigurationInterface $configuration)
     {
-        if (!GeneralUtility::verifyFilenameAgainstDenyPattern($uploadInfo['name'])) {
+        if (!GeneralUtility::makeInstance(FileNameValidator::class)->isValid($uploadInfo['name'])) {
             throw new TypeConverterException('Uploading files with PHP file extensions is not allowed!', 1399312430);
         }
 

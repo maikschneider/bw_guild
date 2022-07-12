@@ -3,8 +3,10 @@
 namespace Blueways\BwGuild\Domain\Model\Dto;
 
 use Blueways\BwGuild\Service\GeoService;
+use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Mvc\Request;
 
 class BaseDemand extends AbstractEntity
 {
@@ -35,6 +37,8 @@ class BaseDemand extends AbstractEntity
     protected float $latitude = 0.0;
 
     protected float $longitude = 0.0;
+
+    protected int $limit = -1;
 
     /**
      * @return int
@@ -165,11 +169,6 @@ class BaseDemand extends AbstractEntity
     }
 
     /**
-     * @var int
-     */
-    protected $limit = -1;
-
-    /**
      * @return string
      */
     public function getExcludeSearchFields(): string
@@ -249,19 +248,23 @@ class BaseDemand extends AbstractEntity
         $this->search = $search;
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
-     */
-    public function overrideDemand($demand): void
+    public function overrideFromRequest(Request $request): void
     {
-        // abort if no valid demand
-        if (!$demand || !is_array($demand)) {
+        // abort if no valid demand array
+        if (!$request->hasArgument('demand') || !$demand = $request->getArgument('demand')) {
             return;
         }
 
+        $reflectionClass = new ReflectionClass($this);
+
         // override properties
         foreach ($demand as $key => $value) {
-            $this->_setProperty($key, $value);
+            if (!$reflectionClass->hasProperty($key)) {
+                continue;
+            }
+
+            settype($value, gettype($this->$key));
+            $this->$key = $value;
         }
     }
 
@@ -289,5 +292,27 @@ class BaseDemand extends AbstractEntity
     public function getSearchParts(): array
     {
         return GeneralUtility::trimExplode(' ', $this->search, true);
+    }
+
+    public static function createFromSettings($settings): self
+    {
+        $demand = new static();
+
+        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
+        $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
+        $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
+        $demand->setOrder($settings['order'] ?? '');
+        $demand->setOrderDirection($settings['orderDirection'] ?? '');
+        $demand->setItemsPerPage((int)$settings['itemsPerPage']);
+
+        if ($settings['limit']) {
+            $demand->setLimit((int)$settings['limit']);
+        }
+
+        if ($settings['maxItems']) {
+            $demand->setLimit((int)$settings['maxItems']);
+        }
+
+        return $demand;
     }
 }
