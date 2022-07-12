@@ -29,7 +29,25 @@ class Userinfo
 
     public function setBookmarkOutput(array $relationHandlerResult): void
     {
-        // @TODO: nice and compact output for all tables
+        $tableFieldsToKeep = [
+            'pages' => ['uid', 'title'],
+            'fe_users' => ['uid', 'username'],
+        ];
+
+        foreach ($relationHandlerResult as $tableName => &$records) {
+
+            if (!isset($tableFieldsToKeep[$tableName])) {
+                continue;
+            }
+
+            $fieldConfig = $tableFieldsToKeep[$tableName];
+            $records = array_map(function ($record) use ($fieldConfig) {
+                return array_filter($record, function ($key) use ($fieldConfig) {
+                    return in_array($key, $fieldConfig);
+                }, ARRAY_FILTER_USE_KEY);
+            }, $records);
+        }
+
         $this->bookmarks = $relationHandlerResult;
     }
 }
