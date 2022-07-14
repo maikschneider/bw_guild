@@ -4,6 +4,7 @@ namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
 use Blueways\BwGuild\Domain\Model\User;
+use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
@@ -19,10 +20,16 @@ class ApiController extends ActionController
 
     protected UserRepository $userRepository;
 
-    public function __construct(AccessControlService $accessControlService, UserRepository $userRepository)
-    {
+    protected AbstractUserFeatureRepository $featureRepository;
+
+    public function __construct(
+        AccessControlService $accessControlService,
+        UserRepository $userRepository,
+        AbstractUserFeatureRepository $featureRepository
+    ) {
         $this->accessControlService = $accessControlService;
         $this->userRepository = $userRepository;
+        $this->featureRepository = $featureRepository;
     }
 
     public function userinfoAction(): ResponseInterface
@@ -97,8 +104,10 @@ class ApiController extends ActionController
         }
 
         $user = $this->userRepository->findByUid($userId);
+        $features = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
 
         $this->view->assign('user', $user);
+        $this->view->assign('features', $features);
         $html = $this->view->render();
         $response = ['html' => $html];
 
