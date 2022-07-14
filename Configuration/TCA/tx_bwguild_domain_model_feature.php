@@ -3,28 +3,28 @@
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_feature',
-        'label' => 'title',
+        'label' => 'name',
         'crdate' => 'crdate',
         'hideAtCopy' => true,
         'type' => 'record_type',
-        'searchFields' => 'title',
+        'searchFields' => 'name',
         'iconfile' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_feature.svg',
     ],
     'interface' => [
-        'showRecordFieldList' => 'cruser_id,pid,sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime, record_type, title, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail, contact_phone, fe_group',
+        'showRecordFieldList' => 'cruser_id,pid,sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime, record_type, name, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail, contact_phone, fe_group',
     ],
     'types' => [
         // Skill
         '0' => [
-            'showitem' => 'record_type, title',
+            'showitem' => 'record_type, name',
         ],
         // Interest
         '1' => [
-            'showitem' => 'record_type, title',
+            'showitem' => 'record_type, name',
         ],
         // Hobby
         '2' => [
-            'showitem' => 'record_type, title',
+            'showitem' => 'record_type, name',
         ],
     ],
     'columns' => [
@@ -57,10 +57,10 @@ return [
                 'maxitems' => 1,
             ],
         ],
-        'title' => [
+        'name' => [
             'exclude' => false,
             'l10n_mode' => 'prefixLangTitle',
-            'label' => 'LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:header_formlabel',
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_feature.name',
             'config' => [
                 'type' => 'input',
                 'size' => 60,

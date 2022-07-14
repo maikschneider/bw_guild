@@ -100,6 +100,9 @@
 			<trans-unit id="tx_bwguild_domain_model_feature.record_type.2">
 				<source>Hobby</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_feature.name">
+				<source>Name</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

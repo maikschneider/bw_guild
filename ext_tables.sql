@@ -75,7 +75,7 @@ CREATE TABLE tx_bwguild_domain_model_feature (
 	crdate int(11) DEFAULT '0' NOT NULL,
 
 	record_type varchar(255) DEFAULT '' NOT NULL,
-	title varchar(255) DEFAULT '' NOT NULL,
+	name varchar(255) DEFAULT '' NOT NULL,
 	fe_users int(11) DEFAULT 0 NOT NULL,
 
 	PRIMARY KEY (uid),
