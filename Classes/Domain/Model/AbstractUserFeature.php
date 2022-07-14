@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use JetBrains\PhpStorm\ArrayShape;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class AbstractUserFeature extends AbstractEntity
@@ -20,10 +21,11 @@ class AbstractUserFeature extends AbstractEntity
         return $this->recordType;
     }
 
-    public function getJson(): string
+    #[ArrayShape(['label' => 'string', 'value' => 'int|null'])] public function getApiOutputArray(): array
     {
-        return json_encode([
-            'name' => $this->name,
-        ]);
+        return [
+            'label' => $this->name,
+            'value' => $this->getUid(),
+        ];
     }
 }
