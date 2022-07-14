@@ -41,4 +41,29 @@ return [
     Blueways\BwGuild\Domain\Model\FileReference::class => [
         'tableName' => 'sys_file_reference',
     ],
+    Blueways\BwGuild\Domain\Model\AbstractUserFeature::class => [
+        'tableName' => 'tx_bwguild_domain_model_feature',
+        'columns' => [
+            'crdate' => [
+                'mapOnProperty' => 'crdate',
+            ],
+        ],
+        'subclasses' => [
+            Blueways\BwGuild\Domain\Model\UserFeatureInterest::class,
+            Blueways\BwGuild\Domain\Model\UserFeatureHobby::class,
+            Blueways\BwGuild\Domain\Model\UserFeatureSkill::class,
+        ],
+    ],
+    Blueways\BwGuild\Domain\Model\UserFeatureInterest::class => [
+        'recordType' => 1,
+        'tableName' => 'tx_bwguild_domain_model_feature',
+    ],
+    Blueways\BwGuild\Domain\Model\UserFeatureSkill::class => [
+        'recordType' => 0,
+        'tableName' => 'tx_bwguild_domain_model_feature',
+    ],
+    Blueways\BwGuild\Domain\Model\UserFeatureHobby::class => [
+        'recordType' => 2,
+        'tableName' => 'tx_bwguild_domain_model_feature',
+    ],
 ];

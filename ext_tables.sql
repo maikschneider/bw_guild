@@ -3,6 +3,7 @@ CREATE TABLE fe_users (
 	mobile varchar(255) DEFAULT '' NOT NULL,
 	member_nr varchar(255) DEFAULT '' NOT NULL,
 	offers varchar(11) DEFAULT 0 NOT NULL,
+	features varchar(11) DEFAULT 0 NOT NULL,
 	logo varchar(11) DEFAULT 0 NOT NULL,
 	shared_offers int(11) unsigned DEFAULT '0' NOT NULL,
 	sorting_field varchar(255) DEFAULT '' NOT NULL,
@@ -66,5 +67,14 @@ CREATE TABLE tx_bwguild_offer_feuser_mm (
 
 	KEY uid_local (uid_local),
 	KEY uid_foreign (uid_foreign)
+);
+
+CREATE TABLE tx_bwguild_domain_model_feature (
+	uid int(11) NOT NULL auto_increment,
+	pid int(11) DEFAULT '0' NOT NULL,
+	crdate int(11) DEFAULT '0' NOT NULL,
+
+	record_type varchar(255) DEFAULT '' NOT NULL,
+	title varchar(255) DEFAULT '' NOT NULL,
 );
 
