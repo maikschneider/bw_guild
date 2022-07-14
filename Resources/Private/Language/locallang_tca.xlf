@@ -30,6 +30,9 @@
 			<trans-unit id="user.logo">
 				<source>Logo</source>
 			</trans-unit>
+			<trans-unit id="user.features">
+				<source>Features</source>
+			</trans-unit>
 
 			<trans-unit id="tx_bwguild_domain_model_offer">
 				<source>Offer</source>

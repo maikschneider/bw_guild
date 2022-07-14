@@ -16,15 +16,15 @@ return [
     'types' => [
         // Skill
         '0' => [
-            'showitem' => 'fe_user, title',
+            'showitem' => 'record_type, title',
         ],
         // Interest
         '1' => [
-            'showitem' => 'fe_user, title',
+            'showitem' => 'record_type, title',
         ],
         // Hobby
         '2' => [
-            'showitem' => 'fe_user, title',
+            'showitem' => 'record_type, title',
         ],
     ],
     'columns' => [
@@ -67,17 +67,18 @@ return [
                 'eval' => 'required',
             ],
         ],
-        'fe_user' => [
+        'fe_users' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_user',
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_users',
             'config' => [
                 'type' => 'group',
                 'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
-                'foreign_table_field' => 'features',
-                'size' => 1,
-                'maxitems' => 1,
+                'MM' => 'tx_bwguild_feature_feuser_mm',
+                'MM_opposite_field' => 'features',
+                'size' => 10,
+                'maxitems' => 9999,
                 'eval' => 'int',
                 'default' => 0,
                 'suggestOptions' => [

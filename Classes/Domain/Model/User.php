@@ -39,6 +39,12 @@ class User extends FrontendUser
     protected $offers;
 
     /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\AbstractUserFeature>
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     */
+    protected $features;
+
+    /**
      * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
      */
@@ -89,11 +95,7 @@ class User extends FrontendUser
         return $this->slug;
     }
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
-     * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\UserLogoValidator")
-     */
-    protected $logo;
+    protected ?FileReference $logo = null;
 
     public function __construct(string $username = '', string $password = '')
     {
@@ -105,18 +107,12 @@ class User extends FrontendUser
         $this->sortingField = 'company';
     }
 
-    /**
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
-     */
-    public function getLogo(): ?\TYPO3\CMS\Extbase\Domain\Model\FileReference
+    public function getLogo(): ?FileReference
     {
         return $this->logo;
     }
 
-    /**
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FileReference $logo
-     */
-    public function setLogo(\TYPO3\CMS\Extbase\Domain\Model\FileReference $logo): void
+    public function setLogo(?FileReference $logo): void
     {
         $this->logo = $logo;
     }

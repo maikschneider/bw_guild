@@ -46,6 +46,33 @@ call_user_func(function () {
                 'foreign_field' => 'fe_user',
             ],
         ],
+        'features' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.features',
+            'config' => [
+                'type' => 'group',
+                'internal_type' => 'db',
+                'allowed' => 'tx_bwguild_domain_model_feature',
+                'foreign_table' => 'tx_bwguild_domain_model_feature',
+                'MM' => 'tx_bwguild_feature_feuser_mm',
+                'MM_opposite_field' => 'features',
+                'size' => 10,
+                'maxitems' => 9999,
+                'eval' => 'int',
+                'default' => 0,
+                'suggestOptions' => [
+                    'tx_bwguild_domain_model_feature' => [
+                        'searchWholePhrase' => 1,
+                        'additionalSearchFields' => 'title',
+                    ],
+                ],
+                'fieldControl' => [
+                    'addRecord' => [
+                        'disabled' => false,
+                    ],
+                ],
+            ],
+        ],
         'latitude' => [
             'exclude' => false,
             'label' => 'LAT',
@@ -152,6 +179,7 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'public_profile', '', 'after:password');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'logo', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'bookmarks', '', 'after:slug');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'features', '', 'after:bookmarks');
     ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers',

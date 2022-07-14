@@ -76,5 +76,18 @@ CREATE TABLE tx_bwguild_domain_model_feature (
 
 	record_type varchar(255) DEFAULT '' NOT NULL,
 	title varchar(255) DEFAULT '' NOT NULL,
+	fe_users int(11) DEFAULT 0 NOT NULL,
+
+	PRIMARY KEY (uid),
+	KEY parent (pid),
 );
 
+CREATE TABLE tx_bwguild_feature_feuser_mm (
+	uid_local int(11) unsigned DEFAULT '0' NOT NULL,
+	uid_foreign int(11) unsigned DEFAULT '0' NOT NULL,
+	sorting int(11) DEFAULT '0' NOT NULL,
+	sorting_foreign int(11) DEFAULT '0' NOT NULL,
+
+	KEY uid_local (uid_local),
+	KEY uid_foreign (uid_foreign)
+);
