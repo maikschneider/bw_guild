@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Domain\Model;
 
 use Blueways\BwGuild\Service\GeoService;
+use PHPUnit\Framework\Constraint\ObjectEquals;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -105,6 +106,7 @@ class User extends FrontendUser
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
         $this->sortingField = 'company';
+        $this->features = new ObjectStorage();
     }
 
     public function getLogo(): ?FileReference
@@ -373,4 +375,36 @@ class User extends FrontendUser
 
         return $schema;
     }
+
+    public function getFeatures(): ObjectStorage
+    {
+        return $this->features;
+    }
+
+    protected function getFeaturesByRecordType(string $recordType): ObjectStorage
+    {
+        $features = new ObjectStorage();
+        foreach ($this->features as $feature) {
+            if ($feature->getRecordType() === $recordType) {
+                $features->attach($feature);
+            }
+        }
+        return $features;
+    }
+
+    public function getHobbyFeatures(): ObjectStorage
+    {
+        return $this->getFeaturesByRecordType('2');
+    }
+
+    public function getSkillFeatures(): ObjectStorage
+    {
+        return $this->getFeaturesByRecordType('0');
+    }
+
+    public function getInterestFeatures(): ObjectStorage
+    {
+        return $this->getFeaturesByRecordType('1');
+    }
+
 }
