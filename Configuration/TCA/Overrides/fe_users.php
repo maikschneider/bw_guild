@@ -63,7 +63,7 @@ call_user_func(function () {
                 'suggestOptions' => [
                     'tx_bwguild_domain_model_feature' => [
                         'searchWholePhrase' => 1,
-                        'additionalSearchFields' => 'title',
+                        'additionalSearchFields' => 'name',
                     ],
                 ],
                 'fieldControl' => [
