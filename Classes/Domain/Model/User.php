@@ -82,6 +82,13 @@ class User extends FrontendUser
         return $this->bookmarks;
     }
 
+    protected string $slug = '';
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
     /**
      * @var \TYPO3\CMS\Extbase\Domain\Model\FileReference|null
      * @TYPO3\CMS\Extbase\Annotation\Validate("Blueways\BwGuild\Validation\Validator\UserLogoValidator")

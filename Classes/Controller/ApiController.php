@@ -54,13 +54,13 @@ class ApiController extends ActionController
             $userinfo->setBookmarkOutput($relationHandler->results);
         }
 
-        if ($this->settings['showPid']) {
+        if ($this->settings['showPid'] && $user->getSlug()) {
             $url = $this->uriBuilder
                 ->reset()
                 ->setTargetPageUid((int)$this->settings['showPid'])
                 ->uriFor(
                     'show',
-                    ['user' => $userinfo->user['uid']],
+                    ['user' => $user->getSlug()],
                     'User',
                     'BwGuild',
                     'Usershow'
