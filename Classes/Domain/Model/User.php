@@ -3,7 +3,6 @@
 namespace Blueways\BwGuild\Domain\Model;
 
 use Blueways\BwGuild\Service\GeoService;
-use PHPUnit\Framework\Constraint\ObjectEquals;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -406,5 +405,4 @@ class User extends FrontendUser
     {
         return $this->getFeaturesByRecordType('1');
     }
-
 }
