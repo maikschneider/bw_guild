@@ -59,74 +59,11 @@
 			</div>
 		</fieldset>
 
-		<fieldset>
-			<label class="h5" for="feature-skill">{f:translate(key: 'userEditForm.feature-0-headline', extensionName: 'XmDkfzNetSite')}</label>
-			<div class="form-group">
-				<div class="form-element"
-					 data-record-type="0"
-					 data-all-features="{groupedJsonFeatures.0}"
-					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.0}">
-					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-0-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-skill"/>
+		<f:render section="FeatureFieldset" arguments="{recordType: 0, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
 
-					<ul class="list list--inline">
-						<f:for each="{user.featuresGroupedByRecordType.0}" as="feature">
-							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
-								<span>{feature.name}</span>
-								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
-							</a>
-						</f:for>
-					</ul>
+		<f:render section="FeatureFieldset" arguments="{recordType: 1, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
 
-					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
-				</div>
-			</div>
-		</fieldset>
-
-		<fieldset>
-			<label class="h5" for="feature-interest">{f:translate(key: 'userEditForm.feature-1-headline', extensionName: 'XmDkfzNetSite')}</label>
-			<div class="form-group">
-				<div class="form-element"
-					 data-record-type="1"
-					 data-all-features="{groupedJsonFeatures.1}"
-					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.1}">
-					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-1-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-interest"/>
-
-					<ul class="list list--inline">
-						<f:for each="{user.featuresGroupedByRecordType.1}" as="feature">
-							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
-								<span>{feature.name}</span>
-								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
-							</a>
-						</f:for>
-					</ul>
-
-					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
-				</div>
-			</div>
-		</fieldset>
-
-		<fieldset>
-			<label class="h5" for="feature-hobbys">{f:translate(key: 'userEditForm.feature-2-headline', extensionName: 'XmDkfzNetSite')}</label>
-			<div class="form-group">
-				<div class="form-element"
-					 data-record-type="2"
-					 data-all-features="{groupedJsonFeatures.2}"
-					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.1}">
-					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-hobbys"/>
-
-					<ul class="list list--inline">
-						<f:for each="{user.featuresGroupedByRecordType.2}" as="feature">
-							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
-								<span>{feature.name}</span>
-								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
-							</a>
-						</f:for>
-					</ul>
-
-					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
-				</div>
-			</div>
-		</fieldset>
+		<f:render section="FeatureFieldset" arguments="{recordType: 2, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
 
 		<fieldset>
 			<div class="button-group">
@@ -180,4 +117,31 @@
 			</div>
 		</f:comment>
 	</f:form>
+
+
+	<f:section name="FeatureFieldset">
+		<fieldset>
+			<label class="h5" for="feature-{recordType}">{f:translate(key: 'userEditForm.feature-{recordType}-headline', extensionName: 'XmDkfzNetSite')}</label>
+			<div class="form-group">
+				<div class="form-element"
+					 data-record-type="2"
+					 data-all-features="{groupedJsonFeatures.{recordType}}"
+					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.{recordType}}">
+					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-{recordType}"/>
+
+					<ul class="list list--inline">
+						<f:for each="{user.featuresGroupedByRecordType.{recordType}}" as="feature">
+							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
+								<span>{feature.name}</span>
+								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
+							</a>
+						</f:for>
+					</ul>
+
+					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
+				</div>
+			</div>
+		</fieldset>
+	</f:section>
+
 </f:spaceless>
