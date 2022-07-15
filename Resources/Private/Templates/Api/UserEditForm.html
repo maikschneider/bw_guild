@@ -11,6 +11,12 @@
 			enctype="multipart/form-data"
 			pageType="1657523819">
 
+		<f:form.select class="d-none"
+					   property="features"
+					   multiple="1"
+					   options="{features}"
+					   optionLabelField="name"/>
+
 		<a href="#" class="d-none button button--secondary" data-feature="###JS_TEMPLATE###">
 			<span></span>
 			<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
@@ -52,6 +58,7 @@
 				</div>
 			</div>
 		</fieldset>
+
 		<fieldset>
 			<label class="h5" for="feature-skill">Meine Kompetenzen</label>
 			<div class="form-group">
@@ -71,14 +78,29 @@
 					</ul>
 
 					<h6>Ihre Auswahl</h6>
+				</div>
+			</div>
+		</fieldset>
 
-					<f:form.select class="d-none"
-								   property="features"
-								   multiple="1"
-								   options="{groupedFeatures.0}"
-								   optionLabelField="name"/>
-					<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][name]" value="" />-->
-					<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][recordType]" value="0" />-->
+		<fieldset>
+			<label class="h5" for="feature-interest">Meine Kompetenzen</label>
+			<div class="form-group">
+				<div class="form-element"
+					 data-record-type="1"
+					 data-all-features="{groupedJsonFeatures.1}"
+					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.1}">
+					<input type="text" placeholder="Interesse hinzufügen" id="feature-interest"/>
+
+					<ul class="list list--inline">
+						<f:for each="{user.featuresGroupedByRecordType.1}" as="feature">
+							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
+								<span>{feature.name}</span>
+								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
+							</a>
+						</f:for>
+					</ul>
+
+					<h6>Ihre Auswahl</h6>
 				</div>
 			</div>
 		</fieldset>
