@@ -391,6 +391,19 @@ class User extends FrontendUser
         return $groupedFeatures;
     }
 
+    public function getFeaturesAsJsonGroupedByRecordType(): array
+    {
+        $groupedFeatures = $this->getFeaturesGroupedByRecordType();
+
+        return array_map(function ($featureGroup) {
+            $featureGroup = array_map(function ($feature) {
+                return $feature->getApiOutputArray();
+            }, [...$featureGroup]);
+
+            return json_encode(array_values($featureGroup));
+        }, $groupedFeatures);
+    }
+
     public function setFeatures(ObjectStorage $features): void
     {
         $this->features = $features;
