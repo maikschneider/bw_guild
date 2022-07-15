@@ -1,6 +1,7 @@
 <f:flashMessages/>
 
 <f:spaceless>
+
 	<f:form class="userprofile"
 			controller="Api"
 			action="userEditUpdate"
@@ -55,6 +56,7 @@
 			<label class="h5" for="feature-skill">Meine Kompetenzen</label>
 			<div class="form-group">
 				<div class="form-element"
+					 data-record-type="0"
 					 data-all-features="{groupedJsonFeatures.0}"
 					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.0}">
 					<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill"/>
