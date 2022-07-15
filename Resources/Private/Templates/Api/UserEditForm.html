@@ -1,6 +1,6 @@
 <f:flashMessages/>
 
-<h3>Profil bearbeiten</h3>
+
 
 <f:form class="userprofile"
 		controller="Api"
@@ -11,8 +11,10 @@
 		enctype="multipart/form-data"
 		pageType="1657523819">
 
+	<h3>Profil bearbeiten</h3>
+
 	<fieldset>
-		<h4>Profilbild</h4>
+		<h5>Profilbild</h5>
 		<div class="form-group">
 			<div class="form-element">
 				<figure class="">
@@ -48,32 +50,32 @@
 		</div>
 	</fieldset>
 	<fieldset>
-		<label class="h4" for="feature-skill">Meine Kompetenzen</label>
+		<label class="h5" for="feature-skill">Meine Kompetenzen</label>
 		<div class="form-group">
 			<div class="form-element" data-available-features="{groupedJsonFeatures.0}">
-				<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill" />
+				<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill"/>
 
-				<f:if condition="{user.featuresGroupedByRecordType.0}">
-					<h5>Meine Kompetenzen</h5>
+
+
+				<ul class="list list--inline">
 					<f:for each="{user.featuresGroupedByRecordType.0}" as="feature">
-						<a href="#" class="badge">{feature.name}</a>
+						<a href="#" class="button button--secondary">{feature.name} <f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}" /></a>
 					</f:for>
-				</f:if>
+				</ul>
 
-				<f:form.select property="features" multiple="1" options="{groupedFeatures.0}" optionLabelField="name" />
+				<h6>Ihre Auswahl</h6>
 
-				<f:comment>
-				<f:for each="{allFeatures}" as="feature">
-					<f:form.checkbox property="features" value="{feature.uid}" /> {feature.name}
-				</f:for>
-				</f:comment>
-<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][name]" value="" />-->
-<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][recordType]" value="0" />-->
+				<f:form.select class="d-none" property="features" multiple="1" options="{groupedFeatures.0}" optionLabelField="name"/>
+
+				<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][name]" value="" />-->
+				<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][recordType]" value="0" />-->
 
 
 			</div>
 		</div>
 	</fieldset>
+
+	<f:comment>
 	<div class="form__item">
 		<label> Firmenname
 			<f:form.textfield property="company"/>
@@ -112,4 +114,5 @@
 			Speichern
 		</button>
 	</div>
+	</f:comment>
 </f:form>
