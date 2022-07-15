@@ -50,14 +50,25 @@
 	<fieldset>
 		<label class="h4" for="feature-skill">Meine Kompetenzen</label>
 		<div class="form-group">
-			<div class="form-element" data-available-features="{features.0}">
+			<div class="form-element" data-available-features="{groupedJsonFeatures.0}">
 				<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill" />
-				<f:if condition="{user.skillFeatures}">
+
+				<f:if condition="{user.featuresGroupedByRecordType.0}">
 					<h5>Meine Kompetenzen</h5>
-					<f:for each="{user.skillFeatures}" as="feature">
+					<f:for each="{user.featuresGroupedByRecordType.0}" as="feature">
 						<a href="#" class="badge">{feature.name}</a>
 					</f:for>
 				</f:if>
+
+				<f:form.select property="features" multiple="1" options="{groupedFeatures}" optionLabelField="name" />
+
+				<f:comment>
+				<f:for each="{allFeatures}" as="feature">
+					<f:form.checkbox property="features" value="{feature.uid}" /> {feature.name}
+				</f:for>
+				</f:comment>
+<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][name]" value="" />-->
+<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][recordType]" value="0" />-->
 
 
 			</div>

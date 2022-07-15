@@ -4,7 +4,7 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 class AbstractUserFeatureRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
-    public function getFeaturesAsJsonGroupedByRecordType(): array
+    public function getFeaturesGroupedByRecordType(): array
     {
         $query = $this->createQuery();
         $query->setQuerySettings($query->getQuerySettings()->setRespectStoragePage(false));
@@ -17,8 +17,16 @@ class AbstractUserFeatureRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
             $groupedFeatures[(int)$feature->getRecordType()][] = $feature->getApiOutputArray();
         }
 
+        return $groupedFeatures;
+    }
+
+    public function getFeaturesAsJsonGroupedByRecordType(): array
+    {
+        $groupedFeatures = $this->getFeaturesGroupedByRecordType();
+
         return array_map(function ($featureGroup) {
             return json_encode($featureGroup);
         }, $groupedFeatures);
     }
+    
 }

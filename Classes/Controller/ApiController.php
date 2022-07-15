@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Database\RelationHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 
 class ApiController extends ActionController
 {
@@ -104,10 +104,12 @@ class ApiController extends ActionController
         }
 
         $user = $this->userRepository->findByUid($userId);
-        $features = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
+        $groupedJsonFeatures = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
+        $groupedFeatures = $this->featureRepository->getFeaturesGroupedByRecordType();
 
         $this->view->assign('user', $user);
-        $this->view->assign('features', $features);
+        $this->view->assign('groupedFeatures', $groupedFeatures);
+        $this->view->assign('groupedJsonFeatures', $groupedJsonFeatures);
         $html = $this->view->render();
         $response = ['html' => $html];
 
@@ -122,6 +124,19 @@ class ApiController extends ActionController
         if ($isLogoDelete || $isEmptyLogoUpdate) {
             $this->ignoreLogoArgumentInUpdate();
         }
+
+        $propertyMappingConfiguration = $this->arguments->getArgument('user')->getPropertyMappingConfiguration();
+        $propertyMappingConfiguration->allowAllProperties('features');
+        $propertyMappingConfiguration->forProperty('features.*')->allowCreationForSubProperty('*');
+        $propertyMappingConfiguration->forProperty('features.*')->allowProperties('name', 'record_type');
+        $propertyMappingConfiguration->forProperty('features.*')->setTypeConverter(
+            GeneralUtility::makeInstance(PersistentObjectConverter::class),
+        );
+        $propertyMappingConfiguration->forProperty('features.*')->setTypeConverterOption(
+            'TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter',
+            PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+            true
+        );
     }
 
     protected function ignoreLogoArgumentInUpdate(): void
@@ -130,17 +145,6 @@ class ApiController extends ActionController
         $userArgument = $this->request->getArgument('user');
         unset($userArgument['logo']);
         $this->request->setArgument('user', $userArgument);
-
-        // unset logo validator
-        $validator = $this->arguments->getArgument('user')->getValidator();
-        foreach ($validator->getValidators() as $subValidator) {
-            /** @var GenericObjectValidator $subValidatorSub */
-            foreach ($subValidator->getValidators() as $subValidatorSub) {
-                $subValidatorSub->getPropertyValidators('logo')->removeAll(
-                    $subValidatorSub->getPropertyValidators('logo')
-                );
-            }
-        }
     }
 
     public function userEditUpdateAction(User $user): ResponseInterface
