@@ -27,7 +27,6 @@ class AbstractUserFeatureRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
         $groupedFeatures = $this->getFeaturesGroupedByRecordType();
 
         return array_map(function ($featureGroup) {
-
             $featureGroup = array_map(function ($feature) {
                 return $feature->getApiOutputArray();
             }, [...$featureGroup]);
