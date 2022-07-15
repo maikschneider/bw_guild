@@ -17,7 +17,6 @@ class AbstractUserFeature extends AbstractEntity
         $this->feUsers = new ObjectStorage();
     }
 
-
     public function setName(string $name): void
     {
         $this->name = $name;
