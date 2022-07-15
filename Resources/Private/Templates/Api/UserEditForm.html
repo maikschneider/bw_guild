@@ -22,10 +22,10 @@
 			<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
 		</a>
 
-		<h3>Profil bearbeiten</h3>
+		<h3>{f:translate(key: 'userEditForm.profileEdit', extensionName: 'XmDkfzNetSite')}</h3>
 
 		<fieldset>
-			<h5>Profilbild</h5>
+			<h5>{f:translate(key: 'userEditForm.profilePicture', extensionName: 'XmDkfzNetSite')}</h5>
 			<div class="form-group">
 				<div class="form-element">
 					<figure class="">
@@ -44,7 +44,7 @@
 						<f:if condition="!{user.logo}">
 							<img width="150"
 								 src="{f:uri.resource(path: 'EXT:xm_dkfz_net_site/Resources/Public/Images/frontend_user_default.svg')}"
-								 alt="No profile picture"/>
+								 alt="{f:translate(key: 'noProfilePicture', extensionName: 'XmDkfzNetSite')}"/>
 						</f:if>
 					</figure>
 				</div>
@@ -60,13 +60,13 @@
 		</fieldset>
 
 		<fieldset>
-			<label class="h5" for="feature-skill">Meine Kompetenzen</label>
+			<label class="h5" for="feature-skill">{f:translate(key: 'userEditForm.feature-0-headline', extensionName: 'XmDkfzNetSite')}</label>
 			<div class="form-group">
 				<div class="form-element"
 					 data-record-type="0"
 					 data-all-features="{groupedJsonFeatures.0}"
 					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.0}">
-					<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill"/>
+					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-0-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-skill"/>
 
 					<ul class="list list--inline">
 						<f:for each="{user.featuresGroupedByRecordType.0}" as="feature">
@@ -77,19 +77,19 @@
 						</f:for>
 					</ul>
 
-					<h6>Ihre Auswahl</h6>
+					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
 				</div>
 			</div>
 		</fieldset>
 
 		<fieldset>
-			<label class="h5" for="feature-interest">Meine Kompetenzen</label>
+			<label class="h5" for="feature-interest">{f:translate(key: 'userEditForm.feature-1-headline', extensionName: 'XmDkfzNetSite')}</label>
 			<div class="form-group">
 				<div class="form-element"
 					 data-record-type="1"
 					 data-all-features="{groupedJsonFeatures.1}"
 					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.1}">
-					<input type="text" placeholder="Interesse hinzufügen" id="feature-interest"/>
+					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-1-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-interest"/>
 
 					<ul class="list list--inline">
 						<f:for each="{user.featuresGroupedByRecordType.1}" as="feature">
@@ -100,7 +100,30 @@
 						</f:for>
 					</ul>
 
-					<h6>Ihre Auswahl</h6>
+					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<label class="h5" for="feature-hobbys">{f:translate(key: 'userEditForm.feature-2-headline', extensionName: 'XmDkfzNetSite')}</label>
+			<div class="form-group">
+				<div class="form-element"
+					 data-record-type="2"
+					 data-all-features="{groupedJsonFeatures.2}"
+					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.1}">
+					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-hobbys"/>
+
+					<ul class="list list--inline">
+						<f:for each="{user.featuresGroupedByRecordType.2}" as="feature">
+							<a href="#" class="button button--secondary" data-feature="{feature.uid}">
+								<span>{feature.name}</span>
+								<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
+							</a>
+						</f:for>
+					</ul>
+
+					<h6>{f:translate(key: 'userEditForm.yourSelection', extensionName: 'XmDkfzNetSite')}</h6>
 				</div>
 			</div>
 		</fieldset>
@@ -108,10 +131,10 @@
 		<fieldset>
 			<div class="button-group">
 				<button data-abort href="#" class="button button--primary fx--hover">
-					Abbrechen
+					{f:translate(key: 'abort', extensionName: 'XmDkfzNetSite')}
 				</button>
 				<button type="submit" class="button button--primary">
-					Speichern
+					{f:translate(key: 'save', extensionName: 'XmDkfzNetSite')}
 				</button>
 			</div>
 		</fieldset>
