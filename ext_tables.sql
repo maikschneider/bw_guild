@@ -76,7 +76,6 @@ CREATE TABLE tx_bwguild_domain_model_feature (
 
 	record_type varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
-	fe_users int(11) DEFAULT 0 NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),

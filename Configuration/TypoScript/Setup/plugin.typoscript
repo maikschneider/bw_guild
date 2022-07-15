@@ -1,5 +1,6 @@
 plugin {
 	tx_bwguild {
+
 		view {
 			templateRootPaths.0 = EXT:bw_guild/Resources/Private/Templates
 			partialRootPaths.0 = EXT:bw_guild/Resources/Private/Partials
@@ -15,6 +16,7 @@ plugin {
 			classes {
 				Blueways\BwGuild\Domain\Model\User.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
 				Blueways\BwGuild\Domain\Model\Offer.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+				Blueways\BwGuild\Domain\Model\AbstractUserFeature.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
 
 			}
 		}
