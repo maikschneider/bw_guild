@@ -1,7 +1,6 @@
 <f:flashMessages/>
 
 
-
 <f:form class="userprofile"
 		controller="Api"
 		action="userEditUpdate"
@@ -11,6 +10,11 @@
 		enctype="multipart/form-data"
 		pageType="1657523819">
 
+	<a href="#" class="d-none button button--secondary" data-feature="###JS_TEMPLATE###">
+		<span></span>
+		<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
+	</a>
+
 	<h3>Profil bearbeiten</h3>
 
 	<fieldset>
@@ -18,25 +22,23 @@
 		<div class="form-group">
 			<div class="form-element">
 				<figure class="">
-					<div class="picture__item image-color--primary">
-						<f:if condition="{user.logo}">
-							<picture>
-								<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'webp')}"
-										type="image/webp">
-								<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
-										type="image/jpeg">
-								<img src="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
-									 alt="{file.originalResource.alternative}"
-									 class="picture__image image--responsive"
-									 loading="lazy"/>
-							</picture>
-						</f:if>
-						<f:if condition="!{user.logo}">
-							<img width="150"
-								 src="{f:uri.resource(path: 'EXT:xm_dkfz_net_site/Resources/Public/Images/frontend_user_default.svg')}"
-								 alt="No profile picture"/>
-						</f:if>
-					</div>
+					<f:if condition="{user.logo}">
+						<picture>
+							<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'webp')}"
+									type="image/webp">
+							<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
+									type="image/jpeg">
+							<img src="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
+								 alt="{file.originalResource.alternative}"
+								 class="picture__image image--responsive"
+								 loading="lazy"/>
+						</picture>
+					</f:if>
+					<f:if condition="!{user.logo}">
+						<img width="150"
+							 src="{f:uri.resource(path: 'EXT:xm_dkfz_net_site/Resources/Public/Images/frontend_user_default.svg')}"
+							 alt="No profile picture"/>
+					</f:if>
 				</figure>
 			</div>
 			<div>
@@ -52,20 +54,26 @@
 	<fieldset>
 		<label class="h5" for="feature-skill">Meine Kompetenzen</label>
 		<div class="form-group">
-			<div class="form-element" data-available-features="{groupedJsonFeatures.0}">
+			<div class="form-element" data-all-features="{groupedJsonFeatures.0}" data-selected-features="{user.featuresAsJsonGroupedByRecordType.0}">
 				<input type="text" placeholder="Kompetenz hinzufügen" id="feature-skill"/>
-
 
 
 				<ul class="list list--inline">
 					<f:for each="{user.featuresGroupedByRecordType.0}" as="feature">
-						<a href="#" class="button button--secondary">{feature.name} <f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}" /></a>
+						<a href="#" class="button button--secondary" data-feature="{feature.uid}">
+							<span>{feature.name}</span>
+							<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
+						</a>
 					</f:for>
 				</ul>
 
 				<h6>Ihre Auswahl</h6>
 
-				<f:form.select class="d-none" property="features" multiple="1" options="{groupedFeatures.0}" optionLabelField="name"/>
+				<f:form.select class="d-none"
+							   property="features"
+							   multiple="1"
+							   options="{groupedFeatures.0}"
+							   optionLabelField="name"/>
 
 				<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][name]" value="" />-->
 				<!--				<input type="text" name="tx_bwguild_api[user][features][NEWS123][recordType]" value="0" />-->
@@ -76,43 +84,43 @@
 	</fieldset>
 
 	<f:comment>
-	<div class="form__item">
-		<label> Firmenname
-			<f:form.textfield property="company"/>
+		<div class="form__item">
+			<label> Firmenname
+				<f:form.textfield property="company"/>
+			</label>
+		</div>
+		<div class="form__item">
+			<label> Anschrift
+				<f:form.textfield property="address"/>
+			</label>
+		</div>
+		<div class="form__item form__item--2">
+			<label> PLZ
+				<f:form.textfield property="zip"/>
+			</label> <label> Stadt
+			<f:form.textfield property="city"/>
 		</label>
-	</div>
-	<div class="form__item">
-		<label> Anschrift
-			<f:form.textfield property="address"/>
-		</label>
-	</div>
-	<div class="form__item form__item--2">
-		<label> PLZ
-			<f:form.textfield property="zip"/>
-		</label> <label> Stadt
-		<f:form.textfield property="city"/>
-	</label>
-	</div>
-	<div class="form__item">
-		<label> Telefon
-			<f:form.textfield property="telephone"/>
-		</label>
-	</div>
-	<div class="form__item">
-		<label> Email
-			<f:form.textfield property="email"/>
-		</label>
-	</div>
-	<div class="form__item">
-		<label id="publicProfile"> Öffentliches Profil
-			<f:form.checkbox property="publicProfile" id="publicProfile" value="1"/>
-		</label>
-	</div>
-	<div class="form__item form__item--submit">
-		<button type="submit" class="button hollow">
-			<span class="icon-save"></span>
-			Speichern
-		</button>
-	</div>
+		</div>
+		<div class="form__item">
+			<label> Telefon
+				<f:form.textfield property="telephone"/>
+			</label>
+		</div>
+		<div class="form__item">
+			<label> Email
+				<f:form.textfield property="email"/>
+			</label>
+		</div>
+		<div class="form__item">
+			<label id="publicProfile"> Öffentliches Profil
+				<f:form.checkbox property="publicProfile" id="publicProfile" value="1"/>
+			</label>
+		</div>
+		<div class="form__item form__item--submit">
+			<button type="submit" class="button hollow">
+				<span class="icon-save"></span>
+				Speichern
+			</button>
+		</div>
 	</f:comment>
 </f:form>
