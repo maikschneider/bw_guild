@@ -380,29 +380,19 @@ class User extends FrontendUser
         return $this->features;
     }
 
-    protected function getFeaturesByRecordType(string $recordType): ObjectStorage
+    public function getFeaturesGroupedByRecordType(): array
     {
-        $features = new ObjectStorage();
+        $groupedFeatures = [];
+        /** @var \Blueways\BwGuild\Domain\Model\AbstractUserFeature $feature */
         foreach ($this->features as $feature) {
-            if ($feature->getRecordType() === $recordType) {
-                $features->attach($feature);
-            }
+            $groupedFeatures[(int)$feature->getRecordType()] ??= new ObjectStorage();
+            $groupedFeatures[(int)$feature->getRecordType()]->attach($feature);
         }
-        return $features;
+        return $groupedFeatures;
     }
 
-    public function getHobbyFeatures(): ObjectStorage
+    public function setFeatures(ObjectStorage $features): void
     {
-        return $this->getFeaturesByRecordType('2');
-    }
-
-    public function getSkillFeatures(): ObjectStorage
-    {
-        return $this->getFeaturesByRecordType('0');
-    }
-
-    public function getInterestFeatures(): ObjectStorage
-    {
-        return $this->getFeaturesByRecordType('1');
+        $this->features = $features;
     }
 }
