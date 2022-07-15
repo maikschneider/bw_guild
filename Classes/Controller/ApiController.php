@@ -104,8 +104,8 @@ class ApiController extends ActionController
         }
 
         $user = $this->userRepository->findByUid($userId);
-        $groupedJsonFeatures = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
         $groupedFeatures = $this->featureRepository->getFeaturesGroupedByRecordType();
+        $groupedJsonFeatures = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
 
         $this->view->assign('user', $user);
         $this->view->assign('groupedFeatures', $groupedFeatures);
