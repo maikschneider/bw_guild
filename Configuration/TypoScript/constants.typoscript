@@ -45,6 +45,11 @@ plugin {
 			order = company
 			orderDirection =
 			showPid =
+      categories =
+      limit =
+      maxItems =
+      mode =
+      categoryConjunction =
 			schema  {
 				enable = 1
 				defaultImage =

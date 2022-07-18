@@ -44,6 +44,11 @@ plugin {
 			order = {$plugin.tx_bwguild_userlist.settings.order}
 			orderDirection = {$plugin.tx_bwguild_userlist.settings.orderDirection}
 			showPid = {$plugin.tx_bwguild_userlist.settings.showPid}
+			categories = {$plugin.tx_bwguild_userlist.settings.categories}
+			limit = {$plugin.tx_bwguild_userlist.settings.limit}
+			maxItems = {$plugin.tx_bwguild_userlist.settings.maxItems}
+			mode = {$plugin.tx_bwguild_userlist.settings.mode}
+			categoryConjunction = {$plugin.tx_bwguild_userlist.settings.categoryConjunction}
 			schema {
 				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
 				defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}
