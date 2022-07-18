@@ -1,66 +1,66 @@
 [{$plugin.tx_bwguild_userlist.settings.sitemap.enable} == '1']
-	plugin.tx_seo {
-		config {
-			xmlSitemap {
-				sitemaps {
-					users {
-						provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
-						config {
-							table = fe_users
-							sortField = sorting_text
-							lastModifiedField = tstamp
-							pid = {$plugin.tx_bwguild.persistence.storagePid}
-							additionalWhere = AND public_profile=1
-							url {
-								pageId = {$plugin.tx_bwguild_userlist.settings.showPid}
-								fieldToParameterMap {
-									uid = tx_bwguild_userlist[user]
-								}
+  plugin.tx_seo {
+    config {
+      xmlSitemap {
+        sitemaps {
+          users {
+            provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+            config {
+              table = fe_users
+              sortField = sorting_text
+              lastModifiedField = tstamp
+              pid = {$plugin.tx_bwguild.persistence.storagePid}
+              additionalWhere = AND public_profile=1
+              url {
+                pageId = {$plugin.tx_bwguild_userlist.settings.showPid}
+                fieldToParameterMap {
+                  uid = tx_bwguild_userlist[user]
+                }
 
-								additionalGetParameters {
-									tx_bwguild_userlist.controller = User
-									tx_bwguild_userlist.action = show
-								}
+                additionalGetParameters {
+                  tx_bwguild_userlist.controller = User
+                  tx_bwguild_userlist.action = show
+                }
 
-								useCacheHash = 1
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                useCacheHash = 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 [GLOBAL]
 
 [{$plugin.tx_bwguild_offerlist.settings.sitemap.enable} == '1']
-	plugin.tx_seo {
-		config {
-			xmlSitemap {
-				sitemaps {
-					offers {
-						provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
-						config {
-							table = tx_bwguild_domain_model_offer
-							sortField = crdate
-							lastModifiedField = tstamp
-							pid = {$plugin.tx_bwguild.persistence.storagePid}
-							url {
-								pageId = {$plugin.tx_bwguild_offerlist.settings.showPid}
-								fieldToParameterMap {
-									uid = tx_bwguild_offerlist[offer]
-								}
+  plugin.tx_seo {
+    config {
+      xmlSitemap {
+        sitemaps {
+          offers {
+            provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
+            config {
+              table = tx_bwguild_domain_model_offer
+              sortField = crdate
+              lastModifiedField = tstamp
+              pid = {$plugin.tx_bwguild.persistence.storagePid}
+              url {
+                pageId = {$plugin.tx_bwguild_offerlist.settings.showPid}
+                fieldToParameterMap {
+                  uid = tx_bwguild_offerlist[offer]
+                }
 
-								additionalGetParameters {
-									tx_bwguild_offerlist.controller = Offer
-									tx_bwguild_offerlist.action = show
-								}
+                additionalGetParameters {
+                  tx_bwguild_offerlist.controller = Offer
+                  tx_bwguild_offerlist.action = show
+                }
 
-								useCacheHash = 1
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                useCacheHash = 1
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 [GLOBAL]

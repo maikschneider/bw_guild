@@ -1,64 +1,64 @@
 plugin {
-	tx_bwguild {
+  tx_bwguild {
 
-		view {
-			templateRootPaths.0 = EXT:bw_guild/Resources/Private/Templates
-			partialRootPaths.0 = EXT:bw_guild/Resources/Private/Partials
-			layoutRootPaths.0 = EXT:bw_guild/Resources/Private/Layouts
+    view {
+      templateRootPaths.0 = EXT:bw_guild/Resources/Private/Templates
+      partialRootPaths.0 = EXT:bw_guild/Resources/Private/Partials
+      layoutRootPaths.0 = EXT:bw_guild/Resources/Private/Layouts
 
-			templateRootPaths.10 = {$plugin.tx_bwguild.view.templateRootPath}
-			partialRootPaths.10 = {$plugin.tx_bwguild.view.partialRootPath}
-			layoutRootPaths.10 = {$plugin.tx_bwguild.view.layoutRootPath}
-		}
+      templateRootPaths.10 = {$plugin.tx_bwguild.view.templateRootPath}
+      partialRootPaths.10 = {$plugin.tx_bwguild.view.partialRootPath}
+      layoutRootPaths.10 = {$plugin.tx_bwguild.view.layoutRootPath}
+    }
 
-		persistence {
-			storagePid = {$plugin.tx_bwguild.persistence.storagePid}
-			classes {
-				Blueways\BwGuild\Domain\Model\User.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
-				Blueways\BwGuild\Domain\Model\Offer.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
-				Blueways\BwGuild\Domain\Model\AbstractUserFeature.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+    persistence {
+      storagePid = {$plugin.tx_bwguild.persistence.storagePid}
+      classes {
+        Blueways\BwGuild\Domain\Model\User.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+        Blueways\BwGuild\Domain\Model\Offer.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
+        Blueways\BwGuild\Domain\Model\AbstractUserFeature.newRecordStoragePid = {$plugin.tx_bwguild.persistence.storagePid}
 
-			}
-		}
+      }
+    }
 
-		settings {
-			includeSubCategories = {$plugin.tx_bwguild.settings.includeSubCategories}
-			googleApiKey = {$plugin.tx_bwguild.settings.googleApiKey}
-			useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}
-			storagePid = {$plugin.tx_bwguild.persistence.storagePid}
-			userLogoFolder = {$plugin.tx_bwguild.settings.userLogoFolder}
-			itemsPerPage = {$plugin.tx_bwguild.settings.itemsPerPage}
+    settings {
+      includeSubCategories = {$plugin.tx_bwguild.settings.includeSubCategories}
+      googleApiKey = {$plugin.tx_bwguild.settings.googleApiKey}
+      useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}
+      storagePid = {$plugin.tx_bwguild.persistence.storagePid}
+      userLogoFolder = {$plugin.tx_bwguild.settings.userLogoFolder}
+      itemsPerPage = {$plugin.tx_bwguild.settings.itemsPerPage}
       showPid = {$plugin.tx_bwguild.settings.showPid}
-			schema.hiringOrganization {
-				name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
-				url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}
-				logo = {$plugin.tx_bwguild.settings.schema.hiringOrganization.logo}
-			}
-		}
-	}
+      schema.hiringOrganization {
+        name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
+        url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}
+        logo = {$plugin.tx_bwguild.settings.schema.hiringOrganization.logo}
+      }
+    }
+  }
 
-	tx_bwguild_userlist {
-		settings {
-			demandClass = {$plugin.tx_bwguild_userlist.settings.demandClass}
-			includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
-			order = {$plugin.tx_bwguild_userlist.settings.order}
-			orderDirection = {$plugin.tx_bwguild_userlist.settings.orderDirection}
-			showPid = {$plugin.tx_bwguild_userlist.settings.showPid}
-			categories = {$plugin.tx_bwguild_userlist.settings.categories}
-			limit = {$plugin.tx_bwguild_userlist.settings.limit}
-			maxItems = {$plugin.tx_bwguild_userlist.settings.maxItems}
-			mode = {$plugin.tx_bwguild_userlist.settings.mode}
-			categoryConjunction = {$plugin.tx_bwguild_userlist.settings.categoryConjunction}
-			schema {
-				enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
-				defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}
-			}
+  tx_bwguild_userlist {
+    settings {
+      demandClass = {$plugin.tx_bwguild_userlist.settings.demandClass}
+      includeSubCategories = {$plugin.tx_bwguild_userlist.settings.includeSubCategories}
+      order = {$plugin.tx_bwguild_userlist.settings.order}
+      orderDirection = {$plugin.tx_bwguild_userlist.settings.orderDirection}
+      showPid = {$plugin.tx_bwguild_userlist.settings.showPid}
+      categories = {$plugin.tx_bwguild_userlist.settings.categories}
+      limit = {$plugin.tx_bwguild_userlist.settings.limit}
+      maxItems = {$plugin.tx_bwguild_userlist.settings.maxItems}
+      mode = {$plugin.tx_bwguild_userlist.settings.mode}
+      categoryConjunction = {$plugin.tx_bwguild_userlist.settings.categoryConjunction}
+      schema {
+        enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
+        defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}
+      }
 
-			sitemap {
-				enable = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}
-			}
-		}
-	}
+      sitemap {
+        enable = {$plugin.tx_bwguild_userlist.settings.sitemap.enable}
+      }
+    }
+  }
 
   tx_bwguild_usershow {
     settings {
@@ -69,30 +69,31 @@ plugin {
     }
   }
 
-	tx_bwguild_offerlist {
-		settings {
-			demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}
-			maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
-			showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
-			schema {
-				enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
-				hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}
-			}
-			order = {$plugin.tx_bwguild_offerlatest.settings.order}
-			orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
-			sitemap {
-				enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
-			}
-		}
-	}
+  tx_bwguild_offerlist {
+    settings {
+      demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}
+      maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
+      showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
+      schema {
+        enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
+        hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}
+      }
 
-	tx_bwguild_offerlatest {
-		settings {
-			record_type = {$plugin.tx_bwguild_offerlatest.settings.record_type}
-			showPid = {$plugin.tx_bwguild_offerlatest.settings.showPid}
-			maxItems = {$plugin.tx_bwguild_offerlatest.settings.maxItems}
-			order = {$plugin.tx_bwguild_offerlatest.settings.order}
-			orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
-		}
-	}
+      order = {$plugin.tx_bwguild_offerlatest.settings.order}
+      orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
+      sitemap {
+        enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
+      }
+    }
+  }
+
+  tx_bwguild_offerlatest {
+    settings {
+      record_type = {$plugin.tx_bwguild_offerlatest.settings.record_type}
+      showPid = {$plugin.tx_bwguild_offerlatest.settings.showPid}
+      maxItems = {$plugin.tx_bwguild_offerlatest.settings.maxItems}
+      order = {$plugin.tx_bwguild_offerlatest.settings.order}
+      orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
+    }
+  }
 }

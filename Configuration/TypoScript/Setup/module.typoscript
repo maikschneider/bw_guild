@@ -1,22 +1,22 @@
 module.tx_bwguild {
-	settings {
-		startView =
-		importFolderPath = /bw_guild/
-		tableFields.users {
-			1 = username
-			2 = company
-			3 = email
-			4 = www
-		}
+  settings {
+    startView =
+    importFolderPath = /bw_guild/
+    tableFields.users {
+      1 = username
+      2 = company
+      3 = email
+      4 = www
+    }
 
-		tableFields.offers {
-			0 {
-				1 = title
-				2 = description
-				3 = feUser
-			}
-		}
+    tableFields.offers {
+      0 {
+        1 = title
+        2 = description
+        3 = feUser
+      }
+    }
 
-		storagePid = {$plugin.tx_bwguild.persistence.storagePid}
-	}
+    storagePid = {$plugin.tx_bwguild.persistence.storagePid}
+  }
 }

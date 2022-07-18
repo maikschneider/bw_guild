@@ -1,83 +1,86 @@
 plugin {
-	tx_bwguild {
-		persistence.storagePid =
-		view {
-			templateRootPath =
-			partialRootPath =
-			layoutRootPath =
-		}
-		settings {
-			googleApiKey =
-			includeSubCategories = 0
-			useEmailAsUsername = 0
-			userLogoFolder = logos
-			itemsPerPage = 20
+  tx_bwguild {
+    persistence.storagePid =
+    view {
+      templateRootPath =
+      partialRootPath =
+      layoutRootPath =
+    }
+
+    settings {
+      googleApiKey =
+      includeSubCategories = 0
+      useEmailAsUsername = 0
+      userLogoFolder = logos
+      itemsPerPage = 20
       showPid =
-			schema.hiringOrganization {
-				name =
-				url =
-				logo =
-			}
-		}
-	}
+      schema.hiringOrganization {
+        name =
+        url =
+        logo =
+      }
+    }
+  }
 
-	tx_bwguild_offerlist {
-		settings {
-			demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
-			maxItems =
-			showPid =
-			schema {
-				enable = 1
-				hiringOrganization.name =
-			}
-			order =
-			orderDirection =
-			sitemap {
-				enable = 0
-			}
-		}
-	}
+  tx_bwguild_offerlist {
+    settings {
+      demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
+      maxItems =
+      showPid =
+      schema {
+        enable = 1
+        hiringOrganization.name =
+      }
 
-	tx_bwguild_userlist {
-		settings {
-			demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
-			includeSubCategories = 0
-			order = company
-			orderDirection =
-			showPid =
+      order =
+      orderDirection =
+      sitemap {
+        enable = 0
+      }
+    }
+  }
+
+  tx_bwguild_userlist {
+    settings {
+      demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
+      includeSubCategories = 0
+      order = company
+      orderDirection =
+      showPid =
       categories =
       limit =
       maxItems =
       mode =
       categoryConjunction =
-			schema  {
-				enable = 1
-				defaultImage =
-			}
-			sitemap {
-				enable = 0
-			}
-		}
-	}
+      schema {
+        enable = 1
+        defaultImage =
+      }
+
+      sitemap {
+        enable = 0
+      }
+    }
+  }
 
   tx_bwguild_usershow {
     settings {
-      schema  {
+      schema {
         enable = 0
         defaultImage =
       }
     }
   }
 
-	tx_bwguild_offerlatest{
-		settings {
-			record_type = Blueways\BwGuild\Domain\Repository\OfferRepository
-			showPid =
-			maxItems = 3
-			order = crdate
-			orderDirection = DESC
-		}
-	}
+  tx_bwguild_offerlatest {
+    settings {
+      record_type = Blueways\BwGuild\Domain\Repository\OfferRepository
+      showPid =
+      maxItems = 3
+      order = crdate
+      orderDirection = DESC
+    }
+  }
 }
 
 @import 'EXT:bw_guild/Configuration/TypoScript/Constants/ddev.typoscript'
