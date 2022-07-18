@@ -10,7 +10,7 @@ class TCEmainHook
         $id,
         \TYPO3\CMS\Core\DataHandling\DataHandler &$pObj
     ) {
-        if ($table === 'fe_users') {
+        if ($table === 'fe_users' && isset($fieldArray['sorting_field'])) {
             $fieldArray['sorting_text'] = $fieldArray[$fieldArray['sorting_field']];
         }
     }
