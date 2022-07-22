@@ -205,7 +205,7 @@ class AbstractDemandRepository extends Repository
                         )
                     );
                 }
-            break;
+                break;
             case 'and':
             default:
                 // join for every category - include check for category uid in join statement
