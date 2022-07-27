@@ -35,13 +35,13 @@ class ApiController extends ActionController
     public function userinfoAction(): ResponseInterface
     {
         if (!($userId = $this->accessControlService->getFrontendUserUid())) {
-            return $this->responseFactory->createResponse('403', '');
+            return $this->responseFactory->createResponse(403, '');
         }
 
-        /** @var User $user */
+        /** @var User|null $user */
         $user = $this->userRepository->findByIdentifier($userId);
         if (!$user) {
-            return $this->responseFactory->createResponse('404', '');
+            return $this->responseFactory->createResponse(404, '');
         }
 
         $userinfo = new Userinfo($user);
@@ -75,13 +75,13 @@ class ApiController extends ActionController
             $userinfo->user['url'] = $url;
         }
 
-        return $this->jsonResponse(json_encode($userinfo));
+        return $this->jsonResponse((string)json_encode($userinfo));
     }
 
     public function bookmarkAction(string $tableName, int $recordUid): ResponseInterface
     {
         if (!($userId = $this->accessControlService->getFrontendUserUid())) {
-            return $this->responseFactory->createResponse('403', '');
+            return $this->responseFactory->createResponse(403, '');
         }
 
         if ($this->request->getMethod() === 'POST') {
@@ -100,7 +100,7 @@ class ApiController extends ActionController
     public function userEditFormAction(): ResponseInterface
     {
         if (!($userId = $this->accessControlService->getFrontendUserUid())) {
-            return $this->responseFactory->createResponse('403', '');
+            return $this->responseFactory->createResponse(403, '');
         }
 
         $user = $this->userRepository->findByUid($userId);
@@ -113,10 +113,10 @@ class ApiController extends ActionController
         $html = $this->view->render();
         $response = ['html' => $html];
 
-        return $this->jsonResponse(json_encode($response));
+        return $this->jsonResponse((string)json_encode($response));
     }
 
-    public function initializeUserEditUpdateAction()
+    public function initializeUserEditUpdateAction(): void
     {
         $isLogoDelete = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
         $isEmptyLogoUpdate = $_FILES['tx_bwguild_api']['name']['user']['logo'] === '';
@@ -126,7 +126,7 @@ class ApiController extends ActionController
         }
 
         $propertyMappingConfiguration = $this->arguments->getArgument('user')->getPropertyMappingConfiguration();
-        $propertyMappingConfiguration->allowAllProperties('features');
+        $propertyMappingConfiguration->allowAllProperties();
         $propertyMappingConfiguration->forProperty('features.*')->allowCreationForSubProperty('*');
         $propertyMappingConfiguration->forProperty('features.*')->allowProperties('name', 'record_type');
         $propertyMappingConfiguration->forProperty('features.*')->setTypeConverter(
@@ -155,13 +155,13 @@ class ApiController extends ActionController
 
         // delete all logos
         if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {
-            $this->userRepository->deleteAllUserLogos($user->getUid());
+            $this->userRepository->deleteAllUserLogos((int)$user->getUid());
         }
 
         // delete existing logo(s) if new one is created
         $userArguments = $this->request->getArgument('user');
         if (isset($userArguments['logo']) && $user->getLogo()) {
-            $this->userRepository->deleteAllUserLogos($user->getUid());
+            $this->userRepository->deleteAllUserLogos((int)$user->getUid());
         }
 
         $user->geoCodeAddress();
