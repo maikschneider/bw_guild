@@ -127,7 +127,7 @@
 					 data-record-type="{recordType}"
 					 data-all-features="{groupedJsonFeatures.{recordType}}"
 					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.{recordType}}">
-					<input type="text" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-{recordType}"/>
+					<input type="text" autocomplete="off" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-{recordType}"/>
 
 					<ul class="list list--inline">
 						<f:for each="{user.featuresGroupedByRecordType.{recordType}}" as="feature">
