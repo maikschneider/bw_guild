@@ -16,6 +16,8 @@ class Userinfo
 
     public array $bookmarks = [];
 
+    public string $html = '';
+
     public function __construct(User $feUser)
     {
         $this->setUserdata($feUser);
@@ -31,7 +33,8 @@ class Userinfo
     {
         $tableFieldsToKeep = [
             'pages' => ['uid', 'title'],
-            'fe_users' => ['uid', 'username'],
+            'fe_users' => ['uid', 'username', 'first_name', 'last'],
+            'tx_news_domain_model_news' => ['uid', 'title'],
         ];
 
         foreach ($relationHandlerResult as $tableName => &$records) {

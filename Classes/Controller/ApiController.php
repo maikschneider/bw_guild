@@ -57,8 +57,8 @@ class ApiController extends ActionController
                 $GLOBALS['TCA']['fe_users']['columns']['bookmarks']
             );
             $relationHandler->getFromDB();
-
-            $userinfo->setBookmarkOutput($relationHandler->results);
+            $bookmarks = $relationHandler->results;
+            $userinfo->setBookmarkOutput($bookmarks);
         }
 
         if ($this->settings['showPid'] && $user->getSlug()) {
@@ -74,6 +74,11 @@ class ApiController extends ActionController
                 );
             $userinfo->user['url'] = $url;
         }
+
+        $this->view->assign('user', $userinfo->user);
+        $this->view->assign('bookmarks', $bookmarks);
+        $html = $this->view->render();
+        $userinfo->html = $html;
 
         return $this->jsonResponse((string)json_encode($userinfo));
     }
