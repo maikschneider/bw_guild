@@ -4,7 +4,6 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
 {
-
     /**
      * @param $categoryList
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface

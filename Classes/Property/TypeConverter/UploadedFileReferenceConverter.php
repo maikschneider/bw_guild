@@ -39,7 +39,6 @@ use TYPO3\CMS\Extbase\Security\Cryptography\HashService;
  */
 class UploadedFileReferenceConverter extends AbstractTypeConverter
 {
-
     /**
      * Folder where the file upload should go to (including storage).
      */

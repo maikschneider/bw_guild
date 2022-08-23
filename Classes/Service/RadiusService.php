@@ -29,7 +29,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class RadiusService
 {
-
     /**
      * earth radius in kilometers.
      */
@@ -44,7 +43,6 @@ class RadiusService
      */
     public function getDistance($coordinates1, $coordinates2)
     {
-
         // new formula, taken from here: http://snipplr.com/view.php?codeview&id=2531
         $pi80 = M_PI / 180;
         $lat1 = $coordinates1['latitude'] * $pi80;

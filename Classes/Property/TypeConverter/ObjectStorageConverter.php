@@ -27,7 +27,6 @@ namespace Blueways\BwGuild\Property\TypeConverter;
  */
 class ObjectStorageConverter extends \TYPO3\CMS\Extbase\Property\TypeConverter\ObjectStorageConverter
 {
-
     /**
      * @var string[]
      */

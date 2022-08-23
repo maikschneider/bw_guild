@@ -6,7 +6,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class UserLogoValidator extends \TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator
 {
-
     /**
      * @param mixed $value
      */

@@ -16,7 +16,6 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 
 class AdministrationController extends ActionController
 {
-
     /**
      * @var \Blueways\BwGuild\Domain\Repository\UserRepository
      */
@@ -349,7 +348,6 @@ class AdministrationController extends ActionController
         $hashInstance = $this->objectManager->get(PasswordHashFactory::class)->getDefaultHashInstance('FE');
 
         foreach ($rows as $key => $row) {
-
             // username is always required abort if not given
             $username = trim($row[$csvMappings['username']]);
             if (!$username || strlen($username) < 2 || in_array(strtolower($username), $usernames)) {

@@ -8,7 +8,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-
     /**
      * @var string
      * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")

@@ -44,7 +44,6 @@ class SlugUpdater implements UpgradeWizardInterface
     public function executeUpdate(): bool
     {
         foreach (self::TABLES as $table => $slugField) {
-
             // abort if no updated for this table is needed
             $elements = $this->getElementsForTable($table);
             if (!$elements->rowCount()) {
@@ -67,7 +66,6 @@ class SlugUpdater implements UpgradeWizardInterface
             $queryBuilder = $connection->createQueryBuilder();
 
             while ($record = $elements->fetch()) {
-
                 // generate unique slug for record
                 $value = $slugHelper->generate($record, $record['pid']);
                 $state = RecordStateFactory::forName($table)

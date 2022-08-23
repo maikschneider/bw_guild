@@ -14,7 +14,6 @@ use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class AbstractDemandRepository extends Repository
 {
-
     /**
      * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder
      */

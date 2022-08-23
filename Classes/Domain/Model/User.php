@@ -11,7 +11,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class User extends FrontendUser
 {
-
     /**
      * @var string
      */

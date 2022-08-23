@@ -12,7 +12,6 @@ use TYPO3\CMS\Extbase\Reflection\ReflectionService;
 
 class SlugUtility
 {
-
     /**
      * @var string
      */

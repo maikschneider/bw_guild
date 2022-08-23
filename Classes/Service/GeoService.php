@@ -34,7 +34,6 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
  */
 class GeoService
 {
-
     /**
      * @var int
      */

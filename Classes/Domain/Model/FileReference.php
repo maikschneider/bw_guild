@@ -4,7 +4,6 @@ namespace Blueways\BwGuild\Domain\Model;
 
 class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
 {
-
     /**
      * uid of a sys_file
      *
