@@ -24,7 +24,7 @@ class OfferIndexer extends IndexerBase
         parent::__construct($pObj);
 
         // prepare hooks
-        if (is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'])) {
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex']) && is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'] as $classRef) {
                 $this->hookObjectsArr[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($classRef);
             }
