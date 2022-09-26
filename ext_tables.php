@@ -58,23 +58,5 @@ call_user_func(
             \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
             ['source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_feature.svg']
         );
-
-        /**
-         * Register BE Module
-         */
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerModule(
-            'Blueways.BwGuild',
-            'web',
-            'tx_bwguild_admin',
-            '',
-            [
-                'Administration' => 'index, importer, csv, csvImport, offer, passwordRefresh',
-            ],
-            [
-                'access' => 'user,group',
-                'icon' => 'EXT:bw_guild/Resources/Public/Images/module_administration.svg',
-                'labels' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:tx_bwguild_admin',
-            ]
-        );
     }
 );
