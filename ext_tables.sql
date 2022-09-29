@@ -67,6 +67,6 @@ CREATE TABLE tx_bwguild_offer_feuser_mm (
 	KEY uid_foreign (uid_foreign)
 );
 
-CREATE TABLE tx_bwguild_domain_model_abstractbookmark (
+/*CREATE TABLE tx_bwguild_domain_model_abstractbookmark (
 
-);
+);*/
