@@ -15,6 +15,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
+use TYPO3\CMS\Core\Pagination\SimplePagination;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Page\AssetCollector;
 
 /**
  * Class OfferController
@@ -27,13 +31,22 @@ class OfferController extends ActionController
 
     protected AccessControlService $accessControlService;
 
+    public function __construct() {
+        $offerRepository = GeneralUtility::makeInstance('Blueways\BwGuild\Domain\Repository\OfferRepository');
+        $this->offerRepository = $offerRepository;
+        $userRepository = GeneralUtility::makeInstance('Blueways\BwGuild\Domain\Repository\UserRepository');
+        $this->userRepository = $userRepository;
+        $accessControlService = GeneralUtility::makeInstance('Blueways\BwGuild\Service\AccessControlService');
+        $this->accessControlService = $accessControlService;
+    }
+
     public function listAction(): ResponseInterface
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
         // override filter from form
         if ($this->request->hasArgument('demand')) {
-            $demand->overrideFromRequest($this->request->getArgument('demand'));
+            $demand->overrideFromRequest($this->request);
         }
 
         /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
@@ -41,13 +54,24 @@ class OfferController extends ActionController
 
         $offers = $repository->findDemanded($demand);
 
+        // create pagination
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+        $currentPage = $currentPage > 0 ? $currentPage : 1;
+        $itemsPerPage = (int)$this->settings['itemsPerPage'];
+        $paginator = new ArrayPaginator($offers, $currentPage, $itemsPerPage);
+        $pagination = new SimplePagination($paginator);
+
         // disbale indexing of list view
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
         $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
 
         $this->view->setTemplate($this->settings['template'] ?? 'List');
         $this->view->assign('offers', $offers);
-
+        $this->view->assign('pagination', [
+            'currentPage' => $currentPage,
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ]);
         return $this->htmlResponse($this->view->render());
     }
 
@@ -65,15 +89,15 @@ class OfferController extends ActionController
 
     public function showAction(Offer $offer)
     {
-        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
-        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $typoscript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 
         $schema = $offer->getJsonSchema($typoscript);
 
         if ((int)$typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['enable']) {
-            $json = json_encode($schema);
-            $jsCode = '<script type="application/ld+json">' . $json . '</script>';
-            $this->response->addAdditionalHeaderData($jsCode);
+            $json = json_encode($schema, JSON_THROW_ON_ERROR);
+            $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
+            $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
         }
 
         $GLOBALS['TSFE']->page['title'] = $schema['title'];
@@ -200,9 +224,9 @@ class OfferController extends ActionController
 
     private function mergeTyposcriptSettings()
     {
-        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         try {
-            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            $typoscript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
             ArrayUtility::mergeRecursiveWithOverrule(
                 $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
                 $this->settings,

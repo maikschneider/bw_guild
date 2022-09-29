@@ -16,9 +16,9 @@
 </div>
 
 <div class="orders orders--list">
-	<f:widget.paginate as="pagedOffer" objects="{offers}">
-		<f:for each="{pagedOffer}" as="offer">
-			<f:render partial="Offer/Item" arguments="{offer: offer, showPid: settings.showPid}"/>
-		</f:for>
-	</f:widget.paginate>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
+	<f:for each="{pagination.paginator.paginatedItems}" as="offer">
+		<f:render partial="Offer/Item" arguments="{offer: offer, showPid: settings.showPid}"/>
+	</f:for>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
 </div>
