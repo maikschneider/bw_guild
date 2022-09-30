@@ -327,14 +327,16 @@ class AbstractDemandRepository extends Repository
         /** @var \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand */
         $demand = new $class();
 
-        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
+        if (isset($settings['categories'])) {
+            $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
+        }
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
         $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
         $demand->setOrder($settings['order'] ?? '');
         $demand->setOrderDirection($settings['orderDirection'] ?? '');
         $demand->setItemsPerPage((int)$settings['itemsPerPage']);
 
-        if ($settings['limit']) {
+        if (isset($settings['limit'])) {
             $demand->setLimit((int)$settings['limit']);
         }
 
