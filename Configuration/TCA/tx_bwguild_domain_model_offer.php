@@ -434,8 +434,8 @@ return [
         'latitude' => [
             'exclude' => true,
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_db.xlf:address.latitude',
+            'description' => '(To set new coordinates, delete them and save the data set. After that, the new address for the marker will be applied.)',
             'config' => [
-                'fieldInformation' => '(To set new coordinates, delete them and save the data set. After that, the new address for the marker will be applied.)',
                 'type' => 'input',
                 'eval' => \Blueways\BwGuild\Evaluation\LatitudeEvaluation::class,
                 'default' => null,
