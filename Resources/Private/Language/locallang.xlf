@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2017-04-13T10:24:37Z" product-name="bw_guild">
+    <header/>
+    <body>
+      <trans-unit id="no_google_maps_key">
+        <source>No Google Maps key provided with TypoScript</source>
+      </trans-unit>
+      <trans-unit id="more">
+        <source>more</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

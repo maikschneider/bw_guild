@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0" xmlns:t3="http://typo3.org/schemas/xliff">
+    <file t3:id="1502483828" source-language="en" datatype="plaintext" original="messages" date="2017-08-11T20:37:40Z" product-name="bw_guild">
+        <header/>
+        <body>
+            <trans-unit id="address.latitude">
+                <source>Latitude</source>
+            </trans-unit>
+            <trans-unit id="address.longitude">
+                <source>Longitude</source>
+            </trans-unit>
+            <trans-unit id="address.locationMapWizard">
+                <source>Map wizard for visual selection of coordinates</source>
+            </trans-unit>
+            <trans-unit id="address.locationMapWizard.close">
+                <source>Close Map Wizard</source>
+            </trans-unit>
+            <trans-unit id="address.locationMapWizard.import">
+                <source>Import marker-coordinates</source>
+            </trans-unit>
+            <trans-unit id="address_palette.coordinates">
+                <source>Coordinates</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

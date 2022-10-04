@@ -75,6 +75,15 @@ plugin {
 			sitemap {
 				enable = {$plugin.tx_bwguild_offerlist.settings.sitemap.enable}
 			}
+			map {
+				enabled = 0
+				# possible googleMaps or leaflet
+				rendering = leaflet
+				defaultPosition {
+					lat = 48.3057664
+					lng = 14.2873126
+				}
+			}
 		}
 	}
 

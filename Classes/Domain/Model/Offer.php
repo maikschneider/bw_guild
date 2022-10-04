@@ -78,16 +78,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $contactPhone = '';
 
     /**
-     * @var float
-     */
-    protected $geo_lat;
-
-    /**
-     * @var float
-     */
-    protected $geo_long;
-
-    /**
      * @var string
      */
     protected $conditions = '';
@@ -110,12 +100,12 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     /**
      * @var float
      */
-    protected $latitude;
+    protected $latitude = 0;
 
     /**
      * @var float
      */
-    protected $longitude;
+    protected $longitude = 0;
 
     /**
      * @var \DateTime
@@ -185,34 +175,22 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->contactPhone = $contactPhone;
     }
 
-    /**
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    /**
-     * @param float $latitude
-     */
-    public function setLatitude(float $latitude)
+    public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }
 
-    /**
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
 
-    /**
-     * @param float $longitude
-     */
-    public function setLongitude(float $longitude)
+    public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
     }
@@ -311,38 +289,6 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function setContactMail(string $contactMail)
     {
         $this->contactMail = $contactMail;
-    }
-
-    /**
-     * @return float
-     */
-    public function getGeoLat()
-    {
-        return $this->geo_lat;
-    }
-
-    /**
-     * @param float $geo_lat
-     */
-    public function setGeoLat(float $geo_lat)
-    {
-        $this->geo_lat = $geo_lat;
-    }
-
-    /**
-     * @return float
-     */
-    public function getGeoLong()
-    {
-        return $this->geo_long;
-    }
-
-    /**
-     * @param float $geo_long
-     */
-    public function setGeoLong(float $geo_long)
-    {
-        $this->geo_long = $geo_long;
     }
 
     /**

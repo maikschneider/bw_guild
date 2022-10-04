@@ -1,5 +1,5 @@
 {namespace bw=Blueways\BwGuild\ViewHelpers}
-<div class="orders__item card card__content">
+<div class="orders__item card card__content" id="address__label-{offer.uid}">
 	<h3>{offer.title}</h3>
 	<p>
 		<f:format.crop maxCharacters="100">{offer.description->f:format.stripTags()}</f:format.crop>

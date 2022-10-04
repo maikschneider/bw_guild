@@ -40,6 +40,40 @@ class OfferController extends ActionController
         $this->accessControlService = $accessControlService;
     }
 
+    public function initializeAction(): void
+    {
+        parent::initializeAction();
+
+        $this->mergeTyposcriptSettings();
+    }
+
+    /**
+     * Merges the typoscript settings with the settings from flexform
+     */
+    private function mergeTyposcriptSettings(): void
+    {
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        try {
+            $typoscript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
+                $typoscript['plugin.']['tx_bwguild.']['settings.'],
+                true,
+                false,
+                false
+            );
+            ArrayUtility::mergeRecursiveWithOverrule(
+                $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
+                $this->settings,
+                true,
+                false,
+                false
+            );
+            $this->settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
+        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
+        }
+    }
+
     public function listAction(): ResponseInterface
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
@@ -213,29 +247,5 @@ class OfferController extends ActionController
         $offer->setFeUser($user);
 
         $this->view->assign('offer', $offer);
-    }
-
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        $this->mergeTyposcriptSettings();
-    }
-
-    private function mergeTyposcriptSettings()
-    {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        try {
-            $typoscript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
-                $this->settings,
-                true,
-                false,
-                false
-            );
-            $this->settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
-        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
-        }
     }
 }
