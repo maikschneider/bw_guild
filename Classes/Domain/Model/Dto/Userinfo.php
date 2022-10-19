@@ -27,6 +27,9 @@ class Userinfo
     {
         $this->user['username'] = $feUser->getUsername();
         $this->user['uid'] = $feUser->getUid();
+        $this->user['first_name'] = $feUser->getFirstName();
+        $this->user['last_name'] = $feUser->getLastName();
+        $this->user['email'] = $feUser->getEmail();
     }
 
     public function setBookmarkOutput(array $relationHandlerResult): void
