@@ -71,7 +71,8 @@
     "ext-pdo": "*",
     "ext-json": "*",
     "ext-gd": "*",
-    "typo3/cms-core": "^9.0 || ^10.0 || ^11.0"
+    "typo3/cms-core": "^9.0 || ^10.0 || ^11.0",
+  	"georgringer/numbered-pagination": "^1.0"
   },
   "authors": [
     {

@@ -7,6 +7,7 @@ use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\CategoryRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
+use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
@@ -101,11 +102,15 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $users = $this->userRepository->findDemanded($demand);
 
         // create pagination
-        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
-        $currentPage = $currentPage > 0 ? $currentPage : 1;
         $itemsPerPage = (int)$this->settings['itemsPerPage'];
+        $maximumLinks = (int)$this->settings['maximumLinks'];
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
         $paginator = new ArrayPaginator($users, $currentPage, $itemsPerPage);
-        $pagination = new SimplePagination($paginator);
+        $pagination = new NumberedPaginationAlias($paginator, $maximumLinks);
+        $this->view->assign('pagination', [
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+        ]);
 
         // get categories by category settings in plugin
         $catConjunction = $this->settings['categoryConjunction'];

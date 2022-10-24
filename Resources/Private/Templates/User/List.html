@@ -53,7 +53,7 @@
 
 
 <div class="users users--list">
-	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
 	<f:for each="{pagination.paginator.paginatedItems}" as="user">
 		<div class="users__item">
 			<div class="users__item__main">
@@ -95,5 +95,5 @@
 			</div>
 		</div>
 	</f:for>
-	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator}"/>
+	<f:render partial="Pagination" arguments="{pagination: pagination.pagination, paginator: pagination.paginator, actionName: 'list'}" />
 </div>

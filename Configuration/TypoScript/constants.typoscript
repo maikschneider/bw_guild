@@ -26,6 +26,7 @@ plugin {
     settings {
       demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
       maxItems =
+      maximumLinks =
       showPid =
       schema {
         enable = 1
@@ -50,6 +51,7 @@ plugin {
       categories =
       limit =
       maxItems =
+      maximumLinks =
       mode =
       categoryConjunction =
       schema {

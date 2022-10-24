@@ -4,6 +4,7 @@ plugin {
     view {
       templateRootPaths.0 = EXT:bw_guild/Resources/Private/Templates
       partialRootPaths.0 = EXT:bw_guild/Resources/Private/Partials
+      partialRootPaths.1 = EXT:numbered_pagination/Resources/Private/Partials/
       layoutRootPaths.0 = EXT:bw_guild/Resources/Private/Layouts
 
       templateRootPaths.10 = {$plugin.tx_bwguild.view.templateRootPath}
@@ -47,6 +48,7 @@ plugin {
       categories = {$plugin.tx_bwguild_userlist.settings.categories}
       limit = {$plugin.tx_bwguild_userlist.settings.limit}
       maxItems = {$plugin.tx_bwguild_userlist.settings.maxItems}
+      maximumLinks = {$plugin.tx_bwguild_userlist.settings.maximumLinks}
       mode = {$plugin.tx_bwguild_userlist.settings.mode}
       categoryConjunction = {$plugin.tx_bwguild_userlist.settings.categoryConjunction}
       schema {
@@ -73,6 +75,7 @@ plugin {
     settings {
       demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}
       maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
+      maximumLinks = {$plugin.tx_bwguild_userlist.settings.maximumLinks}
       showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
       schema {
         enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
