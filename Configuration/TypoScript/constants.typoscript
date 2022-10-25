@@ -54,6 +54,7 @@ plugin {
       maximumLinks =
       mode =
       categoryConjunction =
+      hideFullResultList =
       schema {
         enable = 1
         defaultImage =

@@ -51,6 +51,7 @@ plugin {
       maximumLinks = {$plugin.tx_bwguild_userlist.settings.maximumLinks}
       mode = {$plugin.tx_bwguild_userlist.settings.mode}
       categoryConjunction = {$plugin.tx_bwguild_userlist.settings.categoryConjunction}
+      hideFullResultList = {$plugin.tx_bwguild_userlist.settings.hideFullResultList}
       schema {
         enable = {$plugin.tx_bwguild_userlist.settings.schema.enable}
         defaultImage = {$plugin.tx_bwguild_userlist.settings.schema.defaultImage}

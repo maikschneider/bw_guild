@@ -11,6 +11,7 @@ use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
+use TYPO3\CMS\Core\Http\NullResponse;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
 use TYPO3\CMS\Core\Page\AssetCollector;
@@ -86,6 +87,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function listAction(): ResponseInterface
     {
         $demand = UserDemand::createFromSettings($this->settings);
+
+        if ($this->settings['hideFullResultList'] && !$this->request->hasArgument('demand')) {
+            return new NullResponse();
+        }
 
         // override filter from form
         if ($this->request->hasArgument('demand')) {
