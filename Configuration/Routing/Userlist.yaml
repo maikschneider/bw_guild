@@ -43,7 +43,7 @@ routeEnhancers:
       page:
         type: StaticRangeMapper
         start: '1'
-        end: '100'
+        end: '99999'
       localized_new:
         type: LocaleModifier
         default: 'search'
