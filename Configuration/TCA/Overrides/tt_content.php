@@ -22,7 +22,7 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_user
     'BwGuild',
     'Offerlatest',
     'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.title',
-    'tx_bwguild_offerlatest'
+    'tx_bwguild_offerlist'
 );
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_offerlist'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
@@ -35,4 +35,11 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_offe
     'Usershow',
     'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.title',
     'tx_bwguild_usershow'
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'BwGuild',
+    'Usersearch',
+    'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usersearch.wizard.title',
+    'tx_bwguild_search'
 );

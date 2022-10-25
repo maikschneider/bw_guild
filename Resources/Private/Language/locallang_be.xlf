@@ -178,6 +178,12 @@
 			<trans-unit id="usershow.wizard.description">
 				<source>Shows a user profile page</source>
 			</trans-unit>
+			<trans-unit id="usersearch.wizard.title">
+				<source>User search</source>
+			</trans-unit>
+			<trans-unit id="usersearch.wizard.description">
+				<source>Displays a form to search for user</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

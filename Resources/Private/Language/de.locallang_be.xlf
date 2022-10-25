@@ -200,7 +200,13 @@
 			</trans-unit>
 			<trans-unit id="usershow.wizard.description">
 				<source>Shows a user profile page</source>
-				<target>Zeit die Profilseite eines Benutzers an</target>
+				<target>Zeigt die Profilseite eines Benutzers an</target>
+			</trans-unit>
+			<trans-unit id="usersearch.wizard.title">
+				<source>User Suche</source>
+			</trans-unit>
+			<trans-unit id="usersearch.wizard.description">
+				<source>Zeigt ein Suchformular für die Benutzesuche an</source>
 			</trans-unit>
 		</body>
 	</file>

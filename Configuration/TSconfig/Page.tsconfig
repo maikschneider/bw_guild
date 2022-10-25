@@ -1,46 +1,57 @@
 mod.wizards.newContentElement.wizardItems.plugins {
-	elements {
+  elements {
 
-		offerlist {
-			iconIdentifier = tx_bwguild_offerlist
-			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.title
-			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.description
-			tt_content_defValues {
-				CType = list
-				list_type = bwguild_offerlist
-			}
-		}
+    offerlist {
+      iconIdentifier = tx_bwguild_offerlist
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlist.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_offerlist
+      }
+    }
 
-		offerlatest {
-			iconIdentifier = tx_bwguild_offerlatest
-			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.title
-			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.description
-			tt_content_defValues {
-				CType = list
-				list_type = bwguild_offerlatest
-			}
-		}
+    offerlatest {
+      iconIdentifier = tx_bwguild_offerlist
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offerlatest.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_offerlatest
+      }
+    }
 
-		userlist {
-			iconIdentifier = tx_bwguild_userlist
-			title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.title
-			description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.description
-			tt_content_defValues {
-				CType = list
-				list_type = bwguild_userlist
-			}
-		}
-	}
+    userlist {
+      iconIdentifier = tx_bwguild_userlist
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_userlist
+      }
+    }
 
-  usershow {
-    iconIdentifier = tx_bwguild_usershow
-    title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.title
-    description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.description
-    tt_content_defValues {
-      CType = list
-      list_type = bwguild_usershow
+
+    usershow {
+      iconIdentifier = tx_bwguild_usershow
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_usershow
+      }
+    }
+
+    usersearch {
+      iconIdentifier = tx_bwguild_search
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usersearch.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usersearch.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_usersearch
+      }
     }
   }
 
-	show = *
+  show = *
 }

@@ -1,19 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
-    <title>Person</title>
-    <desc>Created with Sketch.</desc>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Person">
-            <polygon id="Shape" fill="#FFFFFF" points="0 0 14 0 14 14 0 14"></polygon>
-            <rect id="Rectangle-2" fill="#FFFFFF" x="2" y="3" width="10" height="8"></rect>
-            <rect id="Rectangle-2" fill="#E0E0E0" transform="translate(7.000000, 11.500000) scale(-1, 1) rotate(-180.000000) translate(-7.000000, -11.500000) " x="2" y="11" width="10" height="1"></rect>
-            <rect id="Rectangle-2" fill="#494949" x="7" y="5" width="5" height="1"></rect>
-            <path d="M0,0 L0,14 L14,14 L14,0 L0,0 Z M1,1 L13,1 L13,13 L1,13 L1,1 Z" id="Shape" fill="#999999" fill-rule="nonzero"></path>
-            <rect id="Rectangle-2" fill="#E0E0E0" transform="translate(7.000000, 2.500000) scale(-1, 1) rotate(-180.000000) translate(-7.000000, -2.500000) " x="2" y="2" width="10" height="1"></rect>
-            <polygon id="Rectangle" fill="#B1B1B1" points="12 7 12 8 7 8 7 7"></polygon>
-            <polygon id="Rectangle" fill="#B1B1B1" points="12 9 12 10 7 10 7 9"></polygon>
-            <rect id="Rectangle" fill="#337F99" x="2" y="5" width="4" height="5"></rect>
-        </g>
-    </g>
+<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_53_154)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 0H14V14H0V0Z" fill="#008DD1"/>
+<path d="M7.00009 2.71643C9.36609 2.71643 11.2837 4.63403 11.2837 7.00003C11.2837 9.36563 9.36609 11.2836 7.00009 11.2836C4.63409 11.2836 2.71609 9.36563 2.71609 7.00003C2.71609 4.63403 4.63409 2.71643 7.00009 2.71643V2.71643ZM8.39069 6.01803C8.39069 5.25006 7.76803 4.62743 7.00009 4.62743C6.23173 4.62743 5.60949 5.25009 5.60949 6.01803V7.30433L6.04543 7.02699C6.29465 7.26293 6.62981 7.40824 7.00012 7.40824C7.37004 7.40824 7.70559 7.26293 7.95481 7.02699L8.39075 7.30433L8.38997 6.01803H8.39069ZM4.34379 9.69073C5.02738 10.3657 5.96569 10.7837 6.99999 10.7837C8.03429 10.7837 8.97269 10.3658 9.65619 9.69033V9.43994C9.65619 8.74932 9.09642 8.18994 8.40619 8.18994H5.59369C4.90307 8.18994 4.34369 8.74932 4.34369 9.43994L4.34379 9.69073Z" fill="white"/>
+</g>
+<defs>
+<clipPath id="clip0_53_154">
+<rect width="14" height="14" fill="white"/>
+</clipPath>
+</defs>
 </svg>

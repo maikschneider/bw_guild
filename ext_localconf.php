@@ -24,6 +24,15 @@ defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'BwGuild',
+    'Usersearch',
+    [
+        \Blueways\BwGuild\Controller\UserController::class => 'search',
+    ],
+    []
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'BwGuild',
     'Offerlist',
     [
         \Blueways\BwGuild\Controller\OfferController::class => 'list, show, edit, update, new, delete',
