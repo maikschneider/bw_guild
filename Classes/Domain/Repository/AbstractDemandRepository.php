@@ -114,10 +114,8 @@ class AbstractDemandRepository extends Repository
         }
 
         $constraints = [];
-        $searchSplittedParts = $demand->getSearchParts();
-
-        $tcaSearchFields = $GLOBALS['TCA'][$demand::TABLE]['ctrl']['searchFields'];
-        $searchFields = GeneralUtility::trimExplode(',', $tcaSearchFields, true);
+        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->getSearch(), true);
+        $searchFields = $demand->getSearchFields();
 
         foreach ($searchSplittedParts as $searchSplittedPart) {
             $subConstraints = [];

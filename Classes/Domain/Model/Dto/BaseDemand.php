@@ -14,6 +14,8 @@ class BaseDemand extends AbstractEntity
 
     public const EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid';
 
+    public const SEARCH_FIELDS = '';
+
     protected array $categories = [];
 
     protected string $categoryConjunction = '';
@@ -287,14 +289,6 @@ class BaseDemand extends AbstractEntity
     }
 
     /**
-     * @return array
-     */
-    public function getSearchParts(): array
-    {
-        return GeneralUtility::trimExplode(' ', $this->search, true);
-    }
-
-    /**
      * @param $settings
      * @return static
      */
@@ -318,5 +312,14 @@ class BaseDemand extends AbstractEntity
         }
 
         return $demand;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getSearchFields(): array
+    {
+        $fields = static::SEARCH_FIELDS ?: $GLOBALS['TCA'][static::TABLE]['ctrl']['searchFields'];
+        return GeneralUtility::trimExplode(',', $fields, true);
     }
 }

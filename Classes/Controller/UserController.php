@@ -154,6 +154,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
+        // add autocompleter values
         if ($this->settings['autocompleter']) {
             $autocompleteData = $this->userRepository->getAutocompleteData($this->settings['autocompleter']);
             $this->view->assign('autocompleter', $autocompleteData);
@@ -164,15 +165,13 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         return $this->htmlResponse($this->view->render());
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function showAction(?User $user = null): ResponseInterface
     {
         if (!$user || !$user->isPublicProfile()) {
-            $response = GeneralUtility::makeInstance(ErrorController::class)->pageNotFoundAction(
-                $GLOBALS['TYPO3_REQUEST'],
-                'Profile not found',
-                ['code' => PageAccessFailureReasons::PAGE_NOT_FOUND]
-            );
-            throw new PageNotFoundException($response);
+            throw new PageNotFoundException('Profile not found', 1666954785);
         }
 
         $schema = $user->getJsonSchema($this->settings);
