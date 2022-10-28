@@ -27,15 +27,27 @@ class UserRepository extends AbstractDemandRepository
             return;
         }
 
-        $this->queryBuilder->join($demand::TABLE, 'tx_bwguild_feature_feuser_mm', 'mm',
-            $this->queryBuilder->expr()->eq('mm.uid_foreign',
-                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')));
-        $this->queryBuilder->join('mm', 'tx_bwguild_domain_model_feature', 'f',
-            $this->queryBuilder->expr()->eq('f.uid', $this->queryBuilder->quoteIdentifier('mm.uid_local')));
+        $this->queryBuilder->join(
+            $demand::TABLE,
+            'tx_bwguild_feature_feuser_mm',
+            'mm',
+            $this->queryBuilder->expr()->eq(
+                'mm.uid_foreign',
+                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')
+            )
+        );
+        $this->queryBuilder->join(
+            'mm',
+            'tx_bwguild_domain_model_feature',
+            'f',
+            $this->queryBuilder->expr()->eq('f.uid', $this->queryBuilder->quoteIdentifier('mm.uid_local'))
+        );
 
         $this->queryBuilder->andWhere(
-            $this->queryBuilder->expr()->like('f.name',
-                $this->queryBuilder->createNamedParameter('%' . $demand->feature . '%', \PDO::PARAM_STR))
+            $this->queryBuilder->expr()->like(
+                'f.name',
+                $this->queryBuilder->createNamedParameter('%' . $demand->feature . '%', \PDO::PARAM_STR)
+            )
         );
     }
 
@@ -112,5 +124,38 @@ class UserRepository extends AbstractDemandRepository
         });
         $sql = 'update fe_users set bookmarks="' . implode(',', $bookmarks) . '" where uid=' . $userId . ';';
         $connection->executeQuery($sql);
+    }
+
+    /**
+     * @param array<string, string> $autocompleter
+     * @return array<string, string>
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
+    public function getAutocompleteData(array $autocompleter): array
+    {
+        $data = [];
+
+        foreach ($autocompleter as $name => $setting) {
+            $columns = GeneralUtility::trimExplode(',', $setting);
+
+            foreach ($columns as $column) {
+                $columnData = GeneralUtility::trimExplode('.', $column);
+
+                if (count($columnData) !== 2) {
+                    continue;
+                }
+
+                $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($columnData[0]);
+
+                $result = $qb->select($columnData[1])
+                    ->from($columnData[0])
+                    ->execute()
+                    ->fetchAllAssociativeIndexed();
+                $data[$name] = array_merge($data[$name] ?? [], array_keys($result));
+            }
+        }
+
+        return $data;
     }
 }

@@ -19,7 +19,6 @@ use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
-use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
@@ -82,8 +81,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if ($this->request->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
             $propertyMappingConfiguration->allowAllProperties();
-            $propertyMappingConfiguration->setTypeConverterOption(PersistentObjectConverter::class,
-                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED, true);
+            $propertyMappingConfiguration->setTypeConverterOption(
+                PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
+                true
+            );
         }
     }
 
@@ -99,11 +101,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         if ($this->settings['hideFullResultList'] && !($this->request->hasArgument('demand') || $this->request->hasArgument('currentPage'))) {
             return new NullResponse();
-        }
-
-        // redirect to search action to display another view
-        if ($this->settings['mode'] === 'search') {
-            return new ForwardResponse('search');
         }
 
         // find user by demand
@@ -151,8 +148,15 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $demand = UserDemand::createFromSettings($this->settings);
 
         // override filter from form
-        if ($this->request->hasArgument('demand')) {
-            $demand->overrideFromRequest($this->request);
+        if ($body = $this->request->getParsedBody()) {
+            if (isset($body['tx_bwguild_userlist'], $body['tx_bwguild_userlist']['demand'])) {
+                $demand = $demand->overrideFromPostBody($body['tx_bwguild_userlist']['demand']);
+            }
+        }
+
+        if ($this->settings['autocompleter']) {
+            $autocompleteData = $this->userRepository->getAutocompleteData($this->settings['autocompleter']);
+            $this->view->assign('autocompleter', $autocompleteData);
         }
 
         $this->view->assign('demand', $demand);

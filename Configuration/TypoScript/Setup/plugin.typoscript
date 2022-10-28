@@ -72,6 +72,15 @@ plugin {
     }
   }
 
+  tx_bwguild_usersearch {
+    settings {
+      autocompleter {
+        search = fe_users.first_name,fe_users.last_name
+        features = tx_bwguild_domain_model_feature.name
+      }
+    }
+  }
+
   tx_bwguild_offerlist {
     settings {
       demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}
