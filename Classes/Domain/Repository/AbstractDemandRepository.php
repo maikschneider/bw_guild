@@ -126,7 +126,7 @@ class AbstractDemandRepository extends Repository
                 $searchSplittedPart = trim($searchSplittedPart);
                 if ($searchSplittedPart) {
                     $subConstraints[] = $this->queryBuilder->expr()->like(
-                        $cleanProperty,
+                        $demand::TABLE . '.' . $cleanProperty,
                         $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
                     );
                 }
@@ -241,7 +241,7 @@ class AbstractDemandRepository extends Repository
         $orderDirection = $demand->getOrderDirection() ?: QueryInterface::ORDER_ASCENDING;
 
         foreach ($orderFields as $orderField) {
-            $this->queryBuilder->addOrderBy($orderField, $orderDirection);
+            $this->queryBuilder->addOrderBy($demand::TABLE . '.' . $orderField, $orderDirection);
         }
     }
 

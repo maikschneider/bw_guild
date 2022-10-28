@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
+use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use PDO;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -17,6 +18,25 @@ class UserRepository extends AbstractDemandRepository
         parent::setConstraints($demand);
 
         $this->setPublicProfileConstraint();
+        $this->setFeatureConstraint($demand);
+    }
+
+    protected function setFeatureConstraint(UserDemand $demand)
+    {
+        if (!$demand->feature) {
+            return;
+        }
+
+        $this->queryBuilder->join($demand::TABLE, 'tx_bwguild_feature_feuser_mm', 'mm',
+            $this->queryBuilder->expr()->eq('mm.uid_foreign',
+                $this->queryBuilder->quoteIdentifier($demand::TABLE . '.uid')));
+        $this->queryBuilder->join('mm', 'tx_bwguild_domain_model_feature', 'f',
+            $this->queryBuilder->expr()->eq('f.uid', $this->queryBuilder->quoteIdentifier('mm.uid_local')));
+
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->like('f.name',
+                $this->queryBuilder->createNamedParameter('%' . $demand->feature . '%', \PDO::PARAM_STR))
+        );
     }
 
     private function setPublicProfileConstraint(): void

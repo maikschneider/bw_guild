@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
+use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 use TYPO3\CMS\Frontend\Controller\ErrorController;
 use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
@@ -77,24 +78,27 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
         } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
         }
+
+        if ($this->request->hasArgument('demand')) {
+            $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
+            $propertyMappingConfiguration->allowAllProperties();
+            $propertyMappingConfiguration->setTypeConverterOption(PersistentObjectConverter::class,
+                PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED, true);
+        }
     }
 
     /**
+     * @param ?UserDemand $demand
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
      * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function listAction(): ResponseInterface
+    public function listAction(UserDemand $demand = null): ResponseInterface
     {
-        $demand = UserDemand::createFromSettings($this->settings);
+        $demand = $demand ?? UserDemand::createFromSettings($this->settings);
 
-        if ($this->settings['hideFullResultList'] && !$this->request->hasArgument('demand')) {
+        if ($this->settings['hideFullResultList'] && !($this->request->hasArgument('demand') || $this->request->hasArgument('currentPage'))) {
             return new NullResponse();
-        }
-
-        // override filter from form
-        if ($this->request->hasArgument('demand')) {
-            $demand->overrideFromRequest($this->request);
         }
 
         // redirect to search action to display another view

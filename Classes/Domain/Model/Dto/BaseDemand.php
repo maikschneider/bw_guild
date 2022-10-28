@@ -294,7 +294,11 @@ class BaseDemand extends AbstractEntity
         return GeneralUtility::trimExplode(' ', $this->search, true);
     }
 
-    public static function createFromSettings($settings): self
+    /**
+     * @param $settings
+     * @return static
+     */
+    public static function createFromSettings($settings): static
     {
         $demand = new static();
 

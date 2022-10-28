@@ -20,9 +20,14 @@ routeEnhancers:
     routes:
       - routePath: '/'
         _controller: 'User::list'
-      - routePath: '/{localized_page}/{page}'
+      - routePath: '/suche/{page}'
         _controller: 'User::list'
         _arguments:
+          page: 'currentPage'
+      - routePath: '/suche/{page}/{search}'
+        _controller: 'User::list'
+        _arguments:
+          search: 'demand/search'
           page: 'currentPage'
       - routePath: '/{localized_edit}'
         _controller: 'User::edit'
@@ -35,6 +40,7 @@ routeEnhancers:
       page: '\d+'
     defaults:
       page: '1'
+      search: ''
     aspects:
       user:
         type: PersistedAliasMapper
@@ -50,12 +56,6 @@ routeEnhancers:
         localeMap:
           - locale: 'de_DE.*'
             value: 'suche'
-      localized_page:
-        type: LocaleModifier
-        default: 'page'
-        localeMap:
-          - locale: 'de_DE.*'
-            value: 'seite'
       localized_edit:
         type: LocaleModifier
         default: 'edit'

@@ -18,7 +18,7 @@ defined('TYPO3_MODE') || die();
         \Blueways\BwGuild\Controller\UserController::class => 'list, edit, update, new, search',
     ],
     [
-        \Blueways\BwGuild\Controller\UserController::class => 'edit, update, list',
+        \Blueways\BwGuild\Controller\UserController::class => 'edit, update',
     ]
 );
 
