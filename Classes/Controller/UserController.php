@@ -21,8 +21,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
-use TYPO3\CMS\Frontend\Controller\ErrorController;
-use TYPO3\CMS\Frontend\Page\PageAccessFailureReasons;
 
 /**
  * Class UserController
@@ -50,33 +48,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         parent::initializeAction();
 
         $this->mergeTyposcriptSettings();
-    }
-
-    /**
-     * Merges the typoscript settings with the settings from flexform
-     */
-    private function mergeTyposcriptSettings(): void
-    {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        try {
-            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $typoscript['plugin.']['tx_bwguild.']['settings.'],
-                true,
-                false,
-                false
-            );
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-                $this->settings,
-                true,
-                false,
-                false
-            );
-            $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
-        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
-        }
 
         if ($this->request->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
@@ -87,6 +58,30 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
                 true
             );
         }
+    }
+
+    /**
+     * Merges the typoscript settings with the settings from flexform
+     */
+    private function mergeTyposcriptSettings(): void
+    {
+        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        ArrayUtility::mergeRecursiveWithOverrule(
+            $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+            $typoscript['plugin.']['tx_bwguild.']['settings.'],
+            true,
+            false,
+            false
+        );
+        ArrayUtility::mergeRecursiveWithOverrule(
+            $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
+            $this->settings,
+            true,
+            false,
+            false
+        );
+        $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
     }
 
     /**
@@ -143,6 +138,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         return $this->htmlResponse($this->view->render());
     }
 
+    /**
+     * @return \Psr\Http\Message\ResponseInterface
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
+     */
     public function searchAction(): ResponseInterface
     {
         $demand = UserDemand::createFromSettings($this->settings);
