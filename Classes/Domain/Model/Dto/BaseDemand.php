@@ -5,10 +5,9 @@ namespace Blueways\BwGuild\Domain\Model\Dto;
 use Blueways\BwGuild\Service\GeoService;
 use ReflectionClass;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Mvc\Request;
 
-class BaseDemand extends AbstractEntity
+class BaseDemand
 {
     public const TABLE = 'tx_bwguild_domain_model_offer';
 
@@ -16,34 +15,35 @@ class BaseDemand extends AbstractEntity
 
     public const SEARCH_FIELDS = '';
 
-    protected array $categories = [];
+    public array $categories = [];
 
-    protected string $categoryConjunction = '';
+    public string $categoryConjunction = '';
 
-    protected string $search = '';
+    public string $search = '';
 
-    protected string $excludeSearchFields = '';
+    public string $excludeSearchFields = '';
 
-    protected bool $includeSubCategories = false;
+    public bool $includeSubCategories = false;
 
-    protected string $order = '';
+    public string $order = '';
 
-    protected string $orderDirection = '';
+    public string $orderDirection = '';
 
-    protected int $itemsPerPage = 0;
+    public int $itemsPerPage = 0;
 
-    protected int $maxDistance = 10;
+    public int $maxDistance = 10;
 
-    protected string $searchDistanceAddress = '';
+    public string $searchDistanceAddress = '';
 
-    protected float $latitude = 0.0;
+    public float $latitude = 0.0;
 
-    protected float $longitude = 0.0;
+    public float $longitude = 0.0;
 
-    protected int $limit = -1;
+    public int $limit = -1;
 
     /**
      * @return int
+     * @deprecated
      */
     public function getItemsPerPage(): int
     {
@@ -60,6 +60,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getOrderDirection(): string
     {
@@ -76,6 +77,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return int
+     * @deprecated
      */
     public function getMaxDistance(): int
     {
@@ -92,6 +94,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getSearchDistanceAddress(): string
     {
@@ -108,6 +111,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return float
+     * @deprecated
      */
     public function getLatitude(): float
     {
@@ -124,6 +128,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return float
+     * @deprecated
      */
     public function getLongitude(): float
     {
@@ -140,6 +145,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getOrder(): string
     {
@@ -156,6 +162,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return int
+     * @deprecated
      */
     public function getLimit(): int
     {
@@ -172,6 +179,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getExcludeSearchFields(): string
     {
@@ -188,6 +196,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return bool
+     * @deprecated
      */
     public function isIncludeSubCategories(): bool
     {
@@ -204,6 +213,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return array
+     * @deprecated
      */
     public function getCategories(): array
     {
@@ -220,6 +230,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getCategoryConjunction(): string
     {
@@ -236,6 +247,7 @@ class BaseDemand extends AbstractEntity
 
     /**
      * @return string
+     * @deprecated
      */
     public function getSearch(): string
     {
@@ -294,7 +306,7 @@ class BaseDemand extends AbstractEntity
      */
     public static function createFromSettings($settings): static
     {
-        $demand = new static();
+        $demand = GeneralUtility::makeInstance(static::class);
 
         $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
