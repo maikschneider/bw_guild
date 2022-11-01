@@ -3,28 +3,40 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
+use Blueways\BwGuild\Event\ModifyQueryBuilderEvent;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendGroupRestriction;
+use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class AbstractDemandRepository extends Repository
 {
+    protected QueryBuilder $queryBuilder;
+
+    protected EventDispatcher $eventDispatcher;
+
     /**
-     * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder
+     * @param \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher
      */
-    protected $queryBuilder;
+    public function __construct(ObjectManagerInterface $objectManager, EventDispatcher $eventDispatcher)
+    {
+        parent::__construct($objectManager);
+        $this->eventDispatcher = $eventDispatcher;
+    }
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return int
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
      */
-    public function countDemanded($demand): int
+    public function countDemanded(BaseDemand $demand): int
     {
         $records = $this->findDemanded($demand);
         return $records->count();
@@ -33,9 +45,9 @@ class AbstractDemandRepository extends Repository
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception|\Doctrine\DBAL\DBALException
      */
-    public function findDemanded($demand)
+    public function findDemanded(BaseDemand $demand)
     {
         $this->createQueryBuilder();
 
@@ -49,6 +61,10 @@ class AbstractDemandRepository extends Repository
         }
 
         $this->setConstraints($demand);
+
+        $this->queryBuilder = $this->eventDispatcher->dispatch(
+            new ModifyQueryBuilderEvent($this->queryBuilder, $demand)
+        )->getQueryBuilder();
 
         $result = $this->queryBuilder->execute()->fetchAll();
 

@@ -14,12 +14,15 @@ class UserDemand extends BaseDemand
 
     public string $feature = '';
 
+    public string $feGroup = '';
+
     /**
      * @param ?string $feature
      */
-    public function __construct(?string $feature = null)
+    public function __construct(?string $feature = null, ?string $feGroup = null)
     {
         $this->feature = $feature ?? '';
+        $this->feGroup = $feGroup ?? '';
     }
 
     /**
