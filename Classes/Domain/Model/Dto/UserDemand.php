@@ -3,12 +3,15 @@
 namespace Blueways\BwGuild\Domain\Model\Dto;
 
 use ReflectionClass;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class UserDemand extends BaseDemand
 {
     public const EXCLUDE_FIELDS = 'pid,lockToDomain,image,lastlogin,uid,_localizedUid,_languageUid,_versionedUid,passwordRepeat';
 
     public const SEARCH_FIELDS = 'first_name,last_name,username,email';
+
+    public const FEGROUP_SEARCH_FIELDS = 'title';
 
     public const TABLE = 'fe_users';
 
@@ -43,5 +46,14 @@ class UserDemand extends BaseDemand
         }
 
         return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFeGroupSearchFields(): array
+    {
+        $fields = static::FEGROUP_SEARCH_FIELDS ?: $GLOBALS['TCA']['fe_groups']['ctrl']['searchFields'];
+        return GeneralUtility::trimExplode(',', $fields, true);
     }
 }

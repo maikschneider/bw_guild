@@ -17,8 +17,10 @@ class UserRepository extends AbstractDemandRepository
     {
         parent::setConstraints($demand);
 
+        /** @var UserDemand $demand */
         $this->setPublicProfileConstraint();
         $this->setFeatureConstraint($demand);
+        $this->setFeGroupConstraint($demand);
     }
 
     protected function setFeatureConstraint(UserDemand $demand)
@@ -47,6 +49,44 @@ class UserRepository extends AbstractDemandRepository
             $this->queryBuilder->expr()->like(
                 'f.name',
                 $this->queryBuilder->createNamedParameter('%' . $demand->feature . '%', \PDO::PARAM_STR)
+            )
+        );
+    }
+
+    protected function setFeGroupConstraint(UserDemand $demand): void
+    {
+        if (!$demand->feGroup) {
+            return;
+        }
+
+
+        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->feGroup, true);
+        $searchFields = $demand->getFeGroupSearchFields();
+        $constraints = [];
+
+        foreach ($searchSplittedParts as $searchSplittedPart) {
+            $subConstraints = [];
+
+            foreach ($searchFields as $cleanProperty) {
+                $searchSplittedPart = trim($searchSplittedPart);
+                if ($searchSplittedPart) {
+                    $subConstraints[] = $this->queryBuilder->expr()->like(
+                        'g.' . $cleanProperty,
+                        $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
+                    );
+                }
+            }
+            $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
+        }
+
+        $this->queryBuilder->join($demand::TABLE, 'fe_groups', 'g',
+            $this->queryBuilder->expr()->andX(
+                $this->queryBuilder->expr()->inSet(
+                    $demand::TABLE . '.usergroup', 'g.uid'
+                ),
+                $this->queryBuilder->expr()->andX(
+                    ...$constraints
+                )
             )
         );
     }
