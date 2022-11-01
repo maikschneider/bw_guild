@@ -60,11 +60,14 @@ class AbstractDemandRepository extends Repository
             $this->queryBuilder->setParameter('dcValue1', [0]);
         }
 
-        $this->setConstraints($demand);
-
-        $this->queryBuilder = $this->eventDispatcher->dispatch(
+        /** @var ModifyQueryBuilderEvent $event */
+        $event = $this->eventDispatcher->dispatch(
             new ModifyQueryBuilderEvent($this->queryBuilder, $demand)
-        )->getQueryBuilder();
+        );
+        $this->queryBuilder = $event->getQueryBuilder();
+        $demand = $event->getDemand();
+
+        $this->setConstraints($demand);
 
         $result = $this->queryBuilder->execute()->fetchAll();
 
