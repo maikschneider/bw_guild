@@ -100,7 +100,7 @@ class AbstractDemandRepository extends Repository
                 $typeNames,
                 Connection::PARAM_STR_ARRAY
             );
-            $qb->andWhere($qb->expr()->in($recordTypeColumnName, $typeNameParameter));
+            $qb->andWhere($qb->expr()->in($dataMap->getTableName() . '.' . $recordTypeColumnName, $typeNameParameter));
         }
 
         $this->queryBuilder = $qb;
