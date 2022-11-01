@@ -15,6 +15,14 @@ class UserDemand extends BaseDemand
     public string $feature = '';
 
     /**
+     * @param ?string $feature
+     */
+    public function __construct(?string $feature = null)
+    {
+        $this->feature = $feature ?? '';
+    }
+
+    /**
      * @param array<string, mixed> $body
      * @return $this
      */
