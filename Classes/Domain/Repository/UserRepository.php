@@ -59,7 +59,6 @@ class UserRepository extends AbstractDemandRepository
             return;
         }
 
-
         $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->feGroup, true);
         $searchFields = $demand->getFeGroupSearchFields();
         $constraints = [];
@@ -79,16 +78,15 @@ class UserRepository extends AbstractDemandRepository
             $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
         }
 
-        $this->queryBuilder->join($demand::TABLE, 'fe_groups', 'g',
+        $this->queryBuilder->innerJoin($demand::TABLE, 'fe_groups', 'g',
             $this->queryBuilder->expr()->andX(
                 $this->queryBuilder->expr()->inSet(
                     $demand::TABLE . '.usergroup', 'g.uid'
                 ),
-                $this->queryBuilder->expr()->andX(
-                    ...$constraints
-                )
+                ...$constraints
             )
         );
+        $this->queryBuilder->groupBy('g.uid');
     }
 
     private function setPublicProfileConstraint(): void
