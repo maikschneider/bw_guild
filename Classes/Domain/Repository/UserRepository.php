@@ -190,7 +190,7 @@ class UserRepository extends AbstractDemandRepository
                     ->from($columnData[0])
                     ->execute()
                     ->fetchAllAssociativeIndexed();
-                $data[$name] = array_merge($data[$name] ?? [], array_keys($result));
+                $data[$name] = array_merge($data[$name] ?? [], array_filter(array_keys($result)));
             }
         }
 
