@@ -23,7 +23,7 @@ class UserRepository extends AbstractDemandRepository
         $this->setFeGroupConstraint($demand);
     }
 
-    protected function setFeatureConstraint(UserDemand $demand)
+    protected function setFeatureConstraint(UserDemand $demand): void
     {
         if (!$demand->feature) {
             return;
@@ -136,15 +136,6 @@ class UserRepository extends AbstractDemandRepository
             );
 
         return $queryBuilder->execute();
-    }
-
-    /**
-     * Override this constraint since fe_users aren't localized
-     *
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     */
-    protected function setLanguageConstraint(BaseDemand $demand)
-    {
     }
 
     public function addBookmarkForUser(int $userId, string $tableName, int $recordUid)
