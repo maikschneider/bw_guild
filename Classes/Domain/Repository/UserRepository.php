@@ -2,7 +2,6 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
-use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use PDO;
 use TYPO3\CMS\Core\Database\ConnectionPool;
