@@ -4,7 +4,10 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use Blueways\BwGuild\Event\ModifyQueryBuilderEvent;
-use TYPO3\CMS\Core\Database\Connection;
+use Doctrine\DBAL\Connection as ConnectionAlias;
+use Doctrine\DBAL\Result;
+use TYPO3\CMS\Core\Context\Context;
+use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Expression\ExpressionBuilder;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -14,6 +17,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class AbstractDemandRepository extends Repository
@@ -22,41 +26,57 @@ class AbstractDemandRepository extends Repository
 
     protected EventDispatcher $eventDispatcher;
 
+    protected DataMapper $dataMapper;
+
     /**
      * @param \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher
      */
-    public function __construct(ObjectManagerInterface $objectManager, EventDispatcher $eventDispatcher)
-    {
+    public function __construct(
+        ObjectManagerInterface $objectManager,
+        EventDispatcher $eventDispatcher,
+        DataMapper $dataMapper
+    ) {
         parent::__construct($objectManager);
         $this->eventDispatcher = $eventDispatcher;
+        $this->dataMapper = $dataMapper;
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return int
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws \Doctrine\DBAL\DBALException
      */
     public function countDemanded(BaseDemand $demand): int
     {
-        $records = $this->findDemanded($demand);
-        return $records->count();
+        return count($this->findDemanded($demand));
+    }
+
+    /**
+     * @param array<mixed> $resultArray
+     * @return array<mixed>
+     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     */
+    public function mapResultToObjects(array $resultArray): array
+    {
+        return $this->dataMapper->map(
+            $this->dataMapper->getDataMap($this->objectType)->getClassName(),
+            $resultArray
+        );
     }
 
     /**
      * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array<mixed>|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface<\TYPO3\CMS\Extbase\DomainObject\AbstractEntity>
      * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception|\Doctrine\DBAL\DBALException
+     * @throws \Doctrine\DBAL\Driver\Exception
      */
-    public function findDemanded(BaseDemand $demand)
+    public function findDemanded(BaseDemand $demand): QueryResultInterface|array
     {
         $this->createQueryBuilder();
 
         $this->queryBuilder->select('*');
 
-        $dataMapper = $this->objectManager->get(DataMapper::class);
-        $dataMap = $dataMapper->getDataMap($this->objectType);
-
-        if ($dataMap->getTableName() === 'fe_users') {
+        if ($demand::TABLE === 'fe_users') {
             $this->queryBuilder->setParameter('dcValue1', [0]);
         }
 
@@ -69,12 +89,13 @@ class AbstractDemandRepository extends Repository
 
         $this->setConstraints($demand);
 
-        $result = $this->queryBuilder->execute()->fetchAll();
+        $result = $this->queryBuilder->execute();
 
-        return $dataMapper->map(
-            $dataMap->getClassName(),
-            $result
-        );
+        if (!$result instanceof Result) {
+            return [];
+        }
+
+        return $result->fetchAllAssociative();
     }
 
     /**
@@ -85,9 +106,7 @@ class AbstractDemandRepository extends Repository
      */
     private function createQueryBuilder(): void
     {
-        $dataMapper = $this->objectManager->get(DataMapper::class);
-        $dataMap = $dataMapper->getDataMap($this->objectType);
-        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+        $dataMap = $this->dataMapper->getDataMap($this->objectType);
         $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($dataMap->getTableName());
         $qb->from($dataMap->getTableName());
 
@@ -96,12 +115,12 @@ class AbstractDemandRepository extends Repository
             $typeNames = [$dataMap->getRecordType()];
 
             foreach ($dataMap->getSubclasses() as $subclass) {
-                $typeNames[] = $dataMapper->getDataMap($subclass)->getRecordType();
+                $typeNames[] = $this->dataMapper->getDataMap($subclass)->getRecordType();
             }
 
             $typeNameParameter = $qb->createNamedParameter(
                 $typeNames,
-                Connection::PARAM_STR_ARRAY
+                ConnectionAlias::PARAM_STR_ARRAY
             );
             $qb->andWhere($qb->expr()->in($dataMap->getTableName() . '.' . $recordTypeColumnName, $typeNameParameter));
         }
@@ -112,28 +131,25 @@ class AbstractDemandRepository extends Repository
     /**
      * @param BaseDemand $demand
      */
-    protected function setConstraints($demand): void
+    protected function setConstraints(BaseDemand $demand): void
     {
         $this->setSearchFilterConstraints($demand);
         $this->setCategoryConstraints($demand);
         $this->setOrderConstraints($demand);
         $this->setLimitConstraint($demand);
         $this->setGeoCodeConstraint($demand);
-        $this->setRestritions($demand);
-        $this->setLanguageConstraint($demand);
+        $this->setRestrictions();
+        $this->setLanguageConstraint();
     }
 
-    /**
-     * @param BaseDemand $demand
-     */
-    private function setSearchFilterConstraints($demand): void
+    private function setSearchFilterConstraints(BaseDemand $demand): void
     {
-        if (empty($demand->getSearch())) {
+        if (empty($demand->search)) {
             return;
         }
 
         $constraints = [];
-        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->getSearch(), true);
+        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->search, true);
         $searchFields = $demand->getSearchFields();
 
         foreach ($searchSplittedParts as $searchSplittedPart) {
@@ -154,13 +170,10 @@ class AbstractDemandRepository extends Repository
         $this->queryBuilder->andWhere($this->queryBuilder->expr()->andX(...$constraints));
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     */
     private function setCategoryConstraints(BaseDemand $demand): void
     {
-        $categories = $demand->getCategories();
-        $categoryConjunction = $demand->getCategoryConjunction();
+        $categories = $demand->categories;
+        $categoryConjunction = $demand->categoryConjunction;
 
         // abort if no category settings
         if (!count($categories) || !$categoryConjunction) {
@@ -245,39 +258,31 @@ class AbstractDemandRepository extends Repository
         }
 
         // make result distinct
+        // @TODO: Prefix needs to be added here?
         $this->queryBuilder->groupBy('uid');
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     */
     private function setOrderConstraints(BaseDemand $demand): void
     {
-        $orderField = $demand->getOrder() ?: 'crdate';
+        $orderField = $demand->order ?: 'crdate';
         $orderFields = GeneralUtility::trimExplode(',', $orderField, true);
-        $orderDirection = $demand->getOrderDirection() ?: QueryInterface::ORDER_ASCENDING;
+        $orderDirection = $demand->orderDirection ?: QueryInterface::ORDER_ASCENDING;
 
         foreach ($orderFields as $orderField) {
             $this->queryBuilder->addOrderBy($demand::TABLE . '.' . $orderField, $orderDirection);
         }
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     */
     private function setLimitConstraint(BaseDemand $demand): void
     {
-        if ($demand->getLimit() && $demand->getLimit() > 0) {
-            $this->queryBuilder->setMaxResults($demand->getLimit());
+        if ($demand->limit && $demand->limit > 0) {
+            $this->queryBuilder->setMaxResults($demand->limit);
         }
     }
 
-    /**
-     * @param BaseDemand $demand
-     */
-    private function setGeoCodeConstraint($demand): void
+    private function setGeoCodeConstraint(BaseDemand $demand): void
     {
-        if (!$demand->getSearchDistanceAddress()) {
+        if (!$demand->searchDistanceAddress) {
             return;
         }
 
@@ -288,7 +293,7 @@ class AbstractDemandRepository extends Repository
         }
 
         $earthRadius = 6378.1;
-        $maxDistance = $demand->getMaxDistance() ?: 999;
+        $maxDistance = $demand->maxDistance ?: 999;
 
         $distanceSqlCalc = 'ACOS(SIN(RADIANS(' . $this->queryBuilder->quoteIdentifier('latitude') . ')) * SIN(RADIANS(' . $demand->getLatitude() . ')) + COS(RADIANS(' . $this->queryBuilder->quoteIdentifier('latitude') . ')) * COS(RADIANS(' . $demand->getLatitude() . ')) * COS(RADIANS(' . $this->queryBuilder->quoteIdentifier('longitude') . ') - RADIANS(' . $demand->getLongitude() . '))) * ' . $earthRadius;
 
@@ -299,25 +304,20 @@ class AbstractDemandRepository extends Repository
         $this->queryBuilder->orderBy('distance');
     }
 
-    /**
-     * Change DefaultRestrictions to FrontendRestrictions in order to respect fe_group
-     *
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     */
-    private function setRestritions(BaseDemand $demand)
+    private function setRestrictions(): void
     {
         $this->queryBuilder->getRestrictions()
             ->add(GeneralUtility::makeInstance(FrontendGroupRestriction::class));
     }
 
-    /**
-     * @param \Blueways\BwGuild\Domain\Model\Dto\BaseDemand $demand
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
-     */
-    protected function setLanguageConstraint(BaseDemand $demand)
+    protected function setLanguageConstraint(): void
     {
-        $languageAspect = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Context\Context::class)->getAspect('language');
-        $sysLanguageUid = $languageAspect->getId();
+        try {
+            $languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
+            $sysLanguageUid = $languageAspect->getId();
+        } catch (AspectNotFoundException) {
+            $sysLanguageUid = 0;
+        }
 
         $this->queryBuilder->andWhere(
             $this->queryBuilder->expr()->eq(
@@ -327,6 +327,11 @@ class AbstractDemandRepository extends Repository
         );
     }
 
+    /**
+     * @param array<mixed> $settings
+     * @param string $class
+     * @return \Blueways\BwGuild\Domain\Model\Dto\BaseDemand
+     */
     public function createDemandObjectFromSettings(
         array $settings,
         string $class = BaseDemand::class

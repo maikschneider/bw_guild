@@ -112,6 +112,9 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'pagination' => $pagination,
         ]);
 
+        $numberOfResults = count($users);
+        $users = $this->userRepository->mapResultToObjects($paginator->getPaginatedItems());
+
         // get categories by category settings in plugin
         $catConjunction = $this->settings['categoryConjunction'];
         if ($catConjunction === 'or' || $catConjunction === 'and') {
@@ -133,6 +136,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'currentPage' => $currentPage,
             'paginator' => $paginator,
             'pagination' => $pagination,
+            'numberOfResults' => $numberOfResults,
         ]);
 
         return $this->htmlResponse($this->view->render());
