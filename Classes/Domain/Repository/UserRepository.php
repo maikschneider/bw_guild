@@ -78,10 +78,14 @@ class UserRepository extends AbstractDemandRepository
             $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
         }
 
-        $this->queryBuilder->innerJoin($demand::TABLE, 'fe_groups', 'g',
+        $this->queryBuilder->innerJoin(
+            $demand::TABLE,
+            'fe_groups',
+            'g',
             $this->queryBuilder->expr()->andX(
                 $this->queryBuilder->expr()->inSet(
-                    $demand::TABLE . '.usergroup', 'g.uid'
+                    $demand::TABLE . '.usergroup',
+                    'g.uid'
                 ),
                 ...$constraints
             )

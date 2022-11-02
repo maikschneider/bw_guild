@@ -26,5 +26,4 @@ final class ModifyQueryBuilderEvent
     {
         return $this->demand;
     }
-
 }
