@@ -74,7 +74,7 @@ class AbstractDemandRepository extends Repository
     {
         $this->createQueryBuilder();
 
-        $this->queryBuilder->select('*');
+        $this->queryBuilder->select($demand::TABLE . '.*');
 
         if ($demand::TABLE === 'fe_users') {
             $this->queryBuilder->setParameter('dcValue1', [0]);
