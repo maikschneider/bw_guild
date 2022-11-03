@@ -68,18 +68,15 @@ class UserRepository extends AbstractDemandRepository
         $constraints = [];
 
         foreach ($searchSplittedParts as $searchSplittedPart) {
-            $subConstraints = [];
-
             foreach ($searchFields as $cleanProperty) {
                 $searchSplittedPart = trim($searchSplittedPart);
                 if ($searchSplittedPart) {
-                    $subConstraints[] = $this->queryBuilder->expr()->like(
+                    $constraints[] = $this->queryBuilder->expr()->like(
                         'g.' . $cleanProperty,
                         $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
                     );
                 }
             }
-            $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
         }
 
         $this->queryBuilder->innerJoin(
@@ -90,11 +87,17 @@ class UserRepository extends AbstractDemandRepository
                 $this->queryBuilder->expr()->inSet(
                     $demand::TABLE . '.usergroup',
                     'g.uid'
-                ),
+                )
+            )
+        );
+
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->orX(
                 ...$constraints
             )
         );
-        $this->queryBuilder->groupBy('g.uid');
+
+        $this->queryBuilder->groupBy($demand::TABLE . '.uid');
     }
 
     private function setPublicProfileConstraint(): void
