@@ -49,6 +49,8 @@ class UserRepository extends AbstractDemandRepository
             $this->queryBuilder->expr()->eq('f.uid', $this->queryBuilder->quoteIdentifier('mm.uid_local'))
         );
 
+        $this->queryBuilder->groupBy($demand::TABLE . '.uid');
+
         $this->queryBuilder->andWhere(
             $this->queryBuilder->expr()->like(
                 'f.name',
