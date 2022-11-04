@@ -102,7 +102,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $users = $this->userRepository->findDemanded($demand);
 
         // create pagination
-        $itemsPerPage = (int)$this->settings['itemsPerPage'];
+        $itemsPerPage = (int)$this->settings['maxItems'];
         $maximumLinks = (int)$this->settings['maximumLinks'];
         $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
         $paginator = new ArrayPaginator($users, $currentPage, $itemsPerPage);

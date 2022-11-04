@@ -50,7 +50,7 @@ plugin {
       showPid =
       categories =
       limit =
-      maxItems =
+      maxItems = 20
       maximumLinks =
       mode =
       categoryConjunction =
