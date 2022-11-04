@@ -20,15 +20,6 @@ routeEnhancers:
     routes:
       - routePath: '/'
         _controller: 'User::list'
-      - routePath: '/suche/{page}'
-        _controller: 'User::list'
-        _arguments:
-          page: 'currentPage'
-      - routePath: '/suche/{page}/{search}'
-        _controller: 'User::list'
-        _arguments:
-          search: 'demand/search'
-          page: 'currentPage'
       - routePath: '/{localized_edit}'
         _controller: 'User::edit'
       - routePath: '/hello'
