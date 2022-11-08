@@ -4,6 +4,7 @@ namespace Blueways\BwGuild\Domain\Repository;
 
 use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use PDO;
+use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -178,6 +179,8 @@ class UserRepository extends AbstractDemandRepository
     {
         $data = [];
 
+        $languageUid = GeneralUtility::makeInstance(Context::class)->getPropertyFromAspect('language', 'id');
+
         foreach ($autocompleter as $name => $setting) {
             $columns = GeneralUtility::trimExplode(',', $setting);
 
@@ -190,9 +193,17 @@ class UserRepository extends AbstractDemandRepository
 
                 $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($columnData[0]);
 
-                $result = $qb->select($columnData[1])
-                    ->from($columnData[0])
-                    ->execute();
+                $query = $qb->select($columnData[1])
+                    ->from($columnData[0]);
+
+                // read language field
+                if (isset($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'])) {
+                    $query->where(
+                        $qb->expr()->eq($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'], $qb->createNamedParameter($languageUid, \PDO::PARAM_INT))
+                    );
+                }
+
+                $result = $query->execute();
 
                 if (!$result instanceof \Doctrine\DBAL\Result) {
                     continue;
