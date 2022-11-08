@@ -6,6 +6,9 @@ use Blueways\BwGuild\Domain\Model\User;
 
 class Userinfo
 {
+    /**
+     * @var string[]
+     */
     public array $user = [
         'url' => '',
         'username' => '',
@@ -18,15 +21,19 @@ class Userinfo
 
     public string $html = '';
 
+    public int $validUntil = 0;
+
     public function __construct(User $feUser)
     {
         $this->setUserdata($feUser);
+        $expireDate = (new \DateTime('now'))->modify('+2 minutes');
+        $this->validUntil = $expireDate->getTimestamp();
     }
 
     protected function setUserdata(User $feUser): void
     {
         $this->user['username'] = $feUser->getUsername();
-        $this->user['uid'] = $feUser->getUid();
+        $this->user['uid'] = (string)$feUser->getUid();
         $this->user['first_name'] = $feUser->getFirstName();
         $this->user['last_name'] = $feUser->getLastName();
         $this->user['email'] = $feUser->getEmail();
