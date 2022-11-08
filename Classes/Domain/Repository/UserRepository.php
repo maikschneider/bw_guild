@@ -170,7 +170,7 @@ class UserRepository extends AbstractDemandRepository
 
     /**
      * @param array<string, string> $autocompleter
-     * @return array<string, string>
+     * @return array<string, array<mixed>>
      * @throws \Doctrine\DBAL\DBALException
      * @throws \Doctrine\DBAL\Driver\Exception
      */
@@ -192,8 +192,13 @@ class UserRepository extends AbstractDemandRepository
 
                 $result = $qb->select($columnData[1])
                     ->from($columnData[0])
-                    ->execute()
-                    ->fetchAllAssociativeIndexed();
+                    ->execute();
+
+                if (!$result instanceof \Doctrine\DBAL\Result) {
+                    continue;
+                }
+
+                $result = $result->fetchAllAssociativeIndexed();
                 $data[$name] = array_merge($data[$name] ?? [], array_filter(array_keys($result)));
             }
         }
