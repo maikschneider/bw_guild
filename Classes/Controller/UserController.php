@@ -164,7 +164,10 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->view->assign('autocompleter', $autocompleteData);
         }
 
+        $header = $this->configurationManager->getContentObject()?->data['header'] ?? '';
+
         $this->view->assign('demand', $demand);
+        $this->view->assign('header', $header);
 
         return $this->htmlResponse($this->view->render());
     }
