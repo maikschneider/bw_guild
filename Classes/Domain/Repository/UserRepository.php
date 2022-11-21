@@ -193,8 +193,10 @@ class UserRepository extends AbstractDemandRepository
                 // read language field
                 if (isset($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'])) {
                     $query->where(
-                        $qb->expr()->eq($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'],
-                            $qb->createNamedParameter($languageUid, \PDO::PARAM_INT))
+                        $qb->expr()->eq(
+                            $GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'],
+                            $qb->createNamedParameter($languageUid, \PDO::PARAM_INT)
+                        )
                     );
                 }
 
