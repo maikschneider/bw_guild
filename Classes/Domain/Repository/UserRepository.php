@@ -62,24 +62,18 @@ class UserRepository extends AbstractDemandRepository
 
     protected function setFeGroupConstraint(UserDemand $demand): void
     {
-        if (!$demand->feGroup) {
+        if (!$demand->feGroup || !trim($demand->feGroup)) {
             return;
         }
 
-        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->feGroup, true);
         $searchFields = $demand->getFeGroupSearchFields();
         $constraints = [];
 
-        foreach ($searchSplittedParts as $searchSplittedPart) {
-            foreach ($searchFields as $cleanProperty) {
-                $searchSplittedPart = trim($searchSplittedPart);
-                if ($searchSplittedPart) {
-                    $constraints[] = $this->queryBuilder->expr()->like(
-                        'g.' . $cleanProperty,
-                        $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
-                    );
-                }
-            }
+        foreach ($searchFields as $cleanProperty) {
+            $constraints[] = $this->queryBuilder->expr()->like(
+                'g.' . $cleanProperty,
+                $this->queryBuilder->createNamedParameter('%' . trim($demand->feGroup) . '%')
+            );
         }
 
         $this->queryBuilder->innerJoin(
@@ -199,7 +193,8 @@ class UserRepository extends AbstractDemandRepository
                 // read language field
                 if (isset($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'])) {
                     $query->where(
-                        $qb->expr()->eq($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'], $qb->createNamedParameter($languageUid, \PDO::PARAM_INT))
+                        $qb->expr()->eq($GLOBALS['TCA'][$columnData[0]]['ctrl']['languageField'],
+                            $qb->createNamedParameter($languageUid, \PDO::PARAM_INT))
                     );
                 }
 
