@@ -6,10 +6,12 @@ use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
+use Blueways\BwGuild\Event\UserEditFormEvent;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\RelationHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
@@ -108,6 +110,7 @@ class ApiController extends ActionController
             return $this->responseFactory->createResponse(403, '');
         }
 
+        /** @var FrontendUser $user */
         $user = $this->userRepository->findByUid($userId);
         $features = $this->featureRepository->findAll();
         $groupedJsonFeatures = $this->featureRepository->getFeaturesAsJsonGroupedByRecordType();
@@ -115,6 +118,13 @@ class ApiController extends ActionController
         $this->view->assign('user', $user);
         $this->view->assign('features', $features);
         $this->view->assign('groupedJsonFeatures', $groupedJsonFeatures);
+
+        /** @var UserEditFormEvent $event */
+        $event = $this->eventDispatcher->dispatch(
+            new UserEditFormEvent($user)
+        );
+        $this->view->assignMultiple($event->getAdditionalViewData());
+
         $html = $this->view->render();
         $response = ['html' => $html];
 
