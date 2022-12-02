@@ -11,14 +11,9 @@
 			enctype="multipart/form-data"
 			pageType="1657523819">
 
-		<f:form.select class="d-none"
-					   property="features"
-					   multiple="1"
-					   options="{features}"
-					   optionLabelField="name"/>
+		<f:form.select class="d-none" property="features" multiple="1" options="{features}" optionLabelField="name"/>
 
 		<a href="#" class="d-none button button--secondary" data-feature="###JS_TEMPLATE###">
-			<span></span>
 			<f:render partial="Icon" arguments="{icon: 'close', size: 'xs'}"/>
 		</a>
 
@@ -59,11 +54,33 @@
 			</div>
 		</fieldset>
 
-		<f:render section="FeatureFieldset" arguments="{recordType: 0, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
+		<fieldset>
+			<div class="form-group form-group--inline">
+				<label for="memberSince"><span class="icon"><f:render partial="Icon" arguments="{icon: 'calendar'}"/></span> Im DKFZ seit</label>
+				<div class="form-element">
+					<f:form.textfield id="memberSince" property="memberSince" type="date" />
+				</div>
+			</div>
+		</fieldset>
 
-		<f:render section="FeatureFieldset" arguments="{recordType: 1, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
+		<fieldset>
+			<div class="form-group form-group--inline">
+				<label for="representative"><span class="icon"><f:render partial="Icon" arguments="{icon: 'user-plus'}"/></span> Vertreter</label>
+				<div class="form-element">
+					<f:form.hidden id="representativeHiddenInput" property="representative" />
+					<input data-autocomplete="{representatives->f:format.json()}" type="text" class="autocomplete" id="representative" value="{user.representative.displayName}" />
+				</div>
+			</div>
+		</fieldset>
 
-		<f:render section="FeatureFieldset" arguments="{recordType: 2, groupedJsonFeatures:groupedJsonFeatures, user:user}" />
+		<f:render section="FeatureFieldset"
+				  arguments="{recordType: 0, groupedJsonFeatures:groupedJsonFeatures, user:user}"/>
+
+		<f:render section="FeatureFieldset"
+				  arguments="{recordType: 1, groupedJsonFeatures:groupedJsonFeatures, user:user}"/>
+
+		<f:render section="FeatureFieldset"
+				  arguments="{recordType: 2, groupedJsonFeatures:groupedJsonFeatures, user:user}"/>
 
 		<fieldset>
 			<div class="button-group">
@@ -121,13 +138,17 @@
 
 	<f:section name="FeatureFieldset">
 		<fieldset>
-			<label class="h5" for="feature-{recordType}">{f:translate(key: 'userEditForm.feature-{recordType}-headline', extensionName: 'XmDkfzNetSite')}</label>
+			<label class="h5" for="feature-{recordType}">{f:translate(key: 'userEditForm.feature-{recordType}-headline',
+				extensionName: 'XmDkfzNetSite')}</label>
 			<div class="form-group">
 				<div class="form-element"
 					 data-record-type="{recordType}"
 					 data-all-features="{groupedJsonFeatures.{recordType}}"
 					 data-selected-features="{user.featuresAsJsonGroupedByRecordType.{recordType}}">
-					<input type="text" autocomplete="off" placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}" id="feature-{recordType}"/>
+					<input type="text"
+						   autocomplete="off"
+						   placeholder="{f:translate(key: 'userEditForm.feature-2-placeholder', extensionName: 'XmDkfzNetSite')}"
+						   id="feature-{recordType}"/>
 
 					<ul class="list list--inline">
 						<f:for each="{user.featuresGroupedByRecordType.{recordType}}" as="feature">
