@@ -38,5 +38,4 @@ final class UserEditFormEvent
     {
         $this->additionalViewData = $additionalViewData;
     }
-
 }
