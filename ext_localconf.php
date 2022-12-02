@@ -99,3 +99,13 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('ke_search')) {
     $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['ke_search']['customIndexer'][] =
         \Blueways\BwGuild\Hooks\OfferIndexer::class;
 }
+
+// Register Extbase Controller Argument override to change the dataType
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\TYPO3\CMS\Extbase\Mvc\Controller\Argument::class] = [
+    'className' => Blueways\BwGuild\Extbase\Controller\Argument::class,
+];
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\Container\Container::class)
+    ->registerImplementation(
+        TYPO3\CMS\Extbase\Mvc\Controller\Argument::class,
+        \Blueways\BwGuild\Extbase\Controller\Argument::class
+    );

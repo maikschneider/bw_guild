@@ -10,6 +10,7 @@ use Blueways\BwGuild\Event\UserEditFormEvent;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\RelationHandler;
+use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
@@ -139,6 +140,9 @@ class ApiController extends ActionController
         if ($isLogoDelete || $isEmptyLogoUpdate) {
             $this->ignoreLogoArgumentInUpdate();
         }
+
+        $userModelName = ClassNamingUtility::translateRepositoryNameToModelName($this->userRepository::class);
+        $this->arguments->getArgument('user')->setDataType($userModelName);
 
         $propertyMappingConfiguration = $this->arguments->getArgument('user')->getPropertyMappingConfiguration();
         $propertyMappingConfiguration->allowAllProperties();
