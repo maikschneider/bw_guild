@@ -115,6 +115,19 @@
 			</div>
 		</fieldset>
 
+		<fieldset>
+			<label class="h5" for="about">
+				<f:translate extensionName="XmDkfzNetSite" key="user.about"/>
+			</label>
+			<div class="form-group">
+				<div class="form-element">
+					<f:form.textarea id="about" property="about" placeholder="{f:translate(extensionName:'XmDkfzNetSite', key:'user.about.description')}">
+
+					</f:form.textarea>
+				</div>
+			</div>
+		</fieldset>
+
 		<f:render section="FeatureFieldset"
 				  arguments="{recordType: 0, groupedJsonFeatures:groupedJsonFeatures, user:user}"/>
 
@@ -134,47 +147,6 @@
 				</button>
 			</div>
 		</fieldset>
-
-		<f:comment>
-			<div class="form__item">
-				<label> Firmenname
-					<f:form.textfield property="company"/>
-				</label>
-			</div>
-			<div class="form__item">
-				<label> Anschrift
-					<f:form.textfield property="address"/>
-				</label>
-			</div>
-			<div class="form__item form__item--2">
-				<label> PLZ
-					<f:form.textfield property="zip"/>
-				</label> <label> Stadt
-				<f:form.textfield property="city"/>
-			</label>
-			</div>
-			<div class="form__item">
-				<label> Telefon
-					<f:form.textfield property="telephone"/>
-				</label>
-			</div>
-			<div class="form__item">
-				<label> Email
-					<f:form.textfield property="email"/>
-				</label>
-			</div>
-			<div class="form__item">
-				<label id="publicProfile"> Öffentliches Profil
-					<f:form.checkbox property="publicProfile" id="publicProfile" value="1"/>
-				</label>
-			</div>
-			<div class="form__item form__item--submit">
-				<button type="submit" class="button hollow">
-					<span class="icon-save"></span>
-					Speichern
-				</button>
-			</div>
-		</f:comment>
 	</f:form>
 
 
