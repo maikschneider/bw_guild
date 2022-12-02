@@ -56,28 +56,61 @@
 
 		<fieldset>
 			<div class="form-group form-group--inline">
-				<label for="memberSince"><span class="icon"><f:render partial="Icon" arguments="{icon: 'calendar'}"/></span> <f:translate extensionName="XmDkfzNetSite" key="user.member_since"/></label>
+				<label for="memberSince">
+					<span class="icon">
+						<f:render partial="Icon" arguments="{icon: 'calendar'}"/>
+					</span>
+					<f:translate extensionName="XmDkfzNetSite" key="user.member_since"/>
+				</label>
 				<div class="form-element">
-					<f:form.textfield id="memberSince" property="memberSince" type="date" />
+					<f:form.textfield id="memberSince" property="memberSince" type="date"/>
 				</div>
 			</div>
 		</fieldset>
 
 		<fieldset>
 			<div class="form-group form-group--inline">
-				<label for="representative"><span class="icon"><f:render partial="Icon" arguments="{icon: 'user-plus'}"/></span> <f:translate extensionName="XmDkfzNetSite" key="user.representative"/></label>
+				<label for="representative">
+					<span class="icon">
+						<f:render partial="Icon" arguments="{icon: 'user-plus'}"/>
+					</span>
+					<f:translate extensionName="XmDkfzNetSite" key="user.representative"/>
+				</label>
 				<div class="form-element">
-					<f:form.hidden id="representativeHiddenInput" property="representative" />
-					<input data-autocomplete="{representatives->f:format.json()}" type="text" class="autocomplete" id="representative" value="{user.representative.displayName}" />
+					<f:form.hidden id="representativeHiddenInput" property="representative"/>
+					<input data-autocomplete="{representatives->f:format.json()}"
+						   type="text"
+						   class="autocomplete"
+						   id="representative"
+						   value="{user.representative.displayName}"/>
 				</div>
 			</div>
 		</fieldset>
 
 		<fieldset>
 			<div class="form-group form-group--inline">
-				<label for="responsibilities"><span class="icon"><f:render partial="Icon" arguments="{icon: 'clipboard'}"/></span> <f:translate extensionName="XmDkfzNetSite" key="user.responsibilities"/></label>
+				<label for="responsibilities">
+					<span class="icon">
+						<f:render partial="Icon" arguments="{icon: 'clipboard'}"/>
+					</span>
+					<f:translate extensionName="XmDkfzNetSite" key="user.responsibilities"/>
+				</label>
 				<div class="form-element">
-					<f:form.textarea id="responsibilities" property="responsibilities" />
+					<f:form.textarea id="responsibilities" property="responsibilities"/>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="form-group form-group--inline">
+				<label class="h5" for="user-committee">
+					<f:translate extensionName="XmDkfzNetSite" key="user.committee"/>
+				</label>
+				<div class="form-element">
+					<label for="user-committee">Mitglied im</label>
+					<f:form.select id="user-committee" property="committee" options="{committees}">
+						<f:form.select.option value="0"></f:form.select.option>
+					</f:form.select>
 				</div>
 			</div>
 		</fieldset>
