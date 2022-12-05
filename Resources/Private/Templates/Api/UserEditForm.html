@@ -51,7 +51,7 @@
 					<f:translate extensionName="XmDkfzNetSite" key="user.member_since"/>
 				</label>
 				<div class="form-element">
-					<f:form.textfield id="memberSince" property="memberSince" type="date"/>
+					<f:form.textfield id="memberSince" property="memberSince" value="{user.memberSince->f:format.date(format:'Y-m-d')}" type="date"/>
 				</div>
 			</div>
 		</fieldset>

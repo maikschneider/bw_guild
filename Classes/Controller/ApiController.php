@@ -6,6 +6,7 @@ use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
+use Blueways\BwGuild\Event\InitializeUserUpdateEvent;
 use Blueways\BwGuild\Event\UserEditFormEvent;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
@@ -156,6 +157,8 @@ class ApiController extends ActionController
             PersistentObjectConverter::CONFIGURATION_CREATION_ALLOWED,
             true
         );
+
+        $this->eventDispatcher->dispatch(new InitializeUserUpdateEvent($propertyMappingConfiguration));
     }
 
     protected function ignoreLogoArgumentInUpdate(): void
@@ -188,4 +191,5 @@ class ApiController extends ActionController
 
         return new ForwardResponse('userEditForm');
     }
+
 }
