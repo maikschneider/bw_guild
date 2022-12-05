@@ -27,9 +27,9 @@
 					<f:render partial="UserImage" arguments="{user: user}" />
 				</div>
 				<div class="form-element">
-					<p class="m-b-0"><strong>Mindestgröße:</strong> 1280x720 px (HD)</p>
-					<p class="m-b-0"><strong>Dateiformat:</strong> JPG, PNG, GIF</p>
-					<p><strong>Max. Dateigröße:</strong> 5 MB</p>
+					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.aspectRatio', extensionName: 'XmDkfzNetSite')}:</strong> {f:translate(key: 'userEditForm.logo.aspectRatio.square', extensionName: 'XmDkfzNetSite')}</p>
+					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.minSize', extensionName: 'XmDkfzNetSite')}:</strong> 1280x720 px (HD)</p>
+					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName: 'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
 					<f:comment>
 						<f:if condition="{user.logo}">
@@ -94,11 +94,26 @@
 				<label class="h5" for="user-committee">
 					<f:translate extensionName="XmDkfzNetSite" key="user.committee"/>
 				</label>
-				<div class="form-element">
+				<div class="form-element hide-siblings {f:if(condition: user.committee, then: 'active')}">
 					<label for="user-committee">Mitglied im</label>
 					<f:form.select id="user-committee" property="committee" options="{committees}">
 						<f:form.select.option value="0"></f:form.select.option>
 					</f:form.select>
+				</div>
+
+				<div class="form-element">
+					<label for="user-committee-responsibilities"><f:translate extensionName="XmDkfzNetSite" key="user.committee_responsibilities"/></label>
+					<f:form.textarea id="user-committee-responsibilities" property="committeeResponsibilities"/>
+				</div>
+
+				<div class="form-element">
+					<label for="user-committee-representative"><f:translate extensionName="XmDkfzNetSite" key="user.committee_representative"/></label>
+					<f:form.hidden id="committeeRepresentativeHiddenInput" property="committeeRepresentative"/>
+					<input data-autocomplete="{representatives->f:format.json()}"
+						   type="text"
+						   class="autocomplete"
+						   id="user-committee-representative"
+						   value="{user.committeeRepresentative.displayName}"/>
 				</div>
 			</div>
 		</fieldset>
