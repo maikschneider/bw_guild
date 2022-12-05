@@ -22,8 +22,8 @@
 
 		<fieldset>
 			<h5>{f:translate(key: 'userEditForm.profilePicture', extensionName: 'XmDkfzNetSite')}</h5>
-			<div class="form-group">
-				<div class="form-element">
+			<div class="form-group form-group--inline">
+				<div>
 					<figure class="">
 						<f:if condition="{user.logo}">
 							<picture>
@@ -33,7 +33,6 @@
 										type="image/jpeg">
 								<img src="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
 									 alt="{file.originalResource.alternative}"
-									 class="picture__image image--responsive"
 									 loading="lazy"/>
 							</picture>
 						</f:if>
@@ -44,13 +43,18 @@
 						</f:if>
 					</figure>
 				</div>
-				<div>
+				<div class="form-element">
+					<p class="m-b-0"><strong>Mindestgröße:</strong> 1280x720 px (HD)</p>
+					<p class="m-b-0"><strong>Dateiformat:</strong> JPG, PNG, GIF</p>
+					<p><strong>Max. Dateigröße:</strong> 5 MB</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
-					<f:if condition="{user.logo}">
-						<label>Delete Logo
-							<f:form.checkbox value="1" name="deleteLogo"/>
-						</label>
-					</f:if>
+					<f:comment>
+						<f:if condition="{user.logo}">
+							<label>Delete Logo
+								<f:form.checkbox value="1" name="deleteLogo"/>
+							</label>
+						</f:if>
+					</f:comment>
 				</div>
 			</div>
 		</fieldset>
@@ -122,7 +126,9 @@
 			</label>
 			<div class="form-group">
 				<div class="form-element">
-					<f:form.textarea id="about" property="about" placeholder="{f:translate(extensionName:'XmDkfzNetSite', key:'user.about.description')}">
+					<f:form.textarea id="about"
+									 property="about"
+									 placeholder="{f:translate(extensionName:'XmDkfzNetSite', key:'user.about.description')}">
 
 					</f:form.textarea>
 				</div>
