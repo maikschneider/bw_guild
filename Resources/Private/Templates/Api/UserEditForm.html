@@ -24,24 +24,7 @@
 			<h5>{f:translate(key: 'userEditForm.profilePicture', extensionName: 'XmDkfzNetSite')}</h5>
 			<div class="form-group form-group--inline">
 				<div>
-					<figure class="">
-						<f:if condition="{user.logo}">
-							<picture>
-								<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'webp')}"
-										type="image/webp">
-								<source srcset="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
-										type="image/jpeg">
-								<img src="{f:uri.image(image:user.logo, width:'150', fileExtension: 'jpg')}"
-									 alt="{file.originalResource.alternative}"
-									 loading="lazy"/>
-							</picture>
-						</f:if>
-						<f:if condition="!{user.logo}">
-							<img width="150"
-								 src="{f:uri.resource(path: 'EXT:xm_dkfz_net_site/Resources/Public/Images/frontend_user_default.svg')}"
-								 alt="{f:translate(key: 'noProfilePicture', extensionName: 'XmDkfzNetSite')}"/>
-						</f:if>
-					</figure>
+					<f:render partial="UserImage" arguments="{user: user}" />
 				</div>
 				<div class="form-element">
 					<p class="m-b-0"><strong>Mindestgröße:</strong> 1280x720 px (HD)</p>
