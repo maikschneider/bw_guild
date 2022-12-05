@@ -191,5 +191,4 @@ class ApiController extends ActionController
 
         return new ForwardResponse('userEditForm');
     }
-
 }
