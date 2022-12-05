@@ -95,7 +95,7 @@
 					<f:translate extensionName="XmDkfzNetSite" key="user.committee"/>
 				</label>
 				<div class="form-element hide-siblings {f:if(condition: user.committee, then: 'active')}">
-					<label for="user-committee">Mitglied im</label>
+					<label for="user-committee"><f:translate extensionName="XmDkfzNetSite" key="user.committee.memberIn"/></label>
 					<f:form.select id="user-committee" property="committee" options="{committees}">
 						<f:form.select.option value="0"></f:form.select.option>
 					</f:form.select>
