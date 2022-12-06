@@ -24,12 +24,16 @@
 			<h5>{f:translate(key: 'userEditForm.profilePicture', extensionName: 'XmDkfzNetSite')}</h5>
 			<div class="form-group form-group--inline">
 				<div>
-					<f:render partial="UserImage" arguments="{user: user}" />
+					<f:render partial="UserImage" arguments="{user: user}"/>
 				</div>
 				<div class="form-element">
-					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.aspectRatio', extensionName: 'XmDkfzNetSite')}:</strong> {f:translate(key: 'userEditForm.logo.aspectRatio.square', extensionName: 'XmDkfzNetSite')}</p>
-					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.minSize', extensionName: 'XmDkfzNetSite')}:</strong> 1280x720 px (HD)</p>
-					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName: 'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
+					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.aspectRatio', extensionName:
+						'XmDkfzNetSite')}:</strong> {f:translate(key: 'userEditForm.logo.aspectRatio.square',
+						extensionName: 'XmDkfzNetSite')}</p>
+					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.minSize', extensionName:
+						'XmDkfzNetSite')}:</strong> 1280x720 px (HD)</p>
+					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName:
+						'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
 					<f:comment>
 						<f:if condition="{user.logo}">
@@ -51,7 +55,10 @@
 					<f:translate extensionName="XmDkfzNetSite" key="user.member_since"/>
 				</label>
 				<div class="form-element">
-					<f:form.textfield id="memberSince" property="memberSince" value="{user.memberSince->f:format.date(format:'Y-m-d')}" type="date"/>
+					<f:form.textfield id="memberSince"
+									  property="memberSince"
+									  value="{user.memberSince->f:format.date(format:'Y-m-d')}"
+									  type="date"/>
 				</div>
 			</div>
 		</fieldset>
@@ -69,8 +76,12 @@
 					<input data-autocomplete="{representatives->f:format.json()}"
 						   type="text"
 						   class="autocomplete"
+						   placeholder=" "
 						   id="representative"
 						   value="{user.representative.displayName}"/>
+					<a href="#" data-clear-inputs="#representative, #representativeHiddenInput">
+						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
+					</a>
 				</div>
 			</div>
 		</fieldset>
@@ -95,25 +106,35 @@
 					<f:translate extensionName="XmDkfzNetSite" key="user.committee"/>
 				</label>
 				<div class="form-element hide-siblings {f:if(condition: user.committee, then: 'active')}">
-					<label for="user-committee"><f:translate extensionName="XmDkfzNetSite" key="user.committee.memberIn"/></label>
+					<label for="user-committee">
+						<f:translate extensionName="XmDkfzNetSite" key="user.committee.memberIn"/>
+					</label>
 					<f:form.select id="user-committee" property="committee" options="{committees}">
 						<f:form.select.option value=""></f:form.select.option>
 					</f:form.select>
 				</div>
 
 				<div class="form-element">
-					<label for="user-committee-responsibilities"><f:translate extensionName="XmDkfzNetSite" key="user.committee_responsibilities"/></label>
+					<label for="user-committee-responsibilities">
+						<f:translate extensionName="XmDkfzNetSite" key="user.committee_responsibilities"/>
+					</label>
 					<f:form.textarea id="user-committee-responsibilities" property="committeeResponsibilities"/>
 				</div>
 
 				<div class="form-element">
-					<label for="user-committee-representative"><f:translate extensionName="XmDkfzNetSite" key="user.committee_representative"/></label>
+					<label for="user-committee-representative">
+						<f:translate extensionName="XmDkfzNetSite" key="user.committee_representative"/>
+					</label>
 					<f:form.hidden id="committeeRepresentativeHiddenInput" property="committeeRepresentative"/>
 					<input data-autocomplete="{representatives->f:format.json()}"
 						   type="text"
 						   class="autocomplete"
+						   placeholder=" "
 						   id="user-committee-representative"
 						   value="{user.committeeRepresentative.displayName}"/>
+					<a href="#" data-clear-inputs="#user-committee-representative, #committeeRepresentativeHiddenInput">
+						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
+					</a>
 				</div>
 			</div>
 		</fieldset>
