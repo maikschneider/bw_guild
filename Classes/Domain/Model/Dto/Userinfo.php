@@ -43,7 +43,7 @@ class Userinfo
     {
         $tableFieldsToKeep = [
             'pages' => ['uid', 'title'],
-            'fe_users' => ['uid', 'username', 'first_name', 'last'],
+            'fe_users' => ['uid', 'username', 'first_name', 'last_name'],
             'tx_news_domain_model_news' => ['uid', 'title'],
         ];
 

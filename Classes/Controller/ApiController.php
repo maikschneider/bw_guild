@@ -8,6 +8,7 @@ use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Event\InitializeUserUpdateEvent;
 use Blueways\BwGuild\Event\UserEditFormEvent;
+use Blueways\BwGuild\Event\UserInfoApiEvent;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Database\RelationHandler;
@@ -79,8 +80,10 @@ class ApiController extends ActionController
             $userinfo->user['url'] = $url;
         }
 
+        $this->eventDispatcher->dispatch(new UserInfoApiEvent($userinfo));
+
         $this->view->assign('user', $userinfo->user);
-        $this->view->assign('bookmarks', $bookmarks);
+        $this->view->assign('bookmarks', $userinfo->bookmarks);
         $html = $this->view->render();
         $userinfo->html = $html;
 
