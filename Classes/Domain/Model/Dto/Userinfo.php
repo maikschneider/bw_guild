@@ -23,6 +23,12 @@ class Userinfo
 
     public int $validUntil = 0;
 
+    public array $bookmarkFieldsToKeep = [
+        'pages' => ['uid', 'title'],
+        'fe_users' => ['uid', 'username', 'first_name', 'last_name'],
+        'tx_news_domain_model_news' => ['uid', 'title'],
+    ];
+
     public function __construct(User $feUser)
     {
         $this->setUserdata($feUser);
@@ -39,20 +45,14 @@ class Userinfo
         $this->user['email'] = $feUser->getEmail();
     }
 
-    public function setBookmarkOutput(array $relationHandlerResult): void
+    public function cleanBookmarkFields(): void
     {
-        $tableFieldsToKeep = [
-            'pages' => ['uid', 'title'],
-            'fe_users' => ['uid', 'username', 'first_name', 'last_name'],
-            'tx_news_domain_model_news' => ['uid', 'title'],
-        ];
-
-        foreach ($relationHandlerResult as $tableName => &$records) {
-            if (!isset($tableFieldsToKeep[$tableName])) {
+        foreach ($this->bookmarks as $tableName => &$records) {
+            if (!isset($this->bookmarkFieldsToKeep[$tableName])) {
                 continue;
             }
 
-            $fieldConfig = $tableFieldsToKeep[$tableName];
+            $fieldConfig = $this->bookmarkFieldsToKeep[$tableName];
             $records = array_map(function ($record) use ($fieldConfig) {
                 return array_filter($record, function ($key) use ($fieldConfig) {
                     return in_array($key, $fieldConfig);
@@ -60,6 +60,6 @@ class Userinfo
             }, $records);
         }
 
-        $this->bookmarks = $relationHandlerResult;
+        unset($this->bookmarkFieldsToKeep);
     }
 }
