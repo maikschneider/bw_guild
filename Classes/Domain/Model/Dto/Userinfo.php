@@ -27,6 +27,7 @@ class Userinfo
         'pages' => ['uid', 'title'],
         'fe_users' => ['uid', 'username', 'first_name', 'last_name'],
         'tx_news_domain_model_news' => ['uid', 'title'],
+        'sys_file' => ['uid', 'extension', 'name']
     ];
 
     public function __construct(User $feUser)
