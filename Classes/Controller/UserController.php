@@ -9,6 +9,7 @@ use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
 use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory;
 use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Http\NullResponse;
@@ -33,14 +34,18 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     protected AccessControlService $accessControlService;
 
+    protected CacheManager $cacheManager;
+
     public function __construct(
         UserRepository $userRepository,
         CategoryRepository $categoryRepository,
-        AccessControlService $accessControlService
+        AccessControlService $accessControlService,
+        CacheManager $cacheManager
     ) {
         $this->userRepository = $userRepository;
         $this->categoryRepository = $categoryRepository;
         $this->accessControlService = $accessControlService;
+        $this->cacheManager = $cacheManager;
     }
 
     public function initializeAction(): void
@@ -181,6 +186,20 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             throw new PageNotFoundException('Profile not found', 1666954785);
         }
 
+        // Add cache tag
+        if (!empty($GLOBALS['TSFE']) && is_object($GLOBALS['TSFE'])) {
+            static $cacheTagsSet = false;
+            $typoScriptFrontendController = $GLOBALS['TSFE'];
+            if (!$cacheTagsSet) {
+                $typoScriptFrontendController->addCacheTags(['fe_users_' . $user->getUid()]);
+                $cacheTagsSet = true;
+            }
+        }
+
+        /** @var $cacheManager \TYPO3\CMS\Core\Cache\CacheManager */
+        $cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+        $cacheManager->getCache('cache_pages')->flushByTag('tx_yourextension');
+
         $schema = $user->getJsonSchema($this->settings);
 
         if (isset($schema['logo'])) {
@@ -284,6 +303,9 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         $user->geoCodeAddress();
         $this->userRepository->update($user);
+
+        // clear page cache by tag
+        $this->cacheManager->flushCachesByTag('fe_users_' . $user->getUid());
 
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
