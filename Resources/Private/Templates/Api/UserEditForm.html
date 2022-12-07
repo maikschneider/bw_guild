@@ -2,12 +2,15 @@
 
 <f:spaceless>
 
+	<f:variable name="userProfileUrl">{f:uri.action(action:'show', pluginName: 'Usershow', controller:'User', pageUid:settings.showPid, arguments:'{user: user.uid}')}</f:variable>
+
 	<f:form class="userprofile"
 			controller="Api"
 			action="userEditUpdate"
 			object="{user}"
 			name="user"
 			method="POST"
+			additionalAttributes="{data-profile-url: userProfileUrl}"
 			enctype="multipart/form-data"
 			pageType="1657523819">
 
