@@ -196,10 +196,6 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             }
         }
 
-        /** @var $cacheManager \TYPO3\CMS\Core\Cache\CacheManager */
-        $cacheManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
-        $cacheManager->getCache('cache_pages')->flushByTag('tx_yourextension');
-
         $schema = $user->getJsonSchema($this->settings);
 
         if (isset($schema['logo'])) {
@@ -300,6 +296,9 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         if (isset($userArguments['logo']) && $user->getLogo()) {
             $this->userRepository->deleteAllUserLogos($user->getUid());
         }
+
+        // clear page cache by tag
+        $this->cacheManager->flushCachesByTag('fe_users_' . $user->getUid());
 
         $user->geoCodeAddress();
         $this->userRepository->update($user);

@@ -11,6 +11,7 @@ use Blueways\BwGuild\Event\UserEditFormEvent;
 use Blueways\BwGuild\Event\UserInfoApiEvent;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\RelationHandler;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -27,14 +28,18 @@ class ApiController extends ActionController
 
     protected AbstractUserFeatureRepository $featureRepository;
 
+    protected CacheManager $cacheManager;
+
     public function __construct(
         AccessControlService $accessControlService,
         UserRepository $userRepository,
-        AbstractUserFeatureRepository $featureRepository
+        AbstractUserFeatureRepository $featureRepository,
+        CacheManager $cacheManager
     ) {
         $this->accessControlService = $accessControlService;
         $this->userRepository = $userRepository;
         $this->featureRepository = $featureRepository;
+        $this->cacheManager = $cacheManager;
     }
 
     public function userinfoAction(): ResponseInterface
@@ -191,6 +196,9 @@ class ApiController extends ActionController
 
         $user->geoCodeAddress();
         $this->userRepository->update($user);
+
+        // clear page cache by tag
+        $this->cacheManager->flushCachesByTag('fe_users_' . $user->getUid());
 
         return new ForwardResponse('userEditForm');
     }
