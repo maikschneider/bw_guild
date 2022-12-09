@@ -1,5 +1,6 @@
 <?php
 
+use TYPO3\CMS\Core\Resource\AbstractFile;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 defined('TYPO3_MODE') || die();
@@ -150,6 +151,13 @@ call_user_func(function () {
                         'fieldname' => 'logo',
                         'tablenames' => 'fe_users',
                         'table_local' => 'sys_file',
+                    ],
+                    'overrideChildTca' => [
+                        'types' => [
+                            AbstractFile::FILETYPE_IMAGE => [
+                                'showitem' => '--palette--;;imageoverlayPalette, --palette--;;filePalette',
+                            ],
+                        ],
                     ],
                 ],
                 $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
