@@ -7,6 +7,7 @@ use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
@@ -21,11 +22,12 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  */
 class OfferController extends ActionController
 {
-    protected OfferRepository $offerRepository;
-
-    protected UserRepository $userRepository;
-
-    protected AccessControlService $accessControlService;
+    public function __construct(
+        protected OfferRepository $offerRepository,
+        protected UserRepository $userRepository,
+        protected AccessControlService $accessControlService
+    ) {
+    }
 
     public function listAction(): ResponseInterface
     {
@@ -36,7 +38,7 @@ class OfferController extends ActionController
             $demand->overrideFromRequest($this->request->getArgument('demand'));
         }
 
-        /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
+        /** @var OfferRepository $repository */
         $repository = GeneralUtility::makeInstance($this->settings['record_type']);
 
         $offers = $repository->findDemanded($demand);
@@ -55,7 +57,7 @@ class OfferController extends ActionController
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
-        /** @var \Blueways\BwGuild\Domain\Repository\OfferRepository $repository */
+        /** @var OfferRepository $repository */
         $repository = $this->objectManager->get($this->settings['record_type']);
 
         $offers = $repository->findDemanded($demand);
@@ -63,7 +65,7 @@ class OfferController extends ActionController
         $this->view->assign('offers', $offers);
     }
 
-    public function showAction(Offer $offer)
+    public function showAction(Offer $offer): ResponseInterface
     {
         $configurationManager = $this->objectManager->get(ConfigurationManager::class);
         $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
@@ -73,7 +75,7 @@ class OfferController extends ActionController
         if ((int)$typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['enable']) {
             $json = json_encode($schema);
             $jsCode = '<script type="application/ld+json">' . $json . '</script>';
-            $this->response->addAdditionalHeaderData($jsCode);
+            //$this->response->addAdditionalHeaderData($jsCode);
         }
 
         $GLOBALS['TSFE']->page['title'] = $schema['title'];
@@ -84,6 +86,7 @@ class OfferController extends ActionController
         $metaTagManager->getManagerForProperty('og:description')->addProperty('og:description', $schema['description']);
 
         $this->view->assign('offer', $offer);
+        return $this->htmlResponse();
     }
 
     public function editAction(Offer $offer = null)
