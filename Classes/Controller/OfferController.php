@@ -7,7 +7,6 @@ use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Localization\LanguageService;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
