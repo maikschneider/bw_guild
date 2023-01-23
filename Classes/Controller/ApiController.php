@@ -13,12 +13,16 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\RelationHandler;
+use TYPO3\CMS\Core\Resource\FileReference;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\ResourceStorage;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
+use TYPO3\CMS\Extbase\Service\ImageService;
 
 class ApiController extends ActionController
 {
@@ -82,6 +86,16 @@ class ApiController extends ActionController
                     'Usershow'
                 );
             $userinfo->user['url'] = $url;
+        }
+
+        if ($user->getLogo()) {
+            try {
+                $imageService = GeneralUtility::makeInstance(ImageService::class);
+                $image = $imageService->getImage('', $user->getLogo(), true);
+                $processedImage = $imageService->applyProcessingInstructions($image, ['width' => 75, 'height' => 75]);
+                $userinfo->user['logo'] = $processedImage->getPublicUrl();
+            } catch (\Exception) {
+            }
         }
 
         $this->eventDispatcher->dispatch(new UserInfoApiEvent($userinfo));
