@@ -9,6 +9,6 @@ call_user_func(function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         'bw_guild',
         'Configuration/TypoScript',
-        'Bw Guild Tempalte'
+        'Bw Guild Template'
     );
 });
