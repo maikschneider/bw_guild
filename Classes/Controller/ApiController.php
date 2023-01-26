@@ -89,7 +89,7 @@ class ApiController extends ActionController
             try {
                 $imageService = GeneralUtility::makeInstance(ImageService::class);
                 $image = $imageService->getImage('', $user->getLogo(), true);
-                $processedImage = $imageService->applyProcessingInstructions($image, ['width' => 75, 'height' => 75]);
+                $processedImage = $imageService->applyProcessingInstructions($image, ['width' => '75c', 'height' => '75c']);
                 $userinfo->user['logo'] = $processedImage->getPublicUrl();
             } catch (\Exception) {
             }
