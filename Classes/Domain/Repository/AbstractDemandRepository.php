@@ -160,7 +160,7 @@ class AbstractDemandRepository extends Repository
                 if ($searchSplittedPart) {
                     $subConstraints[] = $this->queryBuilder->expr()->like(
                         $demand::TABLE . '.' . $cleanProperty,
-                        $this->queryBuilder->createNamedParameter('%' . $searchSplittedPart . '%')
+                        $this->queryBuilder->createNamedParameter($searchSplittedPart . '%')
                     );
                 }
             }
