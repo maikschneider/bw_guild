@@ -38,13 +38,11 @@
 					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName:
 						'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
-					<f:comment>
-						<f:if condition="{user.logo}">
-							<label>Delete Logo
-								<f:form.checkbox value="1" name="deleteLogo"/>
-							</label>
-						</f:if>
-					</f:comment>
+					<f:if condition="{user.logo}">
+						<label>{f:translate(key: 'userEditForm.logo.delete', extensionName: 'XmDkfzNetSite')}:
+							<f:form.checkbox value="1" name="deleteLogo"/>
+						</label>
+					</f:if>
 				</div>
 			</div>
 		</fieldset>

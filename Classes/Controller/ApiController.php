@@ -197,6 +197,7 @@ class ApiController extends ActionController
         // delete all logos
         if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {
             $this->userRepository->deleteAllUserLogos((int)$user->getUid());
+            $user->setLogo(null);
         }
 
         // delete existing logo(s) if new one is created
