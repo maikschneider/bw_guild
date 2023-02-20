@@ -81,15 +81,16 @@
 						   class="autocomplete"
 						   placeholder=" "
 						   id="representative"
+						   data-show-oninput="#representative2Fieldset"
 						   value="{user.representative.displayName}"/>
-					<a href="#" data-clear-inputs="#representative, #representativeHiddenInput">
+					<a href="#" data-clear-inputs="#representative, #representativeHiddenInput" data-hide-onclear="#representative2Fieldset">
 						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
 					</a>
 				</div>
 			</div>
 		</fieldset>
 
-		<fieldset>
+		<fieldset class="{f:if(condition: '{user.representative} || {user.representative2}', else: 'd-none')}" id="representative2Fieldset">
 			<div class="form-group form-group--inline">
 				<label for="representative2">
 					<span class="icon">
@@ -157,13 +158,14 @@
 						   class="autocomplete"
 						   placeholder=" "
 						   id="user-committee-representative"
+						   data-show-oninput="#committeeRepresentative2FormElement"
 						   value="{user.committeeRepresentative.displayName}"/>
-					<a href="#" data-clear-inputs="#user-committee-representative, #committeeRepresentativeHiddenInput">
+					<a href="#" data-clear-inputs="#user-committee-representative, #committeeRepresentativeHiddenInput" data-hide-onclear="#committeeRepresentative2FormElement">
 						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
 					</a>
 				</div>
 
-				<div class="form-element">
+				<div class="form-element {f:if(condition: '{user.committeeRepresentative2} || {user.committeeRepresentative}', else: 'd-none')}" id="committeeRepresentative2FormElement">
 					<label for="user-committee-representative2">
 						<f:translate extensionName="XmDkfzNetSite" key="user.committee_representative2"/>
 					</label>
