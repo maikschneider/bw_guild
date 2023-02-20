@@ -91,6 +91,29 @@
 
 		<fieldset>
 			<div class="form-group form-group--inline">
+				<label for="representative2">
+					<span class="icon">
+						<f:render partial="Icon" arguments="{icon: 'user-plus'}"/>
+					</span>
+					<f:translate extensionName="XmDkfzNetSite" key="user.representative2"/>
+				</label>
+				<div class="form-element">
+					<f:form.hidden id="representative2HiddenInput" property="representative2"/>
+					<input data-autocomplete="{representatives->f:format.json()}"
+						   type="text"
+						   class="autocomplete"
+						   placeholder=" "
+						   id="representative2"
+						   value="{user.representative2.displayName}"/>
+					<a href="#" data-clear-inputs="#representative2, #representative2HiddenInput">
+						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
+					</a>
+				</div>
+			</div>
+		</fieldset>
+
+		<fieldset>
+			<div class="form-group form-group--inline">
 				<label for="responsibilities">
 					<span class="icon">
 						<f:render partial="Icon" arguments="{icon: 'clipboard'}"/>
@@ -136,6 +159,22 @@
 						   id="user-committee-representative"
 						   value="{user.committeeRepresentative.displayName}"/>
 					<a href="#" data-clear-inputs="#user-committee-representative, #committeeRepresentativeHiddenInput">
+						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
+					</a>
+				</div>
+
+				<div class="form-element">
+					<label for="user-committee-representative2">
+						<f:translate extensionName="XmDkfzNetSite" key="user.committee_representative2"/>
+					</label>
+					<f:form.hidden id="committeeRepresentative2HiddenInput" property="committeeRepresentative2"/>
+					<input data-autocomplete="{representatives->f:format.json()}"
+						   type="text"
+						   class="autocomplete"
+						   placeholder=" "
+						   id="user-committee-representative2"
+						   value="{user.committeeRepresentative2.displayName}"/>
+					<a href="#" data-clear-inputs="#user-committee-representative2, #committeeRepresentative2HiddenInput">
 						<f:render partial="Icon" arguments="{icon: 'close', size: 'sm'}"/>
 					</a>
 				</div>
