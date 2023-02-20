@@ -149,18 +149,27 @@ class AbstractDemandRepository extends Repository
         }
 
         $constraints = [];
-        $searchSplittedParts = GeneralUtility::trimExplode(' ', $demand->search, true);
+        $searchSplittParts = GeneralUtility::trimExplode(' ', $demand->search, true);
+
+        // reset word-wise search if string contains words less than 3 characters
+        $wordsLess3Characters = array_filter($searchSplittParts, function ($word) {
+            return strlen($word) < 4;
+        });
+        if (count($searchSplittParts) > 1 && count($wordsLess3Characters)) {
+            $searchSplittParts = [$demand->search];
+        }
+
         $searchFields = $demand->getSearchFields();
 
-        foreach ($searchSplittedParts as $searchSplittedPart) {
+        foreach ($searchSplittParts as $searchPart) {
             $subConstraints = [];
 
             foreach ($searchFields as $cleanProperty) {
-                $searchSplittedPart = trim($searchSplittedPart);
-                if ($searchSplittedPart) {
+                $searchPart = trim($searchPart);
+                if ($searchPart) {
                     $subConstraints[] = $this->queryBuilder->expr()->like(
                         $demand::TABLE . '.' . $cleanProperty,
-                        $this->queryBuilder->createNamedParameter($searchSplittedPart . '%')
+                        $this->queryBuilder->createNamedParameter($searchPart . '%')
                     );
                 }
             }
