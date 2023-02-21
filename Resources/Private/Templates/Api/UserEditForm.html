@@ -28,12 +28,6 @@
 			<div class="form-group form-group--inline">
 				<div>
 					<f:render partial="UserImage" arguments="{user: user, invert: 1}"/>
-					<f:if condition="{user.logo}">
-						<label for="deleteLogo" class="field__checkbox">
-							<f:form.checkbox  value="1" name="deleteLogo" id="deleteLogo"/>
-							{f:translate(key: 'userEditForm.logo.delete', extensionName: 'XmDkfzNetSite')}
-						</label>
-					</f:if>
 				</div>
 				<div class="form-element">
 					<p class="m-b-0"><strong>{f:translate(key: 'userEditForm.logo.aspectRatio', extensionName:
@@ -44,6 +38,14 @@
 					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName:
 						'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
+
+					<f:if condition="{user.logo}">
+						<label for="deleteLogo" class="field__checkbox m-t-2">
+							<f:form.checkbox  value="1" name="deleteLogo" id="deleteLogo"/>
+							{f:translate(key: 'userEditForm.logo.delete', extensionName: 'XmDkfzNetSite')}
+						</label>
+					</f:if>
+
 				</div>
 			</div>
 		</fieldset>
