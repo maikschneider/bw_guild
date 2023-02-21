@@ -247,7 +247,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     public function initializeUpdateAction(): void
     {
         $isLogoDelete = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
-        $isEmptyLogoUpdate = $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '';
+        $isEmptyLogoUpdate = !$_FILES || $_FILES['tx_bwguild_userlist']['name']['user']['logo'] === '';
 
         if ($isLogoDelete || $isEmptyLogoUpdate) {
             $this->ignoreLogoArgumentInUpdate();
