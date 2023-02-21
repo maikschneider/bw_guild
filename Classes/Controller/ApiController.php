@@ -155,7 +155,7 @@ class ApiController extends ActionController
     public function initializeUserEditUpdateAction(): void
     {
         $isLogoDelete = $this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo');
-        $isEmptyLogoUpdate = $_FILES['tx_bwguild_api']['name']['user']['logo'] === '';
+        $isEmptyLogoUpdate = !$_FILES || $_FILES['tx_bwguild_api']['name']['user']['logo'] === '';
 
         if ($isLogoDelete || $isEmptyLogoUpdate) {
             $this->ignoreLogoArgumentInUpdate();
@@ -197,6 +197,7 @@ class ApiController extends ActionController
         // delete all logos
         if ($this->request->hasArgument('deleteLogo') && $this->request->getArgument('deleteLogo') === '1') {
             $this->userRepository->deleteAllUserLogos((int)$user->getUid());
+            $user->setLogo(null);
         }
 
         // delete existing logo(s) if new one is created
