@@ -6,8 +6,6 @@ CREATE TABLE fe_users (
 	features varchar(11) DEFAULT 0 NOT NULL,
 	logo varchar(11) DEFAULT 0,
 	shared_offers int(11) unsigned DEFAULT '0' NOT NULL,
-	sorting_field varchar(255) DEFAULT '' NOT NULL,
-	sorting_text varchar(255) DEFAULT '' NOT NULL,
 	slug varchar(255) DEFAULT '' NOT NULL,
 	public_profile tinyint(4) DEFAULT 1 NOT NULL,
 

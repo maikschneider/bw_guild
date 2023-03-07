@@ -45,10 +45,6 @@ class User extends FrontendUser
      */
     protected ?ObjectStorage $sharedOffers = null;
 
-    protected string $sortingText = '';
-
-    protected string $sortingField = '';
-
     protected bool $publicProfile = true;
 
     protected string $bookmarks = '';
@@ -74,7 +70,6 @@ class User extends FrontendUser
         $this->categories = new ObjectStorage();
         $this->offers = new ObjectStorage();
         $this->sharedOffers = new ObjectStorage();
-        $this->sortingField = 'company';
         $this->features = new ObjectStorage();
     }
 
@@ -96,26 +91,6 @@ class User extends FrontendUser
     public function setPublicProfile(bool $publicProfile): void
     {
         $this->publicProfile = $publicProfile;
-    }
-
-    public function getSortingText(): string
-    {
-        return $this->sortingText;
-    }
-
-    public function setSortingText(string $sortingText)
-    {
-        $this->sortingText = $sortingText;
-    }
-
-    public function getSortingField(): string
-    {
-        return $this->sortingField;
-    }
-
-    public function setSortingField(string $sortingField): void
-    {
-        $this->sortingField = $sortingField;
     }
 
     public function getPasswordRepeat(): string

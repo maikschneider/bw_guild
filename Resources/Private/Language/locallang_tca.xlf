@@ -18,9 +18,6 @@
 			<trans-unit id="user.offers">
 				<source>Offers</source>
 			</trans-unit>
-			<trans-unit id="user.sorting_field">
-				<source>Sorting field</source>
-			</trans-unit>
 			<trans-unit id="user.slug">
 				<source>Slug</source>
 			</trans-unit>

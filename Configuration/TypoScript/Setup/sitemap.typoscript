@@ -7,7 +7,6 @@
             provider = TYPO3\CMS\Seo\XmlSitemap\RecordsXmlSitemapDataProvider
             config {
               table = fe_users
-              sortField = sorting_text
               lastModifiedField = tstamp
               pid = {$plugin.tx_bwguild.persistence.storagePid}
               additionalWhere = AND public_profile=1

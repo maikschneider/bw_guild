@@ -22,10 +22,6 @@
 				<source>Offers</source>
 				<target>Angebote</target>
 			</trans-unit>
-			<trans-unit id="user.sorting_field">
-				<source>Sorting field</source>
-				<target>Sortierfeld</target>
-			</trans-unit>
 			<trans-unit id="user.slug">
 				<source>Slug</source>
 				<target>Slug</target>
