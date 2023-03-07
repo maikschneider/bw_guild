@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Blueways\BwGuild\Service\GeoService;
@@ -23,16 +24,19 @@ class User extends FrontendUser
 
     /**
      * @var ObjectStorage<Offer>|null
+     * @Lazy
      */
     protected ?ObjectStorage $offers = null;
 
     /**
      * @var ObjectStorage<AbstractUserFeature>|null
+     * @Lazy
      */
     protected ?ObjectStorage $features = null;
 
     /**
      * @var ObjectStorage<Category>|null
+     * @Lazy
      */
     protected ?ObjectStorage $categories = null;
 
@@ -42,6 +46,7 @@ class User extends FrontendUser
 
     /**
      * @var ObjectStorage<Offer>|null
+     * @Lazy
      */
     protected ?ObjectStorage $sharedOffers = null;
 
@@ -153,7 +158,7 @@ class User extends FrontendUser
         $this->categories = $categories;
     }
 
-    public function getOffers(): ObjectStorage
+    public function getOffers(): ?ObjectStorage
     {
         return $this->offers;
     }
@@ -245,7 +250,7 @@ class User extends FrontendUser
         return $schema;
     }
 
-    public function getFeatures(): ObjectStorage
+    public function getFeatures(): ?ObjectStorage
     {
         return $this->features;
     }

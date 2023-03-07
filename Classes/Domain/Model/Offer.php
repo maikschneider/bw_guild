@@ -13,374 +13,216 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Offer extends AbstractEntity
 {
     /**
-     * @var string
      * @Validate("NotEmpty")
      */
-    protected $title = '';
+    protected string $title = '';
+
+    protected string $address = '';
+
+    protected string $zip = '';
+
+    protected string $city = '';
+
+    protected string $country = '';
+
+    protected string $description = '';
+
+    protected string $startDate = '';
+
+    protected ?User $feUser = null;
 
     /**
-     * @var string
-     */
-    protected $address = '';
-
-    /**
-     * @var string
-     */
-    protected $zip = '';
-
-    /**
-     * @var string
-     */
-    protected $city = '';
-
-    /**
-     * @var string
-     */
-    protected $country = '';
-
-    /**
-     * @var string
-     */
-    protected $description = '';
-
-    /**
-     * @var string
-     */
-    protected $startDate = '';
-
-    /**
-     * @var User
-     */
-    protected $feUser;
-
-    /**
-     * @var ObjectStorage<User>
+     * @var ObjectStorage<User>|null
      * @Lazy
      */
-    protected $feUsers;
+    protected ?ObjectStorage $feUsers = null;
+
+    protected string $slug;
+
+    protected string $contactPerson = '';
 
     /**
-     * @var string
-     */
-    protected $slug;
-
-    /**
-     * @var string
-     */
-    protected $contactPerson = '';
-
-    /**
-     * @var string
      * @Validate("EmailAddress")
      */
-    protected $contactMail = '';
+    protected string $contactMail = '';
+
+    protected string $contactPhone = '';
+
+    protected string $conditions = '';
+
+    protected string $possibilities = '';
+
+    protected int $recordType = 0;
+
+    protected bool $hidden = false;
+
+    protected float $latitude = 0.0;
+
+    protected float $longitude = 0.0;
+
+    protected ?\DateTime $crdate = null;
 
     /**
-     * @var string
-     */
-    protected $contactPhone = '';
-
-    /**
-     * @var float
-     */
-    protected $geo_lat;
-
-    /**
-     * @var float
-     */
-    protected $geo_long;
-
-    /**
-     * @var string
-     */
-    protected $conditions = '';
-
-    /**
-     * @var string
-     */
-    protected $possibilities = '';
-
-    /**
-     * @var int
-     */
-    protected $recordType = 0;
-
-    /**
-     * @var bool
-     */
-    protected $hidden;
-
-    /**
-     * @var float
-     */
-    protected $latitude;
-
-    /**
-     * @var float
-     */
-    protected $longitude;
-
-    /**
-     * @var \DateTime
-     */
-    protected $crdate;
-
-    /**
-     * @var ObjectStorage<Category>
+     * @var ObjectStorage<Category>|null
      * @Lazy
      */
-    protected $categories;
+    protected ?ObjectStorage $categories = null;
 
     /**
-     * Offer constructor.
+     * @var ObjectStorage<FileReference>|null
      */
+    protected ?ObjectStorage $images = null;
+
     public function __construct()
     {
         $this->feUsers = new ObjectStorage();
         $this->categories = new ObjectStorage();
+        $this->images = new ObjectStorage();
     }
 
-    /**
-     * @return string
-     */
     public function getSlug(): string
     {
         return $this->slug;
     }
 
-    /**
-     * @param string $slug
-     */
     public function setSlug(string $slug): void
     {
         $this->slug = $slug;
     }
 
     /**
-     * @return ObjectStorage|null
+     * @return ObjectStorage<User>|null
      */
-    public function getFeUsers()
+    public function getFeUsers(): ?ObjectStorage
     {
         return $this->feUsers;
     }
 
     /**
-     * @param ObjectStorage $feUsers
+     * @param ObjectStorage<User> $feUsers
      */
     public function setFeUsers(ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactPhone()
+    public function getContactPhone(): string
     {
         return $this->contactPhone;
     }
 
-    /**
-     * @param string $contactPhone
-     */
     public function setContactPhone(string $contactPhone)
     {
         $this->contactPhone = $contactPhone;
     }
 
-    /**
-     * @return float
-     */
-    public function getLatitude()
+    public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    /**
-     * @param float $latitude
-     */
     public function setLatitude(float $latitude)
     {
         $this->latitude = $latitude;
     }
 
-    /**
-     * @return float
-     */
-    public function getLongitude()
+    public function getLongitude(): float
     {
         return $this->longitude;
     }
 
-    /**
-     * @param float $longitude
-     */
     public function setLongitude(float $longitude)
     {
         $this->longitude = $longitude;
     }
 
     /**
-     * @return ObjectStorage
+     * @return ObjectStorage<Category>|null
      */
-    public function getCategories()
+    public function getCategories(): ?ObjectStorage
     {
         return $this->categories;
     }
 
     /**
-     * @param ObjectStorage $categories
+     * @param ObjectStorage<Category> $categories
      */
     public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @return int
-     */
-    public function getRecordType()
+    public function getRecordType(): int
     {
         return $this->recordType;
     }
 
-    /**
-     * @param int $recordType
-     */
     public function setRecordType(int $recordType)
     {
         $this->recordType = $recordType;
     }
 
-    /**
-     * @return bool
-     */
-    public function isHidden()
+    public function isHidden(): bool
     {
         return $this->hidden;
     }
 
-    /**
-     * @param bool $hidden
-     */
     public function setHidden(bool $hidden)
     {
         $this->hidden = $hidden;
     }
 
-    /**
-     * @return string
-     */
-    public function getStartDate()
+    public function getStartDate(): string
     {
         return $this->startDate;
     }
 
-    /**
-     * @param string $startDate
-     */
     public function setStartDate(string $startDate)
     {
         $this->startDate = $startDate;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactPerson()
+    public function getContactPerson(): string
     {
         return $this->contactPerson;
     }
 
-    /**
-     * @param string $contactPerson
-     */
     public function setContactPerson(string $contactPerson)
     {
         $this->contactPerson = $contactPerson;
     }
 
-    /**
-     * @return string
-     */
-    public function getContactMail()
+    public function getContactMail(): string
     {
         return $this->contactMail;
     }
 
-    /**
-     * @param string $contactMail
-     */
     public function setContactMail(string $contactMail)
     {
         $this->contactMail = $contactMail;
     }
 
-    /**
-     * @return float
-     */
-    public function getGeoLat()
-    {
-        return $this->geo_lat;
-    }
-
-    /**
-     * @param float $geo_lat
-     */
-    public function setGeoLat(float $geo_lat)
-    {
-        $this->geo_lat = $geo_lat;
-    }
-
-    /**
-     * @return float
-     */
-    public function getGeoLong()
-    {
-        return $this->geo_long;
-    }
-
-    /**
-     * @param float $geo_long
-     */
-    public function setGeoLong(float $geo_long)
-    {
-        $this->geo_long = $geo_long;
-    }
-
-    /**
-     * @return string
-     */
-    public function getConditions()
+    public function getConditions(): string
     {
         return $this->conditions;
     }
 
-    /**
-     * @param string $conditions
-     */
     public function setConditions(string $conditions)
     {
         $this->conditions = $conditions;
     }
 
-    /**
-     * @return string
-     */
-    public function getPossibilities()
+    public function getPossibilities(): string
     {
         return $this->possibilities;
     }
 
-    /**
-     * @param string $possibilities
-     */
     public function setPossibilities(string $possibilities)
     {
         $this->possibilities = $possibilities;
     }
 
-    public function getJsonSchema($typoscript)
+    public function getJsonSchema($typoscript): array
     {
         $name = '';
         $url = '';
@@ -447,10 +289,7 @@ class Offer extends AbstractEntity
         return $schema;
     }
 
-    /**
-     * @return User|null
-     */
-    public function getFeUser()
+    public function getFeUser(): ?User
     {
         return $this->feUser;
     }
@@ -463,42 +302,27 @@ class Offer extends AbstractEntity
         $this->feUser = $feUser;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $title
-     */
     public function setTitle(string $title)
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description)
     {
         $this->description = $description;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCrdate()
+    public function getCrdate(): \DateTime
     {
         return $this->crdate;
     }
@@ -511,66 +335,42 @@ class Offer extends AbstractEntity
         $this->crdate = $crdate;
     }
 
-    /**
-     * @return string
-     */
-    public function getAddress()
+    public function getAddress(): string
     {
         return $this->address;
     }
 
-    /**
-     * @param string $address
-     */
     public function setAddress(string $address)
     {
         $this->address = $address;
     }
 
-    /**
-     * @return string
-     */
-    public function getCity()
+    public function getCity(): string
     {
         return $this->city;
     }
 
-    /**
-     * @param string $city
-     */
     public function setCity(string $city)
     {
         $this->city = $city;
     }
 
-    /**
-     * @return string
-     */
-    public function getZip()
+    public function getZip(): string
     {
         return $this->zip;
     }
 
-    /**
-     * @param string $zip
-     */
     public function setZip(string $zip)
     {
         $this->zip = $zip;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCountry()
+    public function getCountry(): string
     {
         return $this->country;
     }
 
-    /**
-     * @param mixed $country
-     */
-    public function setCountry($country)
+    public function setCountry(string $country)
     {
         $this->country = $country;
     }
