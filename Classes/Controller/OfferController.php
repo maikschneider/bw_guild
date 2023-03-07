@@ -4,6 +4,8 @@ namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\User;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
@@ -56,10 +58,7 @@ class OfferController extends ActionController
     {
         $demand = $demand ?? OfferDemand::createFromSettings($this->settings);
 
-        /** @var OfferRepository $repository */
-        $repository = $this->objectManager->get($this->settings['record_type']);
-
-        $offers = $repository->findDemanded($demand);
+        $offers = $this->offerRepository->findDemanded($demand);
         $this->view->setTemplate($this->settings['template'] ?? 'Latest');
         $this->view->assign('offers', $offers);
         return $this->htmlResponse();
@@ -67,15 +66,12 @@ class OfferController extends ActionController
 
     public function showAction(Offer $offer): ResponseInterface
     {
-        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
-        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        $schema = $offer->getJsonSchema($this->settings);
 
-        $schema = $offer->getJsonSchema($typoscript);
-
-        if ((int)$typoscript['plugin.']['tx_bwguild_offerlist.']['settings.']['schema.']['enable']) {
+        if (isset($this->settings['schema.']['enable']) && $this->settings['schema.']['enable']) {
             $json = json_encode($schema);
-            $jsCode = '<script type="application/ld+json">' . $json . '</script>';
-            //$this->response->addAdditionalHeaderData($jsCode);
+            $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
+            $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
         }
 
         $GLOBALS['TSFE']->page['title'] = $schema['title'];
@@ -194,29 +190,5 @@ class OfferController extends ActionController
 
         $this->view->assign('offer', $offer);
         return $this->htmlResponse();
-    }
-
-    protected function initializeAction()
-    {
-        parent::initializeAction();
-
-        $this->mergeTyposcriptSettings();
-    }
-
-    private function mergeTyposcriptSettings()
-    {
-        $configurationManager = $this->objectManager->get(ConfigurationManager::class);
-        try {
-            $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-            ArrayUtility::mergeRecursiveWithOverrule(
-                $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'],
-                $this->settings,
-                true,
-                false,
-                false
-            );
-            $this->settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
-        } catch (InvalidConfigurationTypeException $exception) {
-        }
     }
 }

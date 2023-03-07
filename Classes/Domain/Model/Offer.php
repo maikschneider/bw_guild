@@ -222,21 +222,21 @@ class Offer extends AbstractEntity
         $this->possibilities = $possibilities;
     }
 
-    public function getJsonSchema($typoscript): array
+    public function getJsonSchema($settings): array
     {
         $name = '';
         $url = '';
         $logo = '';
 
         // defaults from typoscript
-        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['name']) {
-            $name = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['name'];
+        if ($settings['schema']['hiringOrganization']['name']) {
+            $name = $settings['schema']['hiringOrganization']['name'];
         }
-        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['url']) {
-            $url = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['url'];
+        if ($settings['schema']['hiringOrganization']['url']) {
+            $url = $settings['schema']['hiringOrganization']['url'];
         }
-        if ($typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['logo']) {
-            $logo = $typoscript['plugin.']['tx_bwguild.']['settings.']['schema.']['hiringOrganization.']['logo'];
+        if ($settings['schema']['hiringOrganization']['logo']) {
+            $logo = $settings['schema']['hiringOrganization']['logo'];
         }
 
         // override from feUser
@@ -287,6 +287,16 @@ class Offer extends AbstractEntity
         }
 
         return $schema;
+    }
+
+    public function getImages(): ?ObjectStorage
+    {
+        return $this->images;
+    }
+
+    public function setImages(?ObjectStorage $images): void
+    {
+        $this->images = $images;
     }
 
     public function getFeUser(): ?User

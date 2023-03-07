@@ -30,6 +30,7 @@ plugin {
       userLogoFolder = {$plugin.tx_bwguild.settings.userLogoFolder}
       itemsPerPage = {$plugin.tx_bwguild.settings.itemsPerPage}
       showPid = {$plugin.tx_bwguild.settings.showPid}
+      showOfferPid = {$plugin.tx_bwguild.settings.showOfferPid}
       schema.hiringOrganization {
         name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
         url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}
@@ -83,10 +84,9 @@ plugin {
 
   tx_bwguild_offerlist {
     settings {
-      demandClass = {$plugin.tx_bwguild_offerlist.settings.demandClass}
       maxItems = {$plugin.tx_bwguild_offerlist.settings.maxItems}
       maximumLinks = {$plugin.tx_bwguild_userlist.settings.maximumLinks}
-      showPid = {$plugin.tx_bwguild_offerlist.settings.showPid}
+
       schema {
         enable = {$plugin.tx_bwguild_offerlist.settings.schema.enable}
         hiringOrganization.name = {$plugin.tx_bwguild_offerlist.settings.schema.hiringOrganization.name}

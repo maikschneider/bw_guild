@@ -64,8 +64,6 @@ class UserController extends ActionController
     {
         parent::initializeAction();
 
-        $this->mergeTyposcriptSettings();
-
         if ($this->request->hasArgument('demand')) {
             $propertyMappingConfiguration = $this->arguments->getArgument('demand')->getPropertyMappingConfiguration();
             $propertyMappingConfiguration->allowAllProperties();
@@ -75,30 +73,6 @@ class UserController extends ActionController
                 true
             );
         }
-    }
-
-    /**
-     * Merges the typoscript settings with the settings from flexform
-     */
-    private function mergeTyposcriptSettings(): void
-    {
-        $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
-        $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        ArrayUtility::mergeRecursiveWithOverrule(
-            $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-            $typoscript['plugin.']['tx_bwguild.']['settings.'],
-            true,
-            false,
-            false
-        );
-        ArrayUtility::mergeRecursiveWithOverrule(
-            $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'],
-            $this->settings,
-            true,
-            false,
-            false
-        );
-        $this->settings = $typoscript['plugin.']['tx_bwguild_userlist.']['settings.'];
     }
 
     /**

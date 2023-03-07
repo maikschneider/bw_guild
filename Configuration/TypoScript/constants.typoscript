@@ -14,6 +14,7 @@ plugin {
       userLogoFolder = logos
       itemsPerPage = 20
       showPid =
+      showOfferPid =
       schema.hiringOrganization {
         name =
         url =
@@ -24,10 +25,8 @@ plugin {
 
   tx_bwguild_offerlist {
     settings {
-      demandClass = Blueways\BwGuild\Domain\Model\Dto\OfferDemand
       maxItems =
       maximumLinks =
-      showPid =
       schema {
         enable = 1
         hiringOrganization.name =
@@ -77,7 +76,6 @@ plugin {
 
   tx_bwguild_offerlatest {
     settings {
-      record_type = Blueways\BwGuild\Domain\Repository\OfferRepository
       showPid =
       maxItems = 3
       order = crdate
