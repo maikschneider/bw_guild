@@ -51,6 +51,16 @@ mod.wizards.newContentElement.wizardItems.plugins {
         list_type = bwguild_usersearch
       }
     }
+
+    marketplace {
+      iconIdentifier = tx_bwguild_marketplace
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:marketplace.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:marketplace.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_marketplace
+      }
+    }
   }
 
   show = *

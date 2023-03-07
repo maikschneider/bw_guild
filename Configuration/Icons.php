@@ -21,6 +21,10 @@ return [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_offershow.svg',
     ],
+    'tx_bwguild_marketplace' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:bw_guild/Resources/Public/Images/tt_content_marketplace.svg',
+    ],
     'tx_bwguild_domain_model_offer' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg',
