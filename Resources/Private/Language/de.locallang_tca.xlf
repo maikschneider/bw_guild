@@ -28,7 +28,7 @@
 			</trans-unit>
 			<trans-unit id="user.slug">
 				<source>Slug</source>
-				<target>URL</target>
+				<target>Slug</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer">
 				<source>Offer</source>
@@ -109,7 +109,19 @@
 				<source>Slug</source>
 				<target>Slug</target>
 			</trans-unit>
-			<trans-unit id="tx_bwguild_domain_model_offer.publicProfile">
+			<trans-unit id="tx_bwguild_domain_model_offer.images">
+				<source>Images</source>
+				<target>Bilder</target>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.price">
+				<source>Price</source>
+				<target>Preis</target>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.public">
+				<source>Is public</source>
+				<target>Ist veröffentlicht</target>
+			</trans-unit>
+			<trans-unit id="user.publicProfile">
 				<source>Public profile</source>
 				<target>Öffentliches Profil</target>
 			</trans-unit>

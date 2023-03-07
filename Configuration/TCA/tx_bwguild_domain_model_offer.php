@@ -60,19 +60,19 @@ return [
         ],
         // ProductOffer
         '4' => [
-            'showitem' => 'fe_user, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
+            'showitem' => 'fe_user, record_type, title, public, price, slug, description, start_date, contact_person, contact_mail, contact_phone, images, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;access,',
         ],
         // ProductWanted
         '5' => [
-            'showitem' => 'fe_user, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
+            'showitem' => 'fe_user, record_type, title, public, price, slug, description, start_date, contact_person, contact_mail, contact_phone, images, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;access,',
         ],
         // ProductGiveAway
         '6' => [
-            'showitem' => 'fe_user, record_type, title, slug, description, start_date, contact_person, contact_mail, contact_phone, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
+            'showitem' => 'fe_user, record_type, title, public, slug, description, start_date, contact_person, contact_mail, contact_phone, images, geo_lat, geo_long, --div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.more, conditions, possibilities, --div--;LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.address,address,zip,city,country,
             --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access,
                     --palette--;;access,',
         ],
@@ -447,5 +447,36 @@ return [
                 'foreign_table_where' => 'ORDER BY fe_groups.title',
             ],
         ],
+        'images' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.images',
+            'exclude' => 1,
+            'config' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::getFileFieldTCAConfig(
+                'images',
+                [],
+                $GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']
+            ),
+        ],
+        'price' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.price',
+            'exclude' => 1,
+            'config' => [
+                'type' => 'input',
+                'eval' => 'double2'
+            ]
+        ],
+        'public' => [
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.public',
+            'exclude' => 1,
+            'config' => [
+                'type' => 'check',
+                'renderType' => 'checkboxToggle',
+                'items' => [
+                    [
+                        0 => '',
+                        1 => '',
+                    ]
+                ],
+            ]
+        ]
     ],
 ];

@@ -91,6 +91,15 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.contact_phone">
 				<source>Contact phone</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.images">
+				<source>Images</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.price">
+				<source>Price</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.public">
+				<source>Is public</source>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.slug">
 				<source>Slug</source>
 			</trans-unit>
