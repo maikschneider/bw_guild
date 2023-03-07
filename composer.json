@@ -1,11 +1,8 @@
 {
   "name": "blueways/bw-guild",
   "type": "typo3-cms-extension",
-  "description": "Extends TYPO3 for the management of guilds",
-  "homepage": "https://blueways.de",
-  "license": [
-    "proprietary"
-  ],
+  "description": "Extends TYPO3 for the management of frontend users and groups",
+  "license": "GPL-3.0-or-later",
   "keywords": [
     "TYPO3 CMS"
   ],
@@ -55,7 +52,6 @@
     }
   },
   "config": {
-    "vendor-dir": "vendor",
     "allow-plugins": {
       "typo3/cms-composer-installers": true,
       "typo3/class-alias-loader": true
@@ -77,8 +73,7 @@
   "authors": [
     {
       "name": "Maik Schneider",
-      "homepage": "https://blueways.de",
-      "email": "m.schneider@blueways.de",
+      "email": "schneider.maik@me.com",
       "role": "Developer"
     }
   ],
