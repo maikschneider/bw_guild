@@ -41,6 +41,18 @@ return [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.3.svg',
     ],
+    'tx_bwguild_domain_model_offer-4' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.4.svg',
+    ],
+    'tx_bwguild_domain_model_offer-5' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.5.svg',
+    ],
+    'tx_bwguild_domain_model_offer-6' => [
+        'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
+        'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.6.svg',
+    ],
     'tx_bwguild_domain_model_feature' => [
         'provider' => \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
         'source' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_feature.svg',

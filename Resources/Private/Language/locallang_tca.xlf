@@ -52,6 +52,15 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.record_type.3">
 				<source>Help</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.4">
+				<source>Product offer</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.5">
+				<source>Product search</source>
+			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.record_type.6">
+				<source>Product give-away</source>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.description">
 				<source>Job description</source>
 			</trans-unit>
