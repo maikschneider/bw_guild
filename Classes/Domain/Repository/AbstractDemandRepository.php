@@ -338,37 +338,4 @@ class AbstractDemandRepository extends Repository
             )
         );
     }
-
-    /**
-     * @param array<mixed> $settings
-     * @param string $class
-     * @return BaseDemand
-     */
-    public function createDemandObjectFromSettings(
-        array $settings,
-        string $class = BaseDemand::class
-    ): BaseDemand {
-        // @TODO: check if this typoscript demandClass setting makes sense
-        $class = isset($settings['demandClass']) && !empty($settings['demandClass']) ? $settings['demandClass'] : $class;
-
-        /** @var BaseDemand $demand */
-        $demand = new $class();
-
-        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'] ?? '', true));
-        $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
-        $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
-        $demand->setOrder($settings['order'] ?? '');
-        $demand->setOrderDirection($settings['orderDirection'] ?? '');
-        $demand->setItemsPerPage((int)$settings['itemsPerPage']);
-
-        if ($settings['limit'] ?? 0) {
-            $demand->setLimit((int)$settings['limit']);
-        }
-
-        if ($settings['maxItems']) {
-            $demand->setLimit((int)$settings['maxItems']);
-        }
-
-        return $demand;
-    }
 }

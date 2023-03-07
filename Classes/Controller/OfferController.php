@@ -31,19 +31,16 @@ class OfferController extends ActionController
     ) {
     }
 
-    public function listAction(): ResponseInterface
+    public function listAction(?OfferDemand $demand = null): ResponseInterface
     {
-        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
+        $demand = $demand ?? OfferDemand::createFromSettings($this->settings);
 
         // override filter from form
         if ($this->request->hasArgument('demand')) {
-            $demand->overrideFromRequest($this->request->getArgument('demand'));
+            $demand->overrideFromRequest($this->request);
         }
 
-        /** @var OfferRepository $repository */
-        $repository = GeneralUtility::makeInstance($this->settings['record_type']);
-
-        $offers = $repository->findDemanded($demand);
+        $offers = $this->offerRepository->findDemanded($demand);
 
         // disbale indexing of list view
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
@@ -57,7 +54,7 @@ class OfferController extends ActionController
 
     public function latestAction(): ResponseInterface
     {
-        $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
+        $demand = $demand ?? OfferDemand::createFromSettings($this->settings);
 
         /** @var OfferRepository $repository */
         $repository = $this->objectManager->get($this->settings['record_type']);

@@ -306,20 +306,20 @@ class BaseDemand
      */
     public static function createFromSettings($settings): static
     {
-        $demand = GeneralUtility::makeInstance(static::class);
+        $demand = new static();
 
-        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'], true));
+        $demand->setCategories(GeneralUtility::trimExplode(',', $settings['categories'] ?? '', true));
         $demand->setCategoryConjunction($settings['categoryConjunction'] ?? '');
         $demand->setIncludeSubCategories($settings['includeSubCategories'] ?? false);
         $demand->setOrder($settings['order'] ?? '');
         $demand->setOrderDirection($settings['orderDirection'] ?? '');
         $demand->setItemsPerPage((int)$settings['itemsPerPage']);
 
-        if ($settings['limit']) {
+        if ($settings['limit'] ?? '') {
             $demand->setLimit((int)$settings['limit']);
         }
 
-        if ($settings['maxItems']) {
+        if ($settings['maxItems'] ?? '') {
             $demand->setLimit((int)$settings['maxItems']);
         }
 
