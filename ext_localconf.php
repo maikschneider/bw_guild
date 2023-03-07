@@ -37,7 +37,7 @@ defined('TYPO3') || die();
     'BwGuild',
     'Offerlist',
     [
-        \Blueways\BwGuild\Controller\OfferController::class => 'list, show, edit, update, new, delete',
+        \Blueways\BwGuild\Controller\OfferController::class => 'list, edit, update, new, delete',
     ],
     // non-cacheable actions
     [
