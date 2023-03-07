@@ -20,6 +20,9 @@ return [
             Blueways\BwGuild\Domain\Model\Education::class,
             Blueways\BwGuild\Domain\Model\Internship::class,
             Blueways\BwGuild\Domain\Model\Help::class,
+            Blueways\BwGuild\Domain\Model\ProductOffer::class,
+            Blueways\BwGuild\Domain\Model\ProductSearch::class,
+            Blueways\BwGuild\Domain\Model\ProductGiveAway::class,
         ],
     ],
     Blueways\BwGuild\Domain\Model\Job::class => [
@@ -36,6 +39,18 @@ return [
     ],
     Blueways\BwGuild\Domain\Model\Help::class => [
         'recordType' => 3,
+        'tableName' => 'tx_bwguild_domain_model_offer',
+    ],
+    Blueways\BwGuild\Domain\Model\ProductOffer::class => [
+        'recordType' => 4,
+        'tableName' => 'tx_bwguild_domain_model_offer',
+    ],
+    Blueways\BwGuild\Domain\Model\ProductSearch::class => [
+        'recordType' => 5,
+        'tableName' => 'tx_bwguild_domain_model_offer',
+    ],
+    Blueways\BwGuild\Domain\Model\ProductGiveAway::class => [
+        'recordType' => 6,
         'tableName' => 'tx_bwguild_domain_model_offer',
     ],
     Blueways\BwGuild\Domain\Model\FileReference::class => [
