@@ -190,6 +190,12 @@
 			<trans-unit id="marketplace.wizard.description">
 				<source>Displays latest products from users</source>
 			</trans-unit>
+			<trans-unit id="offershow.wizard.title">
+				<source>Offer show</source>
+			</trans-unit>
+			<trans-unit id="offershow.wizard.description">
+				<source>Single view for offers</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

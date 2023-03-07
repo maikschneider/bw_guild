@@ -21,6 +21,16 @@ mod.wizards.newContentElement.wizardItems.plugins {
       }
     }
 
+    offershow {
+      iconIdentifier = tx_bwguild_offershow
+      title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offershow.wizard.title
+      description = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offershow.wizard.description
+      tt_content_defValues {
+        CType = list
+        list_type = bwguild_offershow
+      }
+    }
+
     userlist {
       iconIdentifier = tx_bwguild_userlist
       title = LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.wizard.title
@@ -30,7 +40,6 @@ mod.wizards.newContentElement.wizardItems.plugins {
         list_type = bwguild_userlist
       }
     }
-
 
     usershow {
       iconIdentifier = tx_bwguild_usershow

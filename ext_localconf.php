@@ -47,6 +47,15 @@ defined('TYPO3') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'BwGuild',
+    'Offershow',
+    [
+        \Blueways\BwGuild\Controller\OfferController::class => 'show',
+    ],
+    []
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+    'BwGuild',
     'Marketplace',
     [
         \Blueways\BwGuild\Controller\OfferController::class => 'list',

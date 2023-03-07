@@ -32,6 +32,13 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_offe
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
     'BwGuild',
+    'Offershow',
+    'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:offershow.wizard.title',
+    'tx_bwguild_offershow'
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+    'BwGuild',
     'Usershow',
     'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usershow.wizard.title',
     'tx_bwguild_usershow'
