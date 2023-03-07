@@ -2,7 +2,6 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
-use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Blueways\BwGuild\Service\GeoService;
@@ -14,74 +13,43 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class User extends FrontendUser
 {
-    /**
-     * @var string
-     */
-    protected $shortName = '';
+    protected string $shortName = '';
+
+    protected string $passwordRepeat = '';
+
+    protected string $mobile = '';
+
+    protected string $memberNr = '';
 
     /**
-     * @var string
+     * @var ObjectStorage<Offer>|null
      */
-    protected $passwordRepeat = '';
+    protected ?ObjectStorage $offers = null;
 
     /**
-     * @var string
+     * @var ObjectStorage<AbstractUserFeature>|null
      */
-    protected $mobile = '';
+    protected ?ObjectStorage $features = null;
 
     /**
-     * @var string
+     * @var ObjectStorage<Category>|null
      */
-    protected $memberNr = '';
+    protected ?ObjectStorage $categories = null;
+
+    protected float $latitude = 0.0;
+
+    protected float $longitude = 0.0;
 
     /**
-     * @var ObjectStorage<Offer>
-     * @Lazy
+     * @var ObjectStorage<Offer>|null
      */
-    protected $offers;
+    protected ?ObjectStorage $sharedOffers = null;
 
-    /**
-     * @var ObjectStorage<AbstractUserFeature>
-     * @Lazy
-     */
-    protected $features;
+    protected string $sortingText = '';
 
-    /**
-     * @var ObjectStorage<Category>
-     * @Lazy
-     */
-    protected $categories;
+    protected string $sortingField = '';
 
-    /**
-     * @var float
-     */
-    protected $latitude;
-
-    /**
-     * @var float
-     */
-    protected $longitude;
-
-    /**
-     * @var ObjectStorage<Offer>
-     * @Lazy
-     */
-    protected $sharedOffers;
-
-    /**
-     * @var string
-     */
-    protected $sortingText;
-
-    /**
-     * @var string
-     */
-    protected $sortingField;
-
-    /**
-     * @var bool
-     */
-    protected $publicProfile;
+    protected bool $publicProfile = true;
 
     protected string $bookmarks = '';
 
@@ -120,106 +88,67 @@ class User extends FrontendUser
         $this->logo = $logo;
     }
 
-    /**
-     * @return bool
-     */
     public function isPublicProfile(): bool
     {
-        return (bool)$this->publicProfile;
+        return $this->publicProfile;
     }
 
-    /**
-     * @param bool $publicProfile
-     */
     public function setPublicProfile(bool $publicProfile): void
     {
         $this->publicProfile = $publicProfile;
     }
 
-    /**
-     * @return string
-     */
-    public function getSortingText()
+    public function getSortingText(): string
     {
         return $this->sortingText;
     }
 
-    /**
-     * @param string $sortingText
-     */
     public function setSortingText(string $sortingText)
     {
         $this->sortingText = $sortingText;
     }
 
-    /**
-     * @return string
-     */
-    public function getSortingField()
+    public function getSortingField(): string
     {
         return $this->sortingField;
     }
 
-    /**
-     * @param string $sortingField
-     */
-    public function setSortingField(string $sortingField)
+    public function setSortingField(string $sortingField): void
     {
         $this->sortingField = $sortingField;
     }
 
-    /**
-     * @return string
-     */
     public function getPasswordRepeat(): string
     {
         return $this->passwordRepeat;
     }
 
-    /**
-     * @param string $passwordRepeat
-     */
     public function setPasswordRepeat(string $passwordRepeat): void
     {
         $this->passwordRepeat = $passwordRepeat;
     }
 
-    /**
-     * @return float
-     */
     public function getLatitude(): float
     {
         return $this->latitude;
     }
 
-    /**
-     * @param float $latitude
-     */
     public function setLatitude(float $latitude): void
     {
         $this->latitude = $latitude;
     }
 
-    /**
-     * @return ObjectStorage|null
-     */
-    public function getSharedOffers()
+    public function getSharedOffers(): ?ObjectStorage
     {
         return $this->sharedOffers;
     }
 
-    /**
-     * @param ObjectStorage $sharedOffers
-     */
     public function setSharedOffers(ObjectStorage $sharedOffers): void
     {
         $this->sharedOffers = $sharedOffers;
     }
 
-    /**
-     * @return ObjectStorage<Offer>
-     */
-    public function getAllOffers()
+    public function getAllOffers(): ?ObjectStorage
     {
         $offers = $this->offers;
         if ($this->sharedOffers) {
@@ -229,97 +158,61 @@ class User extends FrontendUser
         return $offers;
     }
 
-    /**
-     * @return float
-     */
     public function getLongitude(): float
     {
         return $this->longitude;
     }
 
-    /**
-     * @param float $longitude
-     */
     public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
     }
 
-    /**
-     * @return ObjectStorage
-     */
     public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
-    /**
-     * @param ObjectStorage $categories
-     */
     public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
-    /**
-     * @return ObjectStorage
-     */
     public function getOffers(): ObjectStorage
     {
         return $this->offers;
     }
 
-    /**
-     * @param ObjectStorage $offers
-     */
     public function setOffers(ObjectStorage $offers): void
     {
         $this->offers = $offers;
     }
 
-    /**
-     * @return string
-     */
     public function getShortName(): string
     {
         return $this->shortName;
     }
 
-    /**
-     * @param string $shortName
-     */
     public function setShortName(string $shortName): void
     {
         $this->shortName = $shortName;
     }
 
-    /**
-     * @return string
-     */
     public function getMobile(): string
     {
         return $this->mobile;
     }
 
-    /**
-     * @param string $mobile
-     */
     public function setMobile(string $mobile): void
     {
         $this->mobile = $mobile;
     }
 
-    /**
-     * @return string
-     */
     public function getMemberNr(): string
     {
         return $this->memberNr;
     }
 
-    /**
-     * @param string $memberNr
-     */
     public function setMemberNr(string $memberNr): void
     {
         $this->memberNr = $memberNr;
