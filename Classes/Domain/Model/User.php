@@ -214,9 +214,9 @@ class User extends FrontendUser
         }
     }
 
-    public function getJsonSchema($settings)
+    public function getJsonSchema(array $settings)
     {
-        $image = $settings['schema.']['defaultImage'] ?: '';
+        $image = $settings['schema']['defaultImage'] ?: '';
 
         $schema = [
             '@context' => 'http://schema.org/',

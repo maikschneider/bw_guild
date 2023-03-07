@@ -189,7 +189,7 @@ class UserController extends ActionController
             $schema['image'] = $schema['logo'];
         }
 
-        if ((int)$this->settings['schema.']['enable']) {
+        if ((int)$this->settings['schema']['enable']) {
             $json = json_encode($schema, JSON_THROW_ON_ERROR);
             $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
             $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
