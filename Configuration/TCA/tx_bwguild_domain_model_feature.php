@@ -10,9 +10,6 @@ return [
         'searchFields' => 'name',
         'iconfile' => 'EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_feature.svg',
     ],
-    'interface' => [
-        'showRecordFieldList' => 'cruser_id,pid,sys_language_uid,l10n_parent,l10n_diffsource,hidden,starttime,endtime, record_type, name, address, zip, country, description, start_date, geo_lat, geo_long, fe_user, fe_users, conditions, possibilities, contact_person, contact_mail, contact_phone, fe_group',
-    ],
     'types' => [
         // Skill
         '0' => [
@@ -72,7 +69,6 @@ return [
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.fe_users',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
                 'MM' => 'tx_bwguild_feature_feuser_mm',

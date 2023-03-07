@@ -2,6 +2,9 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use Blueways\BwGuild\Domain\Model\User;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
@@ -52,7 +55,7 @@ class OfferController extends ActionController
         return $this->htmlResponse($this->view->render());
     }
 
-    public function latestAction(): void
+    public function latestAction(): ResponseInterface
     {
         $demand = $this->offerRepository->createDemandObjectFromSettings($this->settings, OfferDemand::class);
 
@@ -62,6 +65,7 @@ class OfferController extends ActionController
         $offers = $repository->findDemanded($demand);
         $this->view->setTemplate($this->settings['template'] ?? 'Latest');
         $this->view->assign('offers', $offers);
+        return $this->htmlResponse();
     }
 
     public function showAction(Offer $offer): ResponseInterface
@@ -88,13 +92,13 @@ class OfferController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function editAction(Offer $offer = null)
+    public function editAction(Offer $offer = null): ResponseInterface
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
             $this->throwStatus(403, 'Not logged in');
         }
 
-        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        /** @var User $user */
         $user = $this->userRepository->findByUid($this->accessControlService->getFrontendUserUid());
 
         if ($offer && $offer->getFeUser()->getUid() !== $user->getUid()) {
@@ -107,6 +111,7 @@ class OfferController extends ActionController
         } else {
             $this->view->assign('offer', $offer);
         }
+        return $this->htmlResponse();
     }
 
     public function updateAction(Offer $offer)
@@ -116,7 +121,7 @@ class OfferController extends ActionController
         }
 
         $userId = $this->accessControlService->getFrontendUserUid();
-        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        /** @var User $user */
         $user = $this->userRepository->findByUid($userId);
 
         // update: check access
@@ -143,7 +148,7 @@ class OfferController extends ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+            AbstractMessage::OK
         );
 
         $this->redirect('edit');
@@ -160,7 +165,7 @@ class OfferController extends ActionController
             $this->throwStatus(403, 'Not logged in');
         }
 
-        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        /** @var User $user */
         $user = $this->userRepository->findByUid($this->accessControlService->getFrontendUserUid());
 
         if ($offer && $offer->getFeUser()->getUid() !== $user->getUid()) {
@@ -172,25 +177,26 @@ class OfferController extends ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:offer.delete.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+            AbstractMessage::OK
         );
 
         $this->redirect('edit');
     }
 
-    public function newAction()
+    public function newAction(): ResponseInterface
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
             $this->throwStatus(403, 'Not logged in');
         }
 
-        /** @var \Blueways\BwGuild\Domain\Model\User $user */
+        /** @var User $user */
         $user = $this->userRepository->findByUid($this->accessControlService->getFrontendUserUid());
 
         $offer = new Offer();
         $offer->setFeUser($user);
 
         $this->view->assign('offer', $offer);
+        return $this->htmlResponse();
     }
 
     protected function initializeAction()
@@ -213,7 +219,7 @@ class OfferController extends ActionController
                 false
             );
             $this->settings = $typoscript['plugin.']['tx_bwguild_offerlist.']['settings.'];
-        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
+        } catch (InvalidConfigurationTypeException $exception) {
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Updates;
 
+use Doctrine\DBAL\Driver\Statement;
 use TYPO3\CMS\Core\Database\Connection;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
@@ -92,7 +93,7 @@ class SlugUpdater implements UpgradeWizardInterface
      * Gets element with empty or NULL slug field
      *
      * @param string $table
-     * @return \Doctrine\DBAL\Driver\Statement|int
+     * @return Statement|int
      */
     private function getElementsForTable(String $table)
     {

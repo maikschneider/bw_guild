@@ -2,15 +2,19 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Annotation\Validate;
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use Blueways\BwGuild\Utility\SlugUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Offer extends AbstractEntity
 {
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("NotEmpty")
+     * @Validate("NotEmpty")
      */
     protected $title = '';
 
@@ -45,13 +49,13 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $startDate = '';
 
     /**
-     * @var \Blueways\BwGuild\Domain\Model\User
+     * @var User
      */
     protected $feUser;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\User>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<User>
+     * @Lazy
      */
     protected $feUsers;
 
@@ -67,7 +71,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     /**
      * @var string
-     * @TYPO3\CMS\Extbase\Annotation\Validate("EmailAddress")
+     * @Validate("EmailAddress")
      */
     protected $contactMail = '';
 
@@ -122,8 +126,8 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     protected $crdate;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<Category>
+     * @Lazy
      */
     protected $categories;
 
@@ -153,7 +157,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
+     * @return ObjectStorage|null
      */
     public function getFeUsers()
     {
@@ -161,9 +165,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers
+     * @param ObjectStorage $feUsers
      */
-    public function setFeUsers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $feUsers)
+    public function setFeUsers(ObjectStorage $feUsers)
     {
         $this->feUsers = $feUsers;
     }
@@ -217,7 +221,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
     public function getCategories()
     {
@@ -225,9 +229,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     * @param ObjectStorage $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories)
+    public function setCategories(ObjectStorage $categories)
     {
         $this->categories = $categories;
     }
@@ -444,7 +448,7 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @return \Blueways\BwGuild\Domain\Model\User|null
+     * @return User|null
      */
     public function getFeUser()
     {
@@ -452,9 +456,9 @@ class Offer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\User $feUser
+     * @param User $feUser
      */
-    public function setFeUser(\Blueways\BwGuild\Domain\Model\User $feUser)
+    public function setFeUser(User $feUser)
     {
         $this->feUser = $feUser;
     }

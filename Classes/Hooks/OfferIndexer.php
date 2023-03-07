@@ -26,7 +26,7 @@ class OfferIndexer extends IndexerBase
         // prepare hooks
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex']) && is_array($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'])) {
             foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['bw_guild']['afterOfferIndex'] as $classRef) {
-                $this->hookObjectsArr[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance($classRef);
+                $this->hookObjectsArr[] = GeneralUtility::makeInstance($classRef);
             }
         }
     }
@@ -56,7 +56,7 @@ class OfferIndexer extends IndexerBase
 
     /**
      * @param array $indexerConfig
-     * @param \Tpwd\KeSearch\Indexer\IndexerRunner $indexerObject
+     * @param IndexerRunner $indexerObject
      * @return string
      */
     public function customIndexer(array &$indexerConfig, IndexerRunner &$indexerObject): string

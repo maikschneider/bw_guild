@@ -19,7 +19,13 @@ namespace Blueways\BwGuild\Property\TypeConverter;
  *  GNU General Public License for more details.
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder;
+use TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException;
+use TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException;
+use TYPO3\CMS\Extbase\Security\Exception\InvalidHashException;
+use TYPO3\CMS\Core\Resource\DuplicationBehavior;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
@@ -56,9 +62,6 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      */
     public const CONFIGURATION_ALLOWED_FILE_EXTENSIONS = 4;
 
-    /**
-     * @var string
-     */
     protected string $defaultUploadFolder = '1:/user_upload/';
 
     /**
@@ -85,14 +88,14 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     protected PersistenceManager $persistenceManager;
 
     /**
-     * @var \TYPO3\CMS\Core\Resource\FileInterface[]
+     * @var FileInterface[]
      */
     protected array $convertedResources = [];
 
     /**
-     * @param \TYPO3\CMS\Core\Resource\ResourceFactory $resourceFactory
-     * @param \TYPO3\CMS\Extbase\Security\Cryptography\HashService $hashService
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager $persistenceManager
+     * @param ResourceFactory $resourceFactory
+     * @param HashService $hashService
+     * @param PersistenceManager $persistenceManager
      */
     public function __construct(
         ResourceFactory $resourceFactory,
@@ -111,12 +114,12 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
      * @param string|int $source
      * @param string $targetType
      * @param array $convertedChildProperties
-     * @param \TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface|null $configuration
-     * @return \TYPO3\CMS\Extbase\Domain\Model\AbstractFileFolder
-     * @throws \TYPO3\CMS\Core\Resource\Exception\FileDoesNotExistException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ResourceDoesNotExistException
-     * @throws \TYPO3\CMS\Extbase\Security\Exception\InvalidArgumentForHashGenerationException
-     * @throws \TYPO3\CMS\Extbase\Security\Exception\InvalidHashException
+     * @param PropertyMappingConfigurationInterface|null $configuration
+     * @return AbstractFileFolder
+     * @throws FileDoesNotExistException
+     * @throws ResourceDoesNotExistException
+     * @throws InvalidArgumentForHashGenerationException
+     * @throws InvalidHashException
      * @api
      */
     public function convertFrom(
@@ -242,7 +245,7 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             self::CONFIGURATION_UPLOAD_FOLDER
         ) ?: $this->defaultUploadFolder;
         if (class_exists('TYPO3\\CMS\\Core\\Resource\\DuplicationBehavior')) {
-            $defaultConflictMode = \TYPO3\CMS\Core\Resource\DuplicationBehavior::RENAME;
+            $defaultConflictMode = DuplicationBehavior::RENAME;
         } else {
             // @deprecated since 7.6 will be removed once 6.2 support is removed
             $defaultConflictMode = 'changeName';

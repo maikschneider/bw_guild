@@ -3,7 +3,7 @@
 use TYPO3\CMS\Core\Resource\AbstractFile;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
-defined('TYPO3_MODE') || die();
+defined('TYPO3') || die();
 
 call_user_func(function () {
     /**
@@ -51,7 +51,6 @@ call_user_func(function () {
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.features',
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'tx_bwguild_domain_model_feature',
                 'foreign_table' => 'tx_bwguild_domain_model_feature',
                 'MM' => 'tx_bwguild_feature_feuser_mm',
@@ -168,7 +167,6 @@ call_user_func(function () {
             'exclude' => 1,
             'config' => [
                 'type' => 'group',
-                'internal_type' => 'db',
                 'allowed' => 'pages,fe_users,sys_file',
                 'minitems' => 0,
                 'size' => 5,

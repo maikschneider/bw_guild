@@ -2,6 +2,23 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use Blueways\BwGuild\Domain\Repository\UserRepository;
+use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository;
+use Blueways\BwGuild\Domain\Repository\OfferRepository;
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException;
+use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException;
+use TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException;
+use TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException;
+use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
+use TYPO3\CMS\Core\Resource\ResourceFactory;
+use TYPO3\CMS\Core\Resource\FileInterface;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 use Blueways\BwGuild\Domain\Model\User;
 use ReflectionClass;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
@@ -17,48 +34,49 @@ use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 class AdministrationController extends ActionController
 {
     /**
-     * @var \Blueways\BwGuild\Domain\Repository\UserRepository
+     * @var UserRepository
      */
     protected $userRepository;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository
+     * @var FrontendUserGroupRepository
      */
     protected $usergroupRepository;
 
     /**
-     * @var \Blueways\BwGuild\Domain\Repository\OfferRepository
+     * @var OfferRepository
      */
     protected $offerRepository;
 
-    public function indexAction()
+    public function indexAction(): ResponseInterface
     {
         $this->selectFirstView();
 
         $users = $this->userRepository->findAll();
 
         $this->view->assign('users', $users);
+        return $this->htmlResponse();
     }
 
-    public function injectOfferRepository(\Blueways\BwGuild\Domain\Repository\OfferRepository $offerRepository)
+    public function injectOfferRepository(OfferRepository $offerRepository)
     {
         $this->offerRepository = $offerRepository;
     }
 
-    public function injectUserRepository(\Blueways\BwGuild\Domain\Repository\UserRepository $userRepository)
+    public function injectUserRepository(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
     }
 
     public function injectUsergroupRepository(
-        \TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository $usergroupRepository
+        FrontendUserGroupRepository $usergroupRepository
     ) {
         $this->usergroupRepository = $usergroupRepository;
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws InvalidConfigurationTypeException
+     * @throws StopActionException
      */
     protected function selectFirstView()
     {
@@ -71,30 +89,31 @@ class AdministrationController extends ActionController
         }
     }
 
-    public function offerAction()
+    public function offerAction(): ResponseInterface
     {
         $offers = $this->offerRepository->findAll();
         $offerGroups = $this->offerRepository->getGroupedOffers();
 
         $this->view->assign('offers', $offers);
         $this->view->assign('offerGroups', $offerGroups);
+        return $this->htmlResponse();
     }
 
     /**
-     * @throws \TYPO3\CMS\Backend\Routing\Exception\RouteNotFoundException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @throws RouteNotFoundException
+     * @throws ExistingTargetFolderException
+     * @throws InsufficientFolderAccessPermissionsException
+     * @throws InsufficientFolderWritePermissionsException
+     * @throws NoSuchArgumentException
      */
-    public function importerAction()
+    public function importerAction(): ResponseInterface
     {
         $uriBuilder = $this->objectManager->get(UriBuilder::class);
         $formAction = (string)$uriBuilder->buildUriFromRoute('tce_file');
         $formRedirect = (string)$uriBuilder->buildUriFromRoute('bwguild_csv_import');
 
         // get storage
-        $resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $storage = $resourceFactory->getDefaultStorage();
 
         // create upload folder
@@ -128,14 +147,15 @@ class AdministrationController extends ActionController
         $this->view->assign('formRedirect', $formRedirect);
         $this->view->assign('formTarget', $formTarget);
         $this->view->assign('files', $files);
+        return $this->htmlResponse();
     }
 
     /**
      * @param $identifier
      * @return bool|mixed
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
+     * @throws ExistingTargetFolderException
+     * @throws InsufficientFolderAccessPermissionsException
+     * @throws InsufficientFolderWritePermissionsException
      */
     private function getCsvDataFromIdentifier(
         $identifier
@@ -152,15 +172,15 @@ class AdministrationController extends ActionController
 
     /**
      * @param string $identifier
-     * @return bool|\TYPO3\CMS\Core\Resource\FileInterface
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
+     * @return bool|FileInterface
+     * @throws ExistingTargetFolderException
+     * @throws InsufficientFolderAccessPermissionsException
+     * @throws InsufficientFolderWritePermissionsException
      */
     private function getFileFromIdentifier(
         $identifier
     ) {
-        $resourceFactory = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance();
+        $resourceFactory = GeneralUtility::makeInstance(ResourceFactory::class);
         $storage = $resourceFactory->getDefaultStorage();
 
         // create upload folder
@@ -184,7 +204,7 @@ class AdministrationController extends ActionController
     }
 
     /**
-     * @param \TYPO3\CMS\Core\Resource\FileInterface $file
+     * @param FileInterface $file
      * @return mixed
      */
     private function getCsvDataFromCsvFile(
@@ -247,14 +267,14 @@ class AdministrationController extends ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Core\Resource\Exception\ExistingTargetFolderException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderAccessPermissionsException
-     * @throws \TYPO3\CMS\Core\Resource\Exception\InsufficientFolderWritePermissionsException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws ExistingTargetFolderException
+     * @throws InsufficientFolderAccessPermissionsException
+     * @throws InsufficientFolderWritePermissionsException
+     * @throws NoSuchArgumentException
+     * @throws StopActionException
      * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
+     * @throws IllegalObjectTypeException
+     * @throws InvalidPasswordHashException
      */
     public function csvImportAction()
     {
@@ -284,7 +304,7 @@ class AdministrationController extends ActionController
             $this->addFlashMessage(
                 'With the current mapping, ' . count($users) . ' users can be created from your CSV',
                 count($users) . ' users found',
-                FlashMessage::INFO,
+                AbstractMessage::INFO,
                 false
             );
 
@@ -301,7 +321,7 @@ class AdministrationController extends ActionController
             $this->addFlashMessage(
                 count($users) . ' users have been created on this page',
                 'Import success',
-                FlashMessage::OK,
+                AbstractMessage::OK,
                 true
             );
 
@@ -320,7 +340,7 @@ class AdministrationController extends ActionController
      * @param array $csvMappings
      * @param array $fixValues
      * @return array
-     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
+     * @throws InvalidPasswordHashException
      */
     private function createUsersFromCsvDataMapping($rows, $csvMappings, $fixValues)
     {
@@ -382,7 +402,7 @@ class AdministrationController extends ActionController
             if ($groupUid) {
                 $group = $this->usergroupRepository->findByUid($groupUid);
                 if ($group) {
-                    $groupStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+                    $groupStorage = new ObjectStorage();
                     $groupStorage->attach($group);
                     $user->setUsergroup($groupStorage);
                 }
@@ -416,7 +436,7 @@ class AdministrationController extends ActionController
         return $users;
     }
 
-    public function passwordRefreshAction()
+    public function passwordRefreshAction(): ResponseInterface
     {
         $updated = 0;
         $users = $this->userRepository->findAll();
@@ -443,5 +463,6 @@ class AdministrationController extends ActionController
 
         $this->view->assign('users', $users);
         $this->view->assign('updated', $updated);
+        return $this->htmlResponse();
     }
 }

@@ -2,9 +2,11 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use Blueways\BwGuild\Domain\Model\AbstractUserFeature;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-class AbstractUserFeatureRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
+class AbstractUserFeatureRepository extends Repository
 {
     public function getFeaturesGroupedByRecordType(): array
     {
@@ -13,7 +15,7 @@ class AbstractUserFeatureRepository extends \TYPO3\CMS\Extbase\Persistence\Repos
         $features = $query->execute()->toArray();
         $groupedFeatures = [];
 
-        /** @var \Blueways\BwGuild\Domain\Model\AbstractUserFeature $feature */
+        /** @var AbstractUserFeature $feature */
         foreach ($features as $feature) {
             $groupedFeatures[(int)$feature->getRecordType()] ??= new ObjectStorage();
             $groupedFeatures[(int)$feature->getRecordType()]->attach($feature);

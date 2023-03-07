@@ -2,6 +2,18 @@
 
 namespace Blueways\BwGuild\Controller;
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
+use Doctrine\DBAL\DBALException;
+use TYPO3\CMS\Core\Http\PropagateResponseException;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Extbase\Annotation\IgnoreValidation;
+use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
 use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\CategoryRepository;
@@ -26,7 +38,7 @@ use TYPO3\CMS\Extbase\Validation\Validator\GenericObjectValidator;
 /**
  * Class UserController
  */
-class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class UserController extends ActionController
 {
     protected UserRepository $userRepository;
 
@@ -91,9 +103,9 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
     /**
      * @param ?UserDemand $demand
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Generic\Exception
+     * @throws NoSuchArgumentException
+     * @throws InvalidQueryException
+     * @throws Exception
      */
     public function listAction(UserDemand $demand = null): ResponseInterface
     {
@@ -148,8 +160,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @return \Psr\Http\Message\ResponseInterface
-     * @throws \Doctrine\DBAL\DBALException
+     * @return ResponseInterface
+     * @throws DBALException
      * @throws \Doctrine\DBAL\Driver\Exception
      */
     public function searchAction(): ResponseInterface
@@ -223,8 +235,8 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
-     * @throws \TYPO3\CMS\Core\Http\PropagateResponseException
+     * @throws InvalidQueryException
+     * @throws PropagateResponseException
      */
     public function editAction(): ResponseInterface
     {
@@ -242,7 +254,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @throws NoSuchArgumentException
      */
     public function initializeUpdateAction(): void
     {
@@ -274,11 +286,11 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Core\Http\PropagateResponseException
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\NoSuchArgumentException
+     * @throws StopActionException
+     * @throws UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws PropagateResponseException
+     * @throws NoSuchArgumentException
      */
     public function updateAction(User $user): void
     {
@@ -309,14 +321,14 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.update.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+            AbstractMessage::OK
         );
 
         $this->redirect('edit');
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Localization\LanguageService
+     * @return LanguageService
      */
     protected function getLanguageService(): LanguageService
     {
@@ -324,21 +336,22 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     }
 
     /**
-     * @param \Blueways\BwGuild\Domain\Model\User|null $user
-     * @TYPO3\CMS\Extbase\Annotation\IgnoreValidation("user")
+     * @param User|null $user
+     * @IgnoreValidation("user")
      */
-    public function newAction(User $user = null): void
+    public function newAction(User $user = null): ResponseInterface
     {
         if (!$user) {
             $user = new User();
         }
         $this->view->assign('user', $user);
+        return $this->htmlResponse();
     }
 
     /**
-     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
-     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
+     * @throws StopActionException
+     * @throws InvalidPasswordHashException
+     * @throws IllegalObjectTypeException
      */
     public function createAction(User $user): void
     {
@@ -346,7 +359,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.loggedin.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::WARNING
+                AbstractMessage::WARNING
             );
             $this->redirect('new');
         }
@@ -355,7 +368,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.message'),
                 $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.exists.title'),
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR
+                AbstractMessage::ERROR
             );
             $this->redirect('new');
         }
@@ -372,7 +385,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         $this->addFlashMessage(
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.message'),
             $this->getLanguageService()->sL('LLL:EXT:bw_guild/Resources/Private/Language/locallang_fe.xlf:user.create.success.title'),
-            \TYPO3\CMS\Core\Messaging\AbstractMessage::OK
+            AbstractMessage::OK
         );
 
         $this->view->assign('user', $user);
@@ -381,7 +394,7 @@ class UserController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     /**
      * @param string $password
      * @return string
-     * @throws \TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException
+     * @throws InvalidPasswordHashException
      */
     private function encryptPassword(string $password): string
     {

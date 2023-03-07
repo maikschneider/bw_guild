@@ -2,6 +2,9 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Driver\Exception;
+use Doctrine\DBAL\Result;
 use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use PDO;
 use TYPO3\CMS\Core\Context\Context;
@@ -166,8 +169,8 @@ class UserRepository extends AbstractDemandRepository
     /**
      * @param array<string, string> $autocompleter
      * @return array<string, array<mixed>>
-     * @throws \Doctrine\DBAL\DBALException
-     * @throws \Doctrine\DBAL\Driver\Exception
+     * @throws DBALException
+     * @throws Exception
      */
     public function getAutocompleteData(array $autocompleter): array
     {
@@ -202,7 +205,7 @@ class UserRepository extends AbstractDemandRepository
 
                 $result = $query->execute();
 
-                if (!$result instanceof \Doctrine\DBAL\Result) {
+                if (!$result instanceof Result) {
                     continue;
                 }
 

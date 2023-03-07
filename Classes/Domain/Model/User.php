@@ -2,6 +2,9 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
+use TYPO3\CMS\Extbase\Domain\Model\Category;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Blueways\BwGuild\Service\GeoService;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -32,20 +35,20 @@ class User extends FrontendUser
     protected $memberNr = '';
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<Offer>
+     * @Lazy
      */
     protected $offers;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\AbstractUserFeature>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<AbstractUserFeature>
+     * @Lazy
      */
     protected $features;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\TYPO3\CMS\Extbase\Domain\Model\Category>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<Category>
+     * @Lazy
      */
     protected $categories;
 
@@ -60,8 +63,8 @@ class User extends FrontendUser
     protected $longitude;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Lazy
+     * @var ObjectStorage<Offer>
+     * @Lazy
      */
     protected $sharedOffers;
 
@@ -198,7 +201,7 @@ class User extends FrontendUser
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage|null
+     * @return ObjectStorage|null
      */
     public function getSharedOffers()
     {
@@ -206,15 +209,15 @@ class User extends FrontendUser
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $sharedOffers
+     * @param ObjectStorage $sharedOffers
      */
-    public function setSharedOffers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $sharedOffers): void
+    public function setSharedOffers(ObjectStorage $sharedOffers): void
     {
         $this->sharedOffers = $sharedOffers;
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Blueways\BwGuild\Domain\Model\Offer>
+     * @return ObjectStorage<Offer>
      */
     public function getAllOffers()
     {
@@ -243,33 +246,33 @@ class User extends FrontendUser
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
-    public function getCategories(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getCategories(): ObjectStorage
     {
         return $this->categories;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories
+     * @param ObjectStorage $categories
      */
-    public function setCategories(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $categories): void
+    public function setCategories(ObjectStorage $categories): void
     {
         $this->categories = $categories;
     }
 
     /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     * @return ObjectStorage
      */
-    public function getOffers(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getOffers(): ObjectStorage
     {
         return $this->offers;
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $offers
+     * @param ObjectStorage $offers
      */
-    public function setOffers(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $offers): void
+    public function setOffers(ObjectStorage $offers): void
     {
         $this->offers = $offers;
     }
@@ -324,7 +327,7 @@ class User extends FrontendUser
 
     public function geoCodeAddress()
     {
-        $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
+        $geocodingService = GeneralUtility::makeInstance(GeoService::class);
         $coords = $geocodingService->getCoordinatesForAddress(
             $this->getAddress(),
             $this->getZip(),
@@ -382,7 +385,7 @@ class User extends FrontendUser
     public function getFeaturesGroupedByRecordType(): array
     {
         $groupedFeatures = [];
-        /** @var \Blueways\BwGuild\Domain\Model\AbstractUserFeature $feature */
+        /** @var AbstractUserFeature $feature */
         foreach ($this->features as $feature) {
             $groupedFeatures[(int)$feature->getRecordType()] ??= new ObjectStorage();
             $groupedFeatures[(int)$feature->getRecordType()]->attach($feature);

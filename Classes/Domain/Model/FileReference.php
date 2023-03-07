@@ -2,6 +2,8 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use TYPO3\CMS\Core\Resource\ResourceInterface;
+use TYPO3\CMS\Core\Resource\File;
 class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
 {
     /**
@@ -14,9 +16,9 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
     /**
      * setOriginalResource
      *
-     * @param \TYPO3\CMS\Core\Resource\ResourceInterface $originalResource
+     * @param ResourceInterface $originalResource
      */
-    public function setOriginalResource(\TYPO3\CMS\Core\Resource\ResourceInterface $originalResource): void
+    public function setOriginalResource(ResourceInterface $originalResource): void
     {
         $this->originalResource = $originalResource;
         $this->originalFileIdentifier = (int)$originalResource->getOriginalFile()->getUid();
@@ -26,9 +28,9 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
     /**
      * setFile
      *
-     * @param \TYPO3\CMS\Core\Resource\File $falFile
+     * @param File $falFile
      */
-    public function setFile(\TYPO3\CMS\Core\Resource\File $falFile): void
+    public function setFile(File $falFile): void
     {
         $this->originalFileIdentifier = (int)$falFile->getUid();
     }

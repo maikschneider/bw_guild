@@ -19,7 +19,8 @@ namespace Blueways\BwGuild\Service;
  *  GNU General Public License for more details.
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
-
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -60,7 +61,7 @@ class GeoService
         $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
         try {
             $typoscript = $configurationManager->getConfiguration(ConfigurationManager::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
-        } catch (\TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException $exception) {
+        } catch (InvalidConfigurationTypeException $exception) {
         }
 
         // load from extension configuration
@@ -231,7 +232,7 @@ class GeoService
         try {
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
             return $cacheManager->getCache('bwguild');
-        } catch (\TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException $e) {
+        } catch (NoSuchCacheException $e) {
             throw new \RuntimeException('Unable to load Cache!', 1487138924);
         }
     }

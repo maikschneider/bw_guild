@@ -2,12 +2,14 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
+use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
 class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
 {
     /**
      * @param $categoryList
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @return array|QueryResultInterface
+     * @throws InvalidQueryException
      */
     public function findFromUidList($categoryList)
     {
@@ -20,8 +22,8 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRe
 
     /**
      * @param $categoryList
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException
+     * @return array|QueryResultInterface
+     * @throws InvalidQueryException
      */
     public function findFromUidListNot($categoryList)
     {

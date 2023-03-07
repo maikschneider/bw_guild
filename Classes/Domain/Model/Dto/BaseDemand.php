@@ -287,7 +287,7 @@ class BaseDemand
      */
     public function geoCodeSearchString(): bool
     {
-        $geocodingService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(GeoService::class);
+        $geocodingService = GeneralUtility::makeInstance(GeoService::class);
         $coords = $geocodingService->getCoordinatesForAddress($this->searchDistanceAddress);
 
         if (!count($coords)) {
