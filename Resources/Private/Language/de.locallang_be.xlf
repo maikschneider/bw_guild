@@ -208,14 +208,6 @@
 			<trans-unit id="usersearch.wizard.description">
 				<source>Zeigt ein Suchformular für die Benutzersuche an</source>
 			</trans-unit>
-			<trans-unit id="marketplace.wizard.title">
-				<source>Marketplace</source>
-				<target>Marktplatz</target>
-			</trans-unit>
-			<trans-unit id="marketplace.wizard.description">
-				<source>Displays latest products from users</source>
-				<target>Zeigt die letzten Angebote und Gesuche von Benutzern an</target>
-			</trans-unit>
 			<trans-unit id="offershow.wizard.title">
 				<source>Offer show</source>
 				<target>Angebot Detail</target>

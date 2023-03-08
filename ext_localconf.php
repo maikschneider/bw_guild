@@ -56,18 +56,6 @@ defined('TYPO3') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
     'BwGuild',
-    'Marketplace',
-    [
-        \Blueways\BwGuild\Controller\OfferController::class => 'list',
-    ],
-    // non-cacheable actions
-    [
-        \Blueways\BwGuild\Controller\OfferController::class => 'list',
-    ]
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-    'BwGuild',
     'Offerlatest',
     [
         \Blueways\BwGuild\Controller\OfferController::class => 'latest',

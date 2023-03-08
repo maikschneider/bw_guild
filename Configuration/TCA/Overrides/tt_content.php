@@ -50,10 +50,3 @@ $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['bwguild_offe
     'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:usersearch.wizard.title',
     'tx_bwguild_search'
 );
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-    'BwGuild',
-    'Marketplace',
-    'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:marketplace.wizard.title',
-    'tx_bwguild_marketplace'
-);

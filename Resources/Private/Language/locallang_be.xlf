@@ -184,12 +184,6 @@
 			<trans-unit id="usersearch.wizard.description">
 				<source>Displays a form to search for user</source>
 			</trans-unit>
-			<trans-unit id="marketplace.wizard.title">
-				<source>Marketplace</source>
-			</trans-unit>
-			<trans-unit id="marketplace.wizard.description">
-				<source>Displays latest products from users</source>
-			</trans-unit>
 			<trans-unit id="offershow.wizard.title">
 				<source>Offer show</source>
 			</trans-unit>
