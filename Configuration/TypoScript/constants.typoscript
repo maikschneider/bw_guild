@@ -25,8 +25,8 @@ plugin {
 
   tx_bwguild_offerlist {
     settings {
-      maxItems =
-      maximumLinks =
+      maxItems = 10
+      maximumLinks = 6
       schema {
         enable = 1
         hiringOrganization.name =

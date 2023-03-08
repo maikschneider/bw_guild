@@ -98,10 +98,6 @@ class UserController extends ActionController
         $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
         $paginator = new ArrayPaginator($users, $currentPage, $itemsPerPage);
         $pagination = new NumberedPaginationAlias($paginator, $maximumLinks);
-        $this->view->assign('pagination', [
-            'paginator' => $paginator,
-            'pagination' => $pagination,
-        ]);
 
         $numberOfResults = count($users);
         $users = $this->userRepository->mapResultToObjects($paginator->getPaginatedItems());

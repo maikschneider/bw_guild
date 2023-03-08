@@ -3,9 +3,13 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\User;
+use Blueways\BwGuild\Domain\Repository\CategoryRepository;
+use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias;
+use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\Page\AssetCollector;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
@@ -29,7 +33,8 @@ class OfferController extends ActionController
     public function __construct(
         protected OfferRepository $offerRepository,
         protected UserRepository $userRepository,
-        protected AccessControlService $accessControlService
+        protected AccessControlService $accessControlService,
+        protected CategoryRepository $categoryRepository
     ) {
     }
 
@@ -42,7 +47,26 @@ class OfferController extends ActionController
             $demand->overrideFromRequest($this->request);
         }
 
+        // get categories by category settings in plugin
+        $catConjunction = $this->settings['categoryConjunction'];
+        if ($catConjunction === 'or' || $catConjunction === 'and') {
+            $categories = $this->categoryRepository->findFromUidList($this->settings['categories']);
+        } elseif ($catConjunction === 'notor' || $catConjunction === 'notand') {
+            $categories = $this->categoryRepository->findFromUidListNot($this->settings['categories']);
+        } else {
+            $categories = $this->categoryRepository->findAll();
+        }
         $offers = $this->offerRepository->findDemanded($demand);
+
+        // create pagination
+        $itemsPerPage = (int)$this->settings['maxItems'];
+        $maximumLinks = (int)$this->settings['maximumLinks'];
+        $currentPage = $this->request->hasArgument('currentPage') ? (int)$this->request->getArgument('currentPage') : 1;
+        $paginator = new ArrayPaginator($offers, $currentPage, $itemsPerPage);
+        $pagination = new NumberedPaginationAlias($paginator, $maximumLinks);
+
+        $numberOfResults = count($offers);
+        $offers = $this->offerRepository->mapResultToObjects($paginator->getPaginatedItems());
 
         // disbale indexing of list view
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
@@ -50,6 +74,14 @@ class OfferController extends ActionController
 
         $this->view->setTemplate($this->settings['template'] ?? 'List');
         $this->view->assign('offers', $offers);
+        $this->view->assign('demand', $demand);
+        $this->view->assign('categories', $categories);
+        $this->view->assign('pagination', [
+            'currentPage' => $currentPage,
+            'paginator' => $paginator,
+            'pagination' => $pagination,
+            'numberOfResults' => $numberOfResults,
+        ]);
 
         return $this->htmlResponse($this->view->render());
     }
@@ -64,8 +96,12 @@ class OfferController extends ActionController
         return $this->htmlResponse();
     }
 
-    public function showAction(Offer $offer): ResponseInterface
+    public function showAction(?Offer $offer = null): ResponseInterface
     {
+        if (!$offer || !$offer->isPublic()) {
+            throw new PageNotFoundException('Offer not found', 1678267226);
+        }
+
         $schema = $offer->getJsonSchema($this->settings);
 
         if (isset($this->settings['schema.']['enable']) && $this->settings['schema.']['enable']) {

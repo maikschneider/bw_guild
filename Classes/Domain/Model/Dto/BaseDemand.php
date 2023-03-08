@@ -19,6 +19,8 @@ class BaseDemand
 
     public string $categoryConjunction = '';
 
+    public string $category = '';
+
     public string $search = '';
 
     public string $excludeSearchFields = '';
@@ -40,6 +42,8 @@ class BaseDemand
     public float $longitude = 0.0;
 
     public int $limit = -1;
+
+    public string $recordType = '';
 
     /**
      * @return int
