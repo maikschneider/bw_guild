@@ -62,6 +62,13 @@ class Offer extends AbstractEntity
 
     protected ?\DateTime $crdate = null;
 
+    protected bool $public = true;
+
+    public function isPublic(): bool
+    {
+        return $this->public;
+    }
+
     /**
      * @var ObjectStorage<Category>|null
      * @Lazy

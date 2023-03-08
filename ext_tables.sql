@@ -53,7 +53,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	categories int(11) DEFAULT 0 NOT NULL,
 	images varchar(11) DEFAULT 0,
 	price decimal(10, 2) DEFAULT 0 NOT NULL,
-	public tinyint(4) DEFAULT 0 NOT NULL,
+	public tinyint(4) DEFAULT 1 NOT NULL,
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
