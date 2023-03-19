@@ -2,6 +2,7 @@
 
 namespace Blueways\BwGuild\Domain\Model\Dto;
 
+use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Model\User;
 
 class Userinfo
@@ -40,6 +41,30 @@ class Userinfo
         $this->user['email'] = $feUser->getEmail();
         $expireDate = (new \DateTime('now'))->modify('+2 minutes');
         $this->validUntil = $expireDate->getTimestamp();
+        $this->offers = $this->getUserOffers($feUser);
+    }
+
+    protected function getUserOffers(User $feUser): array
+    {
+        $offers = [];
+        /** @var Offer $userOffer */
+        foreach ($feUser->getOffers() ?? [] as $userOffer) {
+            $offerArray = [];
+            $offerArray['url'] = '#';
+            $offerArray['uid'] = $userOffer->getUid();
+            $offerArray['title'] = $userOffer->getTitle();
+            $offerArray['crdate'] = $userOffer->getCrdate()->getTimestamp();
+            $offerArray['categories'] = [];
+            foreach ($userOffer->getCategories() as $category) {
+                $offerArray['categories'][] = [
+                    'uid' => $category->getUid(),
+                    'title' => $category->getTitle(),
+                ];
+            }
+
+            $offers[] = $offerArray;
+        }
+        return $offers;
     }
 
     public function cleanBookmarkFields(): void

@@ -95,6 +95,22 @@ class ApiController extends ActionController
             }
         }
 
+        if ($this->settings['showOfferPid']) {
+            foreach ($userinfo->offers as &$offer) {
+                $url = $this->uriBuilder
+                    ->reset()
+                    ->setTargetPageUid((int)$this->settings['showOfferPid'])
+                    ->uriFor(
+                        'show',
+                        ['offer' => $offer['uid']],
+                        'Offer',
+                        'BwGuild',
+                        'Offershow'
+                    );
+                $offer['url'] = $url;
+            }
+        }
+
         $this->eventDispatcher->dispatch(new UserInfoApiEvent($userinfo));
 
         $this->view->assign('userinfo', $userinfo);
