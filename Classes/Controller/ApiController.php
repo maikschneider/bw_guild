@@ -300,6 +300,8 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
+        $offer->updateSlug();
+
         if ($offer->getUid()) {
             $this->offerRepository->update($offer);
         } else {

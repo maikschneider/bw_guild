@@ -1,4 +1,18 @@
 routeEnhancers:
+  BwGuildOfferShow:
+    type: Extbase
+    extension: BwGuild
+    plugin: Offershow
+    routes:
+      - routePath: '/{offer}'
+        _controller: 'Offer::show'
+        _arguments:
+          offer: offer
+    aspects:
+      offer:
+        type: PersistedAliasMapper
+        tableName: tx_bwguild_domain_model_offer
+        routeFieldName: slug
   BwGuildOffer:
     type: Extbase
     extension: BwGuild
