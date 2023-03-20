@@ -6,11 +6,13 @@ use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
 use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
+use Blueways\BwGuild\Domain\Repository\CategoryRepository;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Event\InitializeUserUpdateEvent;
 use Blueways\BwGuild\Event\UserEditFormEvent;
 use Blueways\BwGuild\Event\UserInfoApiEvent;
+use Blueways\BwGuild\Property\TypeConverter\PriceConverter;
 use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
@@ -31,7 +33,8 @@ class ApiController extends ActionController
         protected UserRepository $userRepository,
         protected AbstractUserFeatureRepository $featureRepository,
         protected CacheManager $cacheManager,
-        protected OfferRepository $offerRepository
+        protected OfferRepository $offerRepository,
+        protected CategoryRepository $categoryRepository
     ) {
     }
 
@@ -241,10 +244,20 @@ class ApiController extends ActionController
         if (!$offer) {
             $offer = new Offer();
             $offer->setFeUser($user);
-            $offer->setTitle('test');
+        }
+
+        // get categories by category settings in plugin
+        $catConjunction = $this->settings['categoryConjunction'] ?? '';
+        if ($catConjunction === 'or' || $catConjunction === 'and') {
+            $categories = $this->categoryRepository->findFromUidList($this->settings['categories'] ?? '');
+        } elseif ($catConjunction === 'notor' || $catConjunction === 'notand') {
+            $categories = $this->categoryRepository->findFromUidListNot($this->settings['categories'] ?? '');
+        } else {
+            $categories = $this->categoryRepository->findAll();
         }
 
         $this->view->assign('offer', $offer);
+        $this->view->assign('categories', $categories);
 
         ///** @var UserEditFormEvent $event */
         //$event = $this->eventDispatcher->dispatch(
@@ -256,6 +269,14 @@ class ApiController extends ActionController
         $response = ['html' => $html];
 
         return $this->jsonResponse((string)json_encode($response));
+    }
+
+    public function initializeOfferEditUpdateAction(): void
+    {
+        $propertyMappingConfiguration = $this->arguments->getArgument('offer')->getPropertyMappingConfiguration();
+        $propertyMappingConfiguration->forProperty('price')->setTypeConverter(
+            GeneralUtility::makeInstance(PriceConverter::class),
+        );
     }
 
     public function offerEditUpdateAction(Offer $offer): ResponseInterface
@@ -270,7 +291,11 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
-        $this->offerRepository->update($offer);
+        if ($offer->getUid()) {
+            $this->offerRepository->update($offer);
+        } else {
+            $this->offerRepository->add($offer);
+        }
 
         // clear page cache by tag
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());

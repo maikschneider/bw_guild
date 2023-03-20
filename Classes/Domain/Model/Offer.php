@@ -37,7 +37,7 @@ class Offer extends AbstractEntity
      */
     protected ?ObjectStorage $feUsers = null;
 
-    protected string $slug;
+    protected string $slug = '';
 
     protected string $contactPerson = '';
 
@@ -63,6 +63,18 @@ class Offer extends AbstractEntity
     protected ?\DateTime $crdate = null;
 
     protected bool $public = true;
+
+    protected float $price = 0.0;
+
+    public function getPrice(): float
+    {
+        return $this->price;
+    }
+
+    public function setPrice(float $price): void
+    {
+        $this->price = $price;
+    }
 
     public function isPublic(): bool
     {
