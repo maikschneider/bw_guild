@@ -12,7 +12,6 @@ CREATE TABLE fe_users (
 	bookmarks varchar(255) DEFAULT '' NOT NULL,
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
-	categories int(11) DEFAULT 0 NOT NULL,
 	latitude decimal(10, 8) DEFAULT 0 NOT NULL,
 	longitude decimal(11, 8) DEFAULT 0 NOT NULL
 );
@@ -50,7 +49,6 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 	contact_person varchar(255) DEFAULT '' NOT NULL,
 	contact_mail varchar(255) DEFAULT '' NOT NULL,
 	contact_phone varchar(255) DEFAULT '' NOT NULL,
-	categories int(11) DEFAULT 0 NOT NULL,
 	images varchar(11) DEFAULT 0,
 	price decimal(10, 2) DEFAULT 0 NOT NULL,
 	public tinyint(4) DEFAULT 1 NOT NULL,

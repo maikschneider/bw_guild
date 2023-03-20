@@ -145,6 +145,12 @@ call_user_func(function () {
                 'size' => 5,
             ],
         ],
+        'categories' => [
+            'label' => 'Category',
+            'config' => [
+                'type' => 'category'
+            ],
+        ],
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
@@ -162,13 +168,5 @@ call_user_func(function () {
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers',
         '',
         'after:description'
-    );
-
-    /**
-     * Connect to sys_categories
-     */
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::makeCategorizable(
-        'bw_guild',
-        'fe_users'
     );
 });

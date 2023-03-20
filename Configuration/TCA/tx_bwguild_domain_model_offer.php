@@ -477,6 +477,12 @@ return [
                     ]
                 ],
             ]
-        ]
+        ],
+        'categories' => [
+            'label' => 'Category',
+            'config' => [
+                'type' => 'category'
+            ],
+        ],
     ],
 ];
