@@ -3,8 +3,10 @@
 namespace Blueways\BwGuild\Controller;
 
 use Blueways\BwGuild\Domain\Model\Dto\Userinfo;
+use Blueways\BwGuild\Domain\Model\Offer;
 use Blueways\BwGuild\Domain\Model\User;
 use Blueways\BwGuild\Domain\Repository\AbstractUserFeatureRepository;
+use Blueways\BwGuild\Domain\Repository\OfferRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Event\InitializeUserUpdateEvent;
 use Blueways\BwGuild\Event\UserEditFormEvent;
@@ -23,24 +25,14 @@ use TYPO3\CMS\Extbase\Service\ImageService;
 
 class ApiController extends ActionController
 {
-    protected AccessControlService $accessControlService;
-
-    protected UserRepository $userRepository;
-
-    protected AbstractUserFeatureRepository $featureRepository;
-
-    protected CacheManager $cacheManager;
 
     public function __construct(
-        AccessControlService $accessControlService,
-        UserRepository $userRepository,
-        AbstractUserFeatureRepository $featureRepository,
-        CacheManager $cacheManager
+        protected AccessControlService $accessControlService,
+        protected UserRepository $userRepository,
+        protected AbstractUserFeatureRepository $featureRepository,
+        protected CacheManager $cacheManager,
+        protected OfferRepository $offerRepository
     ) {
-        $this->accessControlService = $accessControlService;
-        $this->userRepository = $userRepository;
-        $this->featureRepository = $featureRepository;
-        $this->cacheManager = $cacheManager;
     }
 
     public function userinfoAction(): ResponseInterface
@@ -89,7 +81,8 @@ class ApiController extends ActionController
             try {
                 $imageService = GeneralUtility::makeInstance(ImageService::class);
                 $image = $imageService->getImage('', $user->getLogo(), true);
-                $processedImage = $imageService->applyProcessingInstructions($image, ['width' => '75c', 'height' => '75c']);
+                $processedImage = $imageService->applyProcessingInstructions($image,
+                    ['width' => '75c', 'height' => '75c']);
                 $userinfo->user['logo'] = $processedImage->getPublicUrl();
             } catch (\Exception) {
             }
@@ -229,5 +222,59 @@ class ApiController extends ActionController
         $this->cacheManager->flushCachesByTag('fe_users_' . $user->getUid());
 
         return new ForwardResponse('userEditForm');
+    }
+
+    public function offerEditFormAction(?Offer $offer = null): ResponseInterface
+    {
+        if (!$this->accessControlService->hasLoggedInFrontendUser()) {
+            $this->throwStatus(403, 'No access');
+        }
+
+        $userId = $this->accessControlService->getFrontendUserUid();
+        /** @var User $user */
+        $user = $this->userRepository->findByUid($userId);
+
+        if ($offer && $offer->getFeUser()->getUid() !== $userId) {
+            $this->throwStatus(403, 'Permission denied');
+        }
+
+        if (!$offer) {
+            $offer = new Offer();
+            $offer->setFeUser($user);
+            $offer->setTitle('test');
+        }
+
+        $this->view->assign('offer', $offer);
+
+        ///** @var UserEditFormEvent $event */
+        //$event = $this->eventDispatcher->dispatch(
+        //    new UserEditFormEvent($user)
+        //);
+        //$this->view->assignMultiple($event->getAdditionalViewData());
+
+        $html = $this->view->render();
+        $response = ['html' => $html];
+
+        return $this->jsonResponse((string)json_encode($response));
+    }
+
+    public function offerEditUpdateAction(Offer $offer): ResponseInterface
+    {
+        if (!$this->accessControlService->hasLoggedInFrontendUser()) {
+            $this->throwStatus(403, 'No access');
+        }
+
+        $userId = $this->accessControlService->getFrontendUserUid();
+
+        if ($offer->getFeUser()->getUid() !== $userId) {
+            $this->throwStatus(403, 'Permission denied');
+        }
+
+        $this->offerRepository->update($offer);
+
+        // clear page cache by tag
+        $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
+
+        return new ForwardResponse('offerEditForm');
     }
 }
