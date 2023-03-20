@@ -23,4 +23,21 @@ routeEnhancers:
         _controller: 'Api::userEditForm'
       - routePath: '/api/userEditUpdate'
         _controller: 'Api::userEditUpdate'
+      - routePath: '/api/offer/delete/{offer}'
+        _controller: 'Api::offerDelete'
+        _arguments:
+          offer: offer
+        requirements:
+          offer: '\d+'
+      - routePath: '/api/offer/edit/{offer}'
+        _controller: 'Api::offerEditForm'
+        _arguments:
+          offer: offer
+        requirements:
+          offer: '\d+'
     defaultController: 'Api::userinfo'
+    aspects:
+      offer:
+        type: PersistedAliasMapper
+        tableName: tx_bwguild_domain_model_offer
+        routeFieldName: uid

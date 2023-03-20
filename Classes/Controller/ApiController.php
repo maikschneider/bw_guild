@@ -17,6 +17,7 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\RelationHandler;
+use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
@@ -38,18 +39,8 @@ class ApiController extends ActionController
     ) {
     }
 
-    public function userinfoAction(): ResponseInterface
+    protected function getUserinfoResponse(User $user): Userinfo
     {
-        if (!($userId = $this->accessControlService->getFrontendUserUid())) {
-            return $this->responseFactory->createResponse(403, '');
-        }
-
-        /** @var User|null $user */
-        $user = $this->userRepository->findByIdentifier($userId);
-        if (!$user) {
-            return $this->responseFactory->createResponse(404, '');
-        }
-
         $userinfo = new Userinfo($user);
 
         if ($bookmarks = $user->getBookmarks()) {
@@ -114,6 +105,23 @@ class ApiController extends ActionController
         $userinfo->html = $html;
 
         $userinfo->cleanBookmarkFields();
+
+        return $userinfo;
+    }
+
+    public function userinfoAction(): ResponseInterface
+    {
+        if (!($userId = $this->accessControlService->getFrontendUserUid())) {
+            return $this->responseFactory->createResponse(403, '');
+        }
+
+        /** @var User|null $user */
+        $user = $this->userRepository->findByIdentifier($userId);
+        if (!$user) {
+            return $this->responseFactory->createResponse(404, '');
+        }
+
+        $userinfo = $this->getUserinfoResponse($user);
 
         return $this->jsonResponse((string)json_encode($userinfo));
     }
@@ -265,8 +273,9 @@ class ApiController extends ActionController
         //);
         //$this->view->assignMultiple($event->getAdditionalViewData());
 
+        $userinfo = $this->getUserinfoResponse($user);
         $html = $this->view->render();
-        $response = ['html' => $html];
+        $response = ['html' => $html, 'userinfo' => $userinfo];
 
         return $this->jsonResponse((string)json_encode($response));
     }
@@ -301,5 +310,23 @@ class ApiController extends ActionController
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
 
         return new ForwardResponse('offerEditForm');
+    }
+
+    public function offerDeleteAction(Offer $offer): ResponseInterface
+    {
+        if (!$this->accessControlService->hasLoggedInFrontendUser()) {
+            $this->throwStatus(403, 'No access');
+        }
+
+        $userId = $this->accessControlService->getFrontendUserUid();
+
+        if ($offer->getFeUser()->getUid() !== $userId) {
+            $this->throwStatus(403, 'Permission denied');
+        }
+
+        $this->offerRepository->remove($offer);
+        $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
+
+        return new JsonResponse(['success' => true]);
     }
 }
