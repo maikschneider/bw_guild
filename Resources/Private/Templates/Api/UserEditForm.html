@@ -38,6 +38,7 @@
 					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName:
 						'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
 					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
+					<f:form.hidden id="hiddenCropAreaInput" property="logo.crop"/>
 
 					<f:if condition="{user.logo}">
 						<label for="deleteLogo" class="field__checkbox m-t-2">
