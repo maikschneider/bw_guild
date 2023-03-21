@@ -321,7 +321,7 @@ class ApiController extends ActionController
         // Persist
         GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
 
-        // clear page cache by tag
+        // clear cache by tag
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
 
         return new ForwardResponse('offerEditForm');
@@ -339,12 +339,17 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
+        $this->offerRepository->remove($offer);
+
+        // Persist
+        GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
+
+        // clear cache by tag
+        $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
+
         /** @var User $user */
         $user = $this->userRepository->findByUid($userId);
         $userinfo = $this->getUserinfoResponse($user);
-
-        $this->offerRepository->remove($offer);
-        $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
 
         $response = ['userinfo' => $userinfo];
         return $this->jsonResponse((string)json_encode($response));
