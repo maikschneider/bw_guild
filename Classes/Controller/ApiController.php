@@ -17,14 +17,17 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\RelationHandler;
-use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
+use TYPO3\CMS\Fluid\View\StandaloneView;
 
 class ApiController extends ActionController
 {
@@ -100,8 +103,14 @@ class ApiController extends ActionController
 
         $this->eventDispatcher->dispatch(new UserInfoApiEvent($userinfo));
 
-        $this->view->assign('userinfo', $userinfo);
-        $html = $this->view->render();
+        // Render Userinfo view (e.g. Sidebar)
+        $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $view = GeneralUtility::makeInstance(StandaloneView::class);
+        $view->setTemplateRootPaths($typoScript['view']['templateRootPaths']);
+        $view->setLayoutRootPaths($typoScript['view']['layoutRootPaths']);
+        $view->setPartialRootPaths($typoScript['view']['partialRootPaths']);
+        $view->assign('userinfo', $userinfo);
+        $html = $view->render('Api/Userinfo');
         $userinfo->html = $html;
 
         $userinfo->cleanBookmarkFields();
@@ -300,6 +309,7 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
+        $offer->setPid((int)$this->settings['storagePid']);
         $offer->updateSlug();
 
         if ($offer->getUid()) {
@@ -307,6 +317,9 @@ class ApiController extends ActionController
         } else {
             $this->offerRepository->add($offer);
         }
+
+        // Persist
+        GeneralUtility::makeInstance(PersistenceManager::class)->persistAll();
 
         // clear page cache by tag
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
@@ -326,9 +339,14 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
+        /** @var User $user */
+        $user = $this->userRepository->findByUid($userId);
+        $userinfo = $this->getUserinfoResponse($user);
+
         $this->offerRepository->remove($offer);
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
 
-        return new JsonResponse(['success' => true]);
+        $response = ['userinfo' => $userinfo];
+        return $this->jsonResponse((string)json_encode($response));
     }
 }
