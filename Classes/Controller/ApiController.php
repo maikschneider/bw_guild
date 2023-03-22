@@ -244,6 +244,14 @@ class ApiController extends ActionController
         return new ForwardResponse('userEditForm');
     }
 
+    public function initializeOfferEditFormAction(): void
+    {
+        $propertyMappingConfiguration = $this->arguments->getArgument('offer')->getPropertyMappingConfiguration();
+        $propertyMappingConfiguration->forProperty('price')->setTypeConverter(
+            GeneralUtility::makeInstance(PriceConverter::class),
+        );
+    }
+
     public function offerEditFormAction(?Offer $offer = null): ResponseInterface
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {
@@ -275,12 +283,6 @@ class ApiController extends ActionController
 
         $this->view->assign('offer', $offer);
         $this->view->assign('categories', $categories);
-
-        ///** @var UserEditFormEvent $event */
-        //$event = $this->eventDispatcher->dispatch(
-        //    new UserEditFormEvent($user)
-        //);
-        //$this->view->assignMultiple($event->getAdditionalViewData());
 
         $userinfo = $this->getUserinfoResponse($user);
         $html = $this->view->render();

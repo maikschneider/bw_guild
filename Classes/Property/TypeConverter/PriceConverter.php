@@ -14,6 +14,8 @@ class PriceConverter extends FloatConverter
             $source = 0.0;
         }
 
+        $source = str_replace(',', '.', $source);
+
         return parent::convertFrom($source, $targetType, $convertedChildProperties, $configuration);
     }
 }
