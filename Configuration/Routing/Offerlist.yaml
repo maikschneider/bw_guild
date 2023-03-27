@@ -8,6 +8,11 @@ routeEnhancers:
         _controller: 'Offer::show'
         _arguments:
           offer: offer
+      - routePath: '/preview/{offer}'
+        _controller: 'Offer::showPreview'
+        _arguments:
+          offer: offer
+    defaultController: 'Offer::show'
     aspects:
       offer:
         type: PersistedAliasMapper

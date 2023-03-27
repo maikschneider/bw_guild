@@ -121,6 +121,23 @@ class OfferController extends ActionController
         return $this->htmlResponse();
     }
 
+    public function showPreviewAction(?Offer $offer = null): ResponseInterface
+    {
+        if (!$offer || !$this->accessControlService->hasLoggedInFrontendUser()) {
+            throw new PageNotFoundException('Offer not found', 1679915676);
+        }
+
+        $userId = $this->accessControlService->getFrontendUserUid();
+        $isAccessible = $offer->getFeUser()?->getUid() === $userId;
+
+        if (!$isAccessible) {
+            throw new PageNotFoundException('No access', 1679915674);
+        }
+
+        $this->view->assign('offer', $offer);
+        return $this->htmlResponse();
+    }
+
     public function editAction(Offer $offer = null): ResponseInterface
     {
         if (!$this->accessControlService->hasLoggedInFrontendUser()) {

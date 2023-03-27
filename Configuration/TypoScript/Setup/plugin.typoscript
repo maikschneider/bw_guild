@@ -33,6 +33,7 @@ plugin {
       itemsPerPage = {$plugin.tx_bwguild.settings.itemsPerPage}
       showPid = {$plugin.tx_bwguild.settings.showPid}
       showOfferPid = {$plugin.tx_bwguild.settings.showOfferPid}
+      showOfferPreviewPid = {$plugin.tx_bwguild.settings.showOfferPreviewPid}
       schema.hiringOrganization {
         name = {$plugin.tx_bwguild.settings.schema.hiringOrganization.name}
         url = {$plugin.tx_bwguild.settings.schema.hiringOrganization.url}

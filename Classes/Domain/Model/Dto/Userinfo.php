@@ -53,6 +53,7 @@ class Userinfo
             $offerArray['url'] = '#';
             $offerArray['uid'] = $userOffer->getUid();
             $offerArray['title'] = $userOffer->getTitle();
+            $offerArray['public'] = $userOffer->isPublic();
             $offerArray['crdate'] = $userOffer->getCrdate()->getTimestamp();
             $offerArray['categories'] = [];
             foreach ($userOffer->getCategories() as $category) {

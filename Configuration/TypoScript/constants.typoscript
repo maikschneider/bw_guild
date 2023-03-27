@@ -17,6 +17,7 @@ plugin {
       itemsPerPage = 20
       showPid =
       showOfferPid =
+      showOfferPreviewPid =
       schema.hiringOrganization {
         name =
         url =

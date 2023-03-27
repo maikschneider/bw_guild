@@ -1,0 +1,27 @@
+<h1>PREVIEW: {offer.title}</h1>
+
+<f:format.raw>{offer.description}</f:format.raw>
+
+<f:if condition="{offer.conditions}">
+	<f:format.raw>{offer.conditions}</f:format.raw>
+</f:if>
+
+<f:if condition="{offer.possibilities}">
+	<f:format.raw>{offer.possibilities}</f:format.raw>
+</f:if>
+
+<f:if condition="{settings.userPid} && {offer.feUser}">
+	<f:link.action pageUid="{settings.userPid}" action="show" controller="User" arguments="{user: offer.feUser}">
+		{offer.feUser.company}</f:link.action>
+</f:if>
+
+<f:if condition="{offer.address}">
+	<f:then>
+		<p>{offer.address}<br/> {offer.zip} {offer.city}</p>
+	</f:then>
+	<f:else>
+		<p>{offer.feUser.address}<br/> {offer.feUser.zip} {offer.feUser.city}</p>
+	</f:else>
+</f:if>
+
+

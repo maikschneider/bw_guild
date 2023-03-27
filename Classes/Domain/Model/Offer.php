@@ -62,7 +62,7 @@ class Offer extends AbstractEntity
 
     protected ?\DateTime $crdate = null;
 
-    protected bool $public = true;
+    protected bool $public = false;
 
     protected float $price = 0.0;
 

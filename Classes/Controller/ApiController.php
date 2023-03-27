@@ -88,11 +88,13 @@ class ApiController extends ActionController
 
         if ($this->settings['showOfferPid']) {
             foreach ($userinfo->offers as &$offer) {
+                $actionName = $offer['public'] ? 'show' : 'showPreview';
+                $targetPid = $offer['public'] ? (int)$this->settings['showOfferPid'] : (int)$this->settings['showOfferPreviewPid'];
                 $url = $this->uriBuilder
                     ->reset()
-                    ->setTargetPageUid((int)$this->settings['showOfferPid'])
+                    ->setTargetPageUid($targetPid)
                     ->uriFor(
-                        'show',
+                        $actionName,
                         ['offer' => $offer['uid']],
                         'Offer',
                         'BwGuild',
@@ -268,7 +270,7 @@ class ApiController extends ActionController
         }
 
         if (!$offer) {
-            $offer = new Offer();
+            $offer = GeneralUtility::makeInstance(Offer::class);
             $offer->setFeUser($user);
         }
 

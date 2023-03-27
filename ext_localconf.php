@@ -49,7 +49,7 @@ defined('TYPO3') || die();
     'BwGuild',
     'Offershow',
     [
-        \Blueways\BwGuild\Controller\OfferController::class => 'show',
+        \Blueways\BwGuild\Controller\OfferController::class => 'show,showPreview',
     ],
     []
 );
