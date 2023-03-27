@@ -52,6 +52,7 @@ class Userinfo
             $offerArray = [];
             $offerArray['url'] = '#';
             $offerArray['uid'] = $userOffer->getUid();
+            $offerArray['record_type'] = $userOffer->getRecordType();
             $offerArray['title'] = $userOffer->getTitle();
             $offerArray['public'] = $userOffer->isPublic();
             $offerArray['crdate'] = $userOffer->getCrdate()->getTimestamp();
