@@ -2,6 +2,8 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
+
 /**
  * Class OfferRepository
  */
@@ -21,5 +23,23 @@ class OfferRepository extends AbstractDemandRepository
         }
 
         return $offers;
+    }
+
+    public function setConstraints($demand): void
+    {
+        parent::setConstraints($demand);
+
+        /** @var OfferDemand $demand */
+        $this->setPublicOfferConstraint();
+    }
+
+    private function setPublicOfferConstraint(): void
+    {
+        $this->queryBuilder->andWhere(
+            $this->queryBuilder->expr()->eq(
+                'public',
+                $this->queryBuilder->createNamedParameter(1, \PDO::PARAM_BOOL)
+            )
+        );
     }
 }
