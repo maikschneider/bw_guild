@@ -9,7 +9,9 @@ plugin {
 
     settings {
       googleApiKey =
-      includeSubCategories = 0
+      categories =
+      includeSubCategories =
+      categoryConjunction =
       useEmailAsUsername = 0
       userLogoFolder = logos
       itemsPerPage = 20

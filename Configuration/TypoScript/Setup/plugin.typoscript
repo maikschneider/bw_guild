@@ -23,6 +23,8 @@ plugin {
     }
 
     settings {
+      categories = {$plugin.tx_bwguild.settings.categories}
+      categoryConjunction = {$plugin.tx_bwguild.settings.categoryConjunction}
       includeSubCategories = {$plugin.tx_bwguild.settings.includeSubCategories}
       googleApiKey = {$plugin.tx_bwguild.settings.googleApiKey}
       useEmailAsUsername = {$plugin.tx_bwguild.settings.useEmailAsUsername}

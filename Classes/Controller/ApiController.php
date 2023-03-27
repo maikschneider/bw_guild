@@ -28,6 +28,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 use TYPO3\CMS\Fluid\View\StandaloneView;
+use TYPO3\CMS\Frontend\Category\Collection\CategoryCollection;
 
 class ApiController extends ActionController
 {
@@ -271,15 +272,11 @@ class ApiController extends ActionController
             $offer->setFeUser($user);
         }
 
-        // get categories by category settings in plugin
-        $catConjunction = $this->settings['categoryConjunction'] ?? '';
-        if ($catConjunction === 'or' || $catConjunction === 'and') {
-            $categories = $this->categoryRepository->findFromUidList($this->settings['categories'] ?? '');
-        } elseif ($catConjunction === 'notor' || $catConjunction === 'notand') {
-            $categories = $this->categoryRepository->findFromUidListNot($this->settings['categories'] ?? '');
-        } else {
-            $categories = $this->categoryRepository->findAll();
-        }
+        $categories = $this->categoryRepository->findCategoriesFromSettings(
+            $this->settings['categories'] ?? '',
+            $this->settings['includeSubCategories'] ?? '',
+            $this->settings['categoryConjunction'] ?? ''
+        );
 
         $this->view->assign('offer', $offer);
         $this->view->assign('categories', $categories);

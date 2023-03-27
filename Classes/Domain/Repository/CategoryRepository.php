@@ -2,8 +2,10 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+
 class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
 {
     /**
@@ -33,6 +35,38 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRe
                 $query->in('uid', explode(',', $categoryList))
             )
         );
+        return $query->execute();
+    }
+
+    /**
+     * @throws InvalidQueryException
+     */
+    public function findCategoriesFromSettings(
+        string $categories = '',
+        string $includeSubCategories = '0',
+        $categoryConjunction = ''
+    ): QueryResultInterface|array {
+        $categorieUids = GeneralUtility::intExplode(',', $categories, true);
+        $includeSubCategories = filter_var($includeSubCategories, FILTER_VALIDATE_BOOLEAN);
+        $query = $this->createQuery();
+
+        if (!empty($categories)) {
+            $constraint = $query->in('uid', $categorieUids);
+        }
+
+        if ($includeSubCategories) {
+            $constraint = $query->in('parent', $categorieUids);
+        }
+
+        if (isset($constraint)) {
+
+            if ($categoryConjunction === 'notor' || $categoryConjunction === 'notand') {
+                $constraint = $query->logicalNot($constraint);
+            }
+
+            $query->matching($constraint);
+        }
+
         return $query->execute();
     }
 }
