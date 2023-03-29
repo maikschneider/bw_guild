@@ -13,6 +13,7 @@ use Blueways\BwGuild\Service\AccessControlService;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Database\RelationHandler;
+use TYPO3\CMS\Core\Imaging\ImageManipulation\CropVariantCollection;
 use TYPO3\CMS\Core\Utility\ClassNamingUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
@@ -89,7 +90,19 @@ class ApiController extends ActionController
             try {
                 $imageService = GeneralUtility::makeInstance(ImageService::class);
                 $image = $imageService->getImage('', $user->getLogo(), true);
-                $processedImage = $imageService->applyProcessingInstructions($image, ['width' => '75c', 'height' => '75c']);
+                $cropString = $image->getProperty('crop');
+                $cropVariants = array_keys($GLOBALS['TCA']['fe_users']['columns']['logo']['config']['overrideChildTca']['columns']['crop']['config']['cropVariants'] ?? []);
+
+                if ($cropString && count($cropVariants)) {
+                    $cropVariantCollection = CropVariantCollection::create($cropString);
+                    $cropArea = $cropVariantCollection->getCropArea($cropVariants[0]);
+                    $crop = $cropArea->isEmpty() ? null : $cropArea->makeAbsoluteBasedOnFile($image);
+                }
+
+                $processedImage = $imageService->applyProcessingInstructions(
+                    $image,
+                    ['width' => '75c', 'height' => '75c', 'crop' => $crop ?? null]
+                );
                 $userinfo->user['logo'] = $processedImage->getPublicUrl();
             } catch (\Exception) {
             }

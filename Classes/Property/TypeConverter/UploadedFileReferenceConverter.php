@@ -20,6 +20,7 @@ namespace Blueways\BwGuild\Property\TypeConverter;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use Blueways\BwGuild\Domain\Model\FileReference;
 use TYPO3\CMS\Core\Resource\Exception\ExistingTargetFileNameException;
 use TYPO3\CMS\Core\Resource\File as FalFile;
 use TYPO3\CMS\Core\Resource\FileReference as FalFileReference;
@@ -175,16 +176,16 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
     /**
      * @param FalFile $file
      * @param int $resourcePointer
-     * @return \Blueways\BwGuild\Domain\Model\FileReference
+     * @return FileReference
      */
-    protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null)
+    protected function createFileReferenceFromFalFileObject(FalFile $file, $resourcePointer = null, $crop = '')
     {
         $fileReference = $this->resourceFactory->createFileReferenceObject(
             [
                 'uid_local' => $file->getUid(),
                 'uid_foreign' => uniqid('NEW_', true),
                 'uid' => uniqid('NEW_', true),
-                'crop' => null,
+                'crop' => $crop,
             ]
         );
         return $this->createFileReferenceFromFalFileReferenceObject($fileReference, $resourcePointer);
@@ -195,8 +196,9 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
         $resourcePointer = null
     ) {
         if ($resourcePointer === null) {
-            /** @var $fileReference \Blueways\BwGuild\Domain\Model\FileReference */
-            $fileReference = GeneralUtility::makeInstance(\Blueways\BwGuild\Domain\Model\FileReference::class);
+            /** @var $fileReference FileReference */
+            $fileReference = GeneralUtility::makeInstance(FileReference::class);
+            $fileReference->setCrop($falFileReference->getProperty('crop') ?? '');
         } else {
             $fileReference = $this->persistenceManager->getObjectByIdentifier(
                 $resourcePointer,
@@ -262,7 +264,8 @@ class UploadedFileReferenceConverter extends AbstractTypeConverter
             ? $this->hashService->validateAndStripHmac($uploadInfo['submittedFile']['resourcePointer'])
             : null;
 
-        $fileReferenceModel = $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer);
+        $crop = $uploadInfo['crop'] ?? '';
+        $fileReferenceModel = $this->createFileReferenceFromFalFileObject($uploadedFile, $resourcePointer, $crop);
 
         return $fileReferenceModel;
     }
