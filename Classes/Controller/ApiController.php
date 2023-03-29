@@ -219,6 +219,12 @@ class ApiController extends ActionController
             $this->userRepository->deleteAllUserLogos((int)$user->getUid());
         }
 
+        // update crop variant if changed
+        $body = $this->request->getParsedBody();
+        if ($user->getLogo() && isset($body['tx_bwguild_api']['user']['logo']['crop']) && $body['tx_bwguild_api']['user']['logo']['crop'] !== $user->getLogo()->getCrop()) {
+            $user->getLogo()->setCrop($body['tx_bwguild_api']['user']['logo']['crop']);
+        }
+
         $user->geoCodeAddress();
         $this->userRepository->update($user);
 
