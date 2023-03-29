@@ -34,7 +34,13 @@
 						'XmDkfzNetSite')}:</strong> 1280x720 px (HD)</p>
 					<p><strong>{f:translate(key: 'userEditForm.logo.encoding', extensionName:
 						'XmDkfzNetSite')}:</strong> JPG, PNG, GIF</p>
-					<f:form.upload additionalAttributes="{accept: 'image/*'}" property="logo" id="logo"/>
+					<f:if condition="{user.logo}">
+						<f:variable name="originalImage" value="{f:uri.image(image:user.logo, fileExtension: 'jpg')}"/>
+					</f:if>
+					<f:form.upload additionalAttributes="{accept: 'image/*'}"
+								   data="{original: originalImage}"
+								   property="logo"
+								   id="logo"/>
 					<f:form.hidden id="hiddenCropAreaInput" property="logo.crop"/>
 
 					<f:if condition="{user.logo}">
