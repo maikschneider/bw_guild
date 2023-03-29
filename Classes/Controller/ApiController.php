@@ -19,29 +19,19 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Http\ForwardResponse;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Property\TypeConverter\PersistentObjectConverter;
 use TYPO3\CMS\Extbase\Service\ImageService;
 
 class ApiController extends ActionController
 {
-    protected AccessControlService $accessControlService;
-
-    protected UserRepository $userRepository;
-
-    protected AbstractUserFeatureRepository $featureRepository;
-
-    protected CacheManager $cacheManager;
-
     public function __construct(
-        AccessControlService $accessControlService,
-        UserRepository $userRepository,
-        AbstractUserFeatureRepository $featureRepository,
-        CacheManager $cacheManager
+        protected AccessControlService $accessControlService,
+        protected UserRepository $userRepository,
+        protected AbstractUserFeatureRepository $featureRepository,
+        protected CacheManager $cacheManager,
+        protected PersistenceManager $persistenceManager
     ) {
-        $this->accessControlService = $accessControlService;
-        $this->userRepository = $userRepository;
-        $this->featureRepository = $featureRepository;
-        $this->cacheManager = $cacheManager;
     }
 
     public function userinfoAction(): ResponseInterface
@@ -227,6 +217,7 @@ class ApiController extends ActionController
 
         $user->geoCodeAddress();
         $this->userRepository->update($user);
+        $this->persistenceManager->persistAll();
 
         // clear page cache by tag
         $this->cacheManager->flushCachesByTag('fe_users_' . $user->getUid());
