@@ -29,5 +29,4 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
     {
         $this->crop = $crop;
     }
-
 }
