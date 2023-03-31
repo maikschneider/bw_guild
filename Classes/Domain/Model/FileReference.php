@@ -4,14 +4,12 @@ namespace Blueways\BwGuild\Domain\Model;
 
 use TYPO3\CMS\Core\Resource\ResourceInterface;
 use TYPO3\CMS\Core\Resource\File;
+
 class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
 {
-    /**
-     * uid of a sys_file
-     *
-     * @var int
-     */
-    protected $originalFileIdentifier;
+    protected int $originalFileIdentifier = 0;
+
+    protected string $crop = '';
 
     /**
      * setOriginalResource
@@ -33,5 +31,15 @@ class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
     public function setFile(File $falFile): void
     {
         $this->originalFileIdentifier = (int)$falFile->getUid();
+    }
+
+    public function getCrop(): string
+    {
+        return $this->crop;
+    }
+
+    public function setCrop(string $crop): void
+    {
+        $this->crop = $crop;
     }
 }

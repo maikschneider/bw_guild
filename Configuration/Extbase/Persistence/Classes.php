@@ -55,6 +55,11 @@ return [
     ],
     Blueways\BwGuild\Domain\Model\FileReference::class => [
         'tableName' => 'sys_file_reference',
+        'columns' => [
+            'crop' => [
+                'mapOnProperty' => 'crop',
+            ],
+        ],
     ],
     Blueways\BwGuild\Domain\Model\AbstractUserFeature::class => [
         'tableName' => 'tx_bwguild_domain_model_feature',
