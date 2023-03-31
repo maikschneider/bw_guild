@@ -7,8 +7,8 @@
 		</header>
 		<body>
 			<trans-unit id="tx_bwguild_admin">
-				<source>Guild administration</source>
-				<target>Innung Verwaltung</target>
+				<source>Administration</source>
+				<target>Verwaltung</target>
 			</trans-unit>
 			<trans-unit id="module.administration.index">
 				<source>Overview</source>

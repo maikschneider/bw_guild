@@ -56,7 +56,7 @@
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.record_type.5">
 				<source>Product search</source>
-				<target>Produkt Gesuch</source>
+				<target>Produkt Gesuch</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.record_type.6">
 				<source>Product give-away</source>

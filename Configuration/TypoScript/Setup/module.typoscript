@@ -17,6 +17,6 @@ module.tx_bwguild {
       }
     }
 
-    storagePid = {$plugin.tx_bwguild.persistence.storagePid}
   }
+  persistence.storagePid = {$plugin.tx_bwguild.persistence.storagePid}
 }

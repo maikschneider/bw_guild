@@ -1,45 +1,33 @@
-{namespace core=TYPO3\CMS\Core\ViewHelpers}
-{namespace be=TYPO3\CMS\Backend\ViewHelpers}
+{namespace core=TYPO3\CMS\Core\ViewHelpers}{namespace be=TYPO3\CMS\Backend\ViewHelpers}
 <f:be.container includeRequireJsModules="{0:'TYPO3/CMS/Backend/ContextMenu'}" pageTitle="Guild management">
 	<div class="module-loading-indicator"></div>
 	<div class="module-docheader">
 		<div class="module-docheader-bar">
 			<div class="module-docheader-bar-column-left">
-				<div class="form-inline">
-					<div class="form-group form-group-sm">
-
-
-						<f:be.menus.actionMenu additionalAttributes="{class: 'form-control'}">
-							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index')}"
-													   controller="Administration"
-													   action="index"/>
-							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.offer')}"
-													   controller="Administration"
-													   action="offer"/>
-							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.importer')}"
-													   controller="Administration"
-													   action="importer"/>
-							<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.passwordRefresh')}"
-													   controller="Administration"
-													   action="passwordRefresh"/>
-						</f:be.menus.actionMenu>
-					</div>
-				</div>
-			</div>
-			<div class="module-docheader-bar-column-right">
-				<f:be.buttons.shortcut/>
-				<f:be.pagePath/>
-				<f:be.pageInfo/>
+				<f:be.menus.actionMenu additionalAttributes="{class: 'form-select form-select-sm t3-js-jumpMenuBox'}">
+					<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.index')}"
+											   controller="Backend"
+											   action="index"/>
+					<f:be.menus.actionMenuItem label="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.offer')}"
+											   controller="Backend"
+											   action="offer"/>
+				</f:be.menus.actionMenu>
 			</div>
 		</div>
 		<div class="module-docheader-bar">
 			<div class="module-docheader-bar-column-left">
 				<div class="btn-toolbar">
 					<div class="btn-group">
-						<be:link.newRecord class="btn btn-default btn-sm" table="tx_bwguild_domain_model_offer" title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newOffer')}" pid="{settings.storagePid}">
-							<core:icon identifier="tx_bwguild_domain_model_offer" />
+						<be:link.newRecord class="btn btn-default btn-sm"
+										   table="tx_bwguild_domain_model_offer"
+										   title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newOffer')}"
+										   pid="{settings.storagePid}">
+							<core:icon identifier="tx_bwguild_domain_model_offer"/>
 						</be:link.newRecord>
-						<be:link.newRecord class="btn btn-default btn-sm" table="fe_users" title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newUser')}" pid="{settings.storagePid}">
+						<be:link.newRecord class="btn btn-default btn-sm"
+										   table="fe_users"
+										   title="{f:translate(key: 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.newUser')}"
+										   pid="{settings.storagePid}">
 							<core:icon identifier="status-user-frontend"/>
 						</be:link.newRecord>
 					</div>
