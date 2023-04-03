@@ -2,12 +2,10 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
-use Doctrine\DBAL\DBALException;
-use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use Blueways\BwGuild\Domain\Model\Dto\BaseDemand;
 use Blueways\BwGuild\Event\ModifyQueryBuilderEvent;
 use Doctrine\DBAL\Connection as ConnectionAlias;
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Result;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Context\Exception\AspectNotFoundException;
@@ -17,7 +15,9 @@ use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\Query\Restriction\FrontendGroupRestriction;
 use TYPO3\CMS\Core\EventDispatcher\EventDispatcher;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Persistence\Generic\Exception;
 use TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper;
 use TYPO3\CMS\Extbase\Persistence\QueryInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;

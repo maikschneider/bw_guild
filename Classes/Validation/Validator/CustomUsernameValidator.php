@@ -2,12 +2,12 @@
 
 namespace Blueways\BwGuild\Validation\Validator;
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use Blueways\BwGuild\Domain\Model\User;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
+use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class CustomUsernameValidator extends AbstractValidator
 {

@@ -5,7 +5,6 @@ namespace Blueways\BwGuild\EventListener;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
 use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
@@ -29,9 +28,7 @@ class ModifyListTable
         $row = $event->getRecord();
 
         foreach ($this->settings as $tableName => $setting) {
-
             if ($table === $tableName) {
-
                 $event->removeAction('view');
 
                 if ($setting['showNewButton'] === '0') {
@@ -59,7 +56,6 @@ class ModifyListTable
                 }
 
                 if ($setting['showPublicizeButton'] === '1') {
-
                     $this->pageRenderer->loadRequireJsModule(
                         'TYPO3/CMS/BwGuild/BackendModifyListTable',
                         'function(BackendModifyListTable) { BackendModifyListTable.init("' . $tableName . '"); }'

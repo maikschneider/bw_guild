@@ -2,7 +2,6 @@
 
 namespace Blueways\BwGuild\Property\TypeConverter;
 
-use Error;
 use TYPO3\CMS\Extbase\Property\PropertyMappingConfigurationInterface;
 use TYPO3\CMS\Extbase\Property\TypeConverter\FloatConverter;
 

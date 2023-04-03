@@ -2,9 +2,9 @@
 
 namespace Blueways\BwGuild\Validation\Validator;
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
-use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class UserLogoValidator extends AbstractValidator
 {

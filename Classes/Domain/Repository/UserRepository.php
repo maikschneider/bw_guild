@@ -2,16 +2,14 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
+use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\Exception;
 use Doctrine\DBAL\Result;
-use Blueways\BwGuild\Domain\Model\Dto\UserDemand;
 use PDO;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
-use function Deployer\set;
 
 /**
  * Class UserRepository

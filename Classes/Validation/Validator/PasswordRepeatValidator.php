@@ -2,8 +2,8 @@
 
 namespace Blueways\BwGuild\Validation\Validator;
 
-use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 use Blueways\BwGuild\Domain\Model\User;
+use TYPO3\CMS\Extbase\Validation\Validator\AbstractValidator;
 
 class PasswordRepeatValidator extends AbstractValidator
 {

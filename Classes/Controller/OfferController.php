@@ -2,26 +2,22 @@
 
 namespace Blueways\BwGuild\Controller;
 
-use Blueways\BwGuild\Domain\Model\User;
-use Blueways\BwGuild\Domain\Repository\CategoryRepository;
-use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias;
-use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
-use TYPO3\CMS\Core\Page\AssetCollector;
-use TYPO3\CMS\Core\Page\PageRenderer;
-use TYPO3\CMS\Core\Pagination\ArrayPaginator;
-use TYPO3\CMS\Extbase\Configuration\Exception\InvalidConfigurationTypeException;
 use Blueways\BwGuild\Domain\Model\Dto\OfferDemand;
 use Blueways\BwGuild\Domain\Model\Offer;
+use Blueways\BwGuild\Domain\Model\User;
+use Blueways\BwGuild\Domain\Repository\CategoryRepository;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
 use Blueways\BwGuild\Domain\Repository\UserRepository;
 use Blueways\BwGuild\Service\AccessControlService;
+use GeorgRinger\NumberedPagination\NumberedPagination as NumberedPaginationAlias;
 use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Exception\Page\PageNotFoundException;
 use TYPO3\CMS\Core\Localization\LanguageService;
+use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Core\MetaTag\MetaTagManagerRegistry;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Page\AssetCollector;
+use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 

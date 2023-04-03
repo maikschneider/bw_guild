@@ -148,7 +148,7 @@ call_user_func(function () {
         'categories' => [
             'label' => 'Category',
             'config' => [
-                'type' => 'category'
+                'type' => 'category',
             ],
         ],
     ];

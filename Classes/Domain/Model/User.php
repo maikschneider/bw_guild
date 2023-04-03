@@ -2,10 +2,10 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
+use Blueways\BwGuild\Service\GeoService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Blueways\BwGuild\Service\GeoService;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 

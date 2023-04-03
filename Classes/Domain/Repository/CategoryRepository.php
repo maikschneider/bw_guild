@@ -3,8 +3,8 @@
 namespace Blueways\BwGuild\Domain\Repository;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\InvalidQueryException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRepository
 {
@@ -59,7 +59,6 @@ class CategoryRepository extends \TYPO3\CMS\Extbase\Domain\Repository\CategoryRe
         }
 
         if (isset($constraint)) {
-
             if ($categoryConjunction === 'notor' || $categoryConjunction === 'notand') {
                 $constraint = $query->logicalNot($constraint);
             }

@@ -2,8 +2,8 @@
 
 namespace Blueways\BwGuild\Domain\Model;
 
-use TYPO3\CMS\Core\Resource\ResourceInterface;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Resource\ResourceInterface;
 
 class FileReference extends \TYPO3\CMS\Extbase\Domain\Model\FileReference
 {

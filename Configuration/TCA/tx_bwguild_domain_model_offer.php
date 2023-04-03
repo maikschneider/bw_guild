@@ -461,8 +461,8 @@ return [
             'exclude' => 1,
             'config' => [
                 'type' => 'input',
-                'eval' => 'double2'
-            ]
+                'eval' => 'double2',
+            ],
         ],
         'public' => [
             'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.public',
@@ -474,14 +474,14 @@ return [
                     [
                         0 => '',
                         1 => '',
-                    ]
+                    ],
                 ],
-            ]
+            ],
         ],
         'categories' => [
             'label' => 'Category',
             'config' => [
-                'type' => 'category'
+                'type' => 'category',
             ],
         ],
     ],

@@ -2,9 +2,9 @@
 
 namespace Blueways\BwGuild\Domain\Repository;
 
-use TYPO3\CMS\Extbase\Persistence\Repository;
 use Blueways\BwGuild\Domain\Model\AbstractUserFeature;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 class AbstractUserFeatureRepository extends Repository
 {
