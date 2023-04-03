@@ -58,15 +58,10 @@ final class BackendController extends ActionController
         $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
         $startView = $typoScript['settings']['startView'] ?? '';
 
-        if ($startView && $startView !== 'index') {
-            return new ForwardResponse($startView);
-        }
-
         $users = $this->userRepository->findAll();
         $this->view->assign('users', $users);
 
         $moduleTemplate = $this->moduleTemplateFactory->create($this->request);
-        $this->addButtonBar($moduleTemplate);
         $moduleTemplate->setContent($this->view->render());
         return $this->htmlResponse($moduleTemplate->renderContent());
     }
@@ -80,17 +75,6 @@ final class BackendController extends ActionController
         $this->view->assign('offers', $offers);
         $this->view->assign('offerGroups', $offerGroups);
         return $this->htmlResponse();
-    }
-
-    private function addButtonBar(ModuleTemplate $moduleTemplate)
-    {
-        $buttonBar = $moduleTemplate->getDocHeaderComponent()->getButtonBar();
-        $list = $buttonBar->makeLinkButton()
-            ->setHref('<uri-builder-path>')
-            ->setTitle('A Title')
-            ->setShowLabelText('Link')
-            ->setIcon($this->iconFactory->getIcon('actions-extension-import', Icon::SIZE_SMALL));
-        $buttonBar->addButton($list, ButtonBar::BUTTON_POSITION_LEFT, 1);
     }
 
 }

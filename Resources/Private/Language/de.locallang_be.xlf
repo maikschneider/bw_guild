@@ -50,6 +50,10 @@
 				<source>Password refresh</source>
 				<target>Passwort aktualisieren</target>
 			</trans-unit>
+			<trans-unit id="module.administration.offer.all">
+				<source>All offers</source>
+				<target>Alle Angebote</target>
+			</trans-unit>
 			<trans-unit id="userlist">
 				<source>User list</source>
 				<target>Benutzerliste</target>

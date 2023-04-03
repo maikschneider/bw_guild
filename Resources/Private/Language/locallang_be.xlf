@@ -39,6 +39,9 @@
 			<trans-unit id="module.administration.passwordRefresh">
 				<source>Password refresh</source>
 			</trans-unit>
+			<trans-unit id="module.administration.offer.all">
+				<source>All offers</source>
+			</trans-unit>
 			<trans-unit id="userlist">
 				<source>User list</source>
 			</trans-unit>

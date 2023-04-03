@@ -1,4 +1,13 @@
 module.tx_bwguild {
+  view {
+    templateRootPaths.0 = EXT:bw_guild/Resources/Private/Templates
+    partialRootPaths.0 = EXT:bw_guild/Resources/Private/Partials
+    layoutRootPaths.0 = EXT:bw_guild/Resources/Private/Layouts
+
+    templateRootPaths.10 = {$plugin.tx_bwguild.view.templateRootPath}
+    partialRootPaths.10 = {$plugin.tx_bwguild.view.partialRootPath}
+    layoutRootPaths.10 = {$plugin.tx_bwguild.view.layoutRootPath}
+  }
   settings {
     startView =
     importFolderPath = /bw_guild/
