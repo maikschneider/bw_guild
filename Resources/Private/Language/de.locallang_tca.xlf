@@ -63,8 +63,8 @@
 				<target>Produkt Geschenk</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.description">
-				<source>Job description</source>
-				<target>Jobbeschreibung</target>
+				<source>Description</source>
+				<target>Beschreibung</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.start_date">
 				<source>Available from</source>

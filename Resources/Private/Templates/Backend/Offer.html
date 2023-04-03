@@ -10,51 +10,19 @@
 					  state="-1"/>
 	</f:if>
 
-	<div class="card-container">
-		<a href="#tab"
-		   class="card card-size-fixed-small t3js-tabmenu-item active">
-			<div class="card-header">
-				<div class="card-icon">
-					<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg" />
-				</div>
-				<div class="card-header-body">
-					<h1 class="card-title">
-						<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.offer.all"/>
-					</h1>
-					<span class="card-subtitle">{offers->f:count()}
-						<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
-					</span>
-				</div>
-			</div>
-		</a>
-		<f:for each="{offerGroups}" as="offerGroup" iteration="i">
-			<a href="#tab-{i.index}"
-			   class="card card-size-fixed-small t3js-tabmenu-item"
-			   data-toggle="tab">
-				<div class="card-header">
-					<div class="card-icon">
-						<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{offerGroup.0.recordType}.svg"
-								 width="40"
-								 height="40"/>
-					</div>
-					<div class="card-header-body">
-						<h1 class="card-title">
-							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{offerGroup.0.recordType}"/>
-						</h1>
-						<span class="card-subtitle">{offerGroup->f:count()}
-							<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
-						</span>
-					</div>
-				</div>
-			</a>
-		</f:for>
-	</div>
 
 	<div role="tabpanel">
 		<div class="tab-content">
+			<div role="tabpanel" class="tab-pane active" id="tab-0">
+				<f:be.tableList tableName="tx_bwguild_domain_model_offer"
+								fieldList="{settings.tableFields.offers}"
+								enableClickMenu="false"
+								clickTitleMode="info"
+								enableControlPanels="true"/>
+			</div>
 			<f:for each="{offerGroups}" as="offerGroup" iteration="i">
-				<div role="tabpanel" class="tab-pane {f:if(condition: i.isFirst, then: 'active')}" id="tab-{i.index}">
-					<f:render partial="Backend/OfferTable" arguments="{_all}" />
+				<div role="tabpanel" class="tab-pane" id="tab-{i.cycle}">
+					<f:render partial="Backend/OfferTable" arguments="{offers: offerGroup}"/>
 				</div>
 			</f:for>
 		</div>
@@ -76,6 +44,14 @@
 
 		.card:active, .card:focus {
 			text-decoration: none;
+		}
+
+		thead th:not([colspan]) button {
+			display: none;
+		}
+
+		.col-localizationa {
+			display: none;
 		}
 	</style>
 

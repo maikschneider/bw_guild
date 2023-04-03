@@ -1,0 +1,40 @@
+{namespace be=TYPO3\CMS\Backend\ViewHelpers}{namespace core=TYPO3\CMS\Core\ViewHelpers}
+<div class="card-container">
+	<a href="#tab-0"
+	   class="card card-size-fixed-small t3js-tabmenu-item active">
+		<div class="card-header">
+			<div class="card-icon">
+				<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.svg" />
+			</div>
+			<div class="card-header-body">
+				<h1 class="card-title">
+					<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:module.administration.offer.all"/>
+				</h1>
+				<span class="card-subtitle">{offers->f:count()}
+					<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
+				</span>
+			</div>
+		</div>
+	</a>
+	<f:for each="{offerGroups}" as="offerGroup" iteration="i">
+		<a href="#tab-{i.cycle}"
+		   class="card card-size-fixed-small t3js-tabmenu-item"
+		   data-toggle="tab">
+			<div class="card-header">
+				<div class="card-icon">
+					<f:image src="EXT:bw_guild/Resources/Public/Images/tx_bwguild_domain_model_offer.{offerGroup.0.recordType}.svg"
+							 width="40"
+							 height="40"/>
+				</div>
+				<div class="card-header-body">
+					<h1 class="card-title">
+						<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{offerGroup.0.recordType}"/>
+					</h1>
+					<span class="card-subtitle">{offerGroup->f:count()}
+						<f:translate key="LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:userlist.entries"/>
+					</span>
+				</div>
+			</div>
+		</a>
+	</f:for>
+</div>

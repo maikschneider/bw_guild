@@ -8,6 +8,7 @@ module.tx_bwguild {
     partialRootPaths.10 = {$plugin.tx_bwguild.view.partialRootPath}
     layoutRootPaths.10 = {$plugin.tx_bwguild.view.layoutRootPath}
   }
+
   settings {
     startView =
     importFolderPath = /bw_guild/
@@ -19,13 +20,23 @@ module.tx_bwguild {
     }
 
     tableFields.offers {
-      0 {
-        1 = title
-        2 = description
-        3 = feUser
-      }
+      1 = public
+      2 = header
+      3 = description
+      4 = fe_user
+    }
+
+    tableActions.tx_bwguild_domain_model_offer {
+      showNewButton = 0
+      showDeleteButton = 0
+      showHideButton = 0
+      showHistoryButton = 0
+      showViewBigButton = 0
+      showEditButton = 1
+      showPublicizeButton = 1
     }
 
   }
+
   persistence.storagePid = {$plugin.tx_bwguild.persistence.storagePid}
 }

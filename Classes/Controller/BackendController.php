@@ -9,6 +9,7 @@ use TYPO3\CMS\Backend\Template\ModuleTemplate;
 use TYPO3\CMS\Backend\Template\ModuleTemplateFactory;
 use TYPO3\CMS\Core\Imaging\Icon;
 use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Core\Page\PageRenderer;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Domain\Repository\FrontendUserGroupRepository;
 use Blueways\BwGuild\Domain\Repository\OfferRepository;
@@ -71,6 +72,9 @@ final class BackendController extends ActionController
     {
         $offers = $this->offerRepository->findAll();
         $offerGroups = $this->offerRepository->getGroupedOffers();
+
+        $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
+        $pageRenderer->loadRequireJsModule('TYPO3/CMS/BwGuild/BackendOffer');
 
         $this->view->assign('offers', $offers);
         $this->view->assign('offerGroups', $offerGroups);

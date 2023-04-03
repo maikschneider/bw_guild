@@ -10,3 +10,8 @@ services:
 
   Blueways\BwGuild\Controller\BackendController:
     tags: ['backend.controller']
+
+  Blueways\BwGuild\EventListener\ModifyListTable:
+    tags:
+      - name: event.listener
+        identifier: 'bw-guild/modify-list-table'

@@ -59,7 +59,7 @@
 				<source>Product give-away</source>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.description">
-				<source>Job description</source>
+				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.start_date">
 				<source>Available from</source>

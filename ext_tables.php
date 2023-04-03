@@ -8,7 +8,7 @@ defined('TYPO3') || die();
     'tx_bwguild_admin',
     'bottom',
     [
-        \Blueways\BwGuild\Controller\BackendController::class => 'index,offer'
+        \Blueways\BwGuild\Controller\BackendController::class => 'offer,index'
     ],
     [
         'access' => 'admin',
