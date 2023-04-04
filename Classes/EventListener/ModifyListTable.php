@@ -11,15 +11,12 @@ use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
 
 class ModifyListTable
 {
-    protected array $settings;
 
     public function __construct(
         protected ConfigurationManager $configurationManager,
         protected PageRenderer $pageRenderer,
         protected IconFactory $iconFactory
     ) {
-        $typoScript = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
-        $this->settings = $typoScript['settings']['tableActions'];
     }
 
     public function __invoke(ModifyRecordListRecordActionsEvent $event): void
@@ -27,7 +24,10 @@ class ModifyListTable
         $table = $event->getTable();
         $row = $event->getRecord();
 
-        foreach ($this->settings as $tableName => $setting) {
+        $typoScript = $this->configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        $tableActions = $typoScript['settings']['tableActions'] ?? [];
+
+        foreach ($tableActions as $tableName => $setting) {
             if ($table === $tableName) {
                 $event->removeAction('view');
 
