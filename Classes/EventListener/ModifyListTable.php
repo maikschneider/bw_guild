@@ -11,7 +11,6 @@ use TYPO3\CMS\Recordlist\Event\ModifyRecordListRecordActionsEvent;
 
 class ModifyListTable
 {
-
     public function __construct(
         protected ConfigurationManager $configurationManager,
         protected PageRenderer $pageRenderer,
