@@ -117,6 +117,10 @@
 				<source>Is public</source>
 				<target>Ist veröffentlicht</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.crdate">
+				<source>Creation date</source>
+				<target>Erstellungsdatum</target>
+			</trans-unit>
 			<trans-unit id="user.publicProfile">
 				<source>Public profile</source>
 				<target>Öffentliches Profil</target>

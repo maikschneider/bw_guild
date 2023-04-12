@@ -24,6 +24,7 @@ module.tx_bwguild {
       2 = header
       3 = description
       4 = fe_user
+      5 = crdate
     }
 
     tableActions.tx_bwguild_domain_model_offer {

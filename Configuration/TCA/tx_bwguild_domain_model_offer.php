@@ -193,9 +193,11 @@ return [
             ],
         ],
         'crdate' => [
-            'label' => 'crdate',
+            'label' => 'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.crdate',
             'config' => [
-                'type' => 'passthrough',
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
             ],
         ],
         'tstamp' => [
