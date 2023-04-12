@@ -63,8 +63,10 @@ class OfferRepository extends AbstractDemandRepository
         $queryBuilder
             ->update('sys_file_reference')
             ->set('deleted', 1)
-            ->where($queryBuilder->expr()->in('uid',
-                $queryBuilder->quoteArrayBasedValueListToIntegerList($sysFileReferenceUids)))
+            ->where($queryBuilder->expr()->in(
+                'uid',
+                $queryBuilder->quoteArrayBasedValueListToIntegerList($sysFileReferenceUids)
+            ))
             ->execute();
     }
 }
