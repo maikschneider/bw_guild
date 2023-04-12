@@ -329,6 +329,12 @@ class ApiController extends ActionController
             $this->throwStatus(403, 'Permission denied');
         }
 
+        if ($this->request->hasArgument('deleteImages')) {
+            $deleteImages = $this->request->getArgument('deleteImages');
+            $uids = array_keys(array_filter($deleteImages, function($delete) { return (int)$delete; }));
+            $this->offerRepository->deleteImagesByUids($uids);
+        }
+
         $offer->setPid((int)$this->settings['storagePid']);
         $offer->updateSlug();
 
