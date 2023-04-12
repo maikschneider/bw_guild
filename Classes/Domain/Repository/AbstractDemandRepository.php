@@ -184,7 +184,8 @@ class AbstractDemandRepository extends Repository
 
     private function setCategoryConstraints(BaseDemand $demand): void
     {
-        $categories = $demand->categories;
+        // in case "category" is set, override "categories" because this is a search for explizit one
+        $categories = $demand->category ? [$demand->category] : $demand->categories;
         $categoryConjunction = $demand->categoryConjunction;
 
         // abort if no category settings
