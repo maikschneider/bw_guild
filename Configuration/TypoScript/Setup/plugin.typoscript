@@ -110,6 +110,8 @@ plugin {
       maxItems = {$plugin.tx_bwguild_offerlatest.settings.maxItems}
       order = {$plugin.tx_bwguild_offerlatest.settings.order}
       orderDirection = {$plugin.tx_bwguild_offerlatest.settings.orderDirection}
+      categories = {$plugin.tx_bwguild_offerlatest.settings.categories}
+      categoryConjunction = {$plugin.tx_bwguild_offerlatest.settings.categoryConjunction}
     }
   }
 }

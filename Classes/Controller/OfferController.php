@@ -87,6 +87,8 @@ class OfferController extends ActionController
         $demand = $demand ?? OfferDemand::createFromSettings($this->settings);
 
         $offers = $this->offerRepository->findDemanded($demand);
+        $offers = $this->offerRepository->mapResultToObjects($offers);
+
         $this->view->setTemplate($this->settings['template'] ?? 'Latest');
         $this->view->assign('offers', $offers);
         return $this->htmlResponse();

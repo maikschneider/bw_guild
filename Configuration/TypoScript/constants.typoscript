@@ -83,6 +83,8 @@ plugin {
       maxItems = 3
       order = crdate
       orderDirection = DESC
+      categoryConjunction = or
+      categories =
     }
   }
 }
