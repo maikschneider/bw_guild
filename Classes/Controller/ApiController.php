@@ -351,8 +351,10 @@ class ApiController extends ActionController
         // clear cache by tag
         $this->cacheManager->flushCachesByTag('tx_bwguild_domain_model_offer_' . $offer->getUid());
 
-        return new RedirectResponse($this->uriBuilder->setTargetPageType(1657523819)->uriFor('offerEditForm',
-            ['offer' => $offer->getUid()]));
+        return new RedirectResponse($this->uriBuilder->setTargetPageType(1657523819)->uriFor(
+            'offerEditForm',
+            ['offer' => $offer->getUid()]
+        ));
     }
 
     public function offerDeleteAction(Offer $offer): ResponseInterface
