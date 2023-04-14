@@ -106,7 +106,7 @@ class OfferController extends ActionController
             static $cacheTagsSet = false;
             $typoScriptFrontendController = $GLOBALS['TSFE'];
             if (!$cacheTagsSet) {
-                foreach($offers as $offer) {
+                foreach ($offers as $offer) {
                     $typoScriptFrontendController->addCacheTags(['tx_bwguild_domain_model_offer_' . $offer->getUid()]);
                 }
                 $cacheTagsSet = true;
