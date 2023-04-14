@@ -20,6 +20,7 @@ use TYPO3\CMS\Core\Pagination\ArrayPaginator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class OfferController
@@ -64,9 +65,6 @@ class OfferController extends ActionController
         $numberOfResults = count($offers);
         $offers = $this->offerRepository->mapResultToObjects($paginator->getPaginatedItems());
 
-        // add cache tags
-        $this->addCacheTagsForOffers($offers);
-
         // disbale indexing of list view
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
         $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
@@ -100,19 +98,6 @@ class OfferController extends ActionController
         return $this->htmlResponse();
     }
 
-    protected function addCacheTagsForOffers(array $offers): void
-    {
-        if (!empty($GLOBALS['TSFE']) && is_object($GLOBALS['TSFE'])) {
-            static $cacheTagsSet = false;
-            $typoScriptFrontendController = $GLOBALS['TSFE'];
-            if (!$cacheTagsSet) {
-                foreach ($offers as $offer) {
-                    $typoScriptFrontendController->addCacheTags(['tx_bwguild_domain_model_offer_' . $offer->getUid()]);
-                }
-                $cacheTagsSet = true;
-            }
-        }
-    }
 
     public function showAction(?Offer $offer = null): ResponseInterface
     {
@@ -127,9 +112,6 @@ class OfferController extends ActionController
             $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
             $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
         }
-
-        // add cache tags
-        $this->addCacheTagsForOffers([$offer]);
 
         $GLOBALS['TSFE']->page['title'] = $schema['title'];
         $GLOBALS['TSFE']->page['description'] = $schema['description'];
