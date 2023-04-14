@@ -64,6 +64,9 @@ class OfferController extends ActionController
         $numberOfResults = count($offers);
         $offers = $this->offerRepository->mapResultToObjects($paginator->getPaginatedItems());
 
+        // add cache tags
+        $this->addCacheTagsForOffers($offers);
+
         // disbale indexing of list view
         $metaTagManager = GeneralUtility::makeInstance(MetaTagManagerRegistry::class);
         $metaTagManager->getManagerForProperty('robots')->addProperty('robots', 'noindex, follow');
@@ -89,9 +92,26 @@ class OfferController extends ActionController
         $offers = $this->offerRepository->findDemanded($demand);
         $offers = $this->offerRepository->mapResultToObjects($offers);
 
+        // add cache tags
+        $this->addCacheTagsForOffers($offers);
+
         $this->view->setTemplate($this->settings['template'] ?? 'Latest');
         $this->view->assign('offers', $offers);
         return $this->htmlResponse();
+    }
+
+    protected function addCacheTagsForOffers(array $offers): void
+    {
+        if (!empty($GLOBALS['TSFE']) && is_object($GLOBALS['TSFE'])) {
+            static $cacheTagsSet = false;
+            $typoScriptFrontendController = $GLOBALS['TSFE'];
+            if (!$cacheTagsSet) {
+                foreach($offers as $offer) {
+                    $typoScriptFrontendController->addCacheTags(['tx_bwguild_domain_model_offer_' . $offer->getUid()]);
+                }
+                $cacheTagsSet = true;
+            }
+        }
     }
 
     public function showAction(?Offer $offer = null): ResponseInterface
@@ -107,6 +127,9 @@ class OfferController extends ActionController
             $assetCollector = GeneralUtility::makeInstance(AssetCollector::class);
             $assetCollector->addInlineJavaScript('bwguild_json', $json, ['type' => 'application/ld+json']);
         }
+
+        // add cache tags
+        $this->addCacheTagsForOffers([$offer]);
 
         $GLOBALS['TSFE']->page['title'] = $schema['title'];
         $GLOBALS['TSFE']->page['description'] = $schema['description'];
