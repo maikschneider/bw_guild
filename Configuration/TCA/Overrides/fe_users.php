@@ -140,7 +140,7 @@ call_user_func(function () {
             'exclude' => 1,
             'config' => [
                 'type' => 'group',
-                'allowed' => 'pages,fe_users,sys_file',
+                'allowed' => 'pages,fe_users,sys_file,tx_bwguild_domain_model_offer',
                 'minitems' => 0,
                 'size' => 5,
             ],
