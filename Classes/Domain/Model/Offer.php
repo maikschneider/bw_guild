@@ -196,6 +196,11 @@ class Offer extends AbstractEntity
         return $this->startDate;
     }
 
+    public function setPublic(bool $public): void
+    {
+        $this->public = $public;
+    }
+
     public function setStartDate(string $startDate)
     {
         $this->startDate = $startDate;
