@@ -30,7 +30,7 @@ class Userinfo
         'fe_users' => ['uid', 'username', 'first_name', 'last_name'],
         'tx_news_domain_model_news' => ['uid', 'title'],
         'sys_file' => ['uid', 'extension', 'name'],
-        'tx_bwguild_domain_model_offer' => ['title']
+        'tx_bwguild_domain_model_offer' => ['title'],
     ];
 
     public function __construct(User $feUser)
