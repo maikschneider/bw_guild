@@ -9,9 +9,15 @@ services:
     exclude: '../Classes/Domain/Model/*'
 
   Blueways\BwGuild\Controller\BackendController:
-    tags: ['backend.controller']
+    tags: [ 'backend.controller' ]
 
   Blueways\BwGuild\EventListener\ModifyListTable:
     tags:
       - name: event.listener
         identifier: 'bw-guild/modify-list-table'
+
+  Blueways\BwGuild\Command\OfferExpireCommand:
+    tags:
+      - name: console.command
+        command: 'bw_guild:expireOffers'
+        description: 'Deletes outdated offers after a specified amounts of time.'
