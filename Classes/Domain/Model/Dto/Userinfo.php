@@ -57,6 +57,7 @@ class Userinfo
             $offerArray['title'] = $userOffer->getTitle();
             $offerArray['public'] = $userOffer->isPublic();
             $offerArray['crdate'] = $userOffer->getCrdate()->getTimestamp();
+            $offerArray['expireDays'] = $userOffer->getExpirationDays();
             $offerArray['categories'] = [];
             foreach ($userOffer->getCategories() as $category) {
                 $offerArray['categories'][] = [

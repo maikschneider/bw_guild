@@ -66,6 +66,8 @@ class Offer extends AbstractEntity
 
     protected float $price = 0.0;
 
+    protected ?\DateTime $tstamp = null;
+
     public function getPrice(): float
     {
         return $this->price;
@@ -414,5 +416,11 @@ class Offer extends AbstractEntity
         $slugUtility = GeneralUtility::makeInstance(SlugUtility::class);
         $slug = $slugUtility->getSlug($this);
         $this->setSlug($slug);
+    }
+
+    public function getExpirationDays(): float
+    {
+        $expireDate = (clone $this->tstamp)->modify('+14 days');
+        return ceil((strtotime($expireDate->format('c')) - strtotime((new \DateTime())->format('c')))  / (60 * 60 * 24));
     }
 }
