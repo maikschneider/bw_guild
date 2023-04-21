@@ -121,6 +121,10 @@
 				<source>Creation date</source>
 				<target>Erstellungsdatum</target>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.tstamp">
+				<source>Edit date</source>
+				<target>Änderungsdatum</target>
+			</trans-unit>
 			<trans-unit id="user.publicProfile">
 				<source>Public profile</source>
 				<target>Öffentliches Profil</target>

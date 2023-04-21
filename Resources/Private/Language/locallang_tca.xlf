@@ -103,6 +103,9 @@
 			<trans-unit id="tx_bwguild_domain_model_offer.crdate">
 				<source>Creation date</source>
 			</trans-unit>
+			<trans-unit id="tx_bwguild_domain_model_offer.tstamp">
+				<source>Edit date</source>
+			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_feature">
 				<source>Feature</source>
 			</trans-unit>
