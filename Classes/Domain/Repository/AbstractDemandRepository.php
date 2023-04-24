@@ -142,7 +142,7 @@ class AbstractDemandRepository extends Repository
         $this->setLimitConstraint($demand);
         $this->setGeoCodeConstraint($demand);
         $this->setRestrictions();
-        $this->setLanguageConstraint();
+        $this->setLanguageConstraint($demand);
     }
 
     private function setSearchFilterConstraints(BaseDemand $demand): void
@@ -338,8 +338,14 @@ class AbstractDemandRepository extends Repository
             ->add(GeneralUtility::makeInstance(FrontendGroupRestriction::class));
     }
 
-    protected function setLanguageConstraint(): void
+    protected function setLanguageConstraint(BaseDemand $demand): void
     {
+        $languageEnabled = isset($GLOBALS['TCA'][$demand::TABLE]['ctrl']['languageField']) && $GLOBALS['TCA'][$demand::TABLE]['ctrl']['languageField'];
+
+        if (!$languageEnabled) {
+            return;
+        }
+
         try {
             $languageAspect = GeneralUtility::makeInstance(Context::class)->getAspect('language');
             $sysLanguageUid = $languageAspect->getId();
@@ -349,7 +355,7 @@ class AbstractDemandRepository extends Repository
 
         $this->queryBuilder->andWhere(
             $this->queryBuilder->expr()->eq(
-                'sys_language_uid',
+                $GLOBALS['TCA'][$demand::TABLE]['ctrl']['languageField'],
                 $this->queryBuilder->createNamedParameter($sysLanguageUid, \PDO::PARAM_INT)
             )
         );

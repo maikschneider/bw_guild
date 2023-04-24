@@ -26,11 +26,6 @@ class UserRepository extends AbstractDemandRepository
         $this->setFeGroupConstraint($demand);
     }
 
-    protected function setLanguageConstraint(): void
-    {
-        // override since fe_users do not have sys_language_uid set
-    }
-
     protected function setFeatureConstraint(UserDemand $demand): void
     {
         if (!$demand->feature) {
