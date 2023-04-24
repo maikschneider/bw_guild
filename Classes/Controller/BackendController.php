@@ -44,6 +44,7 @@ final class BackendController extends ActionController
 
         $pageRenderer = GeneralUtility::makeInstance(PageRenderer::class);
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/BwGuild/BackendOffer');
+        $pageRenderer->addInlineLanguageLabelFile('EXT:core/Resources/Private/Language/locallang_mod_web_list.xlf');
 
         $this->view->assign('offers', $offers);
         $this->view->assign('offerGroups', $offerGroups);

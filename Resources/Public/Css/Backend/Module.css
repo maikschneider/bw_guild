@@ -1,0 +1,4 @@
+/** This is a fix for a wrongly set z-index by record.js */
+.modal-backdrop {
+	z-index: 1000 !important;
+}

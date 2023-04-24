@@ -18,3 +18,5 @@ defined('TYPO3') || die();
         'inheritNavigationComponentFromMainModule' => false,
     ]
 );
+
+$GLOBALS['TBE_STYLES']['skins']['xm_manual']['stylesheetDirectories'][] = 'EXT:bw_guild/Resources/Public/Css/Backend/';
