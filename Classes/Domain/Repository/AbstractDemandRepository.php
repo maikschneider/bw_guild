@@ -193,6 +193,21 @@ class AbstractDemandRepository extends Repository
             return;
         }
 
+        if ($demand->includeSubCategories) {
+            $qb = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('sys_category');
+            $parentCategories = $qb->select('uid')
+                ->distinct()
+                ->from('sys_category')
+                ->where(
+                    $qb->expr()->in('parent', $categories),
+                    $qb->expr()->neq('parent', 0),
+                    $qb->expr()->notIn('uid', $categories),
+                )
+                ->execute()
+                ->fetchAllAssociative();
+            $categories = array_merge($categories, array_map('strval', array_column($parentCategories, 'uid')));
+        }
+
         switch (strtolower($categoryConjunction)) {
             case 'or':
                 // join tables

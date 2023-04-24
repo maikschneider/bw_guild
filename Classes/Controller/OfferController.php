@@ -44,14 +44,13 @@ class OfferController extends ActionController
         }
 
         // get categories by category settings in plugin
-        $catConjunction = $this->settings['categoryConjunction'];
-        if ($catConjunction === 'or' || $catConjunction === 'and') {
-            $categories = $this->categoryRepository->findFromUidList($this->settings['categories']);
-        } elseif ($catConjunction === 'notor' || $catConjunction === 'notand') {
-            $categories = $this->categoryRepository->findFromUidListNot($this->settings['categories']);
-        } else {
-            $categories = $this->categoryRepository->findAll();
-        }
+        $categories = $this->categoryRepository->findCategoriesFromSettings(
+            $this->settings['categories'] ?? '',
+            $this->settings['includeSubCategories'] ?? '',
+            $this->settings['categoryConjunction'] ?? ''
+        );
+
+        // offers
         $offers = $this->offerRepository->findDemanded($demand);
 
         // create pagination

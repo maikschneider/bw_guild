@@ -108,6 +108,25 @@
 							</config>
 						</TCEforms>
 					</settings.categories>
+					<settings.includeSubCategories>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>
+								LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.includeSubCategories
+							</label>
+							<config>
+								<type>check</type>
+								<renderType>checkboxToggle</renderType>
+								<items>
+									<numIndex index="0" type="array">
+										<numIndex index="0">
+											LLL:EXT:bw_guild/Resources/Private/Language/locallang_be.xlf:flexforms_general.includeSubCategories.yes
+										</numIndex>
+									</numIndex>
+								</items>
+							</config>
+						</TCEforms>
+					</settings.includeSubCategories>
 					<settings.categoryConjunction>
 						<TCEforms>
 							<label>

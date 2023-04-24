@@ -133,6 +133,12 @@
 			<trans-unit id="flexforms_general.categories">
 				<source>Category mode</source>
 			</trans-unit>
+			<trans-unit id="flexforms_general.includeSubCategories">
+				<source>Include subcategories</source>
+			</trans-unit>
+			<trans-unit id="flexforms_general.includeSubCategories.yes">
+				<source>Yes, include subcategories</source>
+			</trans-unit>
 			<trans-unit id="flexforms_general.categoryConjunction">
 				<source>Category mode</source>
 			</trans-unit>
