@@ -26,7 +26,7 @@
 		<th scope="row">{f:translate(key:
 			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.price')}
 		</th>
-		<td>{record.price->f:format.number(decimals:2, decimalSeparator:',')} €</td>
+		<td>{record.price->f:format.number(decimals:2, decimalSeparator:',', thousandsSeparator:'')} €</td>
 	</tr>
 	<tr>
 		<th scope="row">{f:translate(key:
