@@ -99,7 +99,7 @@
 				<target>Kontaktmail</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.contact_phone">
-				<source>Kontakt Telefon</source>
+				<target>Kontakt Telefon</target>
 			</trans-unit>
 			<trans-unit id="tx_bwguild_domain_model_offer.slug">
 				<source>Slug</source>

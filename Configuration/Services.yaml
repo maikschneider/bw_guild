@@ -21,3 +21,6 @@ services:
       - name: console.command
         command: 'bw_guild:expireOffers'
         description: 'Deletes outdated offers after a specified amounts of time.'
+
+  Blueways\BwGuild\Controller\BackendAjaxController:
+    public: true

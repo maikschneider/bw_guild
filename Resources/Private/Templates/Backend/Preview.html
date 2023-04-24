@@ -1,0 +1,56 @@
+<h1>{record.title}</h1>
+
+<f:for each="{files}" as="file">
+	<span style="display:inline-block; margin: 0 1rem 1rem 0;">
+		<f:image image="{file}" maxHeight="400" maxWidth="640"/>
+	</span>
+</f:for>
+
+<table class="table">
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type')}
+		</th>
+		<td>{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.record_type.{record.record_type}')}
+		</td>
+	</tr>
+	<tbody>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.description')}
+		</th>
+		<td>{record.description->f:format.nl2br()}</td>
+	</tr>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.price')}
+		</th>
+		<td>{record.price->f:format.number(decimals:2, decimalSeparator:',')} €</td>
+	</tr>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.contact_phone')}
+		</th>
+		<td>{record.contactPhone}</td>
+	</tr>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.contact_mail')}
+		</th>
+		<td>{record.contact_mail}</td>
+	</tr>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.crdate')}
+		</th>
+		<td>{record.crdate->f:format.date(format:'d.m.y H:i')}</td>
+	</tr>
+	<tr>
+		<th scope="row">{f:translate(key:
+			'LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:tx_bwguild_domain_model_offer.tstamp')}
+		</th>
+		<td>{record.tstamp->f:format.date(format:'d.m.y H:i')}</td>
+	</tr>
+	</tbody>
+</table>
