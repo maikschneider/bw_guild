@@ -10,50 +10,10 @@
 					  state="-1"/>
 	</f:if>
 
-
-	<div role="tabpanel">
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="tab-0">
-				<f:be.tableList tableName="tx_bwguild_domain_model_offer"
-								fieldList="{settings.tableFields.offers}"
-								enableClickMenu="false"
-								sortField="tstamp"
-								sortDescending="TRUE"
-								enableControlPanels="true"/>
-			</div>
-			<f:for each="{offerGroups}" as="offerGroup" iteration="i">
-				<div role="tabpanel" class="tab-pane" id="tab-{i.cycle}">
-					<f:render partial="Backend/OfferTable" arguments="{offers: offerGroup}"/>
-				</div>
-			</f:for>
-		</div>
-	</div>
-
-	<style type="text/css">
-		.panel-body {
-			padding: 1px;
-		}
-
-		.panel.panel-space.panel-default.recordlist {
-			margin: 0;
-			box-shadow: none;
-		}
-
-		.card.active {
-			background-color: #efefef;
-		}
-
-		.card:active, .card:focus {
-			text-decoration: none;
-		}
-
-		thead th:not([colspan]) button {
-			display: none;
-		}
-
-		.col-localizationa {
-			display: none;
-		}
-	</style>
-
+	<f:be.tableList tableName="tx_bwguild_domain_model_offer"
+					fieldList="{settings.tableFields.offers}"
+					enableClickMenu="false"
+					sortField="tstamp"
+					sortDescending="TRUE"
+					enableControlPanels="true"/>
 </f:section>
