@@ -10,8 +10,6 @@ module.tx_bwguild {
   }
 
   settings {
-    startView =
-    importFolderPath = /bw_guild/
     tableFields.users {
       1 = username
       2 = company
@@ -19,7 +17,7 @@ module.tx_bwguild {
       4 = www
     }
 
-    tableFields.offers {
+    tableFields.tx_bwguild_domain_model_offer {
       1 = public
       2 = header
       3 = description
@@ -36,7 +34,6 @@ module.tx_bwguild {
       showEditButton = 1
       showPublicizeButton = 1
     }
-
   }
 
   persistence.storagePid = {$plugin.tx_bwguild.persistence.storagePid}
