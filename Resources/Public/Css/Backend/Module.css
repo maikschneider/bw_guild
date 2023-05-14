@@ -2,3 +2,28 @@
 .modal-backdrop {
 	z-index: 1000 !important;
 }
+
+.module-body--bwguild .panel-body {
+	padding: 1px;
+}
+
+.module-body--bwguild .panel.panel-space.panel-default.recordlist {
+	margin: 0;
+	box-shadow: none;
+}
+
+.module-body--bwguild .card.active {
+	background-color: #efefef;
+}
+
+.module-body--bwguild .card:active, .card:focus {
+	text-decoration: none;
+}
+
+.module-body--bwguild thead th:not([colspan]) button {
+	display: none;
+}
+
+.module-body--bwguild .col-localizationa {
+	display: none;
+}

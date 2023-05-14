@@ -9,7 +9,7 @@ CREATE TABLE fe_users (
 	slug varchar(255) DEFAULT '' NOT NULL,
 	public_profile tinyint(4) DEFAULT 1 NOT NULL,
 
-	bookmarks varchar(255) DEFAULT '' NOT NULL,
+	bookmarks text,
 	company varchar(255) DEFAULT '' NOT NULL,
 	name varchar(255) DEFAULT '' NOT NULL,
 	latitude decimal(10, 8) DEFAULT 0 NOT NULL,
