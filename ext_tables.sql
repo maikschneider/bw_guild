@@ -55,7 +55,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY sys_language_uid_l10n_parent (sys_language_uid,l10n_parent),
+	KEY sys_language_uid_l10n_parent (sys_language_uid,l10n_parent)
 );
 
 CREATE TABLE tx_bwguild_offer_feuser_mm (
@@ -78,7 +78,7 @@ CREATE TABLE tx_bwguild_domain_model_feature (
 	fe_users int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid),
+	KEY parent (pid)
 );
 
 CREATE TABLE tx_bwguild_feature_feuser_mm (

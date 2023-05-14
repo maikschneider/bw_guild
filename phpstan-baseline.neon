@@ -1,0 +1,141 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Mvc\\\\Controller\\\\Argument\\:\\:setDataType\\(\\)\\.$#"
+			count: 1
+			path: Classes/Controller/ApiController.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Property\\\\PropertyMappingConfiguration\\:\\:allowCreationForSubProperty\\(\\)\\.$#"
+			count: 1
+			path: Classes/Controller/ApiController.php
+
+		-
+			message: "#^Parameter \\#2 \\$optionKey of method TYPO3\\\\CMS\\\\Extbase\\\\Property\\\\PropertyMappingConfiguration\\:\\:setTypeConverterOption\\(\\) expects string, int given\\.$#"
+			count: 1
+			path: Classes/Controller/ApiController.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Mvc\\\\View\\\\ViewInterface\\:\\:setTemplate\\(\\)\\.$#"
+			count: 2
+			path: Classes/Controller/OfferController.php
+
+		-
+			message: "#^Left side of && is always true\\.$#"
+			count: 1
+			path: Classes/Controller/OfferController.php
+
+		-
+			message: "#^Variable \\$demand on left side of \\?\\? is never defined\\.$#"
+			count: 1
+			path: Classes/Controller/OfferController.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Validation\\\\Validator\\\\ValidatorInterface\\:\\:getValidators\\(\\)\\.$#"
+			count: 1
+			path: Classes/Controller/UserController.php
+
+		-
+			message: "#^Cannot call method removeAll\\(\\) on array\\.$#"
+			count: 1
+			path: Classes/Controller/UserController.php
+
+		-
+			message: "#^Parameter \\#2 \\$optionKey of method TYPO3\\\\CMS\\\\Extbase\\\\Property\\\\PropertyMappingConfiguration\\:\\:setTypeConverterOption\\(\\) expects string, int given\\.$#"
+			count: 1
+			path: Classes/Controller/UserController.php
+
+		-
+			message: "#^Access to an undefined property Blueways\\\\BwGuild\\\\Domain\\\\Model\\\\AbstractUserFeature\\:\\:\\$feUsers\\.$#"
+			count: 1
+			path: Classes/Domain/Model/AbstractUserFeature.php
+
+		-
+			message: "#^Attribute class JetBrains\\\\PhpStorm\\\\ArrayShape does not exist\\.$#"
+			count: 1
+			path: Classes/Domain/Model/AbstractUserFeature.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: Classes/Domain/Model/Dto/BaseDemand.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Core\\\\Resource\\\\ResourceInterface\\:\\:getOriginalFile\\(\\)\\.$#"
+			count: 2
+			path: Classes/Domain/Model/FileReference.php
+
+		-
+			message: "#^Call to an undefined method TYPO3\\\\CMS\\\\Extbase\\\\Persistence\\\\QueryInterface\\<Blueways\\\\BwGuild\\\\Domain\\\\Model\\\\User\\>\\:\\:statement\\(\\)\\.$#"
+			count: 1
+			path: Classes/Domain/Repository/UserRepository.php
+
+		-
+			message: "#^Cannot call method fetch\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			count: 1
+			path: Classes/Hooks/OfferIndexer.php
+
+		-
+			message: "#^Method Blueways\\\\BwGuild\\\\Property\\\\TypeConverter\\\\UploadedFileReferenceConverter\\:\\:convertFrom\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\AbstractFileFolder but returns TYPO3\\\\CMS\\\\Core\\\\Resource\\\\FileInterface\\.$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Method Blueways\\\\BwGuild\\\\Property\\\\TypeConverter\\\\UploadedFileReferenceConverter\\:\\:convertFrom\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\AbstractFileFolder but returns TYPO3\\\\CMS\\\\Extbase\\\\Error\\\\Error\\.$#"
+			count: 3
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Method Blueways\\\\BwGuild\\\\Property\\\\TypeConverter\\\\UploadedFileReferenceConverter\\:\\:convertFrom\\(\\) should return TYPO3\\\\CMS\\\\Extbase\\\\Domain\\\\Model\\\\AbstractFileFolder but returns null\\.$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^PHPDoc tag @var has invalid value \\(\\$fileReference FileReference\\)\\: Unexpected token \"\\$fileReference\", expected type at offset 9$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Parameter \\#1 \\$uid of method TYPO3\\\\CMS\\\\Core\\\\Resource\\\\ResourceFactory\\:\\:getFileObject\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Parameter \\#1 \\$uid of method TYPO3\\\\CMS\\\\Core\\\\Resource\\\\ResourceFactory\\:\\:getFileReferenceObject\\(\\) expects int, string given\\.$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Parameter \\#2 \\$key of method TYPO3\\\\CMS\\\\Extbase\\\\Property\\\\PropertyMappingConfigurationInterface\\:\\:getConfigurationValue\\(\\) expects string, int given\\.$#"
+			count: 3
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Parameter \\#2 \\$resourcePointer of method Blueways\\\\BwGuild\\\\Property\\\\TypeConverter\\\\UploadedFileReferenceConverter\\:\\:createFileReferenceFromFalFileObject\\(\\) expects int\\|null, string\\|null given\\.$#"
+			count: 1
+			path: Classes/Property/TypeConverter/UploadedFileReferenceConverter.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			count: 1
+			path: Classes/Service/GeoService.php
+
+		-
+			message: "#^Variable \\$typoscript might not be defined\\.$#"
+			count: 1
+			path: Classes/Service/GeoService.php
+
+		-
+			message: "#^Cannot call method fetchAll\\(\\) on Doctrine\\\\DBAL\\\\Result\\|int\\.$#"
+			count: 1
+			path: Classes/Service/RadiusService.php
+
+		-
+			message: "#^Call to an undefined method TYPO3Fluid\\\\Fluid\\\\Core\\\\Rendering\\\\RenderingContextInterface\\:\\:getControllerContext\\(\\)\\.$#"
+			count: 1
+			path: Classes/ViewHelpers/LabelViewHelper.php
+
+		-
+			message: "#^Variable \\$extensionName on left side of \\?\\? is never defined\\.$#"
+			count: 1
+			path: Classes/ViewHelpers/LabelViewHelper.php

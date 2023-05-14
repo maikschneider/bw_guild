@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<phpmd-baseline>
+  <violation rule="PHPMD\Rule\Design\TooManyPublicMethods" file="Classes/Controller/ApiController.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="Classes/Controller/ApiController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="Classes/Controller/ApiController.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/Controller/ApiController.php" method="getUserinfoResponse"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="Classes/Controller/ApiController.php" method="getUserinfoResponse"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/ApiController.php" method="getUserinfoResponse"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Controller/ApiController.php"/>
+  <violation rule="PHPMD\Rule\Design\EmptyCatchBlock" file="Classes/Controller/ApiController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/ApiController.php" method="initializeUserEditUpdateAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/BackendAjaxController.php" method="previewAction"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Controller/BackendController.php"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="Classes/Controller/BackendController.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="Classes/Controller/OfferController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/OfferController.php" method="addCacheTagsForOffers"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Controller/OfferController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/OfferController.php" method="showAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/OfferController.php" method="getLanguageService"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="Classes/Controller/UserController.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Controller/UserController.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/UserController.php" method="showAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/UserController.php" method="initializeUpdateAction"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Controller/UserController.php" method="getLanguageService"/>
+  <violation rule="PHPMD\Rule\ExcessivePublicCount" file="Classes/Domain/Model/Dto/BaseDemand.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Domain/Model/Dto/BaseDemand.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Domain/Model/Dto/BaseDemand.php" method="getSearchFields"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Domain/Model/Dto/UserDemand.php" method="getFeGroupSearchFields"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Domain/Model/FileReference.php"/>
+  <violation rule="PHPMD\Rule\ExcessivePublicCount" file="Classes/Domain/Model/Offer.php"/>
+  <violation rule="PHPMD\Rule\Design\TooManyFields" file="Classes/Domain/Model/Offer.php"/>
+  <violation rule="PHPMD\Rule\Design\WeightedMethodCount" file="Classes/Domain/Model/Offer.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/Domain/Model/Offer.php" method="getJsonSchema"/>
+  <violation rule="PHPMD\Rule\Design\NpathComplexity" file="Classes/Domain/Model/Offer.php" method="getJsonSchema"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="Classes/Domain/Repository/AbstractDemandRepository.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/Domain/Repository/AbstractDemandRepository.php" method="setCategoryConstraints"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="Classes/Domain/Repository/AbstractDemandRepository.php" method="setCategoryConstraints"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Domain/Repository/AbstractDemandRepository.php" method="setLanguageConstraint"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Domain/Repository/UserRepository.php" method="getAutocompleteData"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Event/InitializeUserUpdateEvent.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/EventListener/ModifyListTable.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/EventListener/ModifyListTable.php" method="__invoke"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Hooks/OfferIndexer.php" method="__construct"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="Classes/Hooks/OfferIndexer.php"/>
+  <violation rule="PHPMD\Rule\Design\LongMethod" file="Classes/Hooks/OfferIndexer.php" method="customIndexer"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Property/TypeConverter/PriceConverter.php"/>
+  <violation rule="PHPMD\Rule\Design\CouplingBetweenObjects" file="Classes/Property/TypeConverter/UploadedFileReferenceConverter.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/Property/TypeConverter/UploadedFileReferenceConverter.php" method="convertFrom"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="Classes/Property/TypeConverter/UploadedFileReferenceConverter.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/Property/TypeConverter/UploadedFileReferenceConverter.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Service/AccessControlService.php" method="getFrontendUserUid"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Service/AccessControlService.php" method="hasLoggedInFrontendUser"/>
+  <violation rule="PHPMD\Rule\Design\EmptyCatchBlock" file="Classes/Service/GeoService.php"/>
+  <violation rule="PHPMD\Rule\CyclomaticComplexity" file="Classes/Service/GeoService.php" method="calculateCoordinatesForAllRecordsInTable"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Service/GeoService.php" method="calculateCoordinatesForAllRecordsInTable"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Updates/SlugUpdater.php" method="executeUpdate"/>
+  <violation rule="PHPMD\Rule\UnusedLocalVariable" file="Classes/Updates/SlugUpdater.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="Classes/Utility/LabelUtility.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Utility/SlugUtility.php" method="getSlug"/>
+  <violation rule="PHPMD\Rule\Design\EmptyCatchBlock" file="Classes/Validation/Validator/CustomUsernameValidator.php"/>
+  <violation rule="PHPMD\Rule\Controversial\Superglobals" file="Classes/Validation/Validator/UserLogoValidator.php" method="validateFileExtension"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/ViewHelpers/IsEditableViewHelper.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="Classes/ViewHelpers/IsEditableViewHelper.php"/>
+  <violation rule="PHPMD\Rule\Naming\LongVariable" file="Classes/ViewHelpers/LabelViewHelper.php"/>
+  <violation rule="PHPMD\Rule\UnusedFormalParameter" file="Classes/ViewHelpers/LabelViewHelper.php"/>
+</phpmd-baseline>
