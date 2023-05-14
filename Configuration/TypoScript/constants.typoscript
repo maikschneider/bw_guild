@@ -46,15 +46,13 @@ plugin {
   tx_bwguild_userlist {
     settings {
       demandClass = Blueways\BwGuild\Domain\Model\Dto\UserDemand
-      includeSubCategories = 0
-      order = company
+      includeSubCategories =
+      order =
       orderDirection =
       showPid =
-      categories =
       limit =
       maxItems = 20
       maximumLinks =
-      mode =
       categoryConjunction =
       hideFullResultList =
       schema {

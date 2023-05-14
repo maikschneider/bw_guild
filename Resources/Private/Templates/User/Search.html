@@ -1,15 +1,40 @@
 <div class="search">
-	<f:form action="list" name="demand" controller="User" object="{demand}">
+	<f:form pluginName="Userlist" name="demand" controller="User" object="{demand}">
 
-		<label> In Umgebung von
-			<f:form.textfield property="searchDistanceAddress"/>
-			<f:form.textfield property="maxDistance"/>
-			km </label>
+		<div class="form-group">
+			<label>Phrase</label>
+			<f:form.textfield property="search"/>
+		</div>
 
+		<div class="form-group">
+			<label>Distance</label>
+			<f:form.textfield property="searchDistanceAddress" placeholder="address"/>
+			<f:form.textfield property="maxDistance" placeholder="max distance (km)"/>
+		</div>
 
-		<button type="submit" class="button hollow small">
-			<span>Ansicht aktualisieren</span>
-			<span class="icon-refresh"></span>
-		</button>
+		<f:if condition="{categories}">
+			<div class="form-group">
+				<f:form.hidden property="categoryConjunction" value="or"/>
+				<f:form.hidden property="searchDistanceAddress"/>
+				<f:form.hidden property="maxDistance"/>
+				<label>Category</label>
+				<f:for each="{categories}" as="category" iteration="i">
+					<label>
+						<f:variable name="checked" value="0"/>
+						<f:for each="{demand.categories}" as="demandCategory">
+							<f:if condition="{category.uid} == {demandCategory}">
+								<f:variable name="checked" value="1"/>
+							</f:if>
+						</f:for>
+
+						<f:form.checkbox value="{category.uid}" property="categories.{i.index}" checked="{checked}"/>
+						{category.title} </label>
+				</f:for>
+			</div>
+		</f:if>
+
+		<div class="form-group">
+			<button type="submit">Search</button>
+		</div>
 	</f:form>
 </div>
