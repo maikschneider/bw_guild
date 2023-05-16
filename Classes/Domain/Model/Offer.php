@@ -31,6 +31,7 @@ class Offer extends AbstractEntity
 
     protected ?User $feUser = null;
 
+
     /**
      * @var ObjectStorage<User>|null
      * @Lazy
@@ -65,8 +66,6 @@ class Offer extends AbstractEntity
     protected bool $public = false;
 
     protected float $price = 0.0;
-
-    protected ?\DateTime $tstamp = null;
 
     public function getPrice(): float
     {
