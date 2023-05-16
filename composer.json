@@ -68,7 +68,8 @@
     "ext-json": "*",
     "ext-gd": "*",
     "typo3/cms-core": "^11.0",
-  	"georgringer/numbered-pagination": "^1.0"
+  	"georgringer/numbered-pagination": "^1.0",
+    "sourcebroker/t3api": "^2.0"
   },
   "authors": [
     {

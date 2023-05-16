@@ -9,7 +9,6 @@
 /.*downloads
 /.global_commands
 /.homeadditions
-/.importdb*
 /.sshimageBuild
 /.webimageBuild
 /.webimageExtra
@@ -23,14 +22,9 @@
 /db_snapshots
 /import-db
 /import.yaml
-/mutagen/mutagen.yml
-/mutagen/.start-synced
+/mutagen
 /nginx_full/nginx-site.conf
 /postgres/postgresql.conf
-/providers/platform.yaml
 /sequelpro.spf
-/traefik/config/bw-guild.yaml
-/traefik/certs/bw-guild.crt
-/traefik/certs/bw-guild.key
-/xhprof/xhprof_prepend.php
+/xhprof
 /**/README.*

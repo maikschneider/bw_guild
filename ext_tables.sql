@@ -1,5 +1,6 @@
 CREATE TABLE fe_users (
 	short_name varchar(255) DEFAULT '' NOT NULL,
+	aaa varchar(255) DEFAULT '' NOT NULL,
 	mobile varchar(255) DEFAULT '' NOT NULL,
 	member_nr varchar(255) DEFAULT '' NOT NULL,
 	offers varchar(11) DEFAULT 0 NOT NULL,
@@ -19,7 +20,6 @@ CREATE TABLE fe_users (
 CREATE TABLE tx_bwguild_domain_model_offer (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
-	tstamp int(11) DEFAULT '0' NOT NULL,
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
