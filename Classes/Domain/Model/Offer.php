@@ -3,6 +3,7 @@
 namespace Blueways\BwGuild\Domain\Model;
 
 use Blueways\BwGuild\Utility\SlugUtility;
+use SourceBroker\T3api\Annotation\ApiResource;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Annotation\Validate;
@@ -10,6 +11,25 @@ use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "path"="/offer",
+ *          },
+ *           "post"={
+ *              "method"="POST",
+ *              "path"="/offer",
+ *          },
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "path"="/offer/{id}",
+ *          }
+ *     },
+ * )
+ *
+ */
 class Offer extends AbstractEntity
 {
     /**

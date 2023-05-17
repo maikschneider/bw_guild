@@ -93,7 +93,4 @@ return [
     Blueways\BwGuild\Domain\Model\UserFeatureEndpoints::class => [
         'tableName' => 'tx_bwguild_domain_model_feature',
     ],
-    Blueways\BwGuild\Domain\Model\OfferEndpoint::class => [
-        'tableName' => 'tx_bwguild_domain_model_offer',
-    ],
 ];
