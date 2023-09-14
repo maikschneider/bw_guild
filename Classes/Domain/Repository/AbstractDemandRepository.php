@@ -174,6 +174,10 @@ class AbstractDemandRepository extends Repository
                         $demand::TABLE . '.' . $cleanProperty,
                         $this->queryBuilder->createNamedParameter($searchPart . '%')
                     );
+                    $subConstraints[] = $this->queryBuilder->expr()->like(
+                        $demand::TABLE . '.' . $cleanProperty,
+                        $this->queryBuilder->createNamedParameter('% ' . $searchPart . '%')
+                    );
                 }
             }
             $constraints[] = $this->queryBuilder->expr()->orX(...$subConstraints);
