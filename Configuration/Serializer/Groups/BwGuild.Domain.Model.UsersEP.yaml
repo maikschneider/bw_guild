@@ -1,0 +1,9 @@
+Blueways\BwGuild\Domain\Model\UserEndpoints:
+  properties:
+    uid:
+      groups:
+        - api_get_collection_bw_guild
+        - api_get_item_bw_guild
+      type: int
+    username:
+      groups:

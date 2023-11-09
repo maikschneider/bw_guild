@@ -1,5 +1,6 @@
 CREATE TABLE fe_users (
 	short_name varchar(255) DEFAULT '' NOT NULL,
+	aaa varchar(255) DEFAULT '' NOT NULL,
 	mobile varchar(255) DEFAULT '' NOT NULL,
 	member_nr varchar(255) DEFAULT '' NOT NULL,
 	offers varchar(11) DEFAULT 0 NOT NULL,
@@ -19,7 +20,6 @@ CREATE TABLE fe_users (
 CREATE TABLE tx_bwguild_domain_model_offer (
 	uid int(11) NOT NULL auto_increment,
 	pid int(11) DEFAULT '0' NOT NULL,
-	tstamp int(11) DEFAULT '0' NOT NULL,
 	crdate int(11) DEFAULT '0' NOT NULL,
 	cruser_id int(11) DEFAULT '0' NOT NULL,
 	sys_language_uid int(11) DEFAULT '0' NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE tx_bwguild_domain_model_offer (
 
 	PRIMARY KEY (uid),
 	KEY parent (pid),
-	KEY sys_language_uid_l10n_parent (sys_language_uid,l10n_parent),
+	KEY sys_language_uid_l10n_parent (sys_language_uid,l10n_parent)
 );
 
 CREATE TABLE tx_bwguild_offer_feuser_mm (
@@ -78,7 +78,7 @@ CREATE TABLE tx_bwguild_domain_model_feature (
 	fe_users int(11) DEFAULT '0' NOT NULL,
 
 	PRIMARY KEY (uid),
-	KEY parent (pid),
+	KEY parent (pid)
 );
 
 CREATE TABLE tx_bwguild_feature_feuser_mm (

@@ -49,7 +49,7 @@ class OfferIndexer extends IndexerBase
         $customIndexer = [
             'Offer-Indexer (ext:bw_guild)',
             self::KEY,
-            'EXT:bw_guild/ext_icon.svg',
+            'EXT:bw_guild/Resources/Public/Icons/Extension.svg',
         ];
         $params['items'][] = $customIndexer;
     }

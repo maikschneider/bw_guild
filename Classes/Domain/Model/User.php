@@ -8,9 +8,25 @@ use TYPO3\CMS\Extbase\Annotation\ORM\Lazy;
 use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
-
+use SourceBroker\T3api\Annotation\ApiResource;
 /**
- * Class User
+ * @ApiResource(
+ *     collectionOperations={
+ *          "get"={
+ *              "path"="/users",
+ *          },
+ *          "post"={
+ *              "method"="POST",
+ *              "path"="/users",
+ *          },
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "path"="/users/{id}",
+ *          }
+ *     },
+ * )
+ *
  */
 class User extends FrontendUser
 {
@@ -21,6 +37,26 @@ class User extends FrontendUser
     protected string $mobile = '';
 
     protected string $memberNr = '';
+
+    protected string $aaa = '';
+
+    /**
+     * @return string
+     */
+    public function getAaa(): string
+    {
+        return $this->aaa;
+    }
+
+    /**
+     * @param string $aaa
+     */
+    public function setAaa(string $aaa): void
+    {
+        $this->aaa = $aaa;
+    }
+
+    protected ?\DateTime $tstamp = null;
 
     /**
      * @var ObjectStorage<Offer>|null
@@ -196,6 +232,22 @@ class User extends FrontendUser
     public function setMemberNr(string $memberNr): void
     {
         $this->memberNr = $memberNr;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getTstamp(): ?\DateTime
+    {
+        return $this->tstamp;
+    }
+
+    /**
+     * @param \DateTime|null $tstamp
+     */
+    public function setTstamp(?\DateTime $tstamp): void
+    {
+        $this->tstamp = $tstamp;
     }
 
     public function geoCodeAddress()

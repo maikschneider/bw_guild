@@ -151,6 +151,18 @@ call_user_func(function () {
                 'type' => 'category',
             ],
         ],
+        'tstamp' => [
+            'label' => 'Timestamp',
+            'config' => [
+                'type' => 'input',
+            ]
+        ],
+        'aaa' => [
+            'label' => 'aaa',
+            'config' => [
+                'type' => 'input',
+            ]
+        ]
     ];
     ExtensionManagementUtility::addTCAcolumns('fe_users', $tempColumns);
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'short_name', '', 'after:company');
@@ -163,6 +175,8 @@ call_user_func(function () {
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'logo', '', 'after:image');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'bookmarks', '', 'after:slug');
     ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'features', '', 'after:bookmarks');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'tstamp', '', 'after:company');
+    ExtensionManagementUtility::addToAllTCAtypes('fe_users', 'aaa', '', 'after:company');
     ExtensionManagementUtility::addToAllTCAtypes(
         'fe_users',
         '--div--;LLL:EXT:bw_guild/Resources/Private/Language/locallang_tca.xlf:user.offers,offers',

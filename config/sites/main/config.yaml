@@ -1,4 +1,4 @@
-base: /
+base: 'https://bw-guild.ddev.site/'
 languages:
   -
     title: English
@@ -35,3 +35,5 @@ imports:
     resource: 'EXT:bw_guild/Configuration/Routing/Offerlist.yaml'
   -
     resource: 'EXT:bw_guild/Configuration/Routing/Userlist.yaml'
+  -
+    resource: 'EXT:t3api/Configuration/Routing/config.yaml'
